@@ -1,0 +1,29 @@
+﻿variable_raw,accion,nombre_modelo,razon
+forest_area_pct_land,MANTENER,forest_area_pct,"Normalizada, 100% cobertura. Preferida sobre km²."
+forest_area_km2,EXCLUIR_MODELO,—,Redundante con forest_area_pct; mantener en RAW.
+ghg_total_incl_lulucf_mt_co2e,MANTENER,ghg_total_mt_co2e,Variable dependiente principal GEI. 100% cobertura.
+co2_excl_lulucf_mt_co2e,SEPARAR_MODELO_ALTERNATIVO,co2_mt_co2e,No usar simultáneamente con GHG. Modelo alternativo focalizado en CO2 fósil.
+gdp_per_capita_ppp_const2021_intl,MANTENER,gdp_pc_ppp_2021,"PPA para comparación internacional. RENOMBRAR (año base 2021, no 2017)."
+gdp_per_capita_const2015_usd,EXCLUIR_MODELO,—,Redundante con PPA. Mantener en RAW.
+population_total,MANTENER,population_total,"Directo, 100% cobertura."
+internet_users_pct_pop,MANTENER,internet_users_pct,Mejor proxy tecnología disponible.
+mobile_subscriptions_per100,EXCLUIR_MODELO,—,Redundante con internet. Mantener en RAW.
+agriculture_va_pct_gdp,MANTENER,agri_va_pct_gdp,VAB agrícola.
+manufacturing_va_pct_gdp,MANTENER,manuf_va_pct_gdp,VAB manufacturero.
+services_va_pct_gdp,EXCLUIR_MODELO,—,Tercera restricción VAB — eliminar para evitar colinealidad. Mantener en RAW.
+child_employment_pct_7to14,EXCLUIR_MODELO,—,Proxy inverso laboral con 13.8% cobertura. No usable. Requiere fuente alternativa.
+renewable_energy_pct_final_energy,MANTENER,renew_energy_pct,Tecnología verde — más amplia y conceptualmente adecuada.
+renewable_electricity_output_pct,EXCLUIR_MODELO,—,Redundante con renewable_energy_pct. RENOMBRAR en RAW: quitar 'gw'. Mantener en RAW.
+rd_expenditure_pct_gdp,MANTENER,rd_pct_gdp,Proxy I+D — mejor disponible para innovación.
+account_ownership_pct_adults,MANTENER_CON_CONDICION,findex_account_pct,Trienal — requiere aprobación de estrategia para años sin dato (NaN o interpolación).
+domestic_credit_private_pct_gdp,MANTENER,priv_credit_pct_gdp,"Profundidad financiera — anual, buena cobertura."
+wgi_voice_accountability_est,MANTENER,wgi_accountability,Rendición de cuentas — prioritaria según consigna.
+wgi_government_effectiveness_est,MANTENER_CON_CONDICION,wgi_gov_effect,Retener si modelo necesita calidad institucional; verificar no colinealidad con accountability.
+wgi_rule_of_law_est,EXCLUIR_MODELO,—,Alta redundancia con control_corruption y gov_effect. Mantener en RAW.
+wgi_control_corruption_est,MANTENER,wgi_corruption,Calidad institucional — una sola del bloque anticorrupción.
+wgi_regulatory_quality_est,EXCLUIR_MODELO,—,Proxy de política ambiental imperfecto. Mantener en RAW; excluir sin fuente ambiental directa.
+wgi_political_stability_est,EXCLUIR_MODELO,—,"4to WGI — bloque ya representado por accountability, gov_effect, corruption. Mantener en RAW."
+tax_revenue_pct_gdp,MANTENER_CON_CONDICION,tax_rev_pct_gdp,Proxy fiscal general (no impuestos ambientales específicos). Usar con cautela.
+natural_resources_rents_pct_gdp,MANTENER,nat_rents_pct_gdp,"Renta recursos naturales — directo, buena cobertura."
+vulnerable_employment_pct_total,MANTENER_CON_CONDICION,vuln_employ_pct,RENOMBRAR. Concepto empleo vulnerable ≠ informalidad. Usar con nota metodológica.
+stock_market_cap_pct_gdp,EXCLUIR_MODELO,—,27.3% cobertura. Proxy débil de innovación financiera. Mantener en RAW.
