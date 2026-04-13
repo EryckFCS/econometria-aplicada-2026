@@ -10,11 +10,10 @@ Eliminar el procesamiento manual de datos y la elaboración manual de reportes m
 ## 🛠️ Estado del Proyecto
 
 ### Fase 1: Cimientos y Auditoría Forense 🟢 (Completado)
-*   **Infraestructura de Datos**: Implementación de una arquitectura de capas (`data/`, `src/`, `docs/`, `stata/`).
-*   **Motor Forense**: Sistema de auditoría que genera métricas de integridad y trazabilidad para cada observación descargada.
-*   **Conector World Bank**: Integración robusta vía API de los Indicadores de Desarrollo Mundial (WDI).
-*   **Buscador Terminado**: Prototipo funcional de `wb_search.py` para discovery de variables.
-*   **Empaquetador EVA**: Script `zip_task.py` para generar entregables universitarios con un solo comando.
+*   **Infraestructura de Datos**: Arquitectura de capas (`src/lib/`, `src/tasks/`, `data/`).
+*   **Motor Modular**: Desacoplamiento de Loaders, Processors y Exporters.
+*   **Diccionario Automatizado**: Generación de metadatos en Excel Maestro.
+*   **Empaquetador EVA**: Script `zip_task.py` optimizado para nuevas rutas.
 
 ### Fase 2: Macro-Global y Mercados 🟡 (En curso)
 *   **High-Frequency Data**: Scraper de mercados (Petróleo, Metales, Índices) vía `yfinance` operativo.
@@ -27,10 +26,17 @@ Eliminar el procesamiento manual de datos y la elaboración manual de reportes m
 *   **INEC Secure Bridge**: Automatización de descargas de microdatos ENEDMU / IPC (Requiere gestión de credenciales).
 *   **Agregador Temporal**: Lógica para convertir datos diarios/mensuales a frecuencias anuales/trimestrales sin perder precisión estadística.
 
-### Fase 4: Orquestación Académica ⚪ (Próximamente)
-*   **Stata Automation**: Puente dinámico para que los archivos `.do` consuman directamente el Data Lake procesado.
-*   **Auto-Reporting**: Generación de tablas de regresión automáticas en Word/LaTeX con formato APA/Econometrica.
-*   **Auditoría de Replicabilidad**: Script que verifica que cualquier tercero pueda recrear los resultados desde cero con un solo comando (`make all` o `python main.py`).
+### Fase 4: Orquestación Académica 🟡 (En curso)
+*   **Task Orchestrators**: Independencia total de scripts (ACD, AA, APE) mediante inyección de librerías.
+*   **Syllabus Sync**: Documentación técnica automática por unidad.
+*   **Governance Hub**: Repositorio de manuales y validación de metadatos (CI-Catalog).
+*   **Stata Automation**: Puente dinámico para archivos `.do`.
+
+### Fase 5: Inteligencia y Publicación 🔴 (Pendiente)
+*   **Paper Engine (End-to-End)**: Motor que genera borradores automáticos en Word/LaTeX dignos de publicación (Estructura IMRyD + Tablas APA).
+*   **Bibliography Governance**: Sistema similar al catálogo pero para referencias bibliográficas y fuentes de inteligencia (WSJ/RAG).
+*   **Self-Healing Engine**: Sistema de auto-curación que detecta fallos en APIs y busca automáticamente proxies o métodos alternos.
+*   **Docker Health Monitor**: Contenedores para monitorizar la salud del Data Lake y los procesos de ingesta.
 
 ---
 
@@ -40,4 +46,4 @@ Eliminar el procesamiento manual de datos y la elaboración manual de reportes m
 3.  **Cero Manualidad**: Se prohíbe el "Copy-Paste" de datos. Todo movimiento de datos debe ser scriptado y logueado por `structlog`.
 
 ---
-*Última actualización: 12 de abril de 2026*
+*Última actualización: 13 de abril de 2026 (Refactor Modular v2)*

@@ -92,6 +92,26 @@ SERIES_APE1 = [
         "rol":            "dependiente — ambiental",
         "concepto":       "Emisiones de CO2 totales",
     },
+    {
+        "nombre_raw":     "informal_employment_pct_total",
+        "codigo_api":     "SL.ISV.IFRM.ZS",
+        "unidad_api":     "% del empleo total",
+        "fuente":         "World Bank / ILO",
+        "institucion":    "ILO (International Labour Organization)",
+        "url_indicador":  "https://data.worldbank.org/indicator/SL.ISV.IFRM.ZS",
+        "rol":            "independiente — laboral",
+        "concepto":       "Empleo informal como % del empleo total",
+    },
+    {
+        "nombre_raw":     "ecu_informal_sector_inec",
+        "codigo_api":     "LOCAL_ENEMDU_INF",
+        "unidad_api":     "Porcentaje (%)",
+        "fuente":         "INEC ENEMDU",
+        "institucion":    "Instituto Nacional de Estadística y Censos (Ecuador)",
+        "url_indicador":  "https://www.ecuadorencifras.gob.ec/estadisticas-laborales-enemdu/",
+        "rol":            "objetivo — informalidad",
+        "concepto":       "Empleo en el sector informal (Falta de RUC en el establecimiento)",
+    },
 ]
 
 PAISES_LATAM = {
