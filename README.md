@@ -17,18 +17,13 @@ El proyecto trabaja principalmente con datos de America Latina y, en la parte lo
 
 | Ruta | Proposito |
 | --- | --- |
-| `data/raw/` | Insumos crudos, manifests y panel base. |
-| `data/processed/` | Diccionario de variables, auditorias y propuestas de modelo. |
-| `data/exports/` | Productos finales, incluido el Excel maestro. |
-| `docs/` | Syllabus, bibliografia y entregables por unidad. |
-| `notebooks/` | Cuadernos de analisis y apoyo a la reproduccion. |
-| `src/core/` | Utilidades comunes y configuracion de rutas. |
-| `src/processing/` | Construccion del panel raw y artefactos de auditoria. |
-| `src/orchestration/` | Flujo maestro para reconstruir el producto final. |
-| `src/scrapers/` | Scrapers para BCE, INEC, World Bank y otras fuentes. |
-| `src/tools/` | Utilidades auxiliares, como busqueda de indicadores. |
-| `stata/` | Scripts `.do` para analisis en Stata. |
-| `tests/` | Pruebas unitarias y de integracion ligera. |
+| `data/raw/csv/` | Datos crudos para Stata y herramientas. |
+| `data/raw/excel/` | Excel Maestro con Diccionario para humanos. |
+| `docs/` | Syllabus y entregables por unidad. |
+| `src/lib/` | Librerías compartidas (Loaders, Processors, Exporters). |
+| `src/tasks/` | Orquestadores específicos por tarea académica. |
+| `src/core/` | Utilidades de bajo nivel y configuración. |
+| `stata/` | Scripts `.do` para análisis econométrico. |
 
 ## Requisitos
 
@@ -52,22 +47,16 @@ Si prefieres una instalacion minima, puedes usar el archivo `requirements.txt`, 
 
 ## Ejecucion rapida
 
-Generar el panel raw:
+Generar el proyecto completo (Panel AL + Serie de Tiempo EC):
 
 ```bash
-PYTHONPATH=src uv run python src/processing/ape1_auditoria_raw.py
+PYTHONPATH=src uv run src/tasks/unidad1/ape1_orchestrator.py
 ```
 
-Generar los artefactos de auditoria:
+Generar solo empaquetado final:
 
 ```bash
-PYTHONPATH=src uv run python src/processing/ape1_auditoria_artefactos.py
-```
-
-Recrear el producto final completo:
-
-```bash
-PYTHONPATH=src uv run python src/orchestration/ape1_master_build.py
+PYTHONPATH=src uv run src/orchestration/zip_task.py 1 APE
 ```
 
 Empaquetar una entrega por unidad:
@@ -121,6 +110,9 @@ La integridad del proyecto tambien se valida en CI con Python 3.12.
 - `docs/unidad1/`, `docs/unidad2/` y `docs/unidad3/` contienen entregables y apoyos por unidad.
 - `src/processing/legacy/` conserva versiones anteriores del flujo para referencia.
 
-## Estado del proyecto
+## Flujo de Trabajo (Orquestadores)
 
-La Unidad 1 concentra el flujo mas completo y el resto del repositorio sirve como base para las siguientes unidades y para la reproducibilidad de los entregables.
+Para cada nueva tarea académica (ACD, AA, APE), el flujo recomendado es:
+1.  **Library First**: Añadir lógica reusable en `src/lib/`.
+2.  **Task Orchestrator**: Crear un pequeño script en `src/tasks/unidX/` que importe las librerías y ejecute el flujo específico.
+3.  **Export**: Generar CSVs para Stata y Excel para revisión humana.

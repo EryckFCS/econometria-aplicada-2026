@@ -43,10 +43,10 @@ def zip_task_folder(unit: int, task_type: str, author: str = "ERIK_CONDOY"):
                 zipf.write(file_path, arcname)
                 print(f"  + Añadiendo documento: {file}")
 
-        # 2. Incluir la Base de Datos Maestra desde exports (si existe)
-        master_excel = EXPORTS_DIR / "APE1_Auditoria_Forense_MASTER.xlsx"
+        # 2. Incluir la Base de Datos Maestra desde data/raw/excel (si existe)
+        master_excel = PROJECT_ROOT / "data" / "raw" / "excel" / "APE1_Modelos_Dinamicos.xlsx"
         if master_excel.exists():
-            zipf.write(master_excel, Path("DATA") / master_excel.name)
+            zipf.write(master_excel, Path("DATA") / "APE1_Auditoria_Forense_MASTER.xlsx")
             print(f"  + Añadiendo Base de Datos: {master_excel.name}")
         
         # 3. Incluir el Manifiesto de Trazabilidad (Forensics)
