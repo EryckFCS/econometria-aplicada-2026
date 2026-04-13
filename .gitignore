@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.class
+.venv/
+.env
+.pytest_cache/
+.ruff_cache/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project Specific
+logs/*.log
+data/raw/externos/*.xls
+data/raw/externos/*.xlsx
+# data/raw/*.csv
+# data/processed/*.csv
