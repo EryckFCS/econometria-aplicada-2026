@@ -20,6 +20,9 @@ dependencies = [
   "xlsxwriter>=3.2.9",
   "pyarrow>=23.0.1",
   "tenacity>=9.1.4",
+  "structlog>=25.5.0",
+  "duckdb>=1.5.1",
+  "yfinance>=1.2.1",
 ]
 
 [project.optional-dependencies]
