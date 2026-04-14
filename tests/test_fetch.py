@@ -1,6 +1,6 @@
 from unittest.mock import patch, Mock
 
-from ape1_utils import fetch_wb
+from core.utils import fetch_wb
 
 
 def _make_mock_response(sample_json):

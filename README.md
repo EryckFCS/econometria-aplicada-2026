@@ -30,7 +30,7 @@ El proyecto trabaja principalmente con datos de America Latina y, en la parte lo
 - Python 3.12 o superior.
 - `uv` para una instalacion reproducible.
 - `PYTHONPATH=src` al ejecutar los scripts, porque el repositorio usa un layout `src/` con imports directos.
-- `PYTHONPATH=src/core:src` al ejecutar las pruebas, porque `tests/test_fetch.py` usa el shim legado `ape1_utils`.
+- `PYTHONPATH=src` al ejecutar las pruebas, porque la suite ya importa directamente desde `core` y `lib`.
 
 Si quieres una guia corta para migracion a `uv`, revisa [docs/syllabus/README_UV.md](docs/syllabus/README_UV.md).
 

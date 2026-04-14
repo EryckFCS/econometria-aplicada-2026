@@ -1,6 +1,4 @@
-"""Core utilities moved from `ape1_utils.py`.
-Contiene helpers para descargas y parsers comunes.
-"""
+"""Core utilities for shared download and parsing helpers."""
 import logging
 import time
 import pandas as pd
