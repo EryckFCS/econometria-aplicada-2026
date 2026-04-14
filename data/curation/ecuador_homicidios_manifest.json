@@ -1,0 +1,46 @@
+{
+  "project": "Econometría Aplicada 2026 - Taller de Homicidios",
+  "version": "1.0.0",
+  "curations": [
+    {
+      "target_iso2": "EC",
+      "target_column": "homicidios_100k",
+      "year": 2003,
+      "value": 14.49,
+      "source": "UNODC Global Study on Homicide",
+      "reason": "Banco Mundial API v2 missing data for Ecuador in early 2000s"
+    },
+    {
+      "target_iso2": "EC",
+      "target_column": "homicidios_100k",
+      "year": 2004,
+      "value": 17.58,
+      "source": "UNODC / INEC",
+      "reason": "Banco Mundial API v2 missing data for Ecuador in early 2000s"
+    },
+    {
+      "target_iso2": "EC",
+      "target_column": "homicidios_100k",
+      "year": 2005,
+      "value": 15.34,
+      "source": "UNODC / INEC",
+      "reason": "Banco Mundial API v2 missing data for Ecuador in early 2000s"
+    },
+    {
+      "target_iso2": "EC",
+      "target_column": "homicidios_100k",
+      "year": 2006,
+      "value": 16.96,
+      "source": "UNODC / INEC",
+      "reason": "Banco Mundial API v2 missing data for Ecuador in early 2000s"
+    },
+    {
+      "target_iso2": "EC",
+      "target_column": "uso_internet_pct",
+      "year": 1991,
+      "value": 0.001,
+      "source": "Manual - Interpolación de base histórica",
+      "reason": "Maintain series continuity for dynamic models"
+    }
+  ]
+}
