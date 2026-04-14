@@ -4,31 +4,54 @@ Este documento define la estructura técnica del repositorio, diseñada para sop
 
 ## 🏛️ Capas del Sistema
 
-### 1. Librerías de Lógica (`src/lib/`)
-Contiene el código reusable que NO debe cambiar entre tareas. Estas son las piezas del motor:
-- **`loaders/`**: Ingesta de datos vía API o Scrapers (ej. `WorldBankLoader`).
-- **`processors/`**: Transformación de datos crudos a estructuras econométricas (`PanelBuilder`, `TimeSeriesBuilder`).
-- **`exporters/`**: Formateo de salidas profesionales (`AcademicExcelExporter`).
-- **`catalog.py`**: El "Diccionario de Datos Maestro" con validación automática (CI).
-- **`bibliography.py`**: Motor de gobernanza bibliográfica (Citas APA).
+### 1. Configuración y Backends (`src/core/`)
 
-### 2. Tareas de Orquestación (`src/tasks/`)
-Scripts livianos que usan las librerías para ejecutar un flujo específico. Se organizan por unidad académica o por proyecto de investigación:
+Contiene la configuración transversal y los adaptadores de entrada:
+
+- **`config.py`**: rutas base y directorios de trabajo.
+- **`pipeline_config.py`**: perfiles declarativos, rango temporal, alcance y prioridades de fuente.
+- **`source_backends.py`**: registro de fuentes intercambiables (`world_bank`, `http`, `local_csv`, `local_parquet`, `local_excel`).
+- **`utils.py`**: utilidades compartidas de descarga y parseo.
+
+### 2. Motor Común (`src/lib/`)
+
+Contiene la lógica reusable que sí debe ser estable entre tareas:
+
+- **`engine.py`**: construcción de paneles con filtrado por perfil y fallback de fuentes.
+- **`catalog.py`**: diccionario de variables y países por tarea.
+- **`exporters.py`**: salida a CSV/Excel con diccionario de variables.
+- **`data_doctor.py`**: curación puntual y trazable sobre el dataset final.
+
+### 3. Tareas de Orquestación (`src/tasks/`)
+
+Scripts livianos que usan el motor común para ejecutar un flujo específico. Se organizan por unidad académica o por proyecto de investigación:
+
 - **Nomenclatura**: `Task_[Tema]_[Unidad].py` (Ej. `Task_Panel_Ambiental_Latam.py`).
-- **Regla Oro**: Un orquestador NO debe contener lógica de limpieza o descarga; solo llama a `lib`.
+- **Regla Oro**: Un orquestador no debe contener lógica de backend, filtrado de rango ni selección de fuente; solo resuelve el perfil y llama al motor.
 
-### 3. Evidencias y Metadatos (`data/` y `docs/manuals/`)
+### 4. Perfiles Declarativos (`config/`)
+
+Los perfiles de ejecución se describen en `config/pipeline_profiles.toml` y se pueden ajustar por variables de entorno para cambiar:
+
+- **Rango**: año inicial y final.
+- **Alcance**: país, región o dominio local.
+- **Fuentes**: prioridad entre World Bank, HTTP genérico y archivos locales.
+
+### 5. Evidencias y Metadatos (`data/` y `docs/manuals/`)
+
 Estructura de almacenamiento segregada:
+
 - `/data/raw/csv/`: Para consumo de Stata.
 - `/data/raw/excel/`: Para revisión humana/docente.
 - `/docs/manuals/`: Repositorio de manuales metodológicos (Auditoría Forense).
 
 ## 🚀 Convergencia con Proyecto de Titulación
 
-El sistema no solo resuelve tareas de clase; es el **motor de tu tesis**:
-1. **Pipeline de Datos**: La descarga y limpieza de datos de informalidad (ENEMDU) está automatizada en los Loaders.
-2. **Registro de Variables**: Al usar el `catalog.py`, aseguras que tu tesis use siempre la misma definición técnica que los manuales del INEC.
-3. **Generación Documental**: El objetivo final es el **Paper Engine**, que tomará tus resultados de Stata y los llevará directamente a un borrador de investigación digno de publicación.
+El sistema no solo resuelve tareas de clase; también sirve como motor para la tesis:
+
+1. **Pipeline de Datos**: La descarga y limpieza de datos se resuelven desde perfiles y backends, sin acoplar la lógica a una sola API.
+2. **Registro de Variables**: El catálogo y el perfil de ejecución mantienen consistencia técnica entre tareas y ventanas temporales.
+3. **Generación Documental**: La salida del motor se conserva trazable para llevar resultados a Stata, Excel y documentación metodológica.
 
 ---
-*Mantenimiento: El sistema se valida con `pytest tests/test_catalog.py`.*
+*Mantenimiento: el sistema se valida con `PYTHONPATH=src uv run pytest -q`.*

@@ -2,7 +2,7 @@
 
 Repositorio de trabajo para la asignatura Econometria Aplicada. Aqui se concentran los materiales del curso, los scripts de construccion de datos, los notebooks de analisis y el flujo de auditoria forense APE1 para construir paneles econometricos con trazabilidad completa.
 
-El proyecto trabaja principalmente con datos de America Latina y, en la parte local, integra fuentes del Banco Central del Ecuador (BCE) y del INEC. La capa `raw` no aplica interpolacion, imputacion ni transformaciones analiticas silenciosas.
+El proyecto trabaja principalmente con datos de America Latina y, en la parte local, integra fuentes del Banco Central del Ecuador (BCE) y del INEC. La capa `raw` no aplica interpolacion, imputacion ni transformaciones analiticas silenciosas. La ejecucion actual usa perfiles declarativos, backends intercambiables y rangos configurables para cambiar alcance y fuente sin reescribir las tareas.
 
 ## Que contiene
 
@@ -19,10 +19,11 @@ El proyecto trabaja principalmente con datos de America Latina y, en la parte lo
 | --- | --- |
 | `data/raw/csv/` | Datos crudos para Stata y herramientas. |
 | `data/raw/excel/` | Excel Maestro con Diccionario para humanos. |
+| `config/` | Perfiles declarativos del pipeline y prioridades de fuente. |
 | `docs/` | Syllabus y entregables por unidad. |
-| `src/lib/` | Librerías compartidas (Loaders, Processors, Exporters). |
+| `src/lib/` | Motor comun, catalogo, exportadores y doctor de datos. |
+| `src/core/` | Configuracion, backends de fuente y utilidades compartidas. |
 | `src/tasks/` | Orquestadores específicos por tarea académica. |
-| `src/core/` | Utilidades de bajo nivel y configuración. |
 | `stata/` | Scripts `.do` para análisis econométrico. |
 
 ## Requisitos
@@ -30,7 +31,7 @@ El proyecto trabaja principalmente con datos de America Latina y, en la parte lo
 - Python 3.12 o superior.
 - `uv` para una instalacion reproducible.
 - `PYTHONPATH=src` al ejecutar los scripts, porque el repositorio usa un layout `src/` con imports directos.
-- `PYTHONPATH=src` al ejecutar las pruebas, porque la suite ya importa directamente desde `core` y `lib`.
+- `PYTHONPATH=src` al ejecutar las pruebas, porque la suite importa directamente desde `core` y `lib`.
 
 Si quieres una guia corta para migracion a `uv`, revisa [docs/syllabus/README_UV.md](docs/syllabus/README_UV.md).
 
@@ -50,19 +51,22 @@ Si prefieres una instalacion minima, puedes usar el archivo `requirements.txt`, 
 Generar el proyecto completo (Panel AL + Serie de Tiempo EC):
 
 ```bash
-PYTHONPATH=src uv run src/tasks/unidad1/ape1_orchestrator.py
+PYTHONPATH=src uv run python src/tasks/unidad1/Task_Panel_Ambiental_Latam.py
 ```
 
-Generar solo empaquetado final:
+Generar la base raw de homicidios con el perfil actual:
 
 ```bash
-PYTHONPATH=src uv run src/orchestration/zip_task.py 1 APE
+PYTHONPATH=src uv run python src/tasks/Task_Homicidios_Raw_Base.py
 ```
 
-Empaquetar una entrega por unidad:
+Cambiar rango, alcance o fuentes sin tocar el codigo:
 
 ```bash
-PYTHONPATH=src uv run python src/orchestration/zip_task.py 1 ACD
+export PIPELINE_PROFILE=ape1_latam
+export PIPELINE_START_YEAR=2000
+export PIPELINE_END_YEAR=2023
+export PIPELINE_COUNTRIES=AR,BO,BR,CL,CO,CR,CU,EC,SV,GT,HT,HN,MX,NI,PA,PY,PE,DO,UY,VE
 ```
 
 ## Productos generados
@@ -86,7 +90,7 @@ El flujo APE1 produce, entre otros, estos archivos:
 Ejecutar pruebas:
 
 ```bash
-PYTHONPATH=src/core:src uv run python -m pytest -q
+PYTHONPATH=src uv run pytest -q
 ```
 
 Ejecutar lint:
@@ -108,11 +112,13 @@ La integridad del proyecto tambien se valida en CI con Python 3.12.
 
 - [notebooks/README.md](notebooks/README.md)
 - `docs/unidad1/`, `docs/unidad2/` y `docs/unidad3/` contienen entregables y apoyos por unidad.
-- `src/processing/legacy/` conserva versiones anteriores del flujo para referencia.
+- `config/pipeline_profiles.toml` concentra los perfiles configurables y prioridades de fuente.
+- `tests/test_system_contract.py` documenta el contrato validado del sistema actual.
 
 ## Flujo de Trabajo (Orquestadores)
 
 Para cada nueva tarea académica (ACD, AA, APE), el flujo recomendado es:
-1.  **Library First**: Añadir lógica reusable en `src/lib/`.
-2.  **Task Orchestrator**: Crear un pequeño script en `src/tasks/unidX/` que importe las librerías y ejecute el flujo específico.
-3.  **Export**: Generar CSVs para Stata y Excel para revisión humana.
+
+1. **Library First**: Añadir lógica reusable en `src/lib/`.
+2. **Task Orchestrator**: Crear un pequeño script en `src/tasks/unidX/` que importe las librerías y ejecute el flujo específico.
+3. **Export**: Generar CSVs para Stata y Excel para revisión humana.
