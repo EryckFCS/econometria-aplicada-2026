@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from lib.engine import WECPanelEngine
 from lib.data_doctor import DataDoctor
 from lib.exporters import AcademicExporter
+from core.pipeline_config import load_pipeline_profile_from_env
 
 # --- CONFIGURACIÓN DE VARIABLES (Metadata Maestro) ---
 VARIABLES_HOMICIDIOS = [
@@ -64,19 +65,25 @@ VARIABLES_HOMICIDIOS = [
 ]
 
 def run_task():
-    print("🚀 Iniciando construcción de la base raw LONG ECUADOR (1990-2023) - Motor KISS...")
+    profile = load_pipeline_profile_from_env("homicidios_ecuador")
+    print(
+        f"🚀 Iniciando construcción de la base raw LONG ECUADOR ({profile.start_year}-{profile.end_year}) - Motor KISS..."
+    )
     
     # 1. Configuración
-    start_year = 1990
-    end_year = 2023
-    paises_dict = {"EC": "Ecuador"}
-    paises_l = ["EC"]
+    paises_dict = {code: ("Ecuador" if code == "EC" else code) for code in profile.countries}
+    paises_l = list(profile.countries)
     
     # 2. Inicializar Motor Unificado
-    engine = WECPanelEngine(countries=paises_l, start_year=start_year, end_year=end_year, countries_dict=paises_dict)
+    engine = WECPanelEngine(
+        countries=paises_l,
+        start_year=profile.start_year,
+        end_year=profile.end_year,
+        countries_dict=paises_dict,
+    )
     
     # 3. Construir Panel
-    df_panel, _ = engine.build_panel(VARIABLES_HOMICIDIOS)
+    df_panel, _ = engine.build_panel(VARIABLES_HOMICIDIOS, profile=profile)
     
     # 4. APLICAR CURACIÓN (Data Doctor)
     curation_path = os.getenv("CURATION_MANIFEST", "data/curation/ecuador_homicidios_manifest.json")

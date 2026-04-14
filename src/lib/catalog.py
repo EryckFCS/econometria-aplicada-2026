@@ -111,6 +111,8 @@ SERIES_APE1 = [
         "url_indicador":  "https://www.ecuadorencifras.gob.ec/estadisticas-laborales-enemdu/",
         "rol":            "objetivo — informalidad",
         "concepto":       "Empleo en el sector informal (Falta de RUC en el establecimiento)",
+        "scope":          "ecuador_local",
+        "source_kind":    "local_csv",
     },
 ]
 

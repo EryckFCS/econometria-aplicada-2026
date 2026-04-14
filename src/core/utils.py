@@ -89,7 +89,7 @@ def fetch_wb(indicator_code, countries_str, start, end, session=None, timeout=30
     meta_info = {
         "codigo_api": indicator_code,
         "endpoint_consultado": url_base,
-        "fecha_hora_descarga_utc": pd.Timestamp.utcnow().isoformat(),
+        "fecha_hora_descarga_utc": pd.Timestamp.now(tz="UTC").isoformat(),
         "parametros_consulta": f"countries={countries_str}&date={start}:{end}&per_page=1000",
         "total_registros_descargados": total_downloaded,
         "total_registros_validos": int(df["value"].notna().sum()) if not df.empty else 0,

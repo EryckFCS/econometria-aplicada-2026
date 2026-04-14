@@ -1,0 +1,21 @@
+[profiles.ape1_latam]
+description = "Panel LATAM APE1 con rango configurable."
+scope = "latam_panel"
+countries = ["AR", "BO", "BR", "CL", "CO", "CR", "CU", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "DO", "UY", "VE"]
+start_year = 2000
+end_year = 2023
+allowed_scopes = ["global", "latam_panel"]
+default_source = "world_bank"
+source_priority = ["world_bank", "local_csv", "local_parquet", "local_excel"]
+allow_partial = true
+
+[profiles.homicidios_ecuador]
+description = "Base raw para homicidios Ecuador con ventana amplia."
+scope = "ecuador_local"
+countries = ["EC"]
+start_year = 1990
+end_year = 2023
+allowed_scopes = ["global", "ecuador_local"]
+default_source = "world_bank"
+source_priority = ["world_bank", "local_csv", "local_parquet", "local_excel"]
+allow_partial = true

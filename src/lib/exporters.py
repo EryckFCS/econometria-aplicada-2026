@@ -28,6 +28,8 @@ class AcademicExporter:
             "Unidad": s.get("unidad_api", "N/A"),
             "Definición": s.get("concepto", "N/A"),
             "Fuente": s.get("institucion", "N/A"),
+            "Backend": s.get("source_kind", "world_bank"),
+            "Alcance": s.get("scope", "global"),
             "Link": s.get("url_indicador", "N/A")
         } for s in catalog])
 
