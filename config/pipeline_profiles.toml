@@ -6,7 +6,7 @@ start_year = 2000
 end_year = 2023
 allowed_scopes = ["global", "latam_panel"]
 default_source = "world_bank"
-source_priority = ["world_bank", "local_csv", "local_parquet", "local_excel"]
+source_priority = ["world_bank", "http", "local_csv", "local_parquet", "local_excel"]
 allow_partial = true
 
 [profiles.homicidios_ecuador]
@@ -17,5 +17,5 @@ start_year = 1990
 end_year = 2023
 allowed_scopes = ["global", "ecuador_local"]
 default_source = "world_bank"
-source_priority = ["world_bank", "local_csv", "local_parquet", "local_excel"]
+source_priority = ["world_bank", "http", "local_csv", "local_parquet", "local_excel"]
 allow_partial = true
