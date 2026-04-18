@@ -38,7 +38,6 @@ class AcademicExporter:
             df.to_excel(writer, sheet_name="Panel_Datos", index=False)
             
             # Formatos
-            workbook = writer.book
             for ws in writer.sheets.values():
                 ws.set_column('A:Z', 22)
 

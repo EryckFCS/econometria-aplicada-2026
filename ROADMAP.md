@@ -13,9 +13,10 @@ Eliminar el procesamiento manual de datos y la elaboración manual de reportes m
 ### Fase 1: Cimientos y Auditoría Forense 🟢 (Completado)
 
 - **Infraestructura de Datos**: Arquitectura de capas (`src/core/`, `src/lib/`, `src/tasks/`, `config/`, `data/`).
-- **Motor Modular**: Desacoplamiento de perfiles, backends, motor y exportadores.
-- **Diccionario Automatizado**: Generación de metadatos en Excel Maestro.
-- **Empaquetado reproducible**: Orquestadores directos bajo `src/tasks/` con perfiles declarativos y backends intercambiables.
+- **Motor Modular & Desacoplado**: Desacoplamiento total de perfiles, backends, motor y **catálogos (TOML)**.
+- **Diccionario Automatizado**: Generación de metadatos en Excel Maestro y cargador dinámico de catálogos.
+- **Smart Pathing**: Resolución de rutas en cascada para fuentes locales.
+- **Empaquetado reproducible**: Orquestadores directos bajo `src/tasks/` que inyectan configuraciones externas sin tocar el código base.
 
 ### Fase 2: Macro-Global y Mercados 🟡 (En curso)
 
@@ -24,17 +25,18 @@ Eliminar el procesamiento manual de datos y la elaboración manual de reportes m
 - **Historical Context**: Integración del Maddison Project Database (PIB histórico).
 - **Próximo Pasito**: Consolidar el cargador que une fuentes discrepantes en un panel balanceado.
 
-### Fase 3: Local Forensics (Ecuador) 🔴 (Pendiente)
+### Fase 3: Local Forensics (Ecuador) 🟢 (Arquitectura Base Completada)
 
-- **BCE Integration**: Scraper automatizado para Cuentas Nacionales del Banco Central del Ecuador.
-- **INEC Secure Bridge**: Automatización de descargas de microdatos ENEMDU / IPC (requiere gestión de credenciales).
-- **Agregador Temporal**: Lógica para convertir datos diarios y mensuales a frecuencias anuales o trimestrales sin perder precisión estadística.
+- **BCE Integration**: Infraestructura para Scraper de Cuentas Nacionales operativa en `src/scrapers/bce_scraper.py`.
+- **INEC Secure Bridge**: Infraestructura para descargas de microdatos ENEMDU / IPC operativa en `src/scrapers/inec_scraper.py`.
+- **Agregador Temporal**: Lógica de unificación multi-entidad (Data Doctor) generalizada para soportar códigos nacionales.
 
-### Fase 4: Orquestación Académica 🟡 (En curso)
+### Fase 4: Orquestación Académica 🟢 (Completado)
 
+- **Master Orchestrator**: Unificación de fases en `src/orchestration/ape1_master_build.py`.
 - **Task Orchestrators**: Independencia total de scripts (ACD, AA, APE) mediante inyección de librerías.
-- **Syllabus Sync**: Documentación técnica automática por unidad.
-- **Governance Hub**: Repositorio de manuales y validación de metadatos (CI-Catalog).
+- **Syllabus Sync**: Documentación técnica automática por unidad sincronizada con la realidad del repo.
+- **Governance Hub**: Repositorio de manuales y validación de metadatos (CI-Catalog) operativo.
 - **Stata Automation**: Puente dinámico para archivos `.do`.
 
 ### Fase 5: Inteligencia y Publicación 🔴 (Pendiente)
@@ -54,4 +56,4 @@ Eliminar el procesamiento manual de datos y la elaboración manual de reportes m
 
 ---
 
-Última actualización: 14 de abril de 2026 (perfil declarativo + backends genéricos).
+Última actualización: 17 de abril de 2026 (desacoplamiento total de catálogos TOML + Smart Pathing).

@@ -8,8 +8,9 @@ class DataDoctor:
     Clase encargada de la curación y saneamiento de datos econométricos.
     Permite inyectar parches validados desde manifiestos JSON con trazabilidad.
     """
-    def __init__(self, manifest_path: str = None):
+    def __init__(self, manifest_path: str = None, entity_column: str = "iso2"):
         self.manifest_path = Path(manifest_path) if manifest_path else None
+        self.entity_column = entity_column
         self.curations = []
         if self.manifest_path and self.manifest_path.exists():
             self._load_manifest()
@@ -19,7 +20,10 @@ class DataDoctor:
             with open(self.manifest_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
                 self.curations = data.get("curations", [])
-            logger.info(f"🩺 Manifiesto cargado: {self.manifest_path} ({len(self.curations)} curaciones)")
+                # Permitir que el manifiesto sobrescriba la columna de entidad globalmente
+                if "entity_column" in data:
+                    self.entity_column = data["entity_column"]
+            logger.info(f"🩺 Manifiesto cargado: {self.manifest_path} ({len(self.curations)} curaciones, columna: {self.entity_column})")
         except Exception as e:
             logger.error(f"❌ Error cargando manifiesto: {e}")
 
@@ -32,8 +36,15 @@ class DataDoctor:
         audit_log = []
         applied_count = 0
 
+        # Identificar la columna de entidad efectiva
+        ent_col = self.entity_column
+        if ent_col not in df.columns:
+            logger.error(f"❌ Columna de entidad '{ent_col}' no encontrada en el DataFrame.")
+            return df
+
         for cure in self.curations:
-            iso2 = cure["target_iso2"]
+            # Prioridad: 1. Columna especificada en la cura, 2. Columna global del doctor
+            target_id = cure.get("target_id") or cure.get("target_iso2")
             col = cure["target_column"]
             year = cure["year"]
             new_val = cure["value"]
@@ -42,7 +53,7 @@ class DataDoctor:
             if col not in df.columns:
                 continue
 
-            mask = (df["iso2"] == iso2) & (df["year"] == year)
+            mask = (df[ent_col] == target_id) & (df["year"] == year)
             
             # Verificar si existe el registro y si es NaN
             subset = df.loc[mask]
@@ -51,7 +62,7 @@ class DataDoctor:
                 if pd.isna(old_val) or old_val == 0: # Curar si es NaN o 0 (si aplica)
                     df.loc[mask, col] = new_val
                     applied_count += 1
-                    msg = f"🩹 [CURE] {iso2} {year} {col}: {old_val} -> {new_val} (Fuente: {source})"
+                    msg = f"🩹 [CURE] {target_id} {year} {col}: {old_val} -> {new_val} (Fuente: {source})"
                     logger.success(msg)
                     audit_log.append(msg)
 

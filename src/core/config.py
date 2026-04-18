@@ -1,7 +1,7 @@
 from pathlib import Path
 
-# Proyecto raíz (dos niveles arriba de este archivo)
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+# Proyecto raíz (tres niveles arriba de este archivo: src/core/config.py -> src/core -> src -> root)
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 CONFIG_DIR = PROJECT_ROOT / "config"
 
 DATA_DIR = PROJECT_ROOT / "data"

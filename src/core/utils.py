@@ -7,18 +7,38 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
+from .constants import ISO3_TO_ISO2, NAME_TO_ISO2
+
 logger = logging.getLogger(__name__)
 
-ISO3_TO_ISO2 = {
-    "ARG": "AR", "BOL": "BO", "BRA": "BR", "CHL": "CL", "COL": "CO", "CRI": "CR", "CUB": "CU",
-    "ECU": "EC", "SLV": "SV", "GTM": "GT", "HTI": "HT", "HND": "HN", "MEX": "MX", "NIC": "NI",
-    "PAN": "PA", "PRY": "PY", "PER": "PE", "DOM": "DO", "URY": "UY", "VEN": "VE",
-}
+def normalize_iso2(val):
+    """
+    Normaliza un valor para obtener un código ISO2 (p.ej. 'EC').
+    Soporta ISO3, nombres completos y códigos ISO2 pre-existentes.
+    """
+    if not val or pd.isna(val):
+        return ""
+    
+    val_str = str(val).strip()
+    # 1. ¿Es ISO3?
+    if val_str.upper() in ISO3_TO_ISO2:
+        return ISO3_TO_ISO2[val_str.upper()]
+    
+    # 2. ¿Es Nombre completo?
+    if val_str.title() in NAME_TO_ISO2:
+        return NAME_TO_ISO2[val_str.title()]
+    
+    # 3. ¿Es ISO2 ya?
+    if len(val_str) == 2:
+        return val_str.upper()
+    
+    return val_str.upper()
 
 
-def create_session(retries=3, backoff_factor=0.3, status_forcelist=(500, 502, 503, 504)):
-    """Crea una `requests.Session` con retry/backoff apropiado."""
+def create_session(retries=3, backoff_factor=0.3, status_forcelist=(500, 502, 503, 504), verify=True):
+    """Crea una `requests.Session` con retry/backoff apropiado y política SSL configurable."""
     session = requests.Session()
+    session.verify = verify
     retry = Retry(
         total=retries,
         backoff_factor=backoff_factor,
@@ -62,11 +82,7 @@ def fetch_wb(indicator_code, countries_str, start, end, session=None, timeout=30
         for entry in data[1]:
             total_downloaded += 1
             iso_raw = (entry.get("countryiso3code") or entry.get("country", {}).get("id", "")) or ""
-            iso2 = ""
-            if iso_raw:
-                iso2 = ISO3_TO_ISO2.get(iso_raw.upper(), iso_raw[:2].upper())
-            else:
-                iso2 = entry.get("country", {}).get("id", "")
+            iso2 = normalize_iso2(iso_raw)
             val = entry.get("value")
             records.append({
                 "iso2": iso2,
@@ -82,7 +98,17 @@ def fetch_wb(indicator_code, countries_str, start, end, session=None, timeout=30
 
     df = pd.DataFrame(records)
     if not df.empty:
-        df = df.drop_duplicates(["iso2", "year"])
+        from .exceptions import DataIntegrityError
+        # Validar duplicados contradictorios
+        contradictions = df.groupby(["iso2", "year"])["value"].nunique()
+        serious_dupes = contradictions[contradictions > 1]
+        
+        if not serious_dupes.empty:
+            error_msg = f"❌ Contradicción en World Bank ({indicator_code}): {len(serious_dupes)} puntos duplicados con valores distintos."
+            logger.error(error_msg)
+            raise DataIntegrityError(error_msg)
+        
+        df = df.drop_duplicates(["iso2", "year"], keep="first")
 
     meta_info = {
         "codigo_api": indicator_code,

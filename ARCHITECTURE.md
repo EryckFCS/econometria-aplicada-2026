@@ -1,57 +1,48 @@
-# Arquitectura del Ecosistema de Econometría Aplicada
+# Arquitectura Técnica: CIE - Centro de Investigación Econométrica
 
-Este documento define la estructura técnica del repositorio, diseñada para soportar tanto tareas académicas (ACD, AA, APE) como proyectos de investigación de largo plazo (Tesis de Titulación).
+Este documento define la infraestructura técnica del repositorio, diseñada bajo estándares de ingeniería de software aplicados a la econometría de alto nivel.
 
 ## 🏛️ Capas del Sistema
 
-### 1. Configuración y Backends (`src/core/`)
+### 1. Núcleo e Ingesta Inteligente (`src/core/`)
 
-Contiene la configuración transversal y los adaptadores de entrada:
+Constituye el corazón del sistema y la Única Fuente de la Verdad:
 
-- **`config.py`**: rutas base y directorios de trabajo.
-- **`pipeline_config.py`**: perfiles declarativos, rango temporal, alcance y prioridades de fuente.
-- **`source_backends.py`**: registro de fuentes intercambiables (`world_bank`, `http`, `local_csv`, `local_parquet`, `local_excel`).
-- **`utils.py`**: utilidades compartidas de descarga y parseo.
+- **`constants.py`**: Centraliza todos los mapeos geográficos (ISO3, ISO2) y la definición de la región de estudio (LATAM-20). Prohibida su duplicación en otras capas.
+- **`source_backends.py`**: Registro de los "3 Pilares" (`world_bank`, `http_api`, `local_file`). Implementa **Smart Loading**, que infiere el formato de archivos locales (Parquet > Excel > CSV/TSV) automáticamente.
+- **`utils.py`**: Utilidades robustas de normalización (`normalize_iso2`) y gestión de sesiones con reintentos inteligentes.
+- **`config.py`**: Resolución dinámica de rutas del proyecto y directorios de datos.
 
-### 2. Motor Común (`src/lib/`)
+### 2. Motor de Paneles (`src/lib/`)
 
-Contiene la lógica reusable que sí debe ser estable entre tareas:
+Lógica estable y agnóstica al tema de investigación:
 
-- **`engine.py`**: construcción de paneles con filtrado por perfil y fallback de fuentes.
-- **`catalog.py`**: diccionario de variables y países por tarea.
-- **`exporters.py`**: salida a CSV/Excel con diccionario de variables.
-- **`data_doctor.py`**: curación puntual y trazable sobre el dataset final.
+- **`engine.py`**: Construcción de paneles econométricos con filtrado por perfil y fallback de fuentes.
+- **`data_doctor.py`**: Guardian de la integridad científica. Valida metadatos (ISO2, años) y reporta inconsistencias antes de la fase de estimación.
+- **`catalog.py`**: Desacopla la lógica de las variables mediante catálogos TOML.
 
-### 3. Tareas de Orquestación (`src/tasks/`)
+### 3. Landing Zone de Datos (`data/raw/`)
 
-Scripts livianos que usan el motor común para ejecutar un flujo específico. Se organizan por unidad académica o por proyecto de investigación:
+Organización segregada para garantizar la auditoría forense:
 
-- **Nomenclatura**: `Task_[Tema]_[Unidad].py` (Ej. `Task_Panel_Ambiental_Latam.py`).
-- **Regla Oro**: Un orquestador no debe contener lógica de backend, filtrado de rango ni selección de fuente; solo resuelve el perfil y llama al motor.
+- **`partners/`**: El punto de entrada para contribuciones de socios investigadores (Erick, Abel, Marvin, etc.).
+- **`externos/`**: Almacén para fuentes globales como PWT (Penn World Table) o Maddison Project.
+- **`standardized/`**: Salida de los scripts de normalización unificada (`_std.csv`).
 
-### 4. Perfiles Declarativos (`config/`)
+### 4. Tareas y Orquestación (`src/tasks/`)
 
-Los perfiles de ejecución se describen en `config/pipeline_profiles.toml` y se pueden ajustar por variables de entorno para cambiar:
+Scripts de ejecución siguiendo la nomenclatura institucional `[Tarea]-[Unidad]-[Tipo]-[Tema].py`:
 
-- **Rango**: año inicial y final.
-- **Alcance**: país, región o dominio local.
-- **Fuentes**: prioridad entre World Bank, HTTP genérico y archivos locales.
-
-### 5. Evidencias y Metadatos (`data/` y `docs/manuals/`)
-
-Estructura de almacenamiento segregada:
-
-- `/data/raw/csv/`: Para consumo de Stata.
-- `/data/raw/excel/`: Para revisión humana/docente.
-- `/docs/manuals/`: Repositorio de manuales metodológicos (Auditoría Forense).
-
-## 🚀 Convergencia con Proyecto de Titulación
-
-El sistema no solo resuelve tareas de clase; también sirve como motor para la tesis:
-
-1. **Pipeline de Datos**: La descarga y limpieza de datos se resuelven desde perfiles y backends, sin acoplar la lógica a una sola API.
-2. **Registro de Variables**: El catálogo y el perfil de ejecución mantienen consistencia técnica entre tareas y ventanas temporales.
-3. **Generación Documental**: La salida del motor se conserva trazable para llevar resultados a Stata, Excel y documentación metodológica.
+- **`T02-U1-ACD-Consolidado_Equipo.py`**: Proceso canónico de unión de datos de socios con trazabilidad de origen.
 
 ---
-*Mantenimiento: el sistema se valida con `PYTHONPATH=src uv run pytest -q`.*
+
+## 🚀 Verificación de la Calidad (QA)
+
+El sistema garantiza su integridad mediante una suite de pruebas jerárquica:
+
+1. **Contracts**: Validación de cargadores externos (`tests/test_system_contract.py`).
+2. **Backends**: Validación de la inteligencia del cargador local (`tests/test_source_backends.py`).
+3. **Pipeline**: Validación del flujo completo de configuración (`tests/test_pipeline_config.py`).
+
+*Comando de validación: `PYTHONPATH=src .venv/bin/python -m pytest`.*

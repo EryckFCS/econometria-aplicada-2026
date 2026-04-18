@@ -42,7 +42,7 @@ def test_engine_uses_profile_window_and_skips_local_scope_variables():
                     "rol": "objetivo",
                     "concepto": "Indicador local",
                     "scope": "ecuador_local",
-                    "source_kind": "local_csv",
+                    "source_kind": "local_file",
                 },
             ],
             profile=profile,

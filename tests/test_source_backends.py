@@ -43,7 +43,7 @@ def test_world_bank_backend_routes_through_fetch_wb():
     assert meta["source_ref"] == "TEST"
 
 
-def test_local_csv_backend_filters_and_standardizes(tmp_path):
+def test_local_file_backend_filters_and_standardizes(tmp_path):
     source_path = tmp_path / "series.csv"
     pd.DataFrame(
         {
@@ -54,7 +54,7 @@ def test_local_csv_backend_filters_and_standardizes(tmp_path):
     ).to_csv(source_path, index=False)
 
     frame, meta = SourceBackendRegistry.fetch(
-        "local_csv",
+        "local_file",
         {"source_ref": Path(source_path), "target_column": "my_value", "nombre_raw": "demo"},
         "EC;AR",
         1991,
@@ -65,11 +65,11 @@ def test_local_csv_backend_filters_and_standardizes(tmp_path):
     assert set(frame["iso2"]) == {"EC", "AR"}
     assert set(frame["year"]) == {1991}
     assert "value" in frame.columns
-    assert meta["source_kind"] == "local_csv"
+    assert meta["source_kind"] == "local_file"
     assert meta["records_kept"] == 2
 
 
-def test_http_backend_parses_json_records_and_templates_request():
+def test_http_api_backend_parses_json_records_and_templates_request():
     payload = {
         "data": {
             "records": [
@@ -90,7 +90,7 @@ def test_http_backend_parses_json_records_and_templates_request():
 
     with patch("core.source_backends.create_session", return_value=session):
         frame, meta = SourceBackendRegistry.fetch(
-            "http",
+            "http_api",
             {
                 "nombre_raw": "vdem_proxy",
                 "url": "https://api.example.org/indicator?countries={countries_csv}",
@@ -117,6 +117,58 @@ def test_http_backend_parses_json_records_and_templates_request():
     )
     assert frame.shape == (2, 3)
     assert set(frame["iso2"]) == {"EC", "AR"}
-    assert meta["source_kind"] == "http"
+    assert meta["source_kind"] == "http_api"
     assert meta["http_status_code"] == 200
     assert meta["http_method"] == "GET"
+
+def test_local_file_smart_detection_no_extension(tmp_path):
+    # Archivo sin extensión que es un CSV
+    source_path = tmp_path / "data_without_extension"
+    df_raw = pd.DataFrame({"iso2": ["EC"], "year": [2020], "value": [10.5]})
+    df_raw.to_csv(source_path, index=False)
+    
+    frame, meta = SourceBackendRegistry.fetch(
+        "local_file",
+        {"source_ref": str(source_path), "nombre_raw": "test_no_ext"},
+        "EC",
+        2020,
+        2020,
+    )
+    
+    assert not frame.empty
+    assert frame.iloc[0]["value"] == 10.5
+    assert meta["source_kind"] == "local_file"
+
+def test_local_file_smart_detection_wrong_extension(tmp_path):
+    # Archivo con extensión .txt que en verdad es CSV con punto y coma
+    source_path = tmp_path / "data.txt"
+    with open(source_path, "w") as f:
+        f.write("iso2;year;value\nEC;2021;99.9")
+        
+    frame, meta = SourceBackendRegistry.fetch(
+        "local_file",
+        {"source_ref": str(source_path), "nombre_raw": "test_wrong_ext"},
+        "EC",
+        2021,
+        2021,
+    )
+    
+    assert not frame.empty
+    assert frame.iloc[0]["value"] == 99.9
+
+def test_local_file_smart_detection_parquet_blind(tmp_path):
+    # Parquet renombrado a .tmp
+    source_path = tmp_path / "data.tmp"
+    df_raw = pd.DataFrame({"iso2": ["AR"], "year": [2022], "value": [5.5]})
+    df_raw.to_parquet(source_path)
+    
+    frame, meta = SourceBackendRegistry.fetch(
+        "local_file",
+        {"source_ref": str(source_path), "nombre_raw": "test_parquet_blind"},
+        "AR",
+        2022,
+        2022,
+    )
+    
+    assert not frame.empty
+    assert frame.iloc[0]["value"] == 5.5

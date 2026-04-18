@@ -21,8 +21,8 @@ countries = ["EC", "AR"]
 start_year = 1995
 end_year = 1999
 allowed_scopes = ["global", "demo_scope"]
-default_source = "local_csv"
-source_priority = ["local_csv", "world_bank"]
+default_source = "local_file"
+source_priority = ["local_file", "world_bank"]
 allow_partial = false
 """,
         encoding="utf-8",
@@ -34,7 +34,7 @@ allow_partial = false
     assert profile.countries == ("EC", "AR")
     assert profile.start_year == 1995
     assert profile.end_year == 2001
-    assert profile.default_source == "local_csv"
+    assert profile.default_source == "local_file"
     assert profile.allow_partial is False
 
 

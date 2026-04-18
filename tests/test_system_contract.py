@@ -65,7 +65,7 @@ def test_fetch_wb_paginates_and_deduplicates():
     second_page = [
         {"page": 2, "pages": 2, "per_page": "1000", "total": 4},
         [
-            {"country": {"id": "BRA"}, "countryiso3code": "BRA", "date": "2001", "value": 999},
+            {"country": {"id": "BRA"}, "countryiso3code": "BRA", "date": "2001", "value": 20}, # Duplicado perfecto (permitido)
             {"country": {"id": "CHL"}, "countryiso3code": "CHL", "date": "2002", "value": 30},
         ],
     ]
@@ -83,3 +83,20 @@ def test_fetch_wb_paginates_and_deduplicates():
         ("BR", 2001, 20.0),
         ("CL", 2002, 30.0),
     }
+
+def test_fetch_wb_raises_on_contradiction():
+    from core.exceptions import DataIntegrityError
+    import pytest
+    
+    contradictory_data = [
+        {"page": 1, "pages": 1, "per_page": "1000", "total": 2},
+        [
+            {"countryiso3code": "ECU", "date": "2020", "value": 1.0},
+            {"countryiso3code": "ECU", "date": "2020", "value": 9.9}, # CONTRADICCIÓN
+        ],
+    ]
+
+    mock_resp = _make_mock_response(contradictory_data)
+    with patch("requests.Session.get", return_value=mock_resp):
+        with pytest.raises(DataIntegrityError, match="Contradicción"):
+            fetch_wb("TEST", "EC", 2020, 2020)

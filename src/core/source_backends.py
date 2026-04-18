@@ -12,21 +12,33 @@ from typing import Any
 import pandas as pd
 
 from .config import PROJECT_ROOT
-from .utils import ISO3_TO_ISO2, create_session, fetch_wb
+from .utils import create_session, fetch_wb, normalize_iso2
+from .exceptions import RegistryOverwriteDataError
 
 BackendFn = Callable[[Mapping[str, Any], str, int, int], tuple[pd.DataFrame, dict[str, Any]]]
 
 
 class SourceBackendRegistry:
-    """Registro simple de backends de ingesta."""
+    """
+    Registro unificado de backends del CIE.
+    
+    Administra los '3 Pilares Canónicos' (world_bank, http_api, local_file)
+    y gestiona alias para retrocompatibilidad.
+    """
 
     _backends: dict[str, BackendFn] = {}
+    _canonical_names: set[str] = set()
 
     @classmethod
     def register(cls, name: str, *aliases: str) -> Callable[[BackendFn], BackendFn]:
         def decorator(func: BackendFn) -> BackendFn:
+            if name in cls._backends:
+                raise RegistryOverwriteDataError(f"El backend '{name}' ya está registrado.")
             cls._backends[name] = func
+            cls._canonical_names.add(name)
             for alias in aliases:
+                if alias in cls._backends:
+                    raise RegistryOverwriteDataError(f"El alias '{alias}' ya está registrado.")
                 cls._backends[alias] = func
             return func
 
@@ -51,6 +63,20 @@ class SourceBackendRegistry:
                 f"Backend '{source_kind}' no registrado. Disponibles: {', '.join(cls.available()) or 'ninguno'}"
             )
 
+        if source_kind not in cls._canonical_names:
+            import logging
+            # Buscar el nombre canónico correspondiente (el que apunta a la misma función)
+            canonical = "desconocido"
+            for name, func in cls._backends.items():
+                if func == backend and name in cls._canonical_names:
+                    canonical = name
+                    break
+            
+            logging.getLogger(__name__).warning(
+                "⚠️ Backend deprecado: '%s' es un alias. Usa el nombre canónico '%s' en tus configuraciones.",
+                source_kind, canonical
+            )
+
         return backend(variable, countries_str, start_year, end_year)
 
 
@@ -60,9 +86,30 @@ def _split_countries(countries_str: str) -> set[str]:
 
 def _resolve_source_path(source_ref: str | Path) -> Path:
     source_path = Path(source_ref)
-    if not source_path.is_absolute():
-        source_path = PROJECT_ROOT / source_path
-    return source_path
+    if source_path.is_absolute():
+        return source_path
+        
+    candidates = [
+        PROJECT_ROOT / source_path,
+        PROJECT_ROOT / "data" / "curation" / "group_work" / "standardized" / source_path,
+        PROJECT_ROOT / "data" / "raw" / "csv" / source_path,
+    ]
+    found_candidates = []
+    for candidate in candidates:
+        if candidate.exists():
+            found_candidates.append(candidate)
+    
+    if len(found_candidates) > 1:
+        import logging
+        logging.getLogger(__name__).warning(
+            "⚠️ Ambigüedad en ruta: se encontraron %d archivos para '%s'. Usando: %s",
+            len(found_candidates), source_ref, found_candidates[0]
+        )
+    
+    if found_candidates:
+        return found_candidates[0]
+            
+    return PROJECT_ROOT / source_path
 
 
 class _SafeFormatDict(dict[str, Any]):
@@ -292,14 +339,8 @@ def _standardize_long_frame(frame: pd.DataFrame, variable: Mapping[str, Any]) ->
         columns={country_column: "country_raw", year_column: "year", selected_value_column: "value"}
     )
 
-    if country_column == "iso3":
-        normalized["iso2"] = normalized["country_raw"].astype(str).str.upper().map(
-            lambda code: ISO3_TO_ISO2.get(code, code[:2])
-        )
-    elif country_column == "pais":
-        normalized["iso2"] = normalized["country_raw"].astype(str).str.upper().str.slice(0, 2)
-    else:
-        normalized["iso2"] = normalized["country_raw"].astype(str).str.upper()
+    # Uso del motor de normalización centralizado
+    normalized["iso2"] = normalized["country_raw"].apply(normalize_iso2)
 
     normalized["year"] = pd.to_numeric(normalized["year"], errors="coerce")
     normalized = normalized.dropna(subset=["iso2", "year"])
@@ -308,7 +349,7 @@ def _standardize_long_frame(frame: pd.DataFrame, variable: Mapping[str, Any]) ->
     return normalized[["iso2", "year", "value"]]
 
 
-@SourceBackendRegistry.register("world_bank", "wb", "worldbank")
+@SourceBackendRegistry.register("world_bank")
 def fetch_world_bank(
     variable: Mapping[str, Any],
     countries_str: str,
@@ -323,7 +364,7 @@ def fetch_world_bank(
     return frame, meta
 
 
-@SourceBackendRegistry.register("http", "http_json", "api", "rest")
+@SourceBackendRegistry.register("http_api")
 def fetch_http_api(
     variable: Mapping[str, Any],
     countries_str: str,
@@ -333,7 +374,7 @@ def fetch_http_api(
     source_ref = variable.get("url") or variable.get("endpoint") or variable.get("source_ref")
     if not source_ref:
         raise ValueError(
-            f"La variable '{variable.get('nombre_raw', 'SIN_NOMBRE')}' requiere 'url' o 'endpoint' para usar el backend http"
+            f"La variable '{variable.get('nombre_raw', 'SIN_NOMBRE')}' requiere 'url' o 'endpoint' para usar el backend http_api"
         )
 
     context = _build_context(variable, countries_str, start_year, end_year)
@@ -355,7 +396,7 @@ def fetch_http_api(
         countries_str,
         start_year,
         end_year,
-        "http",
+        "http_api",
         str(response.url),
         extra_meta={
             "http_method": method,
@@ -366,78 +407,101 @@ def fetch_http_api(
     return filtered, meta
 
 
-@SourceBackendRegistry.register("local_csv", "csv")
-def fetch_local_csv(
+def _smart_load_dataframe(source_path: Path, variable: Mapping[str, Any]) -> pd.DataFrame:
+    """Implementa una escalera de detección inteligente por contenido y extensión."""
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    # 1. Intentar por extensión (Vía rápida)
+    ext = source_path.suffix.lower()
+    try:
+        if ext == ".csv":
+            logger.info("Detección rápida: cargando '%s' como CSV", source_path.name)
+            return pd.read_csv(source_path, compression="infer")
+        if ext in {".xlsx", ".xls", ".xlsm"}:
+            logger.info("Detección rápida: cargando '%s' como Excel", source_path.name)
+            return pd.read_excel(source_path, sheet_name=variable.get("sheet_name", 0))
+        if ext == ".parquet":
+            logger.info("Detección rápida: cargando '%s' como Parquet", source_path.name)
+            return pd.read_parquet(source_path)
+    except Exception as e:
+        logger.warning("Fallo en detección rápida para '%s': %s. Iniciando modo Inteligente...", source_path.name, e)
+
+    # 2. Escalera de Inferencia (Modo Inteligente)
+    # 2.a. ¿Es Parquet? (Detección por buffer)
+    try:
+        df = pd.read_parquet(source_path)
+        logger.info("🎯 Inteligencia: '%s' detectado como Parquet por contenido", source_path.name)
+        return df
+    except Exception:
+        pass
+
+    # 2.b. ¿Es Excel?
+    try:
+        df = pd.read_excel(source_path, sheet_name=variable.get("sheet_name", 0))
+        logger.info("🎯 Inteligencia: '%s' detectado como Excel por contenido", source_path.name)
+        return df
+    except Exception:
+        pass
+
+    # 2.c. ¿Es CSV/Text? (Probando delimitadores comunes)
+    for sep in [",", ";", "\t", "|"]:
+        try:
+            # Cargamos solo 5 líneas para validar estructura base
+            df_test = pd.read_csv(source_path, sep=sep, nrows=5, compression="infer")
+            # Si tiene más de una columna, asumimos que el separador es correcto
+            if len(df_test.columns) > 1:
+                df = pd.read_csv(source_path, sep=sep, compression="infer")
+                logger.info("🎯 Inteligencia: '%s' detectado como CSV (separador='%s')", source_path.name, sep)
+                return df
+        except Exception:
+            continue
+
+    # 3. Último recurso: CSV plano
+    try:
+        logger.info("🚀 Último recurso: cargando '%s' como CSV plano", source_path.name)
+        return pd.read_csv(source_path, compression="infer")
+    except Exception as e:
+        raise ValueError(f"Fallo total en la carga inteligente del archivo '{source_path.name}': {e}")
+
+
+@SourceBackendRegistry.register("local_file")
+def fetch_local_file(
     variable: Mapping[str, Any],
     countries_str: str,
     start_year: int,
     end_year: int,
 ) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """
+    Cargador unificado de archivos locales con Súper-Inteligencia (Smart Loading).
+    
+    Infiere automáticamente el formato (Parquet > Excel > CSV/TSV) y 
+    resuelve rutas relativas mediante el Smart Pathing Cascade.
+    """
     source_ref = variable.get("source_ref") or variable.get("source_path")
     if not source_ref:
         raise ValueError(
-            f"La variable '{variable.get('nombre_raw', 'SIN_NOMBRE')}' requiere 'source_ref' para usar el backend local_csv"
+            f"La variable '{variable.get('nombre_raw', 'SIN_NOMBRE')}' requiere 'source_ref' para cargador local"
         )
 
     source_path = _resolve_source_path(source_ref)
     if not source_path.exists():
         raise FileNotFoundError(f"No existe la fuente local: {source_path}")
 
-    frame = pd.read_csv(source_path)
-    return _finalize_frame(frame, variable, countries_str, start_year, end_year, "local_csv", str(source_path))
-
-
-@SourceBackendRegistry.register("local_parquet", "parquet")
-def fetch_local_parquet(
-    variable: Mapping[str, Any],
-    countries_str: str,
-    start_year: int,
-    end_year: int,
-) -> tuple[pd.DataFrame, dict[str, Any]]:
-    source_ref = variable.get("source_ref") or variable.get("source_path")
-    if not source_ref:
-        raise ValueError(
-            f"La variable '{variable.get('nombre_raw', 'SIN_NOMBRE')}' requiere 'source_ref' para usar el backend local_parquet"
-        )
-
-    source_path = _resolve_source_path(source_ref)
-    if not source_path.exists():
-        raise FileNotFoundError(f"No existe la fuente local: {source_path}")
-
-    frame = pd.read_parquet(source_path)
-    return _finalize_frame(frame, variable, countries_str, start_year, end_year, "local_parquet", str(source_path))
-
-
-@SourceBackendRegistry.register("local_excel", "xlsx", "excel")
-def fetch_local_excel(
-    variable: Mapping[str, Any],
-    countries_str: str,
-    start_year: int,
-    end_year: int,
-) -> tuple[pd.DataFrame, dict[str, Any]]:
-    source_ref = variable.get("source_ref") or variable.get("source_path")
-    if not source_ref:
-        raise ValueError(
-            f"La variable '{variable.get('nombre_raw', 'SIN_NOMBRE')}' requiere 'source_ref' para usar el backend local_excel"
-        )
-
-    source_path = _resolve_source_path(source_ref)
-    if not source_path.exists():
-        raise FileNotFoundError(f"No existe la fuente local: {source_path}")
-
-    sheet_name = variable.get("sheet_name", 0)
-    frame = pd.read_excel(source_path, sheet_name=sheet_name)
+    frame = _smart_load_dataframe(source_path, variable)
+    
     if isinstance(frame, dict):
-        # Si el archivo devuelve múltiples hojas, por defecto tomamos la primera.
         frame = next(iter(frame.values()))
 
-    return _finalize_frame(
-        frame,
-        variable,
-        countries_str,
-        start_year,
-        end_year,
-        "local_excel",
-        str(source_path),
-        extra_meta={"sheet_name": sheet_name},
-    )
+    return _finalize_frame(frame, variable, countries_str, start_year, end_year, "local_file", str(source_path))
+
+
+# --- REGISTRO DE SCRAPERS ESPECIALIZADOS (Ecuador) ---
+try:
+    from scrapers import bce_scraper, inec_scraper  # noqa: F401
+except ImportError:
+    # Soporte para imports relativos según el contexto de ejecución
+    try:
+        from ..scrapers import bce_scraper, inec_scraper  # noqa: F401
+    except ImportError:
+        pass

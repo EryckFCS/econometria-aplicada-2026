@@ -6,6 +6,7 @@ from typing import Any, Dict, List, Mapping, Tuple
 
 from core.pipeline_config import PipelineProfile, load_pipeline_profile
 from core.source_backends import SourceBackendRegistry
+from core.exceptions import DataIntegrityError
 
 logger = logging.getLogger(__name__)
 
@@ -97,8 +98,9 @@ class WECPanelEngine:
         countries_dict = self.countries_dict or {c: c for c in countries}
         countries_str = ";".join(countries)
 
-        print(
-            f"🏗️ Construyendo panel para {len(countries)} países ({resolved_profile.start_year}-{resolved_profile.end_year})"
+        logger.info(
+            "🏗️ Construyendo panel para %d países (%d-%d)",
+            len(countries), resolved_profile.start_year, resolved_profile.end_year
         )
         
         # 1. Crear esqueleto balanceado
@@ -159,7 +161,7 @@ class WECPanelEngine:
                 continue
 
             source_candidates = self._backend_chain(variable, resolved_profile)
-            print(f"  📥 Descargando: {name} ({effective_start}-{effective_end})")
+            logger.info("  📥 Descargando: %s (%d-%d)", name, effective_start, effective_end)
 
             df_s = pd.DataFrame()
             selected_meta: dict[str, Any] = {}
@@ -223,7 +225,25 @@ class WECPanelEngine:
 
             df_s = df_s.rename(columns={"value": name})
             df_s["year"] = df_s["year"].astype(int)
+            # Deduplicar con validación: Si hay duplicados con valores distintos, es una violación de integridad.
+            dupes = df_s[df_s.duplicated(subset=["iso2", "year"], keep=False)]
+            if not dupes.empty:
+                # Verificar si los valores son idénticos o distintos
+                # Si todos los grupos tienen una desviación estándar de 0, son duplicados idénticos (inocuos)
+                # Si no, hay contradicción de datos.
+                contradictions = df_s.groupby(["iso2", "year"])[name].nunique()
+                serious_dupes = contradictions[contradictions > 1]
+                
+                if not serious_dupes.empty:
+                    error_msg = f"❌ Contradicción de datos en '{name}': {len(serious_dupes)} puntos tienen valores distintos para el mismo (iso2, año)."
+                    logger.error(error_msg)
+                    raise DataIntegrityError(error_msg)
+                
+                logger.warning("⚠️ %d filas duplicadas con valores idénticos en '%s' — se limpian automáticamente", len(dupes), name)
+                df_s = df_s.drop_duplicates(subset=["iso2", "year"], keep="first")
+
             base = base.merge(df_s[["iso2", "year", name]], on=["iso2", "year"], how="left")
+
 
             selected_meta.update(
                 {
@@ -243,5 +263,15 @@ class WECPanelEngine:
                 }
             )
             manifest.append(selected_meta)
-                
+
+        # ── Post-proceso: ordenar y verificar integridad ──────────────────────
+        base = base.sort_values(["iso2", "year"]).reset_index(drop=True)
+        residual_dupes = base.duplicated(subset=["iso2", "year"]).sum()
+        if residual_dupes > 0:
+            logger.error("❌ Panel final aún tiene %d filas duplicadas (iso2, year) — revisar fuentes", residual_dupes)
+        else:
+            expected_rows = len(countries) * (resolved_profile.end_year - resolved_profile.start_year + 1)
+            logger.info("✅ Panel balanceado: %d filas (esperado ~%d)", len(base), expected_rows)
+
         return base, manifest
+

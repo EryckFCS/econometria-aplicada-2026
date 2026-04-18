@@ -1,14 +1,19 @@
-import sys
 import os
+import logging
 from pathlib import Path
-
-# Añadir src al path para que funcionen los imports
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from lib.engine import WECPanelEngine
 from lib.data_doctor import DataDoctor
 from lib.exporters import AcademicExporter
 from core.pipeline_config import load_pipeline_profile_from_env
+
+"""
+ORQUESTADOR T01-U1-APE: Homicidios y Controles Economicos
+Unidad 1: Econometria Aplicada
+Nomenclatura: T01-U1-APE-Homicidios_Ecuador
+"""
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("T01-U1-APE")
 
 # --- CONFIGURACIÓN DE VARIABLES (Metadata Maestro) ---
 VARIABLES_HOMICIDIOS = [

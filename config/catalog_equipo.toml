@@ -1,0 +1,227 @@
+# Catálogo Declarativo de Variables Econométricas - Trabajo en Grupo
+# Este archivo permite definir nuevas variables sin modificar el código en Python.
+
+[[series]]
+nombre_raw = "gei_total_exclulucf_MtCO2e"
+codigo_api = "EN.ATM.GHGT.KT.CE"
+unidad_api = "kt CO2 equivalente"
+institucion = "Equipo - Erick Condoy"
+rol = "dependiente — ambiental"
+concepto = "Emisiones de GEI totales (excluyendo LULUCF)"
+notas = "Mt CO2e eq. (AR5). Datos directos de EDGAR integrados en WDI."
+url_indicador = "https://data.worldbank.org/indicator/EN.ATM.GHGT.KT.CE"
+fallback_source_kinds = ["local_file"]
+source_ref = "erick_condoy_std.csv"
+value_column = "gei_total_exclulucf_MtCO2e"
+
+[[series]]
+nombre_raw = "renew_cons_pct_tfec"
+codigo_api = "EG.FEC.RNEW.ZS"
+unidad_api = "% del consumo final"
+institucion = "Equipo - Erick Condoy"
+rol = "control — tecnología verde"
+concepto = "Consumo de energía renovable (% del consumo final total)"
+notas = "Indicador directo de adopción tecnológica verde. 1990-2023."
+url_indicador = "https://data.worldbank.org/indicator/EG.FEC.RNEW.ZS"
+fallback_source_kinds = ["local_file"]
+source_ref = "erick_condoy_std.csv"
+value_column = "renew_cons_pct_tfec"
+
+[[series]]
+nombre_raw = "wgi_va_est"
+codigo_api = "VA.EST"
+unidad_api = "Puntaje -2.5 a +2.5"
+institucion = "Equipo - Erick Condoy"
+rol = "control — gobernanza"
+concepto = "Rendición de cuentas y voz (Voice and Accountability)"
+notas = "Gap estructural en 2001 (no disponible en diseño original del WGI)."
+url_indicador = "https://databank.worldbank.org/source/worldwide-governance-indicators"
+fallback_source_kinds = ["local_file"]
+source_ref = "erick_condoy_std.csv"
+value_column = "wgi_va_est"
+
+[[series]]
+nombre_raw = "wgi_ge_est"
+codigo_api = "GE.EST"
+unidad_api = "Puntaje -2.5 a +2.5"
+institucion = "Equipo - Erick Condoy"
+rol = "control — gobernanza"
+concepto = "Efectividad Gubernamental"
+notas = "Calidad de servicios públicos y burocracia."
+url_indicador = "https://databank.worldbank.org/source/worldwide-governance-indicators"
+fallback_source_kinds = ["local_file"]
+source_ref = "erick_condoy_std.csv"
+value_column = "wgi_ge_est"
+
+[[series]]
+nombre_raw = "indice_riesgo_climatico"
+source_kind = "local_file"
+source_ref = "abel_v2_std.csv"
+rol = "control — riesgo"
+institucion = "Equipo - Abel Espinosa"
+concepto = "Índice de Riesgo Climático / Land Cover Index"
+url_indicador = "https://www.germanwatch.org/en/cri"
+value_column = "climate_altering_land_index"
+
+[[series]]
+nombre_raw = "tecnologia"
+codigo_api = "IT.CEL.SETS.P2"
+unidad_api = "suscripciones por cada 100 personas"
+institucion = "Equipo - Marvin Valdivieso"
+rol = "independiente — tecnología"
+concepto = "Suscripciones a telefonía celular"
+url_indicador = "https://data.worldbank.org/indicator/IT.CEL.SETS.P2"
+fallback_source_kinds = ["local_file"]
+source_ref = "marvin_v2_std.csv"
+value_column = "tecnologia"
+
+[[series]]
+nombre_raw = "informalidad"
+source_kind = "local_file"
+source_ref = "marvin_v1_std.csv"
+rol = "control — laboral"
+institucion = "Equipo - Marvin Valdivieso"
+concepto = "Informalidad productiva / SEDLAC"
+notas = "Basado en definición de microempresas y trabajadores familiares."
+url_indicador = "https://www.cedlas.econo.unlp.edu.ar/wp/estadisticas/sedlac/"
+value_column = "informalidad"
+
+[[series]]
+nombre_raw = "credito_privado_pct_gdp"
+codigo_api = "FS.AST.PRVT.GD.ZS"
+unidad_api = "% del PIB"
+institucion = "Equipo - Abel Espinosa"
+rol = "control — financiero"
+concepto = "Crédito doméstico al sector privado"
+notas = "Refleja desarrollo y modernización del sistema financiero."
+url_indicador = "https://data.worldbank.org/indicator/FS.AST.PRVT.GD.ZS"
+
+[[series]]
+nombre_raw = "superficie_forestal"
+codigo_api = "AG.LND.FRST.K2"
+unidad_api = "km²"
+institucion = "Equipo - Erik Moreno"
+rol = "dependiente — ambiental"
+concepto = "Superficie forestal total (km2)"
+url_indicador = "https://data.worldbank.org/indicator/AG.LND.FRST.K2"
+fallback_source_kinds = ["local_file"]
+source_ref = "erik_moreno_std.csv"
+value_column = "superficie_forestal"
+
+[[series]]
+nombre_raw = "poblacion"
+source_kind = "local_file"
+source_ref = "helen_std.csv"
+rol = "independiente — demográfica"
+institucion = "Equipo - Helen Beltran"
+concepto = "Población total"
+value_column = "poblacion"
+
+[[series]]
+nombre_raw = "incertidumbre_energetica"
+source_kind = "local_file"
+source_ref = "helen_std.csv"
+rol = "control — energía"
+institucion = "Equipo - Helen Beltran"
+concepto = "Índice de Incertidumbre Energética"
+value_column = "incertidumbre_energetica"
+
+[[series]]
+nombre_raw = "vab_manufactura"
+source_kind = "local_file"
+source_ref = "erik_moreno_std.csv"
+rol = "independiente — economía"
+institucion = "Equipo - Erik Moreno"
+concepto = "VAB Manufacturero (USD)"
+value_column = "vab_manufactura"
+
+[[series]]
+nombre_raw = "vab_agricultura"
+source_kind = "local_file"
+source_ref = "erik_moreno_std.csv"
+rol = "independiente — economía"
+institucion = "Equipo - Erik Moreno"
+concepto = "VAB Agricultura"
+value_column = "vab_agricultura"
+
+[[series]]
+nombre_raw = "vab_servicios"
+source_kind = "local_file"
+source_ref = "erik_moreno_std.csv"
+rol = "independiente — economía"
+institucion = "Equipo - Erik Moreno"
+concepto = "VAB Servicios"
+value_column = "vab_servicios"
+
+[[series]]
+nombre_raw = "huella_ecologica"
+source_kind = "local_file"
+source_ref = "erik_moreno_std.csv"
+rol = "dependiente — ambiental"
+institucion = "Equipo - Erik Moreno"
+concepto = "Factor de capacidad de carga / Huella ecológica"
+value_column = "huella_ecologica"
+
+[[series]]
+nombre_raw = "impuesto_medioambiental_moreno"
+source_kind = "local_file"
+source_ref = "erik_moreno_std.csv"
+rol = "control — ambiental"
+institucion = "Equipo - Erik Moreno"
+concepto = "Rigorosidad política ambiental (Impuesto)"
+value_column = "impuesto_medioambiental_moreno"
+
+[[series]]
+nombre_raw = "co2_emissions_moreno"
+source_kind = "local_file"
+source_ref = "erik_moreno_std.csv"
+rol = "independiente — ambiental"
+institucion = "Equipo - Erik Moreno"
+concepto = "Emisiones de CO2 (Serie Erik)"
+notas = "Serie secundaria para validación cruzada con Erick Condoy."
+value_column = "co2_emissions_moreno"
+
+[[series]]
+nombre_raw = "PIBpc"
+source_kind = "local_file"
+source_ref = "abel_std.csv"
+rol = "independiente — economía"
+institucion = "Equipo - Abel Espinosa"
+concepto = "PIB per cápita (Local)"
+value_column = "PIBpc"
+
+[[series]]
+nombre_raw = "renta_rec_nat"
+source_kind = "local_file"
+source_ref = "abel_std.csv"
+rol = "independiente — economía"
+institucion = "Equipo - Abel Espinosa"
+concepto = "Renta de recursos naturales (% del PIB)"
+value_column = "renta_rec_nat"
+
+[[series]]
+nombre_raw = "impuestos_ambientales"
+source_kind = "local_file"
+source_ref = "abel_std.csv"
+rol = "control — ambiental"
+institucion = "Equipo - Abel Espinosa"
+concepto = "Recaudación por impuestos ambientales"
+value_column = "impuestos_ambientales"
+
+[[series]]
+nombre_raw = "protec_der_lab"
+source_kind = "local_file"
+source_ref = "abel_std.csv"
+rol = "control — laboral"
+institucion = "Equipo - Abel Espinosa"
+concepto = "Protección de derechos laborales"
+value_column = "protec_der_lab"
+
+[[series]]
+nombre_raw = "innovacion_financiera_access"
+source_kind = "local_file"
+source_ref = "abel_v3_std.csv"
+rol = "control — financiero"
+institucion = "Equipo - Abel Espinosa"
+concepto = "Índice de Acceso a Mercados Financieros"
+value_column = "innovacion_financiera_access"

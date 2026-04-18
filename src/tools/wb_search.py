@@ -15,7 +15,7 @@ def search_indicators(query: str, language: str = "es"):
     """
     Busca indicadores en la API del Banco Mundial por palabras clave.
     """
-    url = f"https://api.worldbank.org/v2/es/indicator"
+    url = "https://api.worldbank.org/v2/es/indicator"
     params = {
         "format": "json",
         "search": query,
@@ -49,7 +49,7 @@ def search_indicators(query: str, language: str = "es"):
                 )
             
             console.print(table)
-            console.print(f"\n[italic]Sugerencia: Usa el ID en tu lista de SERIES_RAW para descargar la data automáticamente.[/italic]")
+            console.print("\n[italic]Sugerencia: Usa el ID en tu lista de SERIES_RAW para descargar la data automáticamente.[/italic]")
             
     except Exception as e:
         console.print(f"[bold red]Error en la conexión:[/bold red] {e}")

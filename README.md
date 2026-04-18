@@ -1,124 +1,133 @@
-# Econometria Aplicada 2026
+# 🏛️ CIE - Centro de Investigación Econométrica 2026
 
-Repositorio de trabajo para la asignatura Econometria Aplicada. Aqui se concentran los materiales del curso, los scripts de construccion de datos, los notebooks de analisis y el flujo de auditoria forense APE1 para construir paneles econometricos con trazabilidad completa.
+## Econometría Aplicada (Ciclo 7) - Universidad Nacional de Loja
 
-El proyecto trabaja principalmente con datos de America Latina y, en la parte local, integra fuentes del Banco Central del Ecuador (BCE) y del INEC. La capa `raw` no aplica interpolacion, imputacion ni transformaciones analiticas silenciosas. La ejecucion actual usa perfiles declarativos, backends intercambiables y rangos configurables para cambiar alcance y fuente sin reescribir las tareas.
+El **Centro de Investigación Econométrica (CIE)** es una infraestructura de ingeniería de datos y laboratorio de análisis científico diseñado para la producción de investigación reproducible, auditable y de alta precisión técnica. 
 
-## Que contiene
+Este ecosistema integra flujos de datos automatizados con metodologías de **Auditoría Forense de Datos**, permitiendo una separación absoluta entre la lógica del motor econométrico y la definición declarativa de variables.
 
-- Material de la asignatura por unidades en `docs/`.
-- Scripts de construccion y auditoria en `src/`.
-- Notebooks exploratorios en `notebooks/`.
-- Entregables y salidas reproducibles en `data/`.
-- Scripts Stata en `stata/`.
-- Pruebas automatizadas en `tests/`.
+---
 
-## Estructura principal
+## 📜 Filosofía de Ingeniería
 
-| Ruta | Proposito |
-| --- | --- |
-| `data/raw/csv/` | Datos crudos para Stata y herramientas. |
-| `data/raw/excel/` | Excel Maestro con Diccionario para humanos. |
-| `config/` | Perfiles declarativos del pipeline y prioridades de fuente. |
-| `docs/` | Syllabus y entregables por unidad. |
-| `src/lib/` | Motor comun, catalogo, exportadores y doctor de datos. |
-| `src/core/` | Configuracion, backends de fuente y utilidades compartidas. |
-| `src/tasks/` | Orquestadores específicos por tarea académica. |
-| `stata/` | Scripts `.do` para análisis econométrico. |
+Nuestra operatividad se rige por tres principios innegociables:
 
-## Requisitos
+1.  **Forensic Econometric Audit**: Cada punto de dato es tratado como evidencia. El sistema valida la integridad de las series antes de permitir cualquier estimación, detectando inconsistencias entre fuentes o años perdidos de forma proactiva.
+2.  **Agnostic Ingestion Intelligence**: Los investigadores no se preocupan por formatos (CSV, Excel o Parquet). El motor infiere y optimiza la carga de forma transparente.
+3.  **Reproducibilidad Total**: Un investigador externo debe poder clonar el repo, correr `uv sync` y generar exactamente el mismo panel mediante una única línea de comando.
 
-- Python 3.12 o superior.
-- `uv` para una instalacion reproducible.
-- `PYTHONPATH=src` al ejecutar los scripts, porque el repositorio usa un layout `src/` con imports directos.
-- `PYTHONPATH=src` al ejecutar las pruebas, porque la suite importa directamente desde `core` y `lib`.
+---
 
-Si quieres una guia corta para migracion a `uv`, revisa [docs/syllabus/README_UV.md](docs/syllabus/README_UV.md).
+## 🏗️ Arquitectura de 4 Capas
 
-## Instalacion
+El sistema se organiza de forma modular para permitir el escalamiento horizontal de investigaciones:
 
-Instalacion recomendada para desarrollo:
+```mermaid
+graph TD
+    subgraph "Capa 1: Núcleo (Core)"
+        C1[constants.py] --> C2[source_backends.py]
+        C2 --> C3[utils.py]
+    end
 
+    subgraph "Capa 2: Motor Profesional (Library)"
+        L1[engine.py] --> L2[data_doctor.py]
+        L2 --> L3[catalog.py]
+    end
+
+    subgraph "Capa 3: Gobernanza de Datos (Data)"
+        D1[data/raw/partners/] --> D2[data/curation/group_work/]
+        D2 --> D3[data/analytic/]
+    end
+
+    subgraph "Capa 4: Orquestación (Tasks)"
+        T1[Master_Build.py] --> T2[Individual Tasks]
+    end
+
+    C3 --> L1
+    L3 --> T2
+    D3 --> T1
+```
+
+---
+
+## 🔌 El Motor de Ingesta: Los 3 Pilares
+
+La ingesta se centraliza en `SourceBackendRegistry`, que administra tres backends canónicos:
+
+### 1. `world_bank` (API Nativa)
+Conexión directa con los indicadores del Banco Mundial. Implementa un **Filtro de Integridad** que rechaza automáticamente series con discrepancias temporales internas.
+
+### 2. `http_api` (Conectividad Dinámica)
+Diseñado para consumir APIs de terceros mediante plantillas dinámicas. Soporta:
+- Headers de autenticación vía variables de entorno.
+- Inyección de parámetros (`start_year`, `end_year`).
+- Navegación recursiva en payloads JSON (`records_path`).
+
+### 3. `local_file` (Smart Loading Intelligence)
+El pilar de mayor flexibilidad. Si un investigador deposita un archivo en la **Landing Zone**, el motor:
+1.  **Smart Pathing**: Localiza el archivo basándose solo en el nombre, resolviendo rutas relativas.
+2.  **Escalera de Inferencia**: Prueba extensiones y contenidos en orden de eficiencia: **Parquet → Excel → CSV/TSV**.
+3.  **Delimite Discovery**: En archivos de texto, detecta automáticamente el separador (`,` , `;` , `|` o `\t`).
+
+---
+
+## 🩺 Validación Científica: Protocolo DataDoctor
+
+Para garantizar que los datos crudos se conviertan en datos científicos, empleamos el **DataDoctor**:
+- **Manifiestos de Curación**: El saneamiento (parches de valores, corrección de outliers) se define en archivos JSON, no en el código. Esto mantiene la trazabilidad de cada cambio.
+- **Audit Logs**: Cada sesión de curación genera un log en `/logs/curation_audit.log` detallando: `Antiguo Valor -> Nuevo Valor (Fuente Citada)`.
+
+---
+
+## 🚀 Researcher Onboarding (Guía de Inicio)
+
+### 1. Configuración del Laboratorio
+El CIE utiliza `uv` para la gestión ultra-rápida de dependencias:
 ```bash
-uv sync --extra dev
+# Instalar dependencias y crear venv
+uv sync
+
+# Activar venv (Linux)
+source .venv/bin/activate
+```
+
+### 2. Variables de Entorno
+Es obligatorio exportar el `PYTHONPATH` para habilitar el motor interno:
+```bash
 export PYTHONPATH=src
 ```
 
-Si prefieres una instalacion minima, puedes usar el archivo `requirements.txt`, pero esa ruta puede no incluir todo el entorno de desarrollo.
-
-## Ejecucion rapida
-
-Generar el proyecto completo (Panel AL + Serie de Tiempo EC):
-
+### 3. Ejecución de Tareas
+Cada unidad tiene un Master Build que secuencia la investigación:
 ```bash
-PYTHONPATH=src uv run python src/tasks/unidad1/Task_Panel_Ambiental_Latam.py
+# Ejecutar toda la Unidad 1
+python src/orchestration/M01-U1-APE-Master_Build.py
 ```
 
-Generar la base raw de homicidios con el perfil actual:
+---
 
-```bash
-PYTHONPATH=src uv run python src/tasks/Task_Homicidios_Raw_Base.py
+## 📂 Estándares de la Landing Zone
+
+Colaboraciones entre investigadores (Socios) deben seguir esta jerarquía para ser detectadas por los scripts de normalización:
+
+```text
+data/raw/partners/
+├── [nombre_socio]/
+│   ├── base_empleo_v1.xlsx
+│   └── datos_ambiente.csv
 ```
 
-Cambiar rango, alcance o fuentes sin tocar el codigo:
+> [!IMPORTANT]
+> **Nomenclatura**: Las tareas deben nombrarse siguiendo el estándar: `[Tarea]-[Unidad]-[Tipo]-[Tema].py` (Ej: `T01-U1-APE-Homicidios.py`).
 
+---
+
+## 🧪 Verificación de Calidad (QA)
+
+Antes de cada commit, el investigador debe validar que el núcleo permanece estable:
 ```bash
-export PIPELINE_PROFILE=ape1_latam
-export PIPELINE_START_YEAR=2000
-export PIPELINE_END_YEAR=2023
-export PIPELINE_COUNTRIES=AR,BO,BR,CL,CO,CR,CU,EC,SV,GT,HT,HN,MX,NI,PA,PY,PE,DO,UY,VE
+python -m pytest
 ```
 
-## Productos generados
-
-El flujo APE1 produce, entre otros, estos archivos:
-
-- `data/raw/panel_raw.csv`
-- `data/raw/manifest_fuentes_raw.csv`
-- `data/raw/series_catalog.pkl`
-- `data/processed/diccionario_variables.csv`
-- `data/processed/matriz_cumplimiento_consigna.csv`
-- `data/processed/auditoria_redundancia.csv`
-- `data/processed/auditoria_integridad.csv`
-- `data/processed/propuesta_panel_modelo.csv`
-- `data/exports/APE1_Auditoria_Forense_MASTER.xlsx`
-- `docs/README_AUDITORIA.md`
-- `docs/variables_no_resueltas.md`
-
-## Calidad y pruebas
-
-Ejecutar pruebas:
-
-```bash
-PYTHONPATH=src uv run pytest -q
-```
-
-Ejecutar lint:
-
-```bash
-PYTHONPATH=src uv run ruff check .
-```
-
-La integridad del proyecto tambien se valida en CI con Python 3.12.
-
-## Notas metodologicas
-
-- El panel raw no usa fillna, forward-fill ni interpolacion propia.
-- Las variables redundantes se documentan en lugar de eliminarse de forma opaca.
-- Las variables sin serie publica directa se marcan como proxies o como no resueltas.
-- Los manifests registran la trazabilidad de descarga y ayudan a reproducir los artefactos.
-
-## Material adicional
-
-- [notebooks/README.md](notebooks/README.md)
-- `docs/unidad1/`, `docs/unidad2/` y `docs/unidad3/` contienen entregables y apoyos por unidad.
-- `config/pipeline_profiles.toml` concentra los perfiles configurables y prioridades de fuente.
-- `tests/test_system_contract.py` documenta el contrato validado del sistema actual.
-
-## Flujo de Trabajo (Orquestadores)
-
-Para cada nueva tarea académica (ACD, AA, APE), el flujo recomendado es:
-
-1. **Library First**: Añadir lógica reusable en `src/lib/`.
-2. **Task Orchestrator**: Crear un pequeño script en `src/tasks/unidX/` que importe las librerías y ejecute el flujo específico.
-3. **Export**: Generar CSVs para Stata y Excel para revisión humana.
+---
+*Centro de Investigación Econométrica - Facultad Jurídica, Social y Administrativa. UNL.*

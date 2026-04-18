@@ -17,5 +17,19 @@ Thumbs.db
 logs/*.log
 data/raw/externos/*.xls
 data/raw/externos/*.xlsx
-# data/raw/*.csv
-# data/processed/*.csv
+
+# Researcher Landing Zone (CIE Governance)
+# We ignore the raw contributions to protect team privacy, 
+# but keep the infrastructure that processes them.
+data/raw/partners/
+data/raw/excel/*.xlsx
+data/raw/csv/*.csv
+data/raw/externos/**/*.sav
+data/raw/externos/**/*.pdf
+data/curation/group_work/standardized/*.csv
+data/exports/*.xlsx
+
+# Allow keeping the folder structure
+!data/raw/partners/.gitkeep
+!data/curation/group_work/standardized/.gitkeep
+!data/raw/externos/.gitkeep

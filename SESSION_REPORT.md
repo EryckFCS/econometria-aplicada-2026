@@ -30,3 +30,28 @@ La base final resultante es la única fuente de verdad para el análisis econom�
 
 ---
 *Este reporte actúa como registro de integridad para la metodología de la investigación.*
+
+## Reporte de Sesión: Restauración de Arquitectura y Generalización Doméstica
+**Fecha:** 2026-04-18
+**Autor:** Antigravity AI
+
+### 🎯 Resumen de la Intervención
+Se detectó un desfase crítico entre la documentación y el estado físico del repositorio ("Componentes Fantasma"). Se procedió a la restauración de capas esenciales y a la generalización del motor para soportar la tesis de titulación con datos locales de Ecuador.
+
+### 🏗️ Hitos Técnicos
+
+#### 1. Restauración de Capas Perdidas
+- **Orquestación**: Creación de `src/orchestration/ape1_master_build.py` para unificar los procesos de descarga (WB) y curación (Data Doctor).
+- **Scrapers**: Implementación de `src/scrapers/bce_scraper.py` e `inec_scraper.py` para ingesta de datos nacionales.
+
+#### 2. Generalización del "Data Doctor"
+- Se eliminó la dependencia hardcodeada de la columna `iso2`. 
+- El sistema ahora soporta `entity_column`, permitiendo la curación automatizada de datos a nivel de cantón, provincia o códigos censales.
+
+#### 3. Saneamiento de Entorno
+- Eliminación de caches de Python (3.12/3.13) para evitar colisiones de bytecode.
+- Validación de ejecución mediante el entorno virtual `.venv`.
+
+### ✅ Validación y Calidad
+- **Prueba de Humo**: La generalización del Doctor fue validada con un dataset sintético de códigos INEC (`src/tests/smoke_test_doctor.py`).
+- **End-to-End**: El Master Build se ejecutó con éxito, generando los archivos finales `Base_Raw_Ecuador_Homicidios_Long.csv/.xlsx`.
