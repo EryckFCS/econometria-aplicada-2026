@@ -1,0 +1,37 @@
+project:
+  type: default
+  output-dir: dist
+
+book:
+  title: "Informe de Econometría Aplicada"
+  author: "Erick Fabricio Condoy Seraquive"
+  date: last-modified
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    number-sections: true
+    code-fold: true
+  pdf:
+    documentclass: article
+    toc: true
+    number-sections: true
+    mainfont: "Liberation Serif"
+    geometry:
+      - margin=25mm
+      - letterpaper
+    cite-method: biblatex
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
+    reference-doc: templates/template.docx # Plantilla base activada
+
+execute:
+  echo: false
+  warning: false
+  engine: jupyter
+
+bibliography: references.bib
+csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl

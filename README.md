@@ -122,6 +122,14 @@ data/raw/partners/
 
 ---
 
+## 📚 Recursos Académicos
+
+Para mantener la raíz del repositorio limpia y enfocada en lo esencial, los materiales de soporte se organizan en:
+- **[Sílabo de la Materia](docs/syllabus/SYLLABUS.pdf)**: Guía oficial del curso.
+- **[Lecturas y Referencias](docs/readings/)**: Material bibliográfico y artículos técnicos.
+
+---
+
 ## 🧪 Verificación de Calidad (QA)
 
 Antes de cada commit, el investigador debe validar que el núcleo permanece estable:

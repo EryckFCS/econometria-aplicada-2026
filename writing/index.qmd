@@ -1,0 +1,61 @@
+---
+title: "Análisis Econométrico: Unidad 1"
+subtitle: "Auditoría Forense y Modelización"
+author: "Erick Fabricio Condoy Seraquive"
+format:
+  html: default
+  pdf: default
+  docx: default
+---
+
+## Resumen Ejecutivo
+
+Este informe detalla los hallazgos de la auditoría forense aplicada a los datos de la región LATAM-20, centrándose en la detección de anomalías y la construcción de un panel balanceado.
+
+## 1. Introducción
+
+El presente estudio se enmarca en la cátedra de Econometría Aplicada 2026. Se utiliza el backend institucional para garantizar la trazabilidad de cada observación.
+
+## 2. Metodología
+
+Se aplicó un pipeline de ingesta inteligente que prioriza fuentes de API (World Bank) y realiza un fallback a archivos locales normalizados.
+
+```{python}
+#| label: setup
+#| include: false
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Configuración de estética
+sns.set_theme(style="whitegrid")
+```
+
+## 3. Resultados
+
+A continuación se presenta un análisis descriptivo preliminar de la muestra.
+
+```{python}
+#| label: fig-check
+#| fig-cap: "Distribución de Datos Normalizados"
+import numpy as np
+
+# Ejemplo dummy para validar renderizado
+data = pd.DataFrame({
+    'x': np.random.normal(0, 1, 100),
+    'y': np.random.normal(0, 1, 100)
+})
+
+plt.figure(figsize=(8, 5))
+sns.scatterplot(data=data, x='x', y='y')
+plt.show()
+```
+
+## 4. Conclusiones
+
+La infraestructura de datos actual permite una transición fluida hacia modelos de estimación dinámicos (GMM, Panel Data).
+
+## Referencias {.unnumbered}
+
+::: {#refs}
+:::
