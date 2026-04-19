@@ -23,6 +23,9 @@ dependencies = [
   "structlog>=25.5.0",
   "duckdb>=1.5.1",
   "yfinance>=1.2.1",
+  "seaborn>=0.13.2",
+  "stargazer>=0.0.7",
+  "plotly>=6.7.0",
 ]
 
 [project.optional-dependencies]
