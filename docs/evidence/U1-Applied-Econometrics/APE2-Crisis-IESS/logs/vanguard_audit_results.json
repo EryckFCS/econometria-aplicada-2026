@@ -1,0 +1,26 @@
+[
+    {
+        "var": "remesas_pib",
+        "bic": -820.9201715818741,
+        "p_val": 2.7173573249120717e-06,
+        "status": "SIGNIFICANT"
+    },
+    {
+        "var": "matricula_superior",
+        "bic": -827.0765822675646,
+        "p_val": 6.630542513367601e-07,
+        "status": "SIGNIFICANT"
+    },
+    {
+        "var": "embi_ecuador",
+        "bic": -823.3476092482277,
+        "p_val": 4.058739544721984e-05,
+        "status": "SIGNIFICANT"
+    },
+    {
+        "var": "gdp_pc_ppp",
+        "bic": -843.1355849842978,
+        "p_val": 2.3317448629786324e-10,
+        "status": "SIGNIFICANT"
+    }
+]

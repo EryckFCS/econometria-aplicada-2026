@@ -1,0 +1,56 @@
+{
+  "project": "Applied Econometrics 2026 - IESS Crisis Audit",
+  "version": "1.1.0-fidelity-update",
+  "last_updated": "2026-04-25T21:06:30Z",
+  "data_lineage": [
+    {
+      "variable": "afiliados_iess",
+      "granularity": "Quarterly",
+      "source": "IESS Statistical Bulletins (BCE Archive)",
+      "processing": "Direct Extraction (2000-2023)",
+      "fidelity": "High"
+    },
+    {
+      "variable": "remesas_pib",
+      "granularity": "Quarterly",
+      "source": "Banco Central del Ecuador (BCE) - Sector Externo",
+      "processing": "Hybrid: Real Quarterly (2022-2023) / Cubic Spline (2000-2021)",
+      "fidelity": "Medium-High",
+      "audit_note": "Replaced synthetic 2022-2023 values with real quarterly figures from BCE reports."
+    },
+    {
+      "variable": "embi_ecuador",
+      "granularity": "Quarterly",
+      "source": "J.P. Morgan / Ministerio de Econom\u00eda y Finanzas / BCRP Data",
+      "processing": "Hybrid: Real Quarterly (2023) / Cubic Spline (2000-2022)",
+      "fidelity": "Medium-High",
+      "audit_note": "Averages for 2023 based on official country risk reports."
+    },
+    {
+      "variable": "matricula_superior",
+      "granularity": "Annual",
+      "source": "World Bank / SENESCYT",
+      "processing": "Cubic Spline Interpolation",
+      "fidelity": "Proxy",
+      "audit_note": "Inherent annual frequency; interpolation used to preserve trend within the ARDL framework."
+    }
+  ],
+  "structural_break_check": {
+    "date": "2000-Q1",
+    "status": "Applied",
+    "rationale": "Dollarization and 2001 IESS Law mark the start of the valid sample."
+  },
+  "lineage": [
+    {
+      "action": "High-Fidelity Integration",
+      "timestamp": "2026-04-25T21:09:40Z",
+      "method": "Cubic Spline Interpolation + Empirical 2023 Injection",
+      "sources": {
+        "remesas_2023": "BCE (Quarterly Balance of Payments)",
+        "embi_2023": "BCRP / Finance Ministry (Daily historical avg)",
+        "vanguard_baseline": "CEPAL / World Bank (Annual indicators)"
+      },
+      "result": "Generated N=96 dataset with mixed synthetic/real quarterly frequency."
+    }
+  ]
+}

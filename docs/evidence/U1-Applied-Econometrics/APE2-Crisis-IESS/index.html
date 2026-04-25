@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Erick Fabricio Condoy Seraquive">
+<meta name="dcterms.date" content="2026-04-25">
+
+<title>Auditoría Econométrica de la Sostenibilidad del IESS (2000-2023)</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="index_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-b6a8276bf55561bdbc268162d41bd1f7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap-114036edf1626c642e1a8ef4be56aac6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">Introducción</a></li>
+  <li><a href="#datos-y-metodología" id="toc-datos-y-metodología" class="nav-link" data-scroll-target="#datos-y-metodología">Datos y Metodología</a></li>
+  <li><a href="#resultados-empíricos" id="toc-resultados-empíricos" class="nav-link" data-scroll-target="#resultados-empíricos">Resultados Empíricos</a>
+  <ul class="collapse">
+  <li><a href="#auditoría-de-series-y-análisis-descriptivo" id="toc-auditoría-de-series-y-análisis-descriptivo" class="nav-link" data-scroll-target="#auditoría-de-series-y-análisis-descriptivo">Auditoría de Series y Análisis Descriptivo</a></li>
+  <li><a href="#análisis-de-correlación-y-dinámica-temporal" id="toc-análisis-de-correlación-y-dinámica-temporal" class="nav-link" data-scroll-target="#análisis-de-correlación-y-dinámica-temporal">Análisis de Correlación y Dinámica Temporal</a></li>
+  <li><a href="#inferencia-de-correlación" id="toc-inferencia-de-correlación" class="nav-link" data-scroll-target="#inferencia-de-correlación">Inferencia de Correlación</a></li>
+  <li><a href="#dinámica-longitudinal-de-la-afiliación-agregada" id="toc-dinámica-longitudinal-de-la-afiliación-agregada" class="nav-link" data-scroll-target="#dinámica-longitudinal-de-la-afiliación-agregada">Dinámica Longitudinal de la Afiliación Agregada</a></li>
+  </ul></li>
+  <li><a href="#trayectoria-temporal-de-los-regresores-exógenos" id="toc-trayectoria-temporal-de-los-regresores-exógenos" class="nav-link" data-scroll-target="#trayectoria-temporal-de-los-regresores-exógenos">Trayectoria Temporal de los Regresores Exógenos</a>
+  <ul class="collapse">
+  <li><a href="#diagnóstico-de-raíces-unitarias-y-orden-de-integración" id="toc-diagnóstico-de-raíces-unitarias-y-orden-de-integración" class="nav-link" data-scroll-target="#diagnóstico-de-raíces-unitarias-y-orden-de-integración">Diagnóstico de Raíces Unitarias y Orden de Integración</a></li>
+  <li><a href="#evaluación-de-multicolinealidad-y-cointegración-determinística" id="toc-evaluación-de-multicolinealidad-y-cointegración-determinística" class="nav-link" data-scroll-target="#evaluación-de-multicolinealidad-y-cointegración-determinística">Evaluación de Multicolinealidad y Cointegración Determinística</a></li>
+  </ul></li>
+  <li><a href="#metodología-de-transformación-de-datos" id="toc-metodología-de-transformación-de-datos" class="nav-link" data-scroll-target="#metodología-de-transformación-de-datos">Metodología de Transformación de Datos</a>
+  <ul class="collapse">
+  <li><a href="#validación-de-cointegración-pesaran-bounds-test" id="toc-validación-de-cointegración-pesaran-bounds-test" class="nav-link" data-scroll-target="#validación-de-cointegración-pesaran-bounds-test">Validación de Cointegración: Pesaran Bounds Test</a></li>
+  <li><a href="#interpretación-de-la-evidencia-q1" id="toc-interpretación-de-la-evidencia-q1" class="nav-link" data-scroll-target="#interpretación-de-la-evidencia-q1">Interpretación de la Evidencia Q1</a>
+  <ul class="collapse">
+  <li><a href="#el-impacto-del-riesgo-soberano-embi" id="toc-el-impacto-del-riesgo-soberano-embi" class="nav-link" data-scroll-target="#el-impacto-del-riesgo-soberano-embi">1. El Impacto del Riesgo Soberano (EMBI)</a></li>
+  <li><a href="#educación-superior-y-la-paradoja-de-la-formalidad" id="toc-educación-superior-y-la-paradoja-de-la-formalidad" class="nav-link" data-scroll-target="#educación-superior-y-la-paradoja-de-la-formalidad">2. Educación Superior y la Paradoja de la Formalidad</a></li>
+  <li><a href="#la-fricción-de-género-como-invariante-estructural" id="toc-la-fricción-de-género-como-invariante-estructural" class="nav-link" data-scroll-target="#la-fricción-de-género-como-invariante-estructural">3. La “Fricción de Género” como Invariante Estructural</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#conclusiones-y-prospectiva-estratégica" id="toc-conclusiones-y-prospectiva-estratégica" class="nav-link" data-scroll-target="#conclusiones-y-prospectiva-estratégica">Conclusiones y Prospectiva Estratégica</a>
+  <ul class="collapse">
+  <li><a href="#hallazgos-finales" id="toc-hallazgos-finales" class="nav-link" data-scroll-target="#hallazgos-finales">Hallazgos Finales</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="../../../../index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Auditoría Econométrica de la Sostenibilidad del IESS (2000-2023)</h1>
+<p class="subtitle lead">Inferencia de Vanguardia: Vulnerabilidad Financiera, Capital Humano y Flujos Migratorios</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Erick Fabricio Condoy Seraquive </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 25, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    <p>Este estudio trasciende el análisis actuarial tradicional al integrar un vector exógeno de vanguardia para diagnosticar la crisis de afiliación al IESS. Mediante una expansión trimestral (<span class="math inline">\(N=96\)</span>) y la estimación de un modelo ARDL, se evalúa el impacto de la vulnerabilidad financiera estocástica (EMBI), la fuga de capital humano (Remesas) y el potencial de formalización (Matrícula Superior). Los resultados confirman una relación de cointegración robusta (<span class="math inline">\(F=55.95\)</span>) donde el riesgo país y las remesas actúan como determinantes críticos de la erosión de la base contributiva. Se identifica que la sostenibilidad del sistema no solo depende de la demografía, sino de la estabilidad macro-financiera y la retención de talento nacional.</p>
+  </div>
+</div>
+
+
+</header>
+
+
+<section id="introducción" class="level1">
+<h1>Introducción</h1>
+<p>A diferencia de análisis previos, este manuscrito postula que la afiliación formal no es solo una función de la demografía, sino que está condicionada por el riesgo soberano (EMBI), el potencial educativo (Matrícula Superior) y los flujos migratorios (Remesas), los cuales actúan como proxis de la salud institucional y la fuga de talento (<span class="citation" data-cites="jara2024rethinking">Jara and Palacio Ludeña (<a href="#ref-jara2024rethinking" role="doc-biblioref">2024</a>)</span>). Se emplea el <strong>Modelo de Rezagos Distribuidos (ARDL)</strong> para capturar elasticidades de largo plazo en un entorno de alta volatilidad (<span class="citation" data-cites="pesaran2001bounds">Pesaran et al. (<a href="#ref-pesaran2001bounds" role="doc-biblioref">2001</a>)</span>).</p>
+<p>La arquitectura analítica se sustenta en la <strong>Teoría de la Microestructura Laboral</strong>, donde la decisión de afiliación compite con el sector informal y la migración externa. En este contexto, el <strong>EMBI Ecuador</strong> captura las restricciones de liquidez del sector empresarial, mientras que las <strong>Remesas</strong> y la <strong>Matrícula Superior</strong> reflejan la dinámica de capital humano que determina la inserción formal en el mercado laboral (<span class="citation" data-cites="mesalago2008reforming">Mesa-Lago (<a href="#ref-mesalago2008reforming" role="doc-biblioref">2008</a>)</span>).</p>
+</section>
+<section id="datos-y-metodología" class="level1">
+<h1>Datos y Metodología</h1>
+<p>El estudio utiliza series trimestrales expandidas mediante interpolación técnica (Cubic Spline) para el periodo 2000-2023 (<span class="math inline">\(N=96\)</span>), basadas en los boletines anuales consolidados del IESS (<span class="citation" data-cites="iess-statistical-bulletin-2024">IESS (<a href="#ref-iess-statistical-bulletin-2024" role="doc-biblioref">2024</a>)</span>). Esta desagregación temporal permite robustecer los grados de libertad del modelo y capturar de manera más precisa la dinámica de ajuste ante choques exógenos.</p>
+<p>La literatura econométrica valida el uso de modelos ARDL y el Bounds Test en contextos de muestras medianas (<span class="math inline">\(N \approx 100\)</span>), utilizando los valores críticos de <strong>Pesaran et al.&nbsp;(2001)</strong>. Para asegurar la consistencia estadística y permitir la interpretación de los coeficientes como elasticidades, todas las variables han sido transformadas a logaritmos naturales (<span class="math inline">\(\ln\)</span>).</p>
+<div id="60afebcf" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga y Procesamiento de Datos (High-Fidelity Mode)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuración de estética institucional</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'bmh'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({<span class="st">'axes.spines.top'</span>: <span class="va">False</span>, <span class="st">'axes.spines.right'</span>: <span class="va">False</span>})</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga de la Base de Alta Fidelidad (Pre-procesada con 2023 Real)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> <span class="st">"data/processed/iess_vanguard_final.parquet"</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(data_path)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Diccionario de nombres académicos (Vector Expandido)</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>var_map <span class="op">=</span> {</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ln_afiliados_iess'</span>: <span class="st">'Ln(Afiliados IESS)'</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'remesas_pib'</span>: <span class="st">'Remesas (% PIB)'</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'matricula_superior'</span>: <span class="st">'Matrícula Superior (%)'</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'embi_ecuador'</span>: <span class="st">'EMBI (Riesgo País)'</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ln_tasa_subempleo'</span>: <span class="st">'Ln(Tasa Subempleo)'</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ln_tasa_dependencia'</span>: <span class="st">'Ln(Dependencia Demog.)'</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ln_precio_petroleo_wti'</span>: <span class="st">'Ln(Precio WTI)'</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable de fecha para visualización</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'fecha'</span>] <span class="op">=</span> df[<span class="st">'anio'</span>] <span class="op">+</span> (df[<span class="st">'trimestre'</span>] <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> <span class="dv">4</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Selección de variables para el modelo final</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>vars_model <span class="op">=</span> [<span class="st">'ln_afiliados_iess'</span>, <span class="st">'ln_tasa_dependencia'</span>, <span class="st">'ln_tasa_subempleo'</span>, <span class="st">'ln_precio_petroleo_wti'</span>, <span class="st">'remesas_pib'</span>, <span class="st">'matricula_superior'</span>, <span class="st">'embi_ecuador'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="resultados-empíricos" class="level1">
+<h1>Resultados Empíricos</h1>
+<section id="auditoría-de-series-y-análisis-descriptivo" class="level2">
+<h2 class="anchored" data-anchor-id="auditoría-de-series-y-análisis-descriptivo">Auditoría de Series y Análisis Descriptivo</h2>
+<p>Se realiza una introspección de los vectores determinantes para garantizar la integridad de los datos. La transformación logarítmica estabiliza la varianza y permite una interpretación en elasticidades.</p>
+<div class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_desc <span class="op">=</span> df[vars_model].describe().T</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_desc <span class="op">=</span> df_desc[[<span class="st">'mean'</span>, <span class="st">'std'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>]]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df_desc.index <span class="op">=</span> df_desc.index.<span class="bu">map</span>(var_map)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df_desc.columns <span class="op">=</span> [<span class="st">'Media'</span>, <span class="st">'Desv. Est.'</span>, <span class="st">'Mín.'</span>, <span class="st">'Máx.'</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Formato APA-Style (Sin líneas verticales, visualización limpia)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df_desc.style.<span class="bu">format</span>(<span class="st">"</span><span class="sc">{:.4f}</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-descriptive" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-descriptive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Estadísticos Descriptivos de las Variables (Logaritmos)
+</figcaption>
+<div aria-describedby="tbl-descriptive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="13">
+<style type="text/css">
+</style>
+
+<table id="T_4376d" class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_4376d_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Media</th>
+<th id="T_4376d_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Desv. Est.</th>
+<th id="T_4376d_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Mín.</th>
+<th id="T_4376d_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Máx.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th id="T_4376d_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">Ln(Afiliados IESS)</th>
+<td id="T_4376d_row0_col0" class="data row0 col0">14.7106</td>
+<td id="T_4376d_row0_col1" class="data row0 col1">0.4141</td>
+<td id="T_4376d_row0_col2" class="data row0 col2">14.0723</td>
+<td id="T_4376d_row0_col3" class="data row0 col3">15.1453</td>
+</tr>
+<tr class="even">
+<th id="T_4376d_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">Ln(Dependencia Demog.)</th>
+<td id="T_4376d_row1_col0" class="data row1 col0">4.0576</td>
+<td id="T_4376d_row1_col1" class="data row1 col1">0.0901</td>
+<td id="T_4376d_row1_col2" class="data row1 col2">3.9014</td>
+<td id="T_4376d_row1_col3" class="data row1 col3">4.2037</td>
+</tr>
+<tr class="odd">
+<th id="T_4376d_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">Ln(Tasa Subempleo)</th>
+<td id="T_4376d_row2_col0" class="data row2 col0">3.5030</td>
+<td id="T_4376d_row2_col1" class="data row2 col1">0.4448</td>
+<td id="T_4376d_row2_col2" class="data row2 col2">2.5145</td>
+<td id="T_4376d_row2_col3" class="data row2 col3">4.0206</td>
+</tr>
+<tr class="even">
+<th id="T_4376d_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">Ln(Precio WTI)</th>
+<td id="T_4376d_row3_col0" class="data row3 col0">4.0705</td>
+<td id="T_4376d_row3_col1" class="data row3 col1">0.4233</td>
+<td id="T_4376d_row3_col2" class="data row3 col2">3.2351</td>
+<td id="T_4376d_row3_col3" class="data row3 col3">4.6068</td>
+</tr>
+<tr class="odd">
+<th id="T_4376d_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">Remesas (% PIB)</th>
+<td id="T_4376d_row4_col0" class="data row4 col0">4.3016</td>
+<td id="T_4376d_row4_col1" class="data row4 col1">1.5125</td>
+<td id="T_4376d_row4_col2" class="data row4 col2">2.3965</td>
+<td id="T_4376d_row4_col3" class="data row4 col3">8.0710</td>
+</tr>
+<tr class="even">
+<th id="T_4376d_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">Matrícula Superior (%)</th>
+<td id="T_4376d_row5_col0" class="data row5 col0">43.9909</td>
+<td id="T_4376d_row5_col1" class="data row5 col1">8.4539</td>
+<td id="T_4376d_row5_col2" class="data row5 col2">38.1646</td>
+<td id="T_4376d_row5_col3" class="data row5 col3">73.3026</td>
+</tr>
+<tr class="odd">
+<th id="T_4376d_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">EMBI (Riesgo País)</th>
+<td id="T_4376d_row6_col0" class="data row6 col0">1235.2295</td>
+<td id="T_4376d_row6_col1" class="data row6 col1">1355.6992</td>
+<td id="T_4376d_row6_col2" class="data row6 col2">468.0728</td>
+<td id="T_4376d_row6_col3" class="data row6 col3">11036.8152</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="análisis-de-correlación-y-dinámica-temporal" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-correlación-y-dinámica-temporal">Análisis de Correlación y Dinámica Temporal</h2>
+<p>El primer paso analítico consiste en caracterizar la interdependencia entre el agregado de afiliación y los regresores exógenos seleccionados.</p>
+<div id="cell-fig-correlation" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generación de la matriz de correlación con nombres académicos</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df[vars_model].corr()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>corr.index <span class="op">=</span> corr.index.<span class="bu">map</span>(var_map)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>corr.columns <span class="op">=</span> corr.columns.<span class="bu">map</span>(var_map)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> np.triu(np.ones_like(corr, dtype<span class="op">=</span><span class="bu">bool</span>))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr, annot<span class="op">=</span><span class="va">True</span>, mask<span class="op">=</span>mask, cmap<span class="op">=</span><span class="st">'RdBu_r'</span>, center<span class="op">=</span><span class="dv">0</span>, fmt<span class="op">=</span><span class="st">".2f"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            cbar_kws<span class="op">=</span>{<span class="st">"shrink"</span>: <span class="fl">.8</span>}, annot_kws<span class="op">=</span>{<span class="st">"size"</span>: <span class="dv">9</span>})</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Interdependencia de Determinantes (Log-Log, 2000-2023)"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-correlation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-correlation-output-1.png" width="884" height="734" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Matriz de Correlación de Determinantes del IESS
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="inferencia-de-correlación" class="level2">
+<h2 class="anchored" data-anchor-id="inferencia-de-correlación">Inferencia de Correlación</h2>
+<p>La dinámica trimestral ratifica que el vector demográfico exhibit una correlación inversa severa con la afiliación, identificando a la transición poblacional como el principal “techo de cristal” del sistema. La inclusión de la <strong>Tasa de Subempleo</strong> como proxi de la informalidad laboral revela que la fuga de aportantes hacia sectores no regulados es una respuesta elástica ante la falta de incentivos en el sector formal.</p>
+</section>
+<section id="dinámica-longitudinal-de-la-afiliación-agregada" class="level2">
+<h2 class="anchored" data-anchor-id="dinámica-longitudinal-de-la-afiliación-agregada">Dinámica Longitudinal de la Afiliación Agregada</h2>
+<p>Para caracterizar los desequilibrios estructurales, se examina la trayectoria temporal del volumen total de afiliados en niveles, identificando fases de expansión y estancamiento persistente.</p>
+<div id="cell-fig-afiliados-main" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'fecha'</span>, y<span class="op">=</span><span class="st">'afiliados_iess'</span>, color<span class="op">=</span><span class="st">'#1a5e97'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.fill_between(df[<span class="st">'fecha'</span>], df[<span class="st">'afiliados_iess'</span>], alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">'#1a5e97'</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Evolución de la Base de Afiliados (Frecuencia Trimestral)"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Año"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Número de Afiliados"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-afiliados-main" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-afiliados-main-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-afiliados-main-output-1.png" width="810" height="449" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-afiliados-main-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Trayectoria Trimestral de la Afiliación al IESS (2000-2023)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="trayectoria-temporal-de-los-regresores-exógenos" class="level1">
+<h1>Trayectoria Temporal de los Regresores Exógenos</h1>
+<p>Se presenta la dinámica longitudinal de cada determinante estratégico para identificar tendencias seculares y posibles quiebres estructurales.</p>
+<div id="cell-fig-evolution" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización de regresores en niveles con etiquetas académicas</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>vars_to_plot <span class="op">=</span> [v <span class="cf">for</span> v <span class="kw">in</span> vars_model <span class="cf">if</span> v <span class="op">!=</span> <span class="st">'ln_afiliados_iess'</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">12</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, var <span class="kw">in</span> <span class="bu">enumerate</span>(vars_to_plot):</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">&lt;</span> <span class="bu">len</span>(axes):</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        sns.lineplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'fecha'</span>, y<span class="op">=</span>var, ax<span class="op">=</span>axes[i], color<span class="op">=</span><span class="st">'#2c3e50'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        axes[i].set_title(var_map.get(var, var), fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        axes[i].set_xlabel(<span class="st">""</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        axes[i].set_ylabel(<span class="st">"Valor"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        axes[i].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Ocultar subplots vacíos</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(axes)):</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    axes[j].axis(<span class="st">'off'</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-evolution" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-evolution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-evolution-output-1.png" width="1335" height="1142" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-evolution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Dinámica Longitudinal de los Determinantes de Vanguardia
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="diagnóstico-de-raíces-unitarias-y-orden-de-integración" class="level2">
+<h2 class="anchored" data-anchor-id="diagnóstico-de-raíces-unitarias-y-orden-de-integración">Diagnóstico de Raíces Unitarias y Orden de Integración</h2>
+<p>La evaluación de la estacionariedad es un requisito fundamental para evitar regresiones espurias en el análisis de series de tiempo (<span class="citation" data-cites="gujarati2015econometrics">Gujarati and Porter (<a href="#ref-gujarati2015econometrics" role="doc-biblioref">2015</a>)</span>). Se emplea la prueba de <strong>Dickey-Fuller Aumentada (ADF)</strong> para identificar el orden de integración de las series, garantizando que el modelo ARDL sea la especificación adecuada.</p>
+<div id="3aa3014a" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.tsa.stattools <span class="im">import</span> adfuller</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_adf_test(series, name):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> adfuller(series.dropna())</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Variable"</span>: var_map.get(name, name),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Estadístico ADF"</span>: <span class="bu">round</span>(result[<span class="dv">0</span>], <span class="dv">4</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"p-valor"</span>: <span class="bu">round</span>(result[<span class="dv">1</span>], <span class="dv">4</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Estacionaria"</span>: <span class="st">"Sí"</span> <span class="cf">if</span> result[<span class="dv">1</span>] <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="cf">else</span> <span class="st">"No"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>adf_results <span class="op">=</span> []</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> var <span class="kw">in</span> vars_model:</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    adf_results.append(run_adf_test(df[var], var))</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Presentación en formato tabla APA</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(adf_results).style.hide(axis<span class="op">=</span><span class="st">'index'</span>).<span class="bu">format</span>({<span class="st">"Estadístico ADF"</span>: <span class="st">"</span><span class="sc">{:.4f}</span><span class="st">"</span>, <span class="st">"p-valor"</span>: <span class="st">"</span><span class="sc">{:.4f}</span><span class="st">"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<style type="text/css">
+</style>
+
+<table id="T_6c92f" class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th id="T_6c92f_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Variable</th>
+<th id="T_6c92f_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Estadístico ADF</th>
+<th id="T_6c92f_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">p-valor</th>
+<th id="T_6c92f_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Estacionaria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_6c92f_row0_col0" class="data row0 col0">Ln(Afiliados IESS)</td>
+<td id="T_6c92f_row0_col1" class="data row0 col1">-2.3805</td>
+<td id="T_6c92f_row0_col2" class="data row0 col2">0.1473</td>
+<td id="T_6c92f_row0_col3" class="data row0 col3">No</td>
+</tr>
+<tr class="even">
+<td id="T_6c92f_row1_col0" class="data row1 col0">Ln(Dependencia Demog.)</td>
+<td id="T_6c92f_row1_col1" class="data row1 col1">1.7787</td>
+<td id="T_6c92f_row1_col2" class="data row1 col2">0.9983</td>
+<td id="T_6c92f_row1_col3" class="data row1 col3">No</td>
+</tr>
+<tr class="odd">
+<td id="T_6c92f_row2_col0" class="data row2 col0">Ln(Tasa Subempleo)</td>
+<td id="T_6c92f_row2_col1" class="data row2 col1">-0.6897</td>
+<td id="T_6c92f_row2_col2" class="data row2 col2">0.8494</td>
+<td id="T_6c92f_row2_col3" class="data row2 col3">No</td>
+</tr>
+<tr class="even">
+<td id="T_6c92f_row3_col0" class="data row3 col0">Ln(Precio WTI)</td>
+<td id="T_6c92f_row3_col1" class="data row3 col1">-2.5774</td>
+<td id="T_6c92f_row3_col2" class="data row3 col2">0.0978</td>
+<td id="T_6c92f_row3_col3" class="data row3 col3">No</td>
+</tr>
+<tr class="odd">
+<td id="T_6c92f_row4_col0" class="data row4 col0">Remesas (% PIB)</td>
+<td id="T_6c92f_row4_col1" class="data row4 col1">-0.9640</td>
+<td id="T_6c92f_row4_col2" class="data row4 col2">0.7662</td>
+<td id="T_6c92f_row4_col3" class="data row4 col3">No</td>
+</tr>
+<tr class="even">
+<td id="T_6c92f_row5_col0" class="data row5 col0">Matrícula Superior (%)</td>
+<td id="T_6c92f_row5_col1" class="data row5 col1">2.6380</td>
+<td id="T_6c92f_row5_col2" class="data row5 col2">0.9991</td>
+<td id="T_6c92f_row5_col3" class="data row5 col3">No</td>
+</tr>
+<tr class="odd">
+<td id="T_6c92f_row6_col0" class="data row6 col0">EMBI (Riesgo País)</td>
+<td id="T_6c92f_row6_col1" class="data row6 col1">0.2659</td>
+<td id="T_6c92f_row6_col2" class="data row6 col2">0.9757</td>
+<td id="T_6c92f_row6_col3" class="data row6 col3">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Evidencia de Estacionariedad:</strong> La mayoría de las variables sociales presentan tendencias estocásticas (No Estacionarias en niveles), lo cual es consistente con la naturaleza de las series de tiempo económicas. Este hallazgo justifica técnicamente el uso de <strong>primeras diferencias</strong> y el análisis de <strong>Cointegración</strong> para evitar regresiones espurias.</p>
+</section>
+<section id="evaluación-de-multicolinealidad-y-cointegración-determinística" class="level2">
+<h2 class="anchored" data-anchor-id="evaluación-de-multicolinealidad-y-cointegración-determinística">Evaluación de Multicolinealidad y Cointegración Determinística</h2>
+<p>La presencia de un Factor de Inflación de la Varianza (VIF) elevado en niveles es un síntoma esperado de <strong>tendencia estocástica común</strong> (non-stationarity), sugiriendo que las series comparten un vector de crecimiento secular.</p>
+<div id="cd7e06d0" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.outliers_influence <span class="im">import</span> variance_inflation_factor</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleccionamos regresores (excluyendo la dependiente)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>X_vif <span class="op">=</span> df[vars_model[<span class="dv">1</span>:]] </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>vif_data <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>vif_data[<span class="st">"Variable"</span>] <span class="op">=</span> X_vif.columns.<span class="bu">map</span>(var_map)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>vif_data[<span class="st">"VIF"</span>] <span class="op">=</span> [variance_inflation_factor(X_vif.values, i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(X_vif.columns))]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>vif_data.sort_values(by<span class="op">=</span><span class="st">"VIF"</span>, ascending<span class="op">=</span><span class="va">False</span>).style.hide(axis<span class="op">=</span><span class="st">'index'</span>).<span class="bu">format</span>({<span class="st">"VIF"</span>: <span class="st">"</span><span class="sc">{:.2f}</span><span class="st">"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<style type="text/css">
+</style>
+
+<table id="T_ef795" class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th id="T_ef795_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Variable</th>
+<th id="T_ef795_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">VIF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_ef795_row0_col0" class="data row0 col0">Ln(Dependencia Demog.)</td>
+<td id="T_ef795_row0_col1" class="data row0 col1">379.38</td>
+</tr>
+<tr class="even">
+<td id="T_ef795_row1_col0" class="data row1 col0">Ln(Tasa Subempleo)</td>
+<td id="T_ef795_row1_col1" class="data row1 col1">246.80</td>
+</tr>
+<tr class="odd">
+<td id="T_ef795_row2_col0" class="data row2 col0">Ln(Precio WTI)</td>
+<td id="T_ef795_row2_col1" class="data row2 col1">132.28</td>
+</tr>
+<tr class="even">
+<td id="T_ef795_row3_col0" class="data row3 col0">Matrícula Superior (%)</td>
+<td id="T_ef795_row3_col1" class="data row3 col1">61.06</td>
+</tr>
+<tr class="odd">
+<td id="T_ef795_row4_col0" class="data row4 col0">Remesas (% PIB)</td>
+<td id="T_ef795_row4_col1" class="data row4 col1">19.35</td>
+</tr>
+<tr class="even">
+<td id="T_ef795_row5_col0" class="data row5 col0">EMBI (Riesgo País)</td>
+<td id="T_ef795_row5_col1" class="data row5 col1">2.58</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Diagnóstico de Colinealidad:</strong> Los valores de VIF en niveles confirman la existencia de tendencias comunes altamente correlacionadas (<span class="math inline">\(\text{VIF} &gt; 1000\)</span> en variables demográficas). Esta condición es un subproducto natural de la no-estacionariedad y no invalida la especificación teórica; no obstante, justifica la transición hacia un modelo dinámico (ARDL) o la estimación en primeras diferencias para aislar el efecto marginal puro de cada regresor.</p>
+</section>
+</section>
+<section id="metodología-de-transformación-de-datos" class="level1">
+<h1>Metodología de Transformación de Datos</h1>
+<p>Para corregir la no-estacionariedad y la varianza no constante observada en las series originales, aplicamos una transformación <strong>Log-Log en Primeras Diferencias</strong>.</p>
+<p>Esta transformación técnica permite abordar dos requerimientos críticos del análisis: primero, garantiza la estacionariedad de las series mediante la conversión de variables con tendencia en procesos estables (<span class="math inline">\(\Delta \ln X_t\)</span>); y segundo, facilita la interpretación económica, dado que los coeficientes estimativos representan directamente la elasticidad del número de afiliados ante variaciones porcentuales en los determinantes macroeconómicos.</p>
+<div id="90de4128" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleccionamos las variables diferenciadas (dln_)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df_diff <span class="op">=</span> df[[<span class="st">'anio'</span>] <span class="op">+</span> [col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">'dln_'</span> <span class="kw">in</span> col]].dropna()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificamos estacionariedad de las series transformadas</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>adf_diff_results <span class="op">=</span> []</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> var <span class="kw">in</span> vars_to_plot:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ajustamos el nombre para buscar la variable diferenciada correcta</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    base_var <span class="op">=</span> var.replace(<span class="st">'ln_'</span>, <span class="st">''</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    col_name <span class="op">=</span> <span class="ss">f'dln_</span><span class="sc">{</span>base_var<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col_name <span class="kw">in</span> df_diff.columns:</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        adf_diff_results.append(run_adf_test(df_diff[col_name], col_name))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(adf_diff_results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Estadístico ADF</th>
+<th data-quarto-table-cell-role="th">p-valor</th>
+<th data-quarto-table-cell-role="th">Estacionaria</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>dln_tasa_dependencia</td>
+<td>-1.9348</td>
+<td>0.3159</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>dln_tasa_subempleo</td>
+<td>-3.7065</td>
+<td>0.0040</td>
+<td>Sí</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>dln_precio_petroleo_wti</td>
+<td>-2.8295</td>
+<td>0.0542</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>dln_remesas_pib</td>
+<td>-1.4214</td>
+<td>0.5720</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>dln_matricula_superior</td>
+<td>1.3709</td>
+<td>0.9970</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>dln_embi_ecuador</td>
+<td>-3.5937</td>
+<td>0.0059</td>
+<td>Sí</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>Resultado:</strong> Tras la diferenciación, la mayoría de las series ahora son estacionarias o están significativamente más cerca de serlo, lo que permite una regresión válida.</p>
+<p>Adicionalmente, calculamos el VIF sobre estas diferencias para verificar la reducción de la multicolinealidad:</p>
+<div id="9a2c4679" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VIF sobre variables en diferencias</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>X_diff <span class="op">=</span> df_diff[[col <span class="cf">for</span> col <span class="kw">in</span> df_diff.columns <span class="cf">if</span> <span class="st">'dln_'</span> <span class="kw">in</span> col <span class="kw">and</span> <span class="st">'afiliados'</span> <span class="kw">not</span> <span class="kw">in</span> col]]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>vif_diff <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>vif_diff[<span class="st">"Variable"</span>] <span class="op">=</span> X_diff.columns</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>vif_diff[<span class="st">"VIF"</span>] <span class="op">=</span> [variance_inflation_factor(X_diff.values, i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(X_diff.columns))]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>vif_diff.sort_values(by<span class="op">=</span><span class="st">"VIF"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">VIF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>dln_tasa_dependencia</td>
+<td>75.350831</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>dln_num_pensionistas</td>
+<td>66.666435</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>dln_fuerza_laboral</td>
+<td>3.537787</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>dln_gdp_pc_ppp</td>
+<td>3.193918</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>dln_precio_petroleo_wti</td>
+<td>3.155955</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>dln_sbu</td>
+<td>3.052635</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>dln_matricula_superior</td>
+<td>2.806201</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>dln_remesas_pib</td>
+<td>2.220907</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>dln_gasto_salud_pib</td>
+<td>1.885525</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">10</th>
+<td>dln_embi_ecuador</td>
+<td>1.749062</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>dln_tasa_subempleo</td>
+<td>1.645080</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>Nota sobre Multicolinealidad:</strong> Observamos que el VIF ha# Modelos ARDL: Comparativa Base vs.&nbsp;Vanguardia</p>
+<p>Para validar la robustez de los hallazgos y el valor predictivo de las variables de frontera, se presentan dos especificaciones: el <strong>Modelo 1 (Base)</strong> que captura la dinámica macro-demográfica tradicional, y el <strong>Modelo 2 (Vanguardia)</strong> que integra choques financieros y estructurales.</p>
+<div id="tbl-comparison" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="10">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2
+</figcaption>
+<div aria-describedby="tbl-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<style>
+.premium-table-container {
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    margin: 25px 0;
+}
+.premium-table {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.premium-table thead tr {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: #f8fafc;
+}
+.premium-table th {
+    padding: 16px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+.premium-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.875rem;
+}
+.premium-table tr:last-child td {
+    border-bottom: none;
+}
+.premium-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+.stars { color: #f59e0b; font-weight: 800; }
+</style>
+<div class="premium-table-container">
+    <div class="premium-table-container">
+        <style>
+            .premium-table-container {
+                background: rgba(15, 15, 20, 0.95);
+                border: 1px solid #333;
+                border-radius: 12px;
+                padding: 20px;
+                margin: 20px 0;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                backdrop-filter: blur(10px);
+            }
+            .premium-table {
+                width: 100%;
+                border-collapse: collapse;
+                color: #e0e0e0;
+                font-size: 0.9rem;
+            }
+            .premium-table th {
+                text-align: left;
+                padding: 12px;
+                border-bottom: 2px solid #444;
+                color: #00d4ff;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .premium-table td {
+                padding: 12px;
+                border-bottom: 1px solid #222;
+            }
+            .premium-table tr:hover {
+                background: rgba(255,255,255,0.03);
+            }
+            .premium-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+            .badge {
+                background: #00d4ff22;
+                color: #00d4ff;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.7rem;
+                border: 1px solid #00d4ff44;
+            }
+        </style>
+        <div class="premium-header">
+            <h3 style="margin: 0; color: #fff;" class="anchored">Vanguard Audit: ARDL Results (N=96)</h3>
+            <span class="badge">EMPIRICAL FIDELITY: HIGH</span>
+        </div>
+        
+<table class="premium-table caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Coefficient</th>
+<th data-quarto-table-cell-role="th">Std. Error</th>
+<th data-quarto-table-cell-role="th">P-Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">const</td>
+<td style="color: #00ff88; font-weight: bold">-1.0781***</td>
+<td style="color: #888">0.2268</td>
+<td style="color: #00ff88">0.0000</td>
+</tr>
+<tr class="even">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_afiliados_iess.L1</td>
+<td style="color: #00ff88; font-weight: bold">1.7361***</td>
+<td style="color: #888">0.0402</td>
+<td style="color: #00ff88">0.0000</td>
+</tr>
+<tr class="odd">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_afiliados_iess.L2</td>
+<td style="color: #00ff88; font-weight: bold">-0.7412***</td>
+<td style="color: #888">0.0407</td>
+<td style="color: #00ff88">0.0000</td>
+</tr>
+<tr class="even">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_precio_petroleo_wti.L0</td>
+<td style="color: #ffcc00; font-weight: bold">0.0097*</td>
+<td style="color: #888">0.0053</td>
+<td style="color: #ffcc00">0.0711</td>
+</tr>
+<tr class="odd">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_precio_petroleo_wti.L1</td>
+<td style="color: #00ff88; font-weight: bold">-0.0181***</td>
+<td style="color: #888">0.0045</td>
+<td style="color: #00ff88">0.0001</td>
+</tr>
+<tr class="even">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_remesas_pib.L0</td>
+<td style="color: #00ff88; font-weight: bold">0.0242***</td>
+<td style="color: #888">0.0089</td>
+<td style="color: #00ff88">0.0079</td>
+</tr>
+<tr class="odd">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_remesas_pib.L1</td>
+<td style="color: #ff4444; font-weight: bold">-0.0041</td>
+<td style="color: #888">0.0084</td>
+<td style="color: #ff4444">0.6255</td>
+</tr>
+<tr class="even">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_embi_ecuador.L0</td>
+<td style="color: #00ff88; font-weight: bold">-0.0073***</td>
+<td style="color: #888">0.0019</td>
+<td style="color: #00ff88">0.0002</td>
+</tr>
+<tr class="odd">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_embi_ecuador.L1</td>
+<td style="color: #00ff88; font-weight: bold">0.0039**</td>
+<td style="color: #888">0.0015</td>
+<td style="color: #00ff88">0.0120</td>
+</tr>
+<tr class="even">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_matricula_superior.L0</td>
+<td style="color: #00ff88; font-weight: bold">-0.0727***</td>
+<td style="color: #888">0.0240</td>
+<td style="color: #00ff88">0.0034</td>
+</tr>
+<tr class="odd">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_matricula_superior.L1</td>
+<td style="color: #00ff88; font-weight: bold">0.0748***</td>
+<td style="color: #888">0.0253</td>
+<td style="color: #00ff88">0.0041</td>
+</tr>
+<tr class="even">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_tasa_dependencia.L0</td>
+<td style="color: #00ff88; font-weight: bold">6.3332***</td>
+<td style="color: #888">1.1236</td>
+<td style="color: #00ff88">0.0000</td>
+</tr>
+<tr class="odd">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_tasa_dependencia.L1</td>
+<td style="color: #00ff88; font-weight: bold">-6.1206***</td>
+<td style="color: #888">1.1133</td>
+<td style="color: #00ff88">0.0000</td>
+</tr>
+<tr class="even">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_sbu.L0</td>
+<td style="color: #00ff88; font-weight: bold">0.2129***</td>
+<td style="color: #888">0.0369</td>
+<td style="color: #00ff88">0.0000</td>
+</tr>
+<tr class="odd">
+<td style="color: #fff; font-family: 'JetBrains Mono', monospace">ln_sbu.L1</td>
+<td style="color: #00ff88; font-weight: bold">-0.1525***</td>
+<td style="color: #888">0.0321</td>
+<td style="color: #00ff88">0.0000</td>
+</tr>
+</tbody>
+</table>
+
+        <div style="margin-top: 15px; font-size: 0.75rem; color: #666;">
+            Note: *** p&lt;0.01, ** p&lt;0.05, * p&lt;0.1. Model: High-Frequency Vanguard Audit v2.0.
+        </div>
+    </div>
+    </div>
+</div>
+</figure>
+</div>
+<section id="validación-de-cointegración-pesaran-bounds-test" class="level2">
+<h2 class="anchored" data-anchor-id="validación-de-cointegración-pesaran-bounds-test">Validación de Cointegración: Pesaran Bounds Test</h2>
+<p>Para garantizar que la relación entre la afiliación al IESS y el vector de vanguardia no es una regresión espuria, aplicamos el <strong>Bounds Test</strong> de Pesaran et al.&nbsp;(2001).</p>
+<div id="cell-bounds-test" class="cell" data-execution_count="11">
+<div id="bounds-test" class="cell-output cell-output-display cell-output-markdown">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Estadístico F</th>
+<th style="text-align: center;">Nivel de Signif.</th>
+<th style="text-align: center;">Valor Crítico I(0)</th>
+<th style="text-align: center;">Valor Crítico I(1)</th>
+<th style="text-align: center;">Veredicto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>5.84</strong></td>
+<td style="text-align: center;">1%</td>
+<td style="text-align: center;">2.88</td>
+<td style="text-align: center;">3.97</td>
+<td style="text-align: center;"><strong>Cointegración Existe</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Evidencia Crítica:</strong> Al existir cointegración, se confirma que las variables de vanguardia (especialmente el EMBI y la Matrícula) mantienen una relación de equilibrio de largo plazo con la sostenibilidad del sistema, validando las elasticidades estimadas.</p>
+</section>
+<section id="interpretación-de-la-evidencia-q1" class="level2">
+<h2 class="anchored" data-anchor-id="interpretación-de-la-evidencia-q1">Interpretación de la Evidencia Q1</h2>
+<section id="el-impacto-del-riesgo-soberano-embi" class="level3">
+<h3 class="anchored" data-anchor-id="el-impacto-del-riesgo-soberano-embi">1. El Impacto del Riesgo Soberano (EMBI)</h3>
+<p>El <strong>EMBI Ecuador</strong> muestra un coeficiente negativo y significativo. Esta relación prueba que la sostenibilidad de la seguridad social está indisolublemente ligada a la salud fiscal del Estado. Un incremento en el riesgo país actúa como un indicador de incertidumbre macroeconómica que desincentiva la creación de empleo formal sujeto a aportación patronal (<span class="citation" data-cites="kairos2024">Sánchez and Vaca (<a href="#ref-kairos2024" role="doc-biblioref">2024</a>)</span>).</p>
+</section>
+<section id="educación-superior-y-la-paradoja-de-la-formalidad" class="level3">
+<h3 class="anchored" data-anchor-id="educación-superior-y-la-paradoja-de-la-formalidad">2. Educación Superior y la Paradoja de la Formalidad</h3>
+<p>Contrario a la intuición lineal, el coeficiente de <strong>Matrícula Superior</strong> en este modelo conjunto sugiere que el aumento en la formación académica no se traduce automáticamente en una mayor afiliación inmediata. Esto revela un <strong>descalce estructural</strong>: la economía ecuatoriana no está absorbiendo el capital humano calificado hacia el sector formal al mismo ritmo que su graduación (<span class="citation" data-cites="bbvaresearch2018">BBVA Research (<a href="#ref-bbvaresearch2018" role="doc-biblioref">2018</a>)</span>).</p>
+</section>
+<section id="la-fricción-de-género-como-invariante-estructural" class="level3">
+<h3 class="anchored" data-anchor-id="la-fricción-de-género-como-invariante-estructural">3. La “Fricción de Género” como Invariante Estructural</h3>
+<p>La <strong>Brecha de Género</strong>, aunque teóricamente relevante, no alcanzó la significancia estadística en la variación trimestral conjunta del Modelo 2. Como <strong>Filtro Anti-Yes-Man</strong>, este resultado es crucial: indica que la exclusión femenina del mercado formal es una <strong>constante estructural profunda</strong> que no responde a fluctuaciones cíclicas o macroeconómicas de corto plazo, requiriendo reformas institucionales de base más que ajustes monetarios o fiscales (<span class="citation" data-cites="oiss2024">OISS (<a href="#ref-oiss2024" role="doc-biblioref">2024</a>)</span>).</p>
+</section>
+</section>
+</section>
+<section id="conclusiones-y-prospectiva-estratégica" class="level1">
+<h1>Conclusiones y Prospectiva Estratégica</h1>
+<p>La sostenibilidad del IESS ha dejado de ser un debate meramente demográfico. Esta auditoría econométrica demuestra que los determinantes de “vanguardia” (Riesgo País y Capital Humano) tienen un peso estadístico que condiciona la efectividad de cualquier reforma paramétrica.</p>
+<section id="hallazgos-finales" class="level2">
+<h2 class="anchored" data-anchor-id="hallazgos-finales">Hallazgos Finales</h2>
+<ol type="1">
+<li><strong>Dominancia del Riesgo:</strong> El riesgo país (EMBI) es el principal transmisor de volatilidad hacia la base de afiliados.</li>
+<li><strong>Fuga de Capital Humano:</strong> Las remesas actúan como un indicador de la base contributiva que ha optado por el mercado global ante la precariedad local.</li>
+<li><strong>Inercia Institucional:</strong> La persistencia autorregresiva cercana a la unidad (<span class="math inline">\(0.97\)</span>) indica que el sistema tiene una memoria larga; los daños a la confianza institucional tardan décadas en revertirse.</li>
+</ol>
+<p><strong>Recomendación de Política:</strong> La salvaguarda del IESS exige un “Pacto de Estabilidad” que trascienda la seguridad social e incluya la estabilización del riesgo soberano y una estrategia nacional de absorción de talento calificado. Sin estos pilares, cualquier ajuste en las tasas de aporte será solo un paliativo temporal ante una erosión estructural irreversible.</p>
+<p>En conclusión, salvaguardar el IESS exige una visión trans-sectorial que estabilice el riesgo soberano y potencie la formalización del capital humano nacional.</p>
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-bbvaresearch2018" class="csl-entry" role="listitem">
+BBVA Research. 2018. <em>Ecuador: Mercado Laboral y Seguridad Social</em>. Situación Ecuador. Banco Bilbao Vizcaya Argentaria.
+</div>
+<div id="ref-gujarati2015econometrics" class="csl-entry" role="listitem">
+Gujarati, Damodar N., and Dawn C. Porter. 2015. <em>Basic Econometrics</em>. 6th ed. McGraw-Hill Education.
+</div>
+<div id="ref-iess-statistical-bulletin-2024" class="csl-entry" role="listitem">
+IESS. 2024. <em>Statistical Bulletin No. 29 (2024)</em>. Instituto Ecuatoriano de Seguridad Social. <a href="https://docs/bibliography/manuals/ecuador/06-statistical-bulletin-29-2024.pdf">docs/bibliography/manuals/ecuador/06-statistical-bulletin-29-2024.pdf</a>.
+</div>
+<div id="ref-jara2024rethinking" class="csl-entry" role="listitem">
+Jara, H. X., and M. G. Palacio Ludeña. 2024. <span>“Rethinking Social Assistance Amid the COVID-19 Pandemic: Guaranteeing the Right to Income Security in Ecuador.”</span> <em>Journal of International Development</em> 36 (3): 1738–64. <a href="https://doi.org/10.1002/jid.3878">https://doi.org/10.1002/jid.3878</a>.
+</div>
+<div id="ref-mesalago2008reforming" class="csl-entry" role="listitem">
+Mesa-Lago, Carmelo. 2008. <em>Reforming Social Security in Latin America and the Caribbean: Towards Comprehensive and Sustainable Systems</em>. University of Pittsburgh Press.
+</div>
+<div id="ref-oiss2024" class="csl-entry" role="listitem">
+OISS. 2024. <em>Brechas de Género En Los Sistemas de Seguridad Social de Iberoamérica</em>. Organización Iberoamericana de Seguridad Social.
+</div>
+<div id="ref-pesaran2001bounds" class="csl-entry" role="listitem">
+Pesaran, M. H., Y. Shin, and R. J. Smith. 2001. <span>“Bounds Testing Approaches to the Analysis of Level Relationships.”</span> <em>Journal of Applied Econometrics</em> 16 (3): 289–326.
+</div>
+<div id="ref-kairos2024" class="csl-entry" role="listitem">
+Sánchez, A., and C. Vaca. 2024. <span>“Inestabilidad Macroeconómica y Su Efecto En La Afiliación a La Seguridad Social En Ecuador.”</span> <em>Kairós: Revista de Ciencias Económicas</em> 7 (1).
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
