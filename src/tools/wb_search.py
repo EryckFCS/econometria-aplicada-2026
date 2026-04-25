@@ -11,48 +11,46 @@ if str(SRC_DIR) not in sys.path:
 
 console = Console()
 
+
 def search_indicators(query: str, language: str = "es"):
     """
     Busca indicadores en la API del Banco Mundial por palabras clave.
     """
     url = "https://api.worldbank.org/v2/es/indicator"
-    params = {
-        "format": "json",
-        "search": query,
-        "per_page": 50
-    }
-    
+    params = {"format": "json", "search": query, "per_page": 50}
+
     console.print(f"[bold blue]🔍 Buscando indicadores para:[/bold blue] '{query}'...")
-    
+
     try:
         with httpx.Client(timeout=20.0) as client:
             response = client.get(url, params=params)
             response.raise_for_status()
             data = response.json()
-            
+
             if len(data) < 2 or not data[1]:
-                console.print("[bold red]❌ No se encontraron indicadores para esa búsqueda.[/bold red]")
+                console.print(
+                    "[bold red]❌ No se encontraron indicadores para esa búsqueda.[/bold red]"
+                )
                 return
-            
+
             indicators = data[1]
-            
+
             table = Table(title=f"Resultados para: {query}")
             table.add_column("ID (Código API)", style="cyan", no_wrap=True)
             table.add_column("Nombre del Indicador", style="green")
             table.add_column("Fuente", style="magenta")
-            
+
             for ind in indicators:
-                table.add_row(
-                    ind["id"],
-                    ind["name"],
-                    ind["source"]["value"]
-                )
-            
+                table.add_row(ind["id"], ind["name"], ind["source"]["value"])
+
             console.print(table)
-            console.print("\n[italic]Sugerencia: Usa el ID en tu lista de SERIES_RAW para descargar la data automáticamente.[/italic]")
-            
+            console.print(
+                "\n[italic]Sugerencia: Usa el ID en tu lista de SERIES_RAW para descargar la data automáticamente.[/italic]"
+            )
+
     except Exception as e:
         console.print(f"[bold red]Error en la conexión:[/bold red] {e}")
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

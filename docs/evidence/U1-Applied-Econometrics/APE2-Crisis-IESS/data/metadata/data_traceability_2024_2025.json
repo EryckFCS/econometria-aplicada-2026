@@ -1,0 +1,15 @@
+{
+  "project": "APE2-Crisis-IESS",
+  "audit_date": "2026-04-25",
+  "version": "1.3",
+  "status": "Consolidated 2000-2023",
+  "changes": [
+    {
+      "action": "Rollback",
+      "period_removed": "2024-2025",
+      "reason": "Methodological inconsistency in Health Expenditure variable (Total vs Public) detected by audit. To maintain econometric validity, the series is restricted to years with consolidated national accounts.",
+      "final_sample_size": 24
+    }
+  ],
+  "data_integrity": "Verified. Series 2000-2023 uses Total Health Expenditure % of GDP (WB/WHO standard) and official consolidated labor indicators."
+}

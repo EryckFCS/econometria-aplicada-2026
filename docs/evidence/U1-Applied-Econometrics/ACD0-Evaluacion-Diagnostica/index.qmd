@@ -1,0 +1,85 @@
+---
+university: "Universidad Nacional de Loja"
+faculty: "Facultad Jurídica, Social y Administrativa"
+school: "Carrera de Economía"
+course: "Econometría Aplicada"
+assignment: "Evaluación de Impacto: Factores Determinantes de la Violencia Letal en Ecuador (1990-2023)"
+author: "Erick Fabricio Condoy Seraquive"
+professor: "Eco. José Rafael Alvarado López"
+submission_date: "20 de abril de 2026"
+format:
+  pdf:
+    template: "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/writing/templates/academic_task.tex"
+    keep-tex: true
+    cite-method: citeproc
+  docx:
+    reference-doc: "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/writing/templates/template_fixed.docx"
+bibliography: references.bib
+---
+
+::: {.content-visible when-format="docx"}
+
+| | |
+|:---------------------------------------|---------------------------------------:|
+| ![](assets/logo_unl.png){width=1.2in} | ![](assets/logo_economia.jpg){width=1.2in} |
+
+:::
+
+# Problema de Investigación
+
+Ecuador ha experimentado una transformación violenta y acelerada en su panorama de seguridad pública. Tras una década de reducción sostenida en las tasas de homicidios (2011-2018), el país ingresó en una fase de crisis caracterizada por un crecimiento exponencial de la violencia letal, vinculada al crimen organizado transnacional. El problema radica en que las políticas previas, como la prohibición de armas de 2011, parecen haber perdido efectividad frente a las nuevas dinámicas delictivas, generando la necesidad de un re-modelado econométrico que capture estos quiebres estructurales.
+
+# Teoría
+
+La investigación se sustenta en dos pilares teóricos:
+1.  **Teoría de la Disuasión (Deterrence Theory):** Propone que el incremento del "costo" de cometer un crimen (como la restricción de medios para la violencia, ej. armas) reduce la incidencia delictiva [@becker1968].
+2.  **Econometría del Crimen y Ruptura Institucional:** Analiza cómo cambios en el entorno (pobreza, desempleo, fortaleza institucional) alteran el equilibrio de violencia. En series temporales, esto se manifiesta como quiebres estructurales donde las tendencias históricas son invalidadas por nuevos choques externos [@shmueli2010].
+
+# Hipótesis
+
+*   **H1 (Hipótesis de Disuasión):** El Decreto 164 de 2011 generó un quiebre estructural negativo (reducción) en la tasa de homicidios inmediatamente después de su implementación.
+*   **H2 (Hipótesis de Invalidez de Régimen):** Existe un segundo quiebre estructural a partir de 2019 que revirtió los logros de la política de 2011, causado por un cambio en la naturaleza delictiva del país.
+
+# Descripción de Variables
+
+Los datos provienen de la síntesis de microdatos de la ENEMDU (INEC) y bases del Banco Mundial, centralizados bajo la arquitectura de la librería `ecs_quantitative`.
+
+| Variable | Tipo | Descripción | Fuente |
+|:---|:---|:---|:---|
+| `year` | Temporal | Año calendario de la observación (1990-2023) | INEC |
+| `homicidios_100k` | Continuo | Tasa de muertes violentas por cada 100k habitantes | INEC |
+| `desempleo_total_ne` | Continuo | Tasa de desempleo nacional (%) | Banco Mundial |
+| `gasto_militar_pct_pib`| Continuo | Inversión en seguridad y defensa respecto al PIB | Banco Mundial |
+| `remesas_pct_pib` | Continuo | Flujo de remesas como proxy de bienestar económico | Banco Mundial |
+
+: Variables integradas para el diagnóstico de impacto en seguridad {#tbl-vars-homicidios}
+
+# Metodología
+
+Se implementa un modelo de **Series de Tiempo Interrumpidas (ITS) de Doble Quiebre**. A diferencia del modelo estándar, esta especificación captura dos regímenes distintos: la estabilización post-2011 y la disrupción post-2019. Para corregir la autocorrelación detectada ($DW \approx 0.6$ en OLS simple), se emplean **Errores Estándar Robustos HAC (Newey-West)**.
+
+$$Y_t = \beta_0 + \beta_1 T_t + \beta_2 P_{1,t} + \beta_3 Q_{1,t} + \beta_4 P_{2,t} + \beta_5 Q_{2,t} + \epsilon_t$$
+
+# Resultados
+
+El refinamiento del modelo permitió elevar el coeficiente de determinación **$R^2$ de 0.33 a 0.91**, indicando que el doble quiebre captura la verdadera estructura de la serie histórica.
+
+## Impacto Inmediato (2011)
+
+El efecto ($\beta_2$) tras la prohibición de 2011 fue una reducción significativa de **-5.13 puntos** en la tasa de homicidios ($p < 0.001$). 
+
+## Crisis de Seguridad (Post-2019)
+
+El cambio en la pendiente ($\beta_5$) post-2019 es de **+11.11**, indicando un crecimiento acelerado que invalida las tendencias previas.
+
+## Análisis Gráfico
+
+![Homicidios en Ecuador: Modelo ITS Robusto con Doble Inflexión](graph/impact_homicidios_its.png){#fig-impacto width=75% fig-align="center"}
+
+# Conclusión
+
+La prohibición de armas de 2011 fue eficaz en su contexto original. Sin embargo, la actual crisis (post-2019) responde a una ruptura institucional que trasciende el control de armas, exigiendo políticas de seguridad de nueva generación.
+
+# Referencias
+::: {#refs}
+:::

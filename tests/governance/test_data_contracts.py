@@ -1,43 +1,56 @@
-"""
-Governance Tests: Data Contracts for Applied Econometrics 2026.
-Ensures group datasets satisfy minimal metadata and formatting requirements.
-"""
+"""Governance tests for the standardized group datasets."""
 
-import pytest
-import pandas as pd
+from __future__ import annotations
+
 from pathlib import Path
 
-DATA_DIR = Path("/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/econometria-aplicada-2026/data/groups")
+import pandas as pd
+import pytest
 
-def get_group_datasets():
-    """Returns list of CSVs in the group data directory."""
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+DATA_DIR = REPO_ROOT / "data" / "curation" / "group_work" / "standardized"
+REQUIRED_COLUMNS = {"iso2", "year"}
+METADATA_COLUMNS = {"iso2", "pais", "country", "year"}
+
+
+def get_group_datasets() -> list[Path]:
+    """Devuelve los CSV estandarizados disponibles."""
     if not DATA_DIR.exists():
         return []
-    return list(DATA_DIR.glob("*.csv"))
+    return sorted(DATA_DIR.glob("*_std.csv"))
+
 
 @pytest.mark.parametrize("file_path", get_group_datasets())
-def test_group_data_contract(file_path):
-    """
-    Check if the group dataset follows the mandatory contract:
-    1. Contains 'year' column.
-    2. Contains 'iso_code' or 'country' column.
-    3. Has no completely empty columns.
-    """
+def test_group_data_contract(file_path: Path) -> None:
+    """Valida el esquema minimo del data mart estandarizado."""
     df = pd.read_csv(file_path)
-    
-    # Check 1: Mandatory Year
-    assert 'year' in [c.lower() for c in df.columns], f"{file_path.name} is missing 'year' column."
-    
-    # Check 2: Entity ID
-    columns = [c.lower() for c in df.columns]
-    has_id = 'iso_code' in columns or 'country' in columns or 'id' in columns
-    assert has_id, f"{file_path.name} must have 'iso_code', 'country', or 'id'."
-    
-    # Check 3: Data Quality
-    empty_cols = df.columns[df.isnull().all()].tolist()
-    assert not empty_cols, f"{file_path.name} contains completely empty columns: {empty_cols}"
+    lower_columns = {column.lower() for column in df.columns}
+    data_columns = [
+        column for column in df.columns if column.lower() not in METADATA_COLUMNS
+    ]
+
+    assert REQUIRED_COLUMNS.issubset(lower_columns), (
+        f"{file_path.name} debe incluir al menos 'iso2' y 'year'."
+    )
+
+    assert data_columns, f"{file_path.name} no contiene columnas de datos."
+    assert df[data_columns].notna().any().any(), (
+        f"{file_path.name} no tiene ninguna serie con valores activos."
+    )
+
+    assert df["iso2"].dropna().astype(str).str.fullmatch(r"[A-Z]{2}").all(), (
+        f"{file_path.name} tiene valores iso2 invalidos."
+    )
+
+    non_empty_years = df["year"].dropna()
+    assert not non_empty_years.empty, f"{file_path.name} no contiene years validos."
+    assert pd.to_numeric(non_empty_years, errors="coerce").notna().all(), (
+        f"{file_path.name} tiene valores year no numericos en filas activas."
+    )
+
 
 if __name__ == "__main__":
-    # If run directly, just check the directory exists
     print(f"Target Directory: {DATA_DIR}")
     print(f"Found {len(get_group_datasets())} datasets.")
+

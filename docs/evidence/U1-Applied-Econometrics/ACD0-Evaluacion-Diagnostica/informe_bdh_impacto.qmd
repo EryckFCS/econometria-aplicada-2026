@@ -1,0 +1,80 @@
+---
+title: "Evaluación de Impacto: Bono de Desarrollo Humano e Informalidad Laboral"
+subtitle: "Applied Econometrics — Unidad 1: Evaluación de Impacto"
+author: "Erick Figueroa"
+date: "2026-04-20"
+format:
+  docx: default
+  pdf: 
+    documentclass: article
+    geometry: margin=1in
+    fontsize: 11pt
+    linestretch: 1.5
+---
+
+## 1. Definición del Problema
+
+La identificación del efecto causal de los programas de transferencias monetarias condicionadas (TMC), como el **Bono de Desarrollo Humano (BDH)** en Ecuador, enfrenta un desafío fundamental: el **Sesgo de Selección**. 
+
+Dado que el bono se asigna a hogares en situación de vulnerabilidad extrema, los beneficiarios (tratados) difieren sistemáticamente de los no beneficiarios (control) en variables observables (educación, edad, tamaño del hogar) y no observables. Si comparamos promedios simples, estaríamos atribuyendo al bono diferencias que en realidad se deben a las características iniciales de pobreza. Este estudio busca aislar el efecto del bono sobre la **Informalidad Laboral**, utilizando una muestra depurada de la ENEMDU 2023-2024.
+
+## 2. Marco Teórico
+
+Desde la perspectiva de la oferta laboral, las TMC pueden generar un "Efecto Ingreso" que reduce la intensidad de búsqueda de empleo formal si el costo de oportunidad de perder el bono (al superar el umbral de ingresos o formalizarse) es muy alto. 
+
+La teoría de la **"Trampa de Informalidad"** sugiere que los individuos en el margen pueden preferir actividades informales de baja productividad que no son reportadas al sistema de seguridad social, manteniendo así su elegibilidad para el subsidio.
+
+## 3. Metodología: Propensity Score Matching (PSM)
+
+Para resolver el sesgo de selección, implementamos un modelo de **Emparejamiento por Puntaje de Propensión (PSM)**.
+
+### Especificación del Modelo
+Estimamos el *Propensity Score* ($P(X)$) mediante un modelo Logit:
+$$ P(D_i = 1 | X_i) = \Lambda( \beta_0 + \beta_1 \text{Edad} + \beta_2 \text{Sexo} + \beta_3 \text{Educación} + \beta_4 \text{Área} + \beta_5 \text{Hogar} ) $$
+
+Donde $D_i=1$ si recibe el BDH. Posteriormente, emparejamos cada beneficiario con un no-beneficiario que tenga un $P(X)$ similar, utilizando el algoritmo de **Vecino más Cercano (1:1)** con un *caliper* de $0.25\sigma$ para garantizar el supuesto de **Soporte Común**.
+
+## 4. Ficha Técnica de Variables
+
+| Variable | Tipo | Descripción | Fuente |
+|:---|:---|:---|:---|
+| `treated` (D) | Binaria | 1 si el individuo recibe BDH, 0 en caso contrario. | ENEMDU (p63 > 0) |
+| `informal` (Y) | Binaria | 1 si trabaja en el sector informal (RUC/Tamaño est). | ENEMDU |
+| `age` | Cuantitativa | Edad del individuo (Limitado a PEA 15-65 años). | ENEMDU |
+| `sex` | Binaria | 1 = Hombre, 0 = Mujer. | ENEMDU |
+| `edu` | Ordinal | Años de instrucción o nivel alcanzado. | ENEMDU |
+| `hh_size` | Cuantitativa | Número de personas en el hogar. | ENEMDU |
+| `area` | Binaria | 1 = Urbana, 0 = Rural. | ENEMDU |
+
+## 5. Resultados y Discusión
+
+Tras el emparejamiento, el modelo evaluó una muestra balanceada de **76,426 tratados** frente a sus respectivos controles.
+
+### Efecto Medio del Tratamiento (ATT)
+El resultado del **ATT (Average Treatment Effect on the Treated)** es:
+$$ \Delta_{ATT} = E[Y_{1i} | D_i=1] - E[Y_{0i} | D_i=1] = \mathbf{+39.32\%} $$
+
+Esto indica que la recepción del BDH incrementa en **39.3 puntos porcentuales** la probabilidad de que el beneficiario se desempeñe en el sector informal, en comparación con un individuo idéntico que no recibe el subsidio.
+
+### Validaciones Gráficas
+
+#### Soporte Común (Common Support)
+La distribución del P-Score muestra un traslape significativo, permitiendo una comparación válida.
+
+![Distribución de Propensity Score](results_bdh/common_support_bdh.png)
+
+#### Balance de Covariables
+El equilibrio de las variables pre-tratamiento (como la edad) mejora tras el matching.
+
+![Balance de Edad Post-Matching](results_bdh/age_balance_post.png)
+
+\newpage
+
+::: {.callout-note appearance="simple"}
+**Certificado de Integridad ECSQ v5.0**
+
+- **Fecha de Auditoría**: 2026-04-20 10:55
+- **Fuentes Verificadas**: 215,978 registros (ENEMDU 2023-2024)
+- **Autoría Soberana**: Erick Figueroa
+- **Estado de Datos**: 🟢 ÍNTEGRO mediante SHA256 Match
+:::

@@ -1,68 +1,71 @@
-"""
-APE1 MASTER BUILD ORCHESTRATOR
-Unified pipeline for Applied Econometrics 2026.
-Nomenclature: M01-U1-APE-Master_Build
+"""Orquestador controlado de la Unidad 1.
+
+Este modulo solo describe el plan de ejecucion. No dispara ingesta ni
+recalcula artefactos de datos.
 """
 
-import sys
-import importlib.util
+from __future__ import annotations
+
+from dataclasses import dataclass
 from pathlib import Path
-from loguru import logger
-from core.exceptions import DataIntegrityError, RegistryOverwriteDataError, CIEError
+import sys
 
-# Configurar ROOT del proyecto
-PROJECT_ROOT = Path(__file__).parents[2]
-sys.path.append(str(PROJECT_ROOT / "src"))
+if __package__ in {None, ""}:
+    sys.path.append(str(Path(__file__).resolve().parents[2]))
 
-def import_task(task_name):
-    """Importa dinámicamente tareas con nombres estandarizados (soportando guiones)."""
-    spec = importlib.util.find_spec(f"tasks.{task_name}")
-    if spec is None:
-        raise ImportError(f"No se encontró la tarea: tasks.{task_name}")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+from src.core.config import settings
 
-def run_pipeline():
-    logger.info("🎬 Iniciando MASTER BUILD PIPELINE (Unidad 1)")
-    
-    try:
-        # T01: Base de Homicidios y Controles (APE)
-        logger.info("--- [T01-U1-APE] Homicidios y Controles Económicos ---")
-        t01 = import_task("T01-U1-APE-Homicidios_Ecuador")
-        t01.run_task()
-        
-        # T02: Consolidado de Equipo (ACD)
-        logger.info("--- [T02-U1-ACD] Consolidado Final de Equipo ---")
-        try:
-            import_task("T02-U1-ACD-Consolidado_Equipo")
-            # t02.run()  # Comentado hasta verificar si tiene entrypoint 'run' o 'run_task'
-        except Exception as e:
-            logger.warning(f"Salto de T02: {e}")
 
-        # T03: Panel Ambiental (AA)
-        logger.info("--- [T03-U1-AA] Panel Ambiental LATAM ---")
-        try:
-            import_task("T03-U1-AA-Panel_Ambiental_Latam")
-            # t03.task_ape1_panel() 
-        except Exception as e:
-            logger.warning(f"Salto de T03: {e}")
+@dataclass(frozen=True, slots=True)
+class MasterBuildStep:
+    """Define un paso declarativo del master build."""
 
-        logger.success("✅ M01 MASTER BUILD completado exitosamente.")
-        
-    except DataIntegrityError as e:
-        logger.critical(f"🛑 VIOLACIÓN DE INTEGRIDAD DE DATOS: {e}")
-        logger.error("El pipeline se detuvo para proteger la validez científica de la investigación.")
-        sys.exit(1)
-    except RegistryOverwriteDataError as e:
-        logger.critical(f"🛡️ ERROR DE CONFIGURACIÓN DE REGISTRO: {e}")
-        sys.exit(1)
-    except CIEError as e:
-        logger.error(f"❌ Error interno en la infraestructura CIE: {e}")
-        sys.exit(1)
-    except Exception as e:
-        logger.critical(f"💥 Error inesperado en la orquestación: {e}")
-        sys.exit(1)
+    label: str
+    script: Path
+    purpose: str
+
+
+def build_master_plan() -> list[MasterBuildStep]:
+    """Construye el plan canonico sin ejecutar ningun paso."""
+    tasks_dir = settings.root_path / "src" / "tasks"
+    return [
+        MasterBuildStep(
+            label="T01",
+            script=tasks_dir / "T01-U1-APE-Homicidios_Ecuador.py",
+            purpose="Construccion de la base raw de homicidios y controles",
+        ),
+        MasterBuildStep(
+            label="T02",
+            script=tasks_dir / "T02-U1-ACD-Consolidado_Equipo.py",
+            purpose="Consolidacion de variables normalizadas del equipo",
+        ),
+        MasterBuildStep(
+            label="T03",
+            script=tasks_dir / "T03-U1-AA-Panel_Ambiental_Latam.py",
+            purpose="Panel ambiental LATAM y controles estructurales",
+        ),
+        MasterBuildStep(
+            label="T04",
+            script=tasks_dir / "T04-U1-ACD-SEM_Homicidios.py",
+            purpose="SEM de homicidios y diagnostico de variables",
+        ),
+        MasterBuildStep(
+            label="T05",
+            script=tasks_dir / "T05-Report_Engine.py",
+            purpose="Renderizado controlado de la capa de reporteo",
+        ),
+    ]
+
+
+def main() -> int:
+    """Imprime el plan controlado de la Unidad 1."""
+    print(f"Plan controlado para {settings.project_name}")
+    for step in build_master_plan():
+        print(
+            f"{step.label}: {step.script.relative_to(settings.root_path)} - {step.purpose}"
+        )
+    return 0
+
 
 if __name__ == "__main__":
-    run_pipeline()
+    raise SystemExit(main())

@@ -1,0 +1,42 @@
+{
+  "collection": "bibliography",
+  "total_chunks": 15187,
+  "last_audit": "2026-04-21",
+  "status": "SINCRONIZADO",
+  "engine": "ecs_quantitative.ingestion.rag",
+  "indexed_documents": [
+    {
+      "source_name": "Econometric Analysis, eBook, Global Edition",
+      "chunks": 4689
+    },
+    {
+      "source_name": "Econometric Analysis (5th Edition)",
+      "chunks": 3614
+    },
+    {
+      "source_name": "Econometric Analysis of Cross Section and Panel Data (2nd ed.)",
+      "chunks": 3410
+    },
+    {
+      "source_name": "Basic Econometrics, Fifth Edition",
+      "chunks": 3237
+    },
+    {
+      "source_name": "Metodologia ENEMDU General",
+      "chunks": 162
+    },
+    {
+      "source_name": "Metodologia Empleo Informal",
+      "chunks": 40
+    },
+    {
+      "source_name": "Censo 2022 Poblacion Ocupada",
+      "chunks": 35
+    },
+    {
+      "source_name": "Statistical Bulletin No. 29 (2024)",
+      "chunks": 0,
+      "status": "PENDIENTE"
+    }
+  ]
+}

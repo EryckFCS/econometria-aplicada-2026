@@ -1,0 +1,29 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:        homicidios_100k   R-squared:                       0.912
+Model:                            OLS   Adj. R-squared:                  0.896
+Method:                 Least Squares   F-statistic:                     77.80
+Date:                Mon, 20 Apr 2026   Prob (F-statistic):           1.54e-15
+Time:                        11:23:57   Log-Likelihood:                -74.224
+No. Observations:                  34   AIC:                             160.4
+Df Residuals:                      28   BIC:                             169.6
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+==================================================================================
+                     coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------
+const              8.6697      0.450     19.266      0.000       7.788       9.552
+time               0.4818      0.033     14.615      0.000       0.417       0.546
+policy1           -5.1303      0.951     -5.393      0.000      -6.995      -3.266
+trend_after_p1    -1.8628      0.218     -8.531      0.000      -2.291      -1.435
+policy2           -1.6967      3.528     -0.481      0.631      -8.611       5.218
+trend_after_p2    11.1157      1.586      7.008      0.000       8.007      14.224
+==============================================================================
+Omnibus:                        8.063   Durbin-Watson:                   1.637
+Prob(Omnibus):                  0.018   Jarque-Bera (JB):               11.672
+Skew:                           0.387   Prob(JB):                      0.00292
+Kurtosis:                       5.764   Cond. No.                         131.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 1 lags and without small sample correction

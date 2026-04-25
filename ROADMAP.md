@@ -33,8 +33,10 @@ Eliminar el procesamiento manual de datos y la elaboración manual de reportes m
 
 ### Fase 4: Orquestación Académica 🟢 (Completado)
 
-- **Master Orchestrator**: Unificación de fases en `src/orchestration/ape1_master_build.py`.
+- **Master Orchestrator**: Unificación de fases en `src/orchestration/M01-U1-APE-Master_Build.py`.
 - **Task Orchestrators**: Independencia total de scripts (ACD, AA, APE) mediante inyección de librerías.
+- **SEM Homicidios**: Institucionalización del taller de ecuaciones simultáneas en la arquitectura CIE (T04).
+- **Evidence Vaulting**: Implementación de la primera 'Bóveda de Evidencia' (U1-ACD2-SEM) para reporteo Quarto reproducible.
 - **Syllabus Sync**: Documentación técnica automática por unidad sincronizada con la realidad del repo.
 - **Governance Hub**: Repositorio de manuales y validación de metadatos (CI-Catalog) operativo.
 - **Stata Automation**: Puente dinámico para archivos `.do`.
@@ -52,8 +54,8 @@ Eliminar el procesamiento manual de datos y la elaboración manual de reportes m
 
 1. **Prioridad API**: Si existe una API estable, no se descarga el archivo completo (ej. World Bank).
 2. **Descarga Crítica**: Se descarga el set de datos completo solo si no hay API o si la trazabilidad forense lo exige (ej. IMF, Maddison).
-3. **Cero Manualidad**: Se prohíbe el "Copy-Paste" de datos. Todo movimiento de datos debe ser scriptado y logueado por `structlog`.
+3. **Cero Manualidad**: Se prohíbe el "Copy-Paste" de datos. Todo movimiento de datos debe ser scriptado y registrado por el sistema de logs del proyecto (`logging` y `loguru`).
 
 ---
 
-Última actualización: 17 de abril de 2026 (desacoplamiento total de catálogos TOML + Smart Pathing).
+Última actualización: 20 de abril de 2026 (institucionalización de Taller SEM y arquitectura de Bóvedas de Evidencia).

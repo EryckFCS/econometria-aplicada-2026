@@ -1,0 +1,88 @@
+{
+  "library": [
+    {
+      "id": "gujarati_porter_basic_econometrics_2009",
+      "name": "Basic Econometrics, Fifth Edition",
+      "path": "docs/bibliografia/Basic Econometrics, Fifth Edition -- Damodar N_ Gujarati, Dawn C_ Porter -- McGraw-Hill Series in Economics, 5, 2009 -- McGraw-H.pdf",
+      "author": "Damodar N. Gujarati; Dawn C. Porter",
+      "year": 2009,
+      "edition": "5th",
+      "source_type": "book",
+      "language": "en",
+      "task_relevance": "core_econometrics_reference",
+      "contains_formula_images": true
+    },
+    {
+      "id": "greene_econometric_analysis_2002",
+      "name": "Econometric Analysis (5th Edition)",
+      "path": "docs/bibliografia/Econometric Analysis (5th Edition) -- William H_ Greene -- 5th ed, Upper Saddle River, NJ, 2002 -- Prentice Hall Internat -- 978.pdf",
+      "author": "William H. Greene",
+      "year": 2002,
+      "edition": "5th",
+      "source_type": "book",
+      "language": "en",
+      "task_relevance": "core_econometrics_reference",
+      "contains_formula_images": true
+    },
+    {
+      "id": "greene_econometric_analysis_2019",
+      "name": "Econometric Analysis, eBook, Global Edition",
+      "path": "docs/bibliografia/Econometric Analysis, eBook, Global Edition -- Greene, William H_ - undifferentiated, Greene, William H -- 8th edition, 2019 -- .pdf",
+      "author": "William H. Greene",
+      "year": 2019,
+      "edition": "8th",
+      "source_type": "book",
+      "language": "en",
+      "task_relevance": "core_econometrics_reference",
+      "contains_formula_images": true
+    },
+    {
+      "id": "wooldridge_cross_section_panel_2010",
+      "name": "Econometric Analysis of Cross Section and Panel Data, 2nd",
+      "path": "docs/bibliografia/Econometric Analysis of Cross Section and Panel Data, 2nd -- Jeffrey M_ Wooldridge -- 2, 2010 -- MIT press -- bbc8445e912c872f90.pdf",
+      "author": "Jeffrey M. Wooldridge",
+      "year": 2010,
+      "edition": "2nd",
+      "source_type": "book",
+      "language": "en",
+      "task_relevance": "panel_data_reference",
+      "contains_formula_images": true
+    },
+    {
+      "id": "manual_enemdu_general",
+      "name": "Metodologia ENEMDU General",
+      "path": "docs/manuals/ecuador/Metodologia_ENEMDU_General.pdf",
+      "author": "INEC",
+      "year": 2021,
+      "edition": "operational",
+      "source_type": "manual",
+      "language": "es",
+      "task_relevance": "survey_methodology_context",
+      "contains_formula_images": true
+    },
+    {
+      "id": "manual_empleo_informal",
+      "name": "Metodologia Empleo Informal",
+      "path": "docs/manuals/ecuador/Metodologia_Empleo_Informal.pdf",
+      "author": "INEC",
+      "year": 2021,
+      "edition": "operational",
+      "source_type": "manual",
+      "language": "es",
+      "task_relevance": "survey_methodology_context",
+      "contains_formula_images": true
+    },
+    {
+      "id": "manual_censo_2022_ocupada",
+      "name": "Censo 2022 Poblacion Ocupada",
+      "path": "docs/manuals/ecuador/Censo2022_Poblacion_Ocupada.pdf",
+      "author": "INEC",
+      "year": 2022,
+      "edition": "operational",
+      "source_type": "manual",
+      "language": "es",
+      "task_relevance": "survey_methodology_context",
+      "contains_formula_images": true
+    }
+  ]
+}

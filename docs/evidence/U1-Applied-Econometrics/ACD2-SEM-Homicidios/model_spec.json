@@ -1,0 +1,23 @@
+{
+    "model_id": "SEM-01-HOMICIDIOS",
+    "description": "Sistema de Ecuaciones Simult\u00e1neas: Violencia y Din\u00e1mica Socioecon\u00f3mica",
+    "equations": [
+        {
+            "target": "homicidios_100k",
+            "predictors": [
+                "desempleo_total_ne",
+                "gasto_militar_pct_pib",
+                "remesas_pct_pib"
+            ],
+            "label": "Ecuaci\u00f3n de Seguridad (Violencia)"
+        },
+        {
+            "target": "desempleo_total_ne",
+            "predictors": [
+                "remesas_pct_pib",
+                "uso_internet_pct"
+            ],
+            "label": "Ecuaci\u00f3n Socio-Urbana (Laboral)"
+        }
+    ]
+}

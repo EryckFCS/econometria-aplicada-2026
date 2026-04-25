@@ -1,0 +1,154 @@
+{
+  "node": "applied_econometrics_2026",
+  "collection": "bibliography",
+  "note_shared": "Colecci\u00f3n COMPARTIDA del brain federado. Incluye materiales de econometr\u00eda y ENEMDU.",
+  "generated": "2026-04-21",
+  "total_chunks": 15187,
+  "documents": [
+    {
+      "source_id": "greene_8th_ebook",
+      "title": "Econometric Analysis, eBook Global Edition (8\u00aa ed.)",
+      "authors": [
+        "Greene, William H."
+      ],
+      "year": 2019,
+      "publisher": "Pearson",
+      "type": "libro",
+      "file": "docs/bibliography/Econometric Analysis, eBook, Global Edition...pdf",
+      "chunks": 4689,
+      "collection": "bibliography",
+      "date_indexed": "2026-04-20",
+      "status": "INDEXADO",
+      "chunks_indexed": 4689
+    },
+    {
+      "source_id": "greene_5th",
+      "title": "Econometric Analysis (5\u00aa ed.)",
+      "authors": [
+        "Greene, William H."
+      ],
+      "year": 2002,
+      "publisher": "Prentice Hall",
+      "type": "libro",
+      "file": "docs/bibliography/Econometric Analysis (5th Edition)...pdf",
+      "chunks": 3614,
+      "collection": "bibliography",
+      "date_indexed": "2026-04-20",
+      "status": "INDEXADO",
+      "chunks_indexed": 3614
+    },
+    {
+      "source_id": "gujarati_5th",
+      "title": "Basic Econometrics (5\u00aa ed.)",
+      "authors": [
+        "Gujarati, Damodar N.",
+        "Porter, Dawn C."
+      ],
+      "year": 2009,
+      "publisher": "McGraw-Hill",
+      "type": "libro",
+      "file": "docs/bibliography/Basic Econometrics, Fifth Edition...pdf",
+      "chunks": 3237,
+      "collection": "bibliography",
+      "date_indexed": "2026-04-20",
+      "status": "INDEXADO",
+      "chunks_indexed": 3237
+    },
+    {
+      "source_id": "metodologia_enemdu_general",
+      "title": "Metodolog\u00eda ENEMDU \u2014 General",
+      "authors": [
+        "INEC Ecuador"
+      ],
+      "year": null,
+      "type": "manual_metodologico",
+      "file": "docs/manuals/ecuador/Metodologia_ENEMDU_General.pdf",
+      "chunks": 162,
+      "collection": "bibliography",
+      "date_indexed": "2026-04-20",
+      "status": "INDEXADO"
+    },
+    {
+      "source_id": "metodologia_empleo_informal",
+      "title": "Metodolog\u00eda Empleo Informal",
+      "authors": [
+        "INEC Ecuador"
+      ],
+      "year": null,
+      "type": "manual_metodologico",
+      "file": "docs/manuals/ecuador/Metodologia_Empleo_Informal.pdf",
+      "chunks": 40,
+      "collection": "bibliography",
+      "date_indexed": "2026-04-20",
+      "status": "INDEXADO"
+    },
+    {
+      "source_id": "censo2022_ocupada",
+      "title": "Censo 2022 \u2014 Poblaci\u00f3n Ocupada",
+      "authors": [
+        "INEC Ecuador"
+      ],
+      "year": 2022,
+      "type": "boletin_estadistico",
+      "file": "docs/manuals/ecuador/Censo2022_Poblacion_Ocupada.pdf",
+      "chunks": 35,
+      "collection": "bibliography",
+      "date_indexed": "2026-04-20",
+      "status": "INDEXADO"
+    },
+    {
+      "source_id": "iess-statistical-bulletin-2024",
+      "title": "Statistical Bulletin No. 29 (2024)",
+      "authors": [
+        "IESS - Direcci\u00f3n Actuarial, de Investigaci\u00f3n y Estad\u00edstica"
+      ],
+      "year": 2024,
+      "type": "boletin_estadistico",
+      "file": "docs/bibliography/manuals/ecuador/06-statistical-bulletin-29-2024.pdf",
+      "collection": "bibliography",
+      "status": "PENDIENTE"
+    }
+  ],
+  "not_indexed": [
+    {
+      "file": "data/raw/externos/V-Dem-CY-FullOthers-v16_sav/codebook.pdf",
+      "reason": "Codebook de dataset \u2014 no es bibliograf\u00eda acad\u00e9mica. Usar directamente para consulta."
+    },
+    {
+      "file": "docs/bibliography/Econometric Analysis of Cross Section and Panel Data 2nd (Wooldridge 2010).pdf",
+      "reason": "NO INDEXADO A\u00daN \u2014 requiere ingesta",
+      "priority": "ALTA"
+    }
+  ],
+  "pending": [
+    {
+      "source_id": "wooldridge_panel",
+      "title": "Econometric Analysis of Cross Section and Panel Data (2\u00aa ed.)",
+      "authors": [
+        "Wooldridge, Jeffrey M."
+      ],
+      "year": 2010,
+      "publisher": "MIT Press",
+      "file": "docs/bibliography/Econometric Analysis of Cross Section and Panel Data...pdf",
+      "type": "libro",
+      "priority": "ALTA",
+      "status": "PROCESANDO (OCR en segundo plano)",
+      "note": "Sincronizaci\u00f3n iniciada el 2026-04-21. PDF escaneado (requiere OCR)."
+    },
+    {
+      "title": "Introductory Econometrics: A Modern Approach (Wooldridge)",
+      "authors": [
+        "Wooldridge, Jeffrey M."
+      ],
+      "type": "libro",
+      "priority": "MEDIA",
+      "note": "Texto complementario \u2014 obtener PDF"
+    },
+    {
+      "title": "Material adicional del docente (Alvarado Lopez)",
+      "type": "material_docente",
+      "priority": "MEDIA",
+      "note": "Consultar al docente por lecturas de U1-U3"
+    }
+  ]
+}

@@ -1,12 +1,21 @@
----
-title: "Análisis Econométrico: Unidad 1"
-subtitle: "Auditoría Forense y Modelización"
-author: "Erick Fabricio Condoy Seraquive"
+university: "UNIVERSIDAD NACIONAL DE LOJA"
+faculty: "FACULTAD JURÍDICA, SOCIAL Y ADMINISTRATIVA"
+school: "CARRERA DE ECONOMÍA"
+course: "ECONOMETRÍA APLICADA"
+
 format:
   html: default
-  pdf: default
+  pdf:
+    pdf-engine: lualatex
+    template: /home/erick-fcs/Capital_Workstation/capital-workstation-libs/src/ecs_quantitative/reporting/templates/academic_task.tex
+    toc: false
+    number-sections: true
+    citeproc: true
   docx: default
----
+
+bibliography: 
+  - /home/erick-fcs/Capital_Workstation/capital-workstation-libs/src/ecs_quantitative/reporting/assets/references.bib
+csl: /home/erick-fcs/Capital_Workstation/capital-workstation-libs/src/ecs_quantitative/reporting/templates/apa_7.csl
 
 ## Resumen Ejecutivo
 
@@ -18,7 +27,7 @@ El presente estudio se enmarca en la cátedra de Econometría Aplicada 2026. Se 
 
 ## 2. Metodología
 
-Se aplicó un pipeline de ingesta inteligente que prioriza fuentes de API (World Bank) y realiza un fallback a archivos locales normalizados.
+Se aplicó un pipeline de ingesta inteligente que prioriza fuentes de API provenientes del Banco Mundial y realiza un fallback a archivos locales normalizados.
 
 ```{python}
 #| label: setup
@@ -53,7 +62,7 @@ plt.show()
 
 ## 4. Conclusiones
 
-La infraestructura de datos actual permite una transición fluida hacia modelos de estimación dinámicos (GMM, Panel Data).
+La infraestructura de datos actual permite una transición fluida hacia modelos de estimación dinámicos tales como GMM o datos de panel.
 
 ## Referencias {.unnumbered}
 

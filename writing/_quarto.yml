@@ -14,9 +14,11 @@ format:
     number-sections: true
     code-fold: true
   pdf:
-    documentclass: article
-    toc: true
+    pdf-engine: lualatex
+    include-in-header: /home/erick-fcs/Capital_Workstation/capital-workstation-libs/src/ecs_quantitative/reporting/templates/academic_task.tex
+    toc: false
     number-sections: true
+    citeproc: true
     mainfont: "Liberation Serif"
     geometry:
       - margin=25mm
@@ -26,7 +28,7 @@ format:
     toc: true
     number-sections: true
     highlight-style: github
-    reference-doc: templates/template.docx # Plantilla base activada
+    reference-doc: /home/erick-fcs/Capital_Workstation/capital-workstation-libs/src/ecs_quantitative/reporting/assets/template.docx # Plantilla base activada
 
 execute:
   echo: false

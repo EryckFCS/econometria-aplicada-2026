@@ -1,35 +1,48 @@
-# Python
+# Python-generated files
 __pycache__/
-*.py[cod]
-*.class
-deliveries/
-.venv/
-.env
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.coverage
+htmlcov/
 .pytest_cache/
-.ruff_cache/
-*.swp
 
-# OS
-.DS_Store
-Thumbs.db
+# Virtual environments
+.venv
 
-# Project Specific
-logs/*.log
-data/raw/externos/*.xls
-data/raw/externos/*.xlsx
+# Quarto
+/.quarto/
+**/*.quarto_ipynb
+**/*_files/
+**/*_cache/
+_site/
 
-# Researcher Landing Zone (CIE Governance)
-# We ignore the raw contributions to protect team privacy, 
-# but keep the infrastructure that processes them.
-data/raw/partners/
+# Scratch — scripts operativos no versionables
+scratch/
+
+# Archives and Large Files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Specific Exclusions
+Photos*/
 data/raw/excel/*.xlsx
 data/raw/csv/*.csv
-data/raw/externos/**/*.sav
-data/raw/externos/**/*.pdf
-data/curation/group_work/standardized/*.csv
 data/exports/*.xlsx
 
-# Allow keeping the folder structure
-!data/raw/partners/.gitkeep
-!data/curation/group_work/standardized/.gitkeep
-!data/raw/externos/.gitkeep
+# Salidas de writing/ (libro Quarto)
+writing/dist/
+_freeze/
+.ipynb_checkpoints/
+render_log*.txt
+.ruff_cache/
+
+# Large Datasets and Vector Stores
+*.sav
+*.sqlite3
+**/vector_store/
+data/raw/external/

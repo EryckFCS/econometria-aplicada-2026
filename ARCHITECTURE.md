@@ -1,48 +1,45 @@
-# Arquitectura Técnica: CIE - Centro de Investigación Econométrica
+# Arquitectura Tecnica - Applied Econometrics 2026
 
-Este documento define la infraestructura técnica del repositorio, diseñada bajo estándares de ingeniería de software aplicados a la econometría de alto nivel.
+Este documento describe la estructura real del nodo despues de la
+reestructuracion controlada a Nivel 5.
 
-## 🏛️ Capas del Sistema
+## 1. Bootstrap local
 
-### 1. Núcleo e Ingesta Inteligente (`src/core/`)
+- `src/core/config.py`: resuelve la raiz del proyecto y las rutas canonicas.
+- `src/core/brain.py`: expone el estado basal de memoria con
+  `global_knowledge` como coleccion declarativa y `memory=None`.
+- `main.py`: publica la identidad del nodo sin ejecutar ingesta.
 
-Constituye el corazón del sistema y la Única Fuente de la Verdad:
+## 2. Capa analitica
 
-- **`constants.py`**: Centraliza todos los mapeos geográficos (ISO3, ISO2) y la definición de la región de estudio (LATAM-20). Prohibida su duplicación en otras capas.
-- **`source_backends.py`**: Registro de los "3 Pilares" (`world_bank`, `http_api`, `local_file`). Implementa **Smart Loading**, que infiere el formato de archivos locales (Parquet > Excel > CSV/TSV) automáticamente.
-- **`utils.py`**: Utilidades robustas de normalización (`normalize_iso2`) y gestión de sesiones con reintentos inteligentes.
-- **`config.py`**: Resolución dinámica de rutas del proyecto y directorios de datos.
+- `src/lib/catalog.py`: carga los catalogos TOML del trabajo de grupo.
+- `src/tasks/`: contiene `T01-U1-APE-Homicidios_Ecuador.py`,
+  `T02-U1-ACD-Consolidado_Equipo.py`, `T03-U1-AA-Panel_Ambiental_Latam.py`,
+  `T04-U1-ACD-SEM_Homicidios.py` y `T05-Report_Engine.py`.
+- `src/orchestration/M01-U1-APE-Master_Build.py`: imprime un plan declarativo
+  y no dispara procesos de datos.
 
-### 2. Motor de Paneles (`src/lib/`)
+## 3. Data mart real
 
-Lógica estable y agnóstica al tema de investigación:
+- `data/curation/group_work/standardized/`: CSV estandarizados con esquema
+  `iso2`, `year` y columnas de variables.
+- `tests/governance/test_data_contracts.py`: verifica ese contrato minimo.
 
-- **`engine.py`**: Construcción de paneles econométricos con filtrado por perfil y fallback de fuentes.
-- **`data_doctor.py`**: Guardian de la integridad científica. Valida metadatos (ISO2, años) y reporta inconsistencias antes de la fase de estimación.
-- **`catalog.py`**: Desacopla la lógica de las variables mediante catálogos TOML.
+## 4. Vaults documentales
 
-### 3. Landing Zone de Datos (`data/raw/`)
+- `docs/evidence/U1-Applied-Econometrics/`: evidencia por unidad.
+- `docs/readings/`: placeholder vacio reservado para lecturas futuras.
+- `docs/syllabus/`: syllabus institucional.
+- `docs/manuals/`: guias operativas cortas.
+- `docs/bibliography/`: indice bibliografico local y estado RAG legado.
+- `writing/`: salida Quarto y reportes.
 
-Organización segregada para garantizar la auditoría forense:
+## 5. QA y gatekeepers
 
-- **`partners/`**: El punto de entrada para contribuciones de socios investigadores (Erick, Abel, Marvin, etc.).
-- **`externos/`**: Almacén para fuentes globales como PWT (Penn World Table) o Maddison Project.
-- **`standardized/`**: Salida de los scripts de normalización unificada (`_std.csv`).
+- `tests/test_main.py`: valida la identidad publica del nodo.
+- `tests/test_system_contract.py`: valida el catalogo local y la integracion
+  con la libreria central.
+- `tests/governance/test_data_contracts.py`: valida el data mart estandarizado.
+- `tests/test_vault_architecture.py`: valida la estructura de bovedas.
 
-### 4. Tareas y Orquestación (`src/tasks/`)
-
-Scripts de ejecución siguiendo la nomenclatura institucional `[Tarea]-[Unidad]-[Tipo]-[Tema].py`:
-
-- **`T02-U1-ACD-Consolidado_Equipo.py`**: Proceso canónico de unión de datos de socios con trazabilidad de origen.
-
----
-
-## 🚀 Verificación de la Calidad (QA)
-
-El sistema garantiza su integridad mediante una suite de pruebas jerárquica:
-
-1. **Contracts**: Validación de cargadores externos (`tests/test_system_contract.py`).
-2. **Backends**: Validación de la inteligencia del cargador local (`tests/test_source_backends.py`).
-3. **Pipeline**: Validación del flujo completo de configuración (`tests/test_pipeline_config.py`).
-
-*Comando de validación: `PYTHONPATH=src .venv/bin/python -m pytest`.*
+No se ejecuta ingesta ni reindexacion RAG en esta fase.

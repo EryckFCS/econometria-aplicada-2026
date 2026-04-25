@@ -1,10 +1,10 @@
 import os
 import logging
 from pathlib import Path
-from lib.engine import WECPanelEngine
-from lib.data_doctor import DataDoctor
-from lib.exporters import AcademicExporter
-from core.pipeline_config import load_pipeline_profile_from_env
+from ecs_quantitative.ingestion import PanelEngine
+from ecs_quantitative.stats import DataDoctor
+from ecs_quantitative.reporting import AcademicExporter
+from ecs_quantitative.core import load_pipeline_profile_from_env
 
 """
 ORQUESTADOR T01-U1-APE: Homicidios y Controles Economicos
@@ -66,45 +66,53 @@ VARIABLES_HOMICIDIOS = [
         "url_indicador": "https://data.worldbank.org/indicator/BX.TRF.PWKR.DT.GD.ZS",
         "rol": "control — económico (No tradicional)",
         "concepto": "Remesas personales, recibidas (% del PIB)",
-    }
+    },
 ]
+
 
 def run_task():
     profile = load_pipeline_profile_from_env("homicidios_ecuador")
     print(
         f"🚀 Iniciando construcción de la base raw LONG ECUADOR ({profile.start_year}-{profile.end_year}) - Motor KISS..."
     )
-    
+
     # 1. Configuración
-    paises_dict = {code: ("Ecuador" if code == "EC" else code) for code in profile.countries}
+    paises_dict = {
+        code: ("Ecuador" if code == "EC" else code) for code in profile.countries
+    }
     paises_l = list(profile.countries)
-    
+
     # 2. Inicializar Motor Unificado
-    engine = WECPanelEngine(
+    engine = PanelEngine(
         countries=paises_l,
         start_year=profile.start_year,
         end_year=profile.end_year,
         countries_dict=paises_dict,
     )
-    
+
     # 3. Construir Panel
     df_panel, _ = engine.build_panel(VARIABLES_HOMICIDIOS, profile=profile)
-    
+
     # 4. APLICAR CURACIÓN (Data Doctor)
-    curation_path = os.getenv("CURATION_MANIFEST", "data/curation/ecuador_homicidios_manifest.json")
+    curation_path = os.getenv(
+        "CURATION_MANIFEST", "data/curation/ecuador_homicidios_manifest.json"
+    )
     doctor = DataDoctor(manifest_path=curation_path)
     df_panel = doctor.apply_cures(df_panel)
-    
+
     # 5. Exportar usando el nuevo Exportador Unificado
     exporter = AcademicExporter(output_base=Path("data/raw"))
-    
+
     # Excel para revisión visual
-    exporter.to_academic_excel(df_panel, VARIABLES_HOMICIDIOS, filename="Base_Raw_Ecuador_Homicidios_Long.xlsx")
-    
+    exporter.to_academic_excel(
+        df_panel, VARIABLES_HOMICIDIOS, filename="Base_Raw_Ecuador_Homicidios_Long.xlsx"
+    )
+
     # CSV para Stata
     exporter.to_stata_csv(df_panel, filename="Base_Raw_Ecuador_Homicidios_Long.csv")
-    
+
     print("\n✅ Proceso completado con éxito con arquitectura simplificada.")
+
 
 if __name__ == "__main__":
     run_task()

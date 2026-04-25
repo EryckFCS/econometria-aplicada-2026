@@ -1,0 +1,34 @@
+{
+  "unit_id": "U1-APE2-Crisis-IESS",
+  "knowledge_sources": [
+    {
+      "id": "iess-statistical-bulletin-2024",
+      "type": "manual",
+      "path": "docs/bibliography/manuals/ecuador/06-statistical-bulletin-29-2024.pdf",
+      "priority": "high"
+    },
+    {
+      "id": "wooldridge_panel_2010",
+      "type": "textbook",
+      "path": "docs/bibliography/Econometric Analysis of Cross Section and Panel Data, 2nd -- Jeffrey M_ Wooldridge -- 2, 2010 -- MIT press -- bbc8445e912c872f90.pdf",
+      "priority": "medium"
+    },
+    {
+      "id": "pesaran_ardl_2001",
+      "type": "paper",
+      "name": "Bounds testing approaches to the analysis of level relationships",
+      "author": "Pesaran, M. H., Shin, Y., & Smith, R. J.",
+      "priority": "high",
+      "contribution": "ARDL approach for cointegration in small samples with mixed I(0)/I(1) variables."
+    },
+    {
+      "id": "narayan_bounds_2005",
+      "type": "paper",
+      "name": "The saving and investment nexus for China: evidence from cointegration tests",
+      "author": "Narayan, P. K.",
+      "priority": "high",
+      "contribution": "Adjusted critical values for Bounds Test in small sample sizes (N < 30)."
+    }
+  ],
+  "rag_collection": "bibliography"
+}
