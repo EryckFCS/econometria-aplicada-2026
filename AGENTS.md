@@ -1,6 +1,6 @@
 # AGENTS.md - Federated Node: Applied Econometrics 2026
 
-> This repository is a **Level 5 Pure Node** in the Federated Architecture v8.0.0.
+> This repository is a **Level 5 Pure Node** in the Federated Architecture v8.1.5.
 > It operates under the Constitution centralized in `capital-workstation-libs`.
 
 ## Constitucion
@@ -14,11 +14,11 @@
 | Campo | Valor |
 | --- | --- |
 | **Nodo** | Applied Econometrics 2026 |
-| **Status** | Active - Master Blueprint v8.0.0 Migrated |
+| **Status** | Active - Ecosystem Hardened (v8.1.5) |
 | **Docente** | Econ. Jose Rafael Alvarado Lopez |
 | **Central Library** | `ecs_quantitative` (capital-workstation-libs) |
 | **Intelligence Level** | 5 - Intelligent Ecosystem with Controlled Autonomy |
-| **Architecture Standard** | Blueprint v8.0.0 (High Fidelity) |
+| **Architecture Standard** | Blueprint v8.1.5 (High Fidelity) |
 | **Gatekeeper** | `tests/system/test_architecture.py` |
 | **RAG** | `global_knowledge` como destino federado; `data/processed/vector_store/` es un artefacto legado de ejecucion y no debe convertirse en otra fuente de verdad |
 
@@ -57,7 +57,7 @@ Este nodo esta disenado para producir econometria aplicada reproducible con traz
 |       |-- manuals/         # Guías de operación y boletines técnicos
 |       |-- readings/        # Lecturas críticas y teoría
 |       `-- syllabus/        # Marco institucional
-|-- writing/                 # Capa de presentacion y reportes Quarto
+|   |-- writing/                 # Capa de presentacion y reportes Quarto
 |-- src/
 |   |-- core/                # Ingesta, configuracion y utilidades
 |   |-- lib/                 # Motor de paneles, catalogo y data doctor
@@ -91,7 +91,7 @@ uv run python main.py
 ## 7. Regla de Oro
 
 > Si algo que se construye aqui sirve para otras materias, proponlo para la libreria central.
-# AGENTS.md Update: Centralized Lake Protocol (v8.1.0)
+# AGENTS.md Update: Centralized Lake Protocol (v8.1.5)
 
 Este repositorio utiliza el **Data Lake Centralizado** de Capital Workstation para gestionar archivos pesados (Datasets y Bibliografía).
 
@@ -109,9 +109,9 @@ uv run python -c "from src.core.config import settings; settings.resolve_resourc
 - **Acción**: Si necesitas un nuevo archivo pesado, regístralo en el Lake y añade el puntero en `config/resources.json`.
 
 ---
-*Actualización aplicada automáticamente durante la migración a Arquitectura v8.1.0.*
+*Actualización aplicada automáticamente durante la migración a Arquitectura v8.1.5.*
 
-## Architecture v8.1.4 (Final Validation)
+## Architecture v8.1.5 (Final Validation)
 - Status: ✅ Synchronized and Lake-Linked.
 - Date: 2026-05-01
 - Operation: Massive Data Lake Centralization and RAG intelligence decoupling.

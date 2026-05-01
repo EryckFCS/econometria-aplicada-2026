@@ -32,9 +32,11 @@ reestructuracion controlada a Nivel 5.
 - `docs/syllabus/`: syllabus institucional.
 - `docs/manuals/`: guias operativas cortas.
 - `docs/bibliography/`: indice bibliografico local y estado RAG legado.
-- `writing/`: salida Quarto y reportes.
+- `docs/writing/`: salida Quarto y reportes.
 
 ## 5. QA y gatekeepers
+
+- `tests/system/test_architecture.py`: Meta-gatekeeper canónico (v8.1.5).
 
 - `tests/test_main.py`: valida la identidad publica del nodo.
 - `tests/test_system_contract.py`: valida el catalogo local y la integracion
@@ -43,3 +45,8 @@ reestructuracion controlada a Nivel 5.
 - `tests/test_vault_architecture.py`: valida la estructura de bovedas.
 
 No se ejecuta ingesta ni reindexacion RAG en esta fase.
+
+
+## Intervención v8.1.5 (Endurecimiento)
+
+El nodo ha sido endurecido y unificado en Python 3.12. Se eliminaron archivos flotantes y se centralizó la gestión del Data Lake vía `ecs_core`.
