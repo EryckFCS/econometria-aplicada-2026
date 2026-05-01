@@ -1,0 +1,40 @@
+{
+  "source_name": "Quality of Government (QoG) Standard Dataset",
+  "version": "Time-Series (TS) - January 2026",
+  "download_url": "https://www.qogdata.pol.gu.se/data/qog_std_ts_jan26.sav",
+  "download_date": "2026-04-27",
+  "format": "SAV (SPSS)",
+  "potential_variables": [
+    {
+      "code": "wvs_confsss",
+      "name": "Confidence in Social Security System",
+      "source": "World Values Survey",
+      "relevance": "Captures the subjective trust in IESS, explaining non-affiliation beyond economic factors."
+    },
+    {
+      "code": "wwbi_prpemp_ss",
+      "name": "Public sector employment in social security",
+      "source": "World Bank",
+      "relevance": "Reflects the administrative capacity of the system."
+    },
+    {
+      "code": "wdi_socseccbt",
+      "name": "Social security contributions (% of revenue)",
+      "source": "WDI",
+      "relevance": "Fiscal importance of IESS contributions."
+    },
+    {
+      "code": "ilo_informal",
+      "name": "Informal employment rate",
+      "source": "ILO",
+      "relevance": "Direct competitor to formal affiliation."
+    },
+    {
+      "code": "icrg_qog",
+      "name": "Quality of Government Index",
+      "source": "ICRG",
+      "relevance": "Better proxy for institutional quality than EMBI."
+    }
+  ],
+  "audit_status": "Awaiting local inspection (Ecuador subset)"
+}

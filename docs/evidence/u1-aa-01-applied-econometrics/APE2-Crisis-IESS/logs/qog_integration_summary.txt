@@ -1,0 +1,13 @@
+Correlation Matrix for IESS-QoG Integration
+tasa_afiliacion       1.000000
+tasa_subempleo       -0.697806
+embi_ecuador         -0.235904
+remesas_pib          -0.905531
+matricula_superior    0.543662
+wvs_confsss                NaN
+icrg_qog             -0.471647
+fi_reg                0.525683
+ti_cpi               -0.219997
+fh_status            -0.194533
+vdem_polyarchy       -0.831460
+Name: tasa_afiliacion, dtype: float64

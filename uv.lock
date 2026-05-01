@@ -568,7 +568,7 @@ wheels = [
 
 [[package]]
 name = "capital-workstation-libs"
-version = "7.3.2"
+version = "7.4.0"
 source = { editable = "../../../../../Capital_Workstation/capital-workstation-libs" }
 dependencies = [
     { name = "aiofiles" },

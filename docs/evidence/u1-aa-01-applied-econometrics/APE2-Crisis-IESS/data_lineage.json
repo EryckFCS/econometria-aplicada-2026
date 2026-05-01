@@ -40,6 +40,13 @@
     "status": "Applied",
     "rationale": "Dollarization and 2001 IESS Law mark the start of the valid sample."
   },
+  "potential_extensions": [
+    {
+      "source": "Quality of Government (QoG) Standard Dataset (Jan 2026)",
+      "variables": ["wvs_confsss", "icrg_qog", "ilo_informal"],
+      "purpose": "Institutional quality and trust auditing."
+    }
+  ],
   "lineage": [
     {
       "action": "High-Fidelity Integration",

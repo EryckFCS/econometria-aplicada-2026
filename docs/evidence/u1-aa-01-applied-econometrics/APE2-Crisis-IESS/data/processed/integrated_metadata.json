@@ -1,0 +1,409 @@
+{
+    "project": "Applied Econometrics 2026 - IESS Crisis Audit",
+    "dataset_name": "iess_qog_integrated.parquet",
+    "audit_date": "2026-04-27",
+    "total_observations": 24,
+    "integrity_summary": {
+        "null_percentage_avg": 8.806818181818182,
+        "broken_variables_count": 1,
+        "viable_variables_count": 43
+    },
+    "variables": [
+        {
+            "name": "anio",
+            "definition": "A\u00f1o de la observaci\u00f3n",
+            "source": "Control",
+            "dataset_origin": "Internal",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "afiliados_iess",
+            "definition": "N\u00famero total de afiliados al IESS",
+            "source": "IESS Statistical Bulletins",
+            "dataset_origin": "IESS",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "fuerza_laboral",
+            "definition": "Poblaci\u00f3n Econ\u00f3micamente Activa (PEA)",
+            "source": "INEC/BCE",
+            "dataset_origin": "BCE",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "tasa_subempleo",
+            "definition": "Porcentaje de la PEA en subempleo",
+            "source": "INEC (ENEMDU)",
+            "dataset_origin": "BCE",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "sbu",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "num_pensionistas",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "tasa_dependencia",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "gasto_salud_pib",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "precio_petroleo_wti",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ln_afiliados_iess",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ln_fuerza_laboral",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ln_tasa_subempleo",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ln_sbu",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ln_num_pensionistas",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ln_tasa_dependencia",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ln_gasto_salud_pib",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "LOG"
+        },
+        {
+            "name": "ln_precio_petroleo_wti",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "dln_afiliados_iess",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 4.166666666666666,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "dln_fuerza_laboral",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 4.166666666666666,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "dln_tasa_subempleo",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 4.166666666666666,
+            "status": "VIABLE",
+            "transformation_required": "LOG"
+        },
+        {
+            "name": "dln_sbu",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 4.166666666666666,
+            "status": "VIABLE",
+            "transformation_required": "LOG"
+        },
+        {
+            "name": "dln_num_pensionistas",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 4.166666666666666,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "dln_tasa_dependencia",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 4.166666666666666,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "dln_gasto_salud_pib",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 4.166666666666666,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "dln_precio_petroleo_wti",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 4.166666666666666,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ffd_ln_sbu",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ffd_ln_afiliados_iess",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 37.5,
+            "status": "VIABLE",
+            "transformation_required": "LOG"
+        },
+        {
+            "name": "ffd_ln_fuerza_laboral",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 12.5,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ffd_ln_tasa_subempleo",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 20.833333333333336,
+            "status": "VIABLE",
+            "transformation_required": "LOG"
+        },
+        {
+            "name": "ffd_ln_tasa_dependencia",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 45.83333333333333,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ffd_ln_gasto_salud_pib",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 41.66666666666667,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "ffd_ln_precio_petroleo_wti",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 41.66666666666667,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "year",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "remesas_pib",
+            "definition": "Remesas recibidas como % del PIB",
+            "source": "World Bank / BCE",
+            "dataset_origin": "World Bank",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "matricula_superior",
+            "definition": "Tasa bruta de matr\u00edcula en educaci\u00f3n superior",
+            "source": "World Bank",
+            "dataset_origin": "World Bank",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "LOG"
+        },
+        {
+            "name": "gdp_pc_ppp",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "embi_ecuador",
+            "definition": "Riesgo Pa\u00eds (EMBI)",
+            "source": "J.P. Morgan / Min. Finanzas",
+            "dataset_origin": "BCE/JP Morgan",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "LOG"
+        },
+        {
+            "name": "wvs_confsss",
+            "definition": "Variable sin descripci\u00f3n detallada",
+            "source": "Desconocido",
+            "dataset_origin": "Desconocido",
+            "null_percentage": 100.0,
+            "status": "BROKEN",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "icrg_qog",
+            "definition": "\u00cdndice de Calidad de Gobierno (ICRG)",
+            "source": "International Country Risk Guide",
+            "dataset_origin": "QoG Dataset",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "fi_reg",
+            "definition": "\u00cdndice de Regulaci\u00f3n del Mercado (Fraser Institute)",
+            "source": "Economic Freedom of the World",
+            "dataset_origin": "QoG Dataset",
+            "null_percentage": 4.166666666666666,
+            "status": "VIABLE",
+            "transformation_required": "LOG"
+        },
+        {
+            "name": "ti_cpi",
+            "definition": "\u00cdndice de Percepci\u00f3n de la Corrupci\u00f3n",
+            "source": "Transparency International",
+            "dataset_origin": "QoG Dataset",
+            "null_percentage": 50.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "fh_status",
+            "definition": "Estatus de Libertad (Freedom House)",
+            "source": "Freedom in the World",
+            "dataset_origin": "QoG Dataset",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "LOG"
+        },
+        {
+            "name": "vdem_polyarchy",
+            "definition": "\u00cdndice de Democracia Electoral (V-Dem)",
+            "source": "Varieties of Democracy Project",
+            "dataset_origin": "QoG Dataset",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        },
+        {
+            "name": "tasa_afiliacion",
+            "definition": "Ratio Afiliados / Fuerza Laboral",
+            "source": "C\u00e1lculo propio",
+            "dataset_origin": "Computed",
+            "null_percentage": 0.0,
+            "status": "VIABLE",
+            "transformation_required": "NONE"
+        }
+    ]
+}

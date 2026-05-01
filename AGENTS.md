@@ -1,7 +1,7 @@
-# AGENTS.md - Nodo Federado: Applied Econometrics 2026
+# AGENTS.md - Federated Node: Applied Econometrics 2026
 
-> Este repositorio es un Nodo Puro de la Arquitectura Federada v7.4.0.
-> Opera bajo la Constitucion centralizada en `capital-workstation-libs`.
+> This repository is a **Level 5 Pure Node** in the Federated Architecture v8.0.0.
+> It operates under the Constitution centralized in `capital-workstation-libs`.
 
 ## Constitucion
 
@@ -14,14 +14,12 @@
 | Campo | Valor |
 | --- | --- |
 | **Nodo** | Applied Econometrics 2026 |
-| **Estado** | Activo - Laboratorio econometrico y entrega academica |
+| **Status** | Active - Master Blueprint v8.0.0 Migrated |
 | **Docente** | Econ. Jose Rafael Alvarado Lopez |
-| **Estudiante** | Erick Fabricio Condoy Seraquive |
-| **Periodo** | Marzo - Agosto 2026 |
-| **Libreria Central** | `ecs_quantitative` (capital-workstation-libs) |
-| **Nivel de Inteligencia** | 5 - Intelligent Ecosystem with Controlled Autonomy |
-| **Gatekeeper** | `tests/test_system_contract.py` |
-| **QA complementaria** | `tests/governance/test_data_contracts.py` |
+| **Central Library** | `ecs_quantitative` (capital-workstation-libs) |
+| **Intelligence Level** | 5 - Intelligent Ecosystem with Controlled Autonomy |
+| **Architecture Standard** | Blueprint v8.0.0 (High Fidelity) |
+| **Gatekeeper** | `tests/system/test_architecture.py` |
 | **RAG** | `global_knowledge` como destino federado; `data/processed/vector_store/` es un artefacto legado de ejecucion y no debe convertirse en otra fuente de verdad |
 
 ## 2. Capacidades de Inteligencia (v2.0)

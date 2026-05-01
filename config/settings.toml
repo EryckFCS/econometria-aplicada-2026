@@ -1,0 +1,14 @@
+[node]
+name = "Applied Econometrics 2026"
+id = "applied-econometrics"
+architecture = "v8.0.0"
+
+[rag]
+sanitization_protocol = "USP-v1"
+alphanumeric_threshold = 0.6
+
+[paths]
+vaults = "docs/vaults"
+bibliography = "bibliography"
+src = "src"
+data = "data"
