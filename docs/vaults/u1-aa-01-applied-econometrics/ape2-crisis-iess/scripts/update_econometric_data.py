@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 # Path to the data
-base_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/evidence/U1-Applied-Econometrics/APE2-Crisis-IESS"
+base_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess"
 file_path = os.path.join(base_path, "data/processed/iess_clean.parquet")
 
 # Load data

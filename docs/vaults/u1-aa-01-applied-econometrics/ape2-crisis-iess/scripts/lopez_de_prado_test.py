@@ -28,7 +28,7 @@ def fracDiff_FFD(series, d, thres=1e-5):
     return pd.DataFrame(df)
 
 # Load data
-base_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/evidence/U1-Applied-Econometrics/APE2-Crisis-IESS"
+base_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess"
 file_path = os.path.join(base_path, "data/processed/iess_clean.parquet")
 df = pd.read_parquet(file_path)
 

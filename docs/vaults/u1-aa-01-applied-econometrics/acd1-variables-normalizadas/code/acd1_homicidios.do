@@ -9,7 +9,7 @@ set more off
 *--------------------------------------------------*
 * 0) Configuración de Rutas (Relativas al script)
 *--------------------------------------------------*
-* El archivo vive en /docs/evidence/U1-Applied-Econometrics/ACD1-Variables-Normalizadas/code/
+* El archivo vive en /docs/vaults/U1-Applied-Econometrics/ACD1-Variables-Normalizadas/code/
 local data_input  "../../../../../data/raw/panel_raw.csv"
 local output_word "../resultados_acd1.rtf"
 

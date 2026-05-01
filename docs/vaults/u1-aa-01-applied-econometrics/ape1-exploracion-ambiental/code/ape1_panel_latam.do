@@ -10,7 +10,7 @@ set matsize 800
 *--------------------------------------------------*
 * 0) Carga de Data Forense (Rutas Relativas)
 *--------------------------------------------------*
-* El archivo vive en /docs/evidence/U1-Applied-Econometrics/APE1-Exploracion-Ambiental/code/
+* El archivo vive en /docs/vaults/U1-Applied-Econometrics/APE1-Exploracion-Ambiental/code/
 local data_input  "../../../../../data/raw/panel_raw.csv"
 local output_res  "../resultados_ape1_dinamico.rtf"
 

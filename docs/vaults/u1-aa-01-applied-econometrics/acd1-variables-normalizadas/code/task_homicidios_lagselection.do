@@ -9,7 +9,7 @@ set more off
 capture log close
 
 * 0. CONFIGURACIÓN DE ENTORNO Y LOGS (Rutas Relativas)
-* El archivo vive en /docs/evidence/U1-Applied-Econometrics/ACD1-Variables-Normalizadas/code/
+* El archivo vive en /docs/vaults/U1-Applied-Econometrics/ACD1-Variables-Normalizadas/code/
 
 * Iniciar log estructurado
 local log_date : display %tdCCYYNNDD date(c(current_date), "DMY")

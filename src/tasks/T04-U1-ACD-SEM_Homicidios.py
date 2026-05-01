@@ -56,10 +56,10 @@ def run_task():
     )
 
     # 3. Preparar Repositorio de Evidencia (Bóveda)
-    evidence_path = Path("docs/evidence/U1-Applied-Econometrics/ACD2-SEM-Homicidios")
-    evidence_path.mkdir(parents=True, exist_ok=True)
+    evidence_path = Path("docs/vaults/u1-aa-01-applied-econometrics/acd2-sem-homicidios)
+    evidence_path.mkdir(parents=true, exist_ok=true)
 
-    # 4. Generar reporte preliminar de variables para el taller
+    # 4. generar reporte preliminar de variables para el taller
     print("\n📦 Variables identificadas para el sistema SEM:")
     for eq in SEM_SPECIFICATION["equations"]:
         print(f"  🔹 {eq['label']}:")

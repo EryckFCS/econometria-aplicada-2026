@@ -5,7 +5,7 @@ from statsmodels.tsa.ardl import ARDL, ardl_select_order
 import matplotlib.pyplot as plt
 
 # Paths
-base_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/evidence/U1-Applied-Econometrics/APE2-Crisis-IESS"
+base_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess"
 data_path = os.path.join(base_path, "data/processed/iess_clean.parquet")
 output_path = os.path.join(base_path, "assets")
 os.makedirs(output_path, exist_ok=True)

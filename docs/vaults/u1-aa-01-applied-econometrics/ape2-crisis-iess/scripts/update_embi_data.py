@@ -3,7 +3,7 @@ from pathlib import Path
 from loguru import logger
 
 # Configuration
-BASE_PATH = Path("/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/evidence/U1-Applied-Econometrics/APE2-Crisis-IESS")
+BASE_PATH = Path("/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess")
 RAW_VANGUARD = BASE_PATH / "data" / "raw" / "vanguard_strategy_vars.parquet"
 
 embi_data = {
