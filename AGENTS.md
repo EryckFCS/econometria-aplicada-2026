@@ -52,7 +52,7 @@ Este nodo esta disenado para producir econometria aplicada reproducible con traz
 ```text
 .
 |-- docs/
-|   |-- evidence/            # Evidencia reproducible por unidad
+|   |-- vaults/            # Evidencia reproducible por unidad
 |   `-- bibliography/        # Master Knowledge Vault (RAG Origin)
 |       |-- manuals/         # Guías de operación y boletines técnicos
 |       |-- readings/        # Lecturas críticas y teoría
