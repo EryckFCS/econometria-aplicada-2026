@@ -27,7 +27,7 @@ reestructuracion controlada a Nivel 5.
 
 ## 4. Vaults documentales
 
-- `docs/evidence/U1-Applied-Econometrics/`: evidencia por unidad.
+- `docs/vaults/U1-Applied-Econometrics/`: evidencia por unidad.
 - `docs/readings/`: placeholder vacio reservado para lecturas futuras.
 - `docs/syllabus/`: syllabus institucional.
 - `docs/manuals/`: guias operativas cortas.

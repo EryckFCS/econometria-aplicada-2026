@@ -1,18 +1,6 @@
-"""Estado basal del canal de memoria institucional."""
-
 from __future__ import annotations
+from ecs_quantitative.core.federation import NodeBrain
+from .config import settings
 
-from dataclasses import dataclass
-from typing import Any
-
-
-@dataclass(frozen=True, slots=True)
-class BrainState:
-    """Describe el estado inicial del subsistema de memoria."""
-
-    collection: str = "global_knowledge"
-    memory: Any | None = None
-    status: str = "dormant"
-
-
-brain = BrainState()
+# Instancia global del cerebro del nodo
+brain = NodeBrain(config=settings)

@@ -4,7 +4,9 @@
   "last_sync": "2026-04-28",
   "sources": {
     "bibliography": "bibliography/raw/",
-    "vaults": "docs/vaults/"mappings": [
+    "vaults": "docs/vaults/"
+  },
+  "mappings": [
     {
       "source": "config/catalog_ape1.toml",
       "target": "microdata",
