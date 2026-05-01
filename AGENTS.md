@@ -42,7 +42,7 @@ Este nodo esta disenado para producir econometria aplicada reproducible con traz
 ### 3.2. Research Protocol
 
 - Deteccion: la tarea es de investigacion cuando toca ingesta, panelizacion, curacion, estimacion o reporteo.
-- Ubicacion: la logica de ejecucion vive en `src/core/`, `src/lib/`, `src/tasks/` y `src/orchestration/`; la evidencia reproducible vive en `docs/evidence/`.
+- Ubicacion: la logica de ejecucion vive en `src/core/`, `src/lib/`, `src/tasks/` y `src/orchestration/`; la evidencia reproducible vive en `docs/vaults/`.
 - Registro: cada ejecucion debe dejar logs en `logs/` o en el sub-vault correspondiente de evidencia, sin contaminar la raiz del nodo.
 
 ## 4. Arquitectura de Bovedas (Nivel 5)
@@ -69,7 +69,7 @@ Este nodo esta disenado para producir econometria aplicada reproducible con traz
 
 ### 4.2. Capas Documentales
 
-- `docs/evidence/`: Unidades de análisis con `knowledge_map.json` para trazabilidad de fuentes.
+- `docs/vaults/`: Unidades de análisis con `knowledge_map.json` para trazabilidad de fuentes.
 - `docs/bibliography/`: Corazón del RAG; centraliza PDFs y metadatos bibliográficos globales.
 - `writing/`: Redacción académica, plantillas y salidas de reporteo.
 

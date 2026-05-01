@@ -46,3 +46,12 @@ render_log*.txt
 *.sqlite3
 **/vector_store/
 data/raw/external/
+
+# Heavy Data Exclusion (Vaults Architecture)
+docs/vaults/**/data/*.csv
+docs/vaults/**/data/*.parquet
+docs/vaults/**/data/*.xlsx
+docs/vaults/**/data/*.dta
+docs/vaults/**/data/*.sav
+docs/vaults/**/data/*.db
+docs/vaults/**/data/*.sqlite

@@ -13,7 +13,7 @@ def test_root_structure():
         "bibliography/sanitized",
         "config",
         "data",
-        "docs/evidence",
+        "docs/vaults",
         "docs/management",
         "docs/readings",
         "docs/syllabus",
@@ -31,13 +31,13 @@ def test_root_structure():
 
 def test_evidence_naming_convention():
     """Ensures evidence units follow the [unit]-[cat]-[seq]-[slug] convention."""
-    evidence_path = REPO_ROOT / "docs" / "evidence"
-    if not evidence_path.exists():
+    vaults_path = REPO_ROOT / "docs" / "vaults"
+    if not vaults_path.exists():
         pytest.skip("No evidence folder found.")
         
     pattern = re.compile(r"^u\d-(aa|ape|acd)-\d{2}-[\w-]+$")
 
-    for item in evidence_path.iterdir():
+    for item in vaults_path.iterdir():
         if item.is_dir() and not item.name.startswith("."):
             assert item.name == item.name.lower(), f"Vault '{item.name}' must be lowercase."
             assert pattern.match(item.name), (
@@ -47,13 +47,13 @@ def test_evidence_naming_convention():
 
 def test_evidence_autonomy():
     """Validates that each research evidence unit has the required internal structure."""
-    evidence_path = REPO_ROOT / "docs" / "evidence"
-    if not evidence_path.exists():
+    vaults_path = REPO_ROOT / "docs" / "vaults"
+    if not vaults_path.exists():
         pytest.skip("No evidence folder found.")
         
     required_internal = ["assets", "logs", "chapters", "index.qmd"]
 
-    for vault in evidence_path.iterdir():
+    for vault in vaults_path.iterdir():
         if vault.is_dir() and not vault.name.startswith("."):
             for req in required_internal:
                 assert (vault / req).exists(), (
