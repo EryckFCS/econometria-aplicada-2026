@@ -14,13 +14,18 @@ htmlcov/
 
 # Quarto
 /.quarto/
-**/*.quarto_ipynb
+**/*.quarto_ipynb*
 **/*_files/
 **/*_cache/
 _site/
 
-# Scratch — scripts operativos no versionables
-scratch/
+# Project data artifacts
+data/*
+!data/.gitkeep
+scratch/*
+!scratch/.gitkeep
+reports/*
+!reports/.gitkeep
 
 # Archives and Large Files
 *.zip

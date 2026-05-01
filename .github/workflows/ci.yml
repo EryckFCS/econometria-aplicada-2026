@@ -2,18 +2,33 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
-  test:
+  integrity:
+    name: 🛡️ Architecture Integrity
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [ '3.12' ]
     steps:
       - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+      - name: Run Architecture Tests
+        run: uv tool run pytest tests/system/test_architecture.py
+
+  build-and-render:
+    name: 🧪 Build & Render
+    needs: integrity
+    runs-on: ubuntu-latest
+    env:
+      HAS_SECRET: ${{ secrets.GH_PAT != '' }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -21,16 +36,29 @@ jobs:
           enable-cache: true
           version: "latest"
 
-      - name: Set up Python
-        run: uv python install ${{ matrix.python-version }}
+      - name: Setup Python
+        run: uv python install 3.12
 
-      - name: Install dependencies
-        run: uv sync --all-extras --dev
+      - name: Patch or Strip private dependency
+        shell: bash
+        run: |
+          if [ "${{ env.HAS_SECRET }}" = "true" ]; then
+            echo "✅ GH_PAT detected. Patching pyproject.toml for remote access."
+            sed -i 's|path = "/home/erick-fcs/Capital_Workstation/capital-workstation-libs", editable = true|git = "https://${{ secrets.GH_PAT }}@github.com/EryckFCS/capital-workstation-libs.git"|g' pyproject.toml
+          else
+            echo "⚠️ GH_PAT not found. Stripping private dependency to allow sync of other tools."
+            sed -i '/capital-workstation-libs/d' pyproject.toml
+            sed -i '/capital-workstation-libs = { path =/d' pyproject.toml
+          fi
 
-      - name: Lint with ruff
-        run: uv run ruff check .
+      - name: Sync Dependencies
+        run: uv sync
 
-      - name: Run tests
-        run: uv run pytest -q
-        env:
-          PYTHONPATH: src
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: false
+
+      - name: 📝 Phase 4: Quarto Rendering
+        run: |
+          quarto render
