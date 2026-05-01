@@ -14,6 +14,11 @@ except ImportError:
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
+sys.path.append(str(PROJECT_ROOT))
+
+from src.core.lake import DEFAULT_BIBLIOGRAPHY_COLLECTION  # noqa: E402
+from src.core.lake import write_bibliography_manifest  # noqa: E402
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -22,8 +27,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--manifest",
         type=Path,
-        default=PROJECT_ROOT / "data" / "raw" / "bibliografia" / "metadata.json",
-        help="Path to the bibliographic manifest.",
+        default=None,
+        help=(
+            "Path to the bibliographic manifest. If omitted, the manifest is built "
+            "from the central Lake registry."
+        ),
     )
     parser.add_argument(
         "--persist-path",
@@ -33,7 +41,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--collection",
-        default="econometria_2026_bibliografia",
+        default=DEFAULT_BIBLIOGRAPHY_COLLECTION,
         help="ChromaDB collection name (lobe).",
     )
     parser.add_argument(
@@ -48,9 +56,12 @@ def build_parser() -> argparse.ArgumentParser:
 async def run_indexing() -> int:
     args = build_parser().parse_args()
 
-    if not args.manifest.exists():
-        logger.error(f"Manifest not found: {args.manifest}")
-        return 1
+    manifest_path = args.manifest
+    if manifest_path is None or not manifest_path.exists():
+        manifest_path = write_bibliography_manifest(
+            output_path=PROJECT_ROOT / "scratch" / "lake_bibliography_manifest.json"
+        )
+        logger.info(f"Manifest generated from the central Lake: {manifest_path}")
 
     logger.info(f"🧠 Iniciando indexación Soberana L0: {args.collection}")
 
@@ -60,7 +71,7 @@ async def run_indexing() -> int:
     )
 
     # 1. Base Indexing (Text & Formulas) - Nivel 0 puro
-    summary = rag.index_manifest(args.manifest, limit=args.limit)
+    summary = rag.index_manifest(manifest_path, limit=args.limit)
     logger.success(f"✅ Consolidación L0 completada: {summary}")
 
     return 0

@@ -53,4 +53,3 @@ def test_group_data_contract(file_path: Path) -> None:
 if __name__ == "__main__":
     print(f"Target Directory: {DATA_DIR}")
     print(f"Found {len(get_group_datasets())} datasets.")
-

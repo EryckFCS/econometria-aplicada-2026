@@ -1,11 +1,9 @@
 import pandas as pd
-import numpy as np
-import statsmodels.api as sm
 from statsmodels.tsa.ardl import ARDL
 import os
 
 # Paths
-base_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/
+base_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/"
 data_path = os.path.join(base_path, "data/processed/iess_vanguard_final.parquet")
 output_path = os.path.join(base_path, "assets/")
 os.makedirs(output_path, exist_ok=True)
@@ -14,18 +12,18 @@ os.makedirs(output_path, exist_ok=True)
 df = pd.read_parquet(data_path)
 
 # Prepare time series
-df['time'] = pd.to_datetime(df['anio'].astype(str) + 'Q' + df['trimestre'].astype(str))
-df = df.set_index('time')
+df["time"] = pd.to_datetime(df["anio"].astype(str) + "Q" + df["trimestre"].astype(str))
+df = df.set_index("time")
 
 # Define target and exogenous
-target = 'ln_afiliados_iess'
+target = "ln_afiliados_iess"
 exog_cols = [
-    'ln_precio_petroleo_wti', 
-    'ln_remesas_pib', 
-    'ln_embi_ecuador', 
-    'ln_matricula_superior', 
-    'ln_tasa_dependencia', 
-    'ln_sbu'
+    "ln_precio_petroleo_wti",
+    "ln_remesas_pib",
+    "ln_embi_ecuador",
+    "ln_matricula_superior",
+    "ln_tasa_dependencia",
+    "ln_sbu",
 ]
 
 # Clean missing
@@ -41,21 +39,22 @@ res = model.fit()
 with open(os.path.join(base_path, "logs/ardl_vanguard_summary.txt"), "w") as f:
     f.write(res.summary().as_text())
 
+
 # --- PREMIUM HTML TABLE GENERATION ---
 def generate_premium_table(result):
     params = result.params
     pvalues = result.pvalues
     std_errors = result.bse
-    
+
     # Filter for Long Run or relevant coefficients (simplified for demo)
     # In a real ARDL we'd extract long-run effects via result.params / (1 - sum(AR coefficients))
-    
+
     rows = ""
     for idx in params.index:
         p = pvalues[idx]
         stars = "***" if p < 0.01 else "**" if p < 0.05 else "*" if p < 0.1 else ""
         color = "#00ff88" if p < 0.05 else "#ff4444" if p > 0.1 else "#ffcc00"
-        
+
         rows += f"""
         <tr>
             <td style="color: #fff; font-family: 'JetBrains Mono', monospace;">{idx}</td>
@@ -64,7 +63,7 @@ def generate_premium_table(result):
             <td style="color: {color};">{p:.4f}</td>
         </tr>
         """
-        
+
     html = f"""
     <div class="premium-table-container">
         <style>
@@ -135,9 +134,10 @@ def generate_premium_table(result):
         </div>
     </div>
     """
-    
+
     with open(os.path.join(output_path, "premium_table.html"), "w") as f:
         f.write(html)
+
 
 generate_premium_table(res)
 print("Vanguard Model Audit completed.")

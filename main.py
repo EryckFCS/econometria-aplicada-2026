@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Any
 
+
 def build_status(config: Any | None = None, brain: Any | None = None) -> dict[str, Any]:
     if config is None:
         from src.core.config import settings as config
@@ -14,6 +15,7 @@ def build_status(config: Any | None = None, brain: Any | None = None) -> dict[st
         "rag_available": getattr(brain, "memory", None) is not None,
     }
 
+
 def main() -> int:
     status = build_status()
     print(f"📊 {status['project_name']} 2026")
@@ -22,6 +24,8 @@ def main() -> int:
     print(f"RAG disponible: {'sí' if status['rag_available'] else 'no'}")
     return 0
 
+
 if __name__ == "__main__":
     import sys
+
     sys.exit(main())

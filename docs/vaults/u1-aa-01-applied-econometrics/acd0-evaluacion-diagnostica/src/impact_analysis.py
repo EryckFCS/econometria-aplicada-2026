@@ -43,7 +43,7 @@ model = sm.OLS(y, X).fit(cov_type="HAC", cov_kwds={"maxlags": 1})
 print(model.summary())
 
 # Rutas de salida (absolutas para evitar errores)
-output_dir = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/acd0-evaluacion-diagnostica/
+output_dir = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/acd0-evaluacion-diagnostica/"
 
 # guardar resultados para el reporte quarto
 results_path = os.path.join(output_dir, "src/model_results.txt")

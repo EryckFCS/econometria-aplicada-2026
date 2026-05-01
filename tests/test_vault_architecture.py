@@ -17,46 +17,56 @@ def test_level_5_vaults_exist() -> None:
         REPO_ROOT / "src" / "core" / "brain.py",
         REPO_ROOT / "src" / "orchestration",
         REPO_ROOT / "src" / "orchestration" / "M01-U1-APE-Master_Build.py",
-        REPO_ROOT / "docs" / "evidence",
-        REPO_ROOT / "docs" / "evidence" / "U1-Applied-Econometrics",
-        REPO_ROOT / "docs" / "bibliography" / "readings",
-        REPO_ROOT / "docs" / "bibliography" / "syllabus",
-        REPO_ROOT / "docs" / "bibliography" / "manuals",
-        REPO_ROOT / "docs" / "bibliography",
+        REPO_ROOT / "docs" / "vaults",
+        REPO_ROOT / "docs" / "vaults" / "u1-aa-01-applied-econometrics",
         REPO_ROOT / "writing",
+        REPO_ROOT / "bibliography",
+        REPO_ROOT / "bibliography" / "raw",
         REPO_ROOT / "data" / "curation" / "group_work" / "standardized",
     ]
 
     for path in required_paths:
         assert path.exists(), f"Falta la ruta requerida: {path}"
 
-    expected_evidence = [
+    expected_vaults = [
         REPO_ROOT
         / "docs"
-        / "evidence"
-        / "U1-Applied-Econometrics"
-        / "APE1-Exploracion-Ambiental",
+        / "vaults"
+        / "u1-aa-01-applied-econometrics"
+        / "ape1-exploracion-ambiental",
         REPO_ROOT
         / "docs"
-        / "evidence"
-        / "U1-Applied-Econometrics"
-        / "ACD0-Evaluacion-Diagnostica",
+        / "vaults"
+        / "u1-aa-01-applied-econometrics"
+        / "acd0-evaluacion-diagnostica",
         REPO_ROOT
         / "docs"
-        / "evidence"
-        / "U1-Applied-Econometrics"
-        / "ACD1-Variables-Normalizadas",
+        / "vaults"
+        / "u1-aa-01-applied-econometrics"
+        / "acd1-variables-normalizadas",
         REPO_ROOT
         / "docs"
-        / "evidence"
-        / "U1-Applied-Econometrics"
-        / "ACD2-SEM-Homicidios",
+        / "vaults"
+        / "u1-aa-01-applied-econometrics"
+        / "acd2-sem-homicidios",
     ]
-    for path in expected_evidence:
+    for path in expected_vaults:
         assert path.is_dir(), f"Falta la sub-boveda de evidencia: {path}"
 
-    assert (REPO_ROOT / "docs" / "bibliography" / "bibliography_index.json").is_file()
-    assert (REPO_ROOT / "docs" / "bibliography" / "rag_status.json").is_file()
-    assert (REPO_ROOT / "docs" / "bibliography" / "manuals" / "README.md").is_file()
-    assert (REPO_ROOT / "docs" / "bibliography" / "syllabus" / "SYLLABUS.pdf").is_file()
-    assert not any((REPO_ROOT / "docs" / "bibliography" / "readings").iterdir())
+    assert (REPO_ROOT / "bibliography" / "bibliography_index.json").is_file()
+    assert (REPO_ROOT / "bibliography" / "rag_status.json").is_file()
+    assert (REPO_ROOT / "bibliography" / "raw" / "manuals").is_dir()
+    assert (
+        REPO_ROOT
+        / "bibliography"
+        / "raw"
+        / "manuals"
+        / "metodologia_enemdu_general.pdf"
+    ).is_file()
+    assert (
+        REPO_ROOT
+        / "bibliography"
+        / "raw"
+        / "manuals"
+        / "06-statistical-bulletin-29-2024.pdf"
+    ).is_file()

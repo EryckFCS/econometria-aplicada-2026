@@ -3,10 +3,15 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 from ecs_quantitative.ingestion.rag import BibliographyRAG
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+sys.path.append(str(PROJECT_ROOT))
+
+from src.core.lake import DEFAULT_BIBLIOGRAPHY_COLLECTION  # noqa: E402
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -24,7 +29,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--collection",
-        default="econometria_2026_bibliografia",
+        default=DEFAULT_BIBLIOGRAPHY_COLLECTION,
         help="ChromaDB collection name (lobe).",
     )
     parser.add_argument(

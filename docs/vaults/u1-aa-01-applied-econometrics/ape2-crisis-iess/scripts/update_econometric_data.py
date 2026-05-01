@@ -11,16 +11,22 @@ df = pd.read_parquet(file_path)
 
 # Variables to transform
 vars_to_transform = [
-    'afiliados_iess', 'fuerza_laboral', 'tasa_subempleo', 'sbu', 
-    'num_pensionistas', 'tasa_dependencia', 'gasto_salud_pib', 'precio_petroleo_wti'
+    "afiliados_iess",
+    "fuerza_laboral",
+    "tasa_subempleo",
+    "sbu",
+    "num_pensionistas",
+    "tasa_dependencia",
+    "gasto_salud_pib",
+    "precio_petroleo_wti",
 ]
 
 print("--- Data Transformation Pipeline (Standard Logs and Diffs) ---")
 
 # Apply Logs and Standard Differences
 for var in vars_to_transform:
-    df[f'ln_{var}'] = np.log(df[var])
-    df[f'dln_{var}'] = df[f'ln_{var}'].diff()
+    df[f"ln_{var}"] = np.log(df[var])
+    df[f"dln_{var}"] = df[f"ln_{var}"].diff()
 
 # Save updated parquet
 df.to_parquet(file_path, index=False)
