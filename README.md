@@ -18,7 +18,7 @@ reales y sin lanzar ingesta ni sincronizacion del vector store.
 
 ## Vaults
 
-- `docs/evidence/U1-Applied-Econometrics/` evidencia por unidad.
+- `docs/vaults/U1-Applied-Econometrics/` evidencia por unidad.
 - `docs/readings/` reservado como placeholder y mantenido vacio por diseno.
 - `docs/syllabus/` syllabus institucional.
 - `docs/manuals/` guias operativas.
