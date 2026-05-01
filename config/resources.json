@@ -1,0 +1,461 @@
+{
+  "datasets": [
+    {
+      "id": "bdh_final_base",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/acd0-evaluacion-diagnostica/bdh_final_base.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/bdh_final_base.xlsx"
+    },
+    {
+      "id": "ape1_basedatos_americalatina",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape1-exploracion-ambiental/ape1_basedatos_americalatina.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/ape1_basedatos_americalatina.csv"
+    },
+    {
+      "id": "tabla_asegurados_1994_2024",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/raw/tabla_asegurados_1994_2024.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/tabla_asegurados_1994_2024.xlsx"
+    },
+    {
+      "id": "iess-fuerza-laboral",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/raw/iess-fuerza-laboral.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/iess-fuerza-laboral.xlsx"
+    },
+    {
+      "id": "iess_vanguard_final",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/iess_vanguard_final.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/iess_vanguard_final.csv"
+    },
+    {
+      "id": "iess_final_audit_2026",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/iess_final_audit_2026.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/iess_final_audit_2026.xlsx"
+    },
+    {
+      "id": "base_homicidios_ecuador_1990_2023",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/acd0-evaluacion-diagnostica/data/base_homicidios_ecuador_1990_2023.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/base_homicidios_ecuador_1990_2023.xlsx"
+    },
+    {
+      "id": "master_consolidado_equipo",
+      "local_path": "data/exports/MASTER_CONSOLIDADO_EQUIPO.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/MASTER_CONSOLIDADO_EQUIPO.xlsx"
+    },
+    {
+      "id": "ape1_auditoria_forense_master",
+      "local_path": "data/exports/APE1_Auditoria_Forense_MASTER.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/APE1_Auditoria_Forense_MASTER.xlsx"
+    },
+    {
+      "id": "panel_raw",
+      "local_path": "data/processed/panel_raw.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/panel_raw.xlsx"
+    },
+    {
+      "id": "ape1_variables_responsable",
+      "local_path": "data/processed/APE1_variables_responsable.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/APE1_variables_responsable.xlsx"
+    },
+    {
+      "id": "ape1_auditoria_master",
+      "local_path": "data/raw/local/APE1_Auditoria_Master.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/APE1_Auditoria_Master.xlsx"
+    },
+    {
+      "id": "master_final_consolidado_api_local",
+      "local_path": "data/raw/local/MASTER_FINAL_CONSOLIDADO_API_LOCAL.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/MASTER_FINAL_CONSOLIDADO_API_LOCAL.xlsx"
+    },
+    {
+      "id": "base_raw_ecuador_homicidios_long",
+      "local_path": "data/raw/local/Base_Raw_Ecuador_Homicidios_Long.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/Base_Raw_Ecuador_Homicidios_Long.csv"
+    },
+    {
+      "id": "erick.condoy",
+      "local_path": "data/raw/local/erick.condoy.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/erick.condoy.xlsx"
+    },
+    {
+      "id": "ape1_corregido",
+      "local_path": "data/raw/local/APE1_corregido.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/APE1_corregido.xlsx"
+    },
+    {
+      "id": "master_econometria_latam_2026",
+      "local_path": "data/raw/local/MASTER_ECONOMETRIA_LATAM_2026.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/MASTER_ECONOMETRIA_LATAM_2026.xlsx"
+    },
+    {
+      "id": "ape1",
+      "local_path": "data/raw/local/APE1.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/APE1.xlsx"
+    },
+    {
+      "id": "pwt110",
+      "local_path": "data/raw/external/pwt110.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/pwt110.xlsx"
+    },
+    {
+      "id": "pwt1001",
+      "local_path": "data/raw/external/pwt1001.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/pwt1001.zip"
+    },
+    {
+      "id": "maddison2023",
+      "local_path": "data/raw/external/maddison2023.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/maddison2023.xlsx"
+    },
+    {
+      "id": "base_v1",
+      "local_path": "data/raw/team/erick_condoy/base_v1.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/base_v1_5e6f311c.xlsx"
+    },
+    {
+      "id": "base_v2",
+      "local_path": "data/raw/team/marvin_valdivieso/base_v2.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/base_v2.csv"
+    },
+    {
+      "id": "base_v3",
+      "local_path": "data/raw/team/marvin_valdivieso/base_v3.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/base_v3.csv"
+    },
+    {
+      "id": "base_v1",
+      "local_path": "data/raw/team/marvin_valdivieso/base_v1.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/base_v1_5e6f311c.xlsx"
+    },
+    {
+      "id": "base_v1",
+      "local_path": "data/raw/team/erik_moreno/base_v1.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/base_v1_5e6f311c.xlsx"
+    },
+    {
+      "id": "base_v1",
+      "local_path": "data/raw/team/helen_beltran/base_v1.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/base_v1_5e6f311c.xlsx"
+    },
+    {
+      "id": "base_v1",
+      "local_path": "data/raw/team/abel_espinosa/base_v1.xlsx",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/base_v1_5e6f311c.xlsx"
+    },
+    {
+      "id": "api_vc.ihr.psrc.p5_ds2_es_excel_v2_515",
+      "local_path": "data/raw/external/API_VC.IHR.PSRC.P5_DS2_es_excel_v2_515.xls",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/API_VC.IHR.PSRC.P5_DS2_es_excel_v2_515.xls"
+    },
+    {
+      "id": "api_ecu_ds2_es_excel_v2_2204",
+      "local_path": "data/raw/external/API_ECU_DS2_es_excel_v2_2204.xls",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/API_ECU_DS2_es_excel_v2_2204.xls"
+    },
+    {
+      "id": "weooct2023all",
+      "local_path": "data/raw/external/WEOOct2023all.xls",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/WEOOct2023all.xls"
+    },
+    {
+      "id": "vanguard_vars_test",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/raw/vanguard_vars_test.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/vanguard_vars_test.csv"
+    },
+    {
+      "id": "gender_gap_data",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/raw/gender_gap_data.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/gender_gap_data.parquet"
+    },
+    {
+      "id": "vanguard_strategy_vars",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/raw/vanguard_strategy_vars.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/vanguard_strategy_vars.csv"
+    },
+    {
+      "id": "iess_clean",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/iess_clean.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/iess_clean.parquet"
+    },
+    {
+      "id": "iess_qog_integrated",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/iess_qog_integrated.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/iess_qog_integrated.parquet"
+    },
+    {
+      "id": "iess_quarterly",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/iess_quarterly.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/iess_quarterly.parquet"
+    },
+    {
+      "id": "iess_qog_final_sanitized",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/iess_qog_final_sanitized.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/iess_qog_final_sanitized.parquet"
+    },
+    {
+      "id": "iess_vanguard_final",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/iess_vanguard_final.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/iess_vanguard_final.csv"
+    },
+    {
+      "id": "qog_std_ts_jan26",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/raw/external/qog_std_ts_jan26.sav",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/qog_std_ts_jan26_e3b0c442.sav"
+    },
+    {
+      "id": "qog_std_ts_jan26",
+      "local_path": "data/raw/external/qog_std_ts_jan26.sav",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/qog_std_ts_jan26_e3b0c442.sav"
+    },
+    {
+      "id": "v-dem-cy-full+others-v16",
+      "local_path": "data/raw/external/V-Dem-CY-FullOthers-v16_sav/V-Dem-CY-Full+Others-v16.sav",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/V-Dem-CY-Full+Others-v16.sav"
+    },
+    {
+      "id": "wb_indicators",
+      "local_path": "scratch/wb_indicators.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/wb_indicators.csv"
+    },
+    {
+      "id": "base_raw_ecuador_homicidios_long",
+      "local_path": "data/raw/local/Base_Raw_Ecuador_Homicidios_Long.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/Base_Raw_Ecuador_Homicidios_Long.csv"
+    },
+    {
+      "id": "panel_equipo_final",
+      "local_path": "data/raw/local/panel_equipo_final.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/panel_equipo_final.csv"
+    },
+    {
+      "id": "panel_final_equipo_api",
+      "local_path": "data/raw/local/panel_final_equipo_api.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/panel_final_equipo_api.csv"
+    },
+    {
+      "id": "api_ecu_ds2_es_excel_v2_2204(data)",
+      "local_path": "data/raw/external/API_ECU_DS2_es_excel_v2_2204(Data).csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/API_ECU_DS2_es_excel_v2_2204(Data).csv"
+    },
+    {
+      "id": "maddison_owid",
+      "local_path": "data/raw/external/maddison_owid.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/maddison_owid.csv"
+    },
+    {
+      "id": "market_data_daily",
+      "local_path": "data/raw/mercados/market_data_daily.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/market_data_daily.csv"
+    },
+    {
+      "id": "base_v3",
+      "local_path": "data/raw/team/abel_espinosa/base_v3.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/base_v3.csv"
+    },
+    {
+      "id": "base_v2",
+      "local_path": "data/raw/team/abel_espinosa/base_v2.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/base_v2.csv"
+    },
+    {
+      "id": "abel_v3_std",
+      "local_path": "data/metadata/curation/group_work/standardized/abel_v3_std.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/abel_v3_std.csv"
+    },
+    {
+      "id": "abel_std",
+      "local_path": "data/metadata/curation/group_work/standardized/abel_std.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/abel_std.csv"
+    },
+    {
+      "id": "helen_std",
+      "local_path": "data/metadata/curation/group_work/standardized/helen_std.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/helen_std.csv"
+    },
+    {
+      "id": "abel_v2_std",
+      "local_path": "data/metadata/curation/group_work/standardized/abel_v2_std.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/abel_v2_std.csv"
+    },
+    {
+      "id": "erik_moreno_std",
+      "local_path": "data/metadata/curation/group_work/standardized/erik_moreno_std.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/erik_moreno_std.csv"
+    },
+    {
+      "id": "marvin_v2_std",
+      "local_path": "data/metadata/curation/group_work/standardized/marvin_v2_std.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/marvin_v2_std.csv"
+    },
+    {
+      "id": "erick_condoy_std",
+      "local_path": "data/metadata/curation/group_work/standardized/erick_condoy_std.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/erick_condoy_std.csv"
+    },
+    {
+      "id": "marvin_v1_std",
+      "local_path": "data/metadata/curation/group_work/standardized/marvin_v1_std.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/marvin_v1_std.csv"
+    },
+    {
+      "id": "erick_condoy",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/acd1-variables-normalizadas/erick_condoy.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/erick_condoy.csv"
+    },
+    {
+      "id": "ape1_basedatos_americalatina",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape1-exploracion-ambiental/ape1_basedatos_americalatina.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/ape1_basedatos_americalatina.csv"
+    },
+    {
+      "id": "vanguard_strategy_vars",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/raw/vanguard_strategy_vars.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/vanguard_strategy_vars.csv"
+    },
+    {
+      "id": "vanguard_vars_test",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/raw/vanguard_vars_test.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/vanguard_vars_test.csv"
+    },
+    {
+      "id": "iess_vanguard_final",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/iess_vanguard_final.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/iess_vanguard_final.csv"
+    },
+    {
+      "id": "qog_ecuador",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/raw/external/qog_ecuador.csv",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/qog_ecuador.csv"
+    },
+    {
+      "id": "pwt1001",
+      "local_path": "data/raw/external/pwt1001.zip",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/pwt1001.zip"
+    },
+    {
+      "id": "pwt11_dataset",
+      "local_path": "data/raw/external/pwt11_dataset.zip",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/pwt11_dataset.zip"
+    },
+    {
+      "id": "erick_condoy_u1_ape_20260412_2250",
+      "local_path": "reports/legacy_deliveries/ERICK_CONDOY_U1_APE_20260412_2250.zip",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/ERICK_CONDOY_U1_APE_20260412_2250.zip"
+    },
+    {
+      "id": "erick_condoy_u1_ape_20260412_2259",
+      "local_path": "reports/legacy_deliveries/ERICK_CONDOY_U1_APE_20260412_2259.zip",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/ERICK_CONDOY_U1_APE_20260412_2259.zip"
+    },
+    {
+      "id": "erick_condoy_u1_acd_20260412_2239",
+      "local_path": "reports/legacy_deliveries/ERICK_CONDOY_U1_ACD_20260412_2239.zip",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/ERICK_CONDOY_U1_ACD_20260412_2239.zip"
+    },
+    {
+      "id": "erick_condoy_u1_ape_20260420_1642",
+      "local_path": "reports/legacy_deliveries/ERICK_CONDOY_U1_APE_20260420_1642.zip",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/ERICK_CONDOY_U1_APE_20260420_1642.zip"
+    }
+  ],
+  "bibliography": [
+    {
+      "id": "econometric-analysis-5th-edition-william-h_-greene-5th-ed-upper-saddle-river-nj-2002-prentice-hall-internat-978",
+      "filename": "econometric-analysis-5th-edition-william-h_-greene-5th-ed-upper-saddle-river-nj-2002-prentice-hall-internat-978.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/econometric-analysis-5th-edition-william-h_-greene-5th-ed-upper-saddle-river-nj-2002-prentice-hall-internat-978.pdf"
+    },
+    {
+      "id": "econometric-analysis-of-cross-section-and-panel-data-2nd-jeffrey-m_-wooldridge-2-2010-mit-press-bbc8445e912c872f90",
+      "filename": "econometric-analysis-of-cross-section-and-panel-data-2nd-jeffrey-m_-wooldridge-2-2010-mit-press-bbc8445e912c872f90.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/econometric-analysis-of-cross-section-and-panel-data-2nd-jeffrey-m_-wooldridge-2-2010-mit-press-bbc8445e912c872f90.pdf"
+    },
+    {
+      "id": "econometric-analysis-ebook-global-edition-greene-william-h_-undifferentiated-greene-william-h-8th-edition-2019-",
+      "filename": "econometric-analysis-ebook-global-edition-greene-william-h_-undifferentiated-greene-william-h-8th-edition-2019-.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/econometric-analysis-ebook-global-edition-greene-william-h_-undifferentiated-greene-william-h-8th-edition-2019-.pdf"
+    },
+    {
+      "id": "basic-econometrics-fifth-edition-damodar-n_-gujarati-dawn-c_-porter-mcgraw-hill-series-in-economics-5-2009-mcgraw-h",
+      "filename": "basic-econometrics-fifth-edition-damodar-n_-gujarati-dawn-c_-porter-mcgraw-hill-series-in-economics-5-2009-mcgraw-h.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/basic-econometrics-fifth-edition-damodar-n_-gujarati-dawn-c_-porter-mcgraw-hill-series-in-economics-5-2009-mcgraw-h.pdf"
+    },
+    {
+      "id": "codebook",
+      "filename": "codebook.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/codebook.pdf"
+    },
+    {
+      "id": "suggested_citation",
+      "filename": "suggested_citation.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/suggested_citation.pdf"
+    },
+    {
+      "id": "whats_new",
+      "filename": "whats_new.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/whats_new.pdf"
+    },
+    {
+      "id": "cautionary_notes",
+      "filename": "cautionary_notes.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/cautionary_notes.pdf"
+    },
+    {
+      "id": "06-statistical-bulletin-29-2024",
+      "filename": "06-statistical-bulletin-29-2024.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/06-statistical-bulletin-29-2024.pdf"
+    },
+    {
+      "id": "metodologia_enemdu_general",
+      "filename": "metodologia_enemdu_general.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/metodologia_enemdu_general.pdf"
+    },
+    {
+      "id": "censo2022_poblacion_ocupada",
+      "filename": "censo2022_poblacion_ocupada.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/censo2022_poblacion_ocupada.pdf"
+    },
+    {
+      "id": "metodologia_empleo_informal",
+      "filename": "metodologia_empleo_informal.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/metodologia_empleo_informal.pdf"
+    },
+    {
+      "id": "syllabus",
+      "filename": "SYLLABUS.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/SYLLABUS.pdf"
+    },
+    {
+      "id": "index_sem",
+      "filename": "index_sem.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/index_sem.pdf"
+    },
+    {
+      "id": "index",
+      "filename": "index.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/index.pdf"
+    },
+    {
+      "id": "acd1_b-impacto-educacion",
+      "filename": "acd1_b-impacto-educacion.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/acd1_b-impacto-educacion.pdf"
+    },
+    {
+      "id": "avance_variables",
+      "filename": "avance_variables.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/avance_variables.pdf"
+    },
+    {
+      "id": "acd1-impacto-bdh",
+      "filename": "acd1-impacto-bdh.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/acd1-impacto-bdh.pdf"
+    },
+    {
+      "id": "informe_bdh_impacto",
+      "filename": "informe_bdh_impacto.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/informe_bdh_impacto.pdf"
+    },
+    {
+      "id": "index",
+      "filename": "index.pdf",
+      "lake_path": "/home/erick-fcs/.capital/lake/bibliography/raw/index.pdf"
+    }
+  ]
+}
