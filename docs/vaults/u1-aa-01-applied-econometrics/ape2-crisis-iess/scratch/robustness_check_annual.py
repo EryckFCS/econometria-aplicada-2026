@@ -1,7 +1,7 @@
 
 import pandas as pd
 import numpy as np
-from statsmodels.tsa.ardl import ARDL, ardl_select_order
+from statsmodels.tsa.ardl import ardl_select_order
 from pathlib import Path
 
 # Paths

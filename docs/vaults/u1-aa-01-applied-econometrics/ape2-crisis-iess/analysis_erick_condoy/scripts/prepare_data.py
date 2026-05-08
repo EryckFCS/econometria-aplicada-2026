@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 # Load the previously built base
 base_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/data/processed/base_erick_condoy_homicidios_iess.csv"
