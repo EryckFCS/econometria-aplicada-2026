@@ -1,0 +1,7 @@
+# Investigación del Problema
+
+El Instituto Ecuatoriano de Seguridad Social (IESS) enfrenta un déficit de caja creciente y una reserva actuarial en proceso de agotamiento acelerado. Esta situación responde a una interacción compleja entre el envejecimiento poblacional y choques externos de inestabilidad social.
+
+La erosión del **ratio de soporte** (relación entre afiliados activos y pensionistas) es el eje del problema. En Ecuador, este indicador se aproxima al 5:1, lejos del nivel óptimo de 8:1 requerido para la estabilidad de un sistema de reparto. Los factores determinantes de esta caída son:
+1.  **Migración internacional:** Expulsión de población en edad productiva y reducción de la densidad de cotización.
+2.  **Inseguridad sistémica:** El incremento en la tasa de homicidios desincentiva la formalización laboral y la inversión productiva, debilitando la recaudación del seguro general.

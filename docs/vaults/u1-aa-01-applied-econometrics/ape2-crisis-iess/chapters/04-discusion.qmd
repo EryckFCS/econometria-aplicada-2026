@@ -1,0 +1,22 @@
+# Discusión y Prospectiva Estratégica
+
+La sostenibilidad del IESS ha dejado de ser un debate meramente demográfico. Esta auditoría econométrica demuestra que los determinantes de "vanguardia" (Riesgo País y Capital Humano) tienen un peso estadístico que condiciona la efectividad de cualquier reforma paramétrica.
+
+## Interpretación de la Evidencia Q1
+
+### 1. El Impacto del Riesgo (EMBI)
+El **EMBI Ecuador** muestra un coeficiente negativo y significativo. Esta relación prueba que la sostenibilidad de la seguridad social está indisolublemente ligada a la salud fiscal del Estado. Un incremento en el riesgo país actúa como un indicador de incertidumbre macroeconómica que desincentiva la creación de empleo formal sujeto a aportación patronal [@kairos2024].
+
+### 2. Educación Superior y la Paradoja de la Formalidad
+Contrario a la intuición lineal, el coeficiente de **Matrícula Superior** sugiere que el aumento en la formación académica no se traduce automáticamente en una mayor afiliación inmediata. Esto revela un **descalce estructural**: la economía ecuatoriana no está absorbiendo el capital humano calificado hacia el sector formal al mismo ritmo que su graduación [@bbvaresearch2018].
+
+### 3. La "Fricción de Género" como Invariante Estructural
+La **Brecha de Género**, aunque teóricamente relevante, no alcanzó la significancia estadística en la variación trimestral conjunta. Como **Filtro Anti-Yes-Man**, este resultado es crucial: indica que la exclusión femenina del mercado formal es una **constante estructural profunda** que no responde a fluctuaciones cíclicas de corto plazo [@oiss2024].
+
+## Conclusiones y Hallazgos Finales
+
+1. **Dominancia del Riesgo:** El riesgo país (EMBI) es el principal transmisor de volatilidad hacia la base de afiliados.
+2. **Fuga de Capital Humano:** Las remesas actúan como un indicador de la base contributiva que ha optado por el mercado global ante la precariedad local.
+3. **Inercia Institucional:** La persistencia autorregresiva cercana a la unidad ($0.97$) indica que el sistema tiene una memoria larga; los daños a la confianza institucional tardan décadas en revertirse.
+
+**Recomendación de Política:** La salvaguarda del IESS exige un "Pacto de Estabilidad" que trascienda la seguridad social e incluya la estabilización del riesgo soberano y una estrategia nacional de absorción de talento calificado. Sin estos pilares, cualquier ajuste en las tasas de aporte será solo un paliativo temporal ante una erosión estructural irreversible.

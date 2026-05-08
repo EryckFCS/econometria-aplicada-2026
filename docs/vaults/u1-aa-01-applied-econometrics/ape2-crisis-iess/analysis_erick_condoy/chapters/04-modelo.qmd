@@ -1,0 +1,13 @@
+# **Modelo Planteado**
+
+Se propone una especificación log-log para capturar elasticidades, integrando factores demográficos, de movilidad e institucionales:
+
+$$\log(AF_{t}) = \beta_0 + \beta_1 \log(DE_{t}) + \beta_2 MI_{t} + \beta_3 \log(HO_{t}) + \beta_4 \log(GM_{t}) + \beta_5 \log(RN_{t}) + \epsilon_{t}$$
+
+Donde:
+- **AF**: Afiliados al IESS (Variable dependiente).
+- **DE**: Tasa de Dependencia de vejez. Se espera $\beta_1 > 0$ en el corto plazo por inercia, pero con presión sobre la sostenibilidad.
+- **MI**: Migración neta. Se espera $\beta_2 > 0$ (un saldo positivo incrementa la base de aportantes).
+- **HO**: Tasa de Homicidios. Se espera $\beta_3 < 0$ (la inseguridad como impuesto a la formalidad).
+- **GM** y **RN**: Gasto Militar y Rentas Naturales como variables de control institucional y macroeconómico.
+

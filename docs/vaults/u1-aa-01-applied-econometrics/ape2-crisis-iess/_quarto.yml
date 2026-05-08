@@ -1,0 +1,41 @@
+project:
+  type: book
+  output-dir: _book
+
+bibliography: references.bib
+
+book:
+  title: "Auditoría Econométrica de la Sostenibilidad del IESS"
+  author: "Erick Fabricio Condoy Seraquive"
+  date: "2026-04-25"
+  chapters:
+    - index.qmd
+    - chapters/01-metodologia.qmd
+    - chapters/02-diagnosticos.qmd
+    - chapters/03-resultados.qmd
+    - chapters/04-discusion.qmd
+
+format:
+  pdf:
+    documentclass: scrreprt
+    papersize: letter
+    geometry:
+      - top=2.54cm
+      - bottom=2.54cm
+      - left=2.54cm
+      - right=2.54cm
+    fontfamily: times
+    fontsize: 12pt
+    linestretch: 1.5
+    indent: true
+    number-sections: true
+    top-level-division: chapter
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+
+crossref:
+  tbl-prefix: "Tabla"
+  fig-prefix: "Figura"
+  chapters: true

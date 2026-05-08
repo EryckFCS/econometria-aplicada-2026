@@ -1,0 +1,555 @@
+-----------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econ
+> ometrics_2026\docs\vaults\u1-aa-01-applied-econometrics\ape2-crisis-iess\logs/stata_int
+> egrated_word_export.log
+  log type:  text
+ opened on:   4 May 2026, 11:22:36
+
+. 
+. * 1. CARGA Y PREPARACION
+. import excel "data/processed/iess_integrated_review.xlsx", firstrow clear
+(44 vars, 24 obs)
+
+. capture destring anio, replace
+
+. tsset anio
+
+Time variable: anio, 2000 to 2023
+        Delta: 1 unit
+
+. 
+. foreach var in afiliados_iess fuerza_laboral embi_ecuador gdp_pc_ppp sbu {
+  2.     capture gen ln_`var' = ln(`var')
+  3. }
+
+. 
+. * 2. ANALISIS Y EXPORTACION
+. putdocx begin
+
+. putdocx paragraph, halign(left)
+
+. putdocx text ("Econometric Results: Unit Root Analysis"), bold
+
+. 
+. * TABLA 1: NIVELES
+. putdocx paragraph, halign(left)
+
+. putdocx text ("Table 4.1: Test-statistics value at Level"), italic
+
+. putdocx table t1 = (6, 6), border(all, nil) border(top, single) border(bottom, single)
+
+. putdocx table t1(1,1) = ("Variable"), border(bottom, single)
+
+. putdocx table t1(1,2) = ("(ADF)"), border(bottom, single)
+
+. putdocx table t1(1,3) = ("(PP)"), border(bottom, single)
+
+. putdocx table t1(1,4) = ("(ZA)"), border(bottom, single)
+
+. putdocx table t1(1,5) = ("Break Year"), border(bottom, single)
+
+. putdocx table t1(1,6) = ("Verdict"), border(bottom, single)
+
+. 
+. * TABLA 2: DIFERENCIAS
+. putdocx paragraph
+
+. putdocx paragraph, halign(left)
+
+. putdocx text ("Table 4.2: Test-statistics value at first difference"), italic
+
+. putdocx table t2 = (6, 6), border(all, nil) border(top, single) border(bottom, single)
+
+. putdocx table t2(1,1) = ("Variable"), border(bottom, single)
+
+. putdocx table t2(1,2) = ("(ADF)"), border(bottom, single)
+
+. putdocx table t2(1,3) = ("(PP)"), border(bottom, single)
+
+. putdocx table t2(1,4) = ("(ZA)"), border(bottom, single)
+
+. putdocx table t2(1,5) = ("Break Year"), border(bottom, single)
+
+. putdocx table t2(1,6) = ("Verdict"), border(bottom, single)
+
+. 
+. local row = 2
+
+. foreach v in ln_afiliados_iess ln_fuerza_laboral ln_embi_ecuador ln_gdp_pc_ppp ln_sbu {
+  2.     
+.     * Mapeo y años de quiebre (Hardcoded por evidencia de LOG)
+.     if "`v'" == "ln_afiliados_iess" {
+  3.         local name "AF"
+  4.         local by 2011
+  5.         local bdy 2013
+  6.     }
+  7.     if "`v'" == "ln_fuerza_laboral" {
+  8.         local name "FL"
+  9.         local by 2015
+ 10.         local bdy 2012
+ 11.     }
+ 12.     if "`v'" == "ln_embi_ecuador" {
+ 13.         local name "EM"
+ 14.         local by 2019
+ 15.         local bdy 2010
+ 16.     }
+ 17.     if "`v'" == "ln_gdp_pc_ppp" {
+ 18.         local name "GDP"
+ 19.         local by 2013
+ 20.         local bdy 2011
+ 21.     }
+ 22.     if "`v'" == "ln_sbu" {
+ 23.         local name "SBU"
+ 24.         local by 2014
+ 25.         local bdy 2020
+ 26.     }
+ 27.     
+.     * Test Niveles
+.     dfuller `v', lags(1) trend
+ 28.     local a_l = string(r(Zt), "%9.3f")
+ 29.     pperron `v', trend
+ 30.     local p_l = string(r(Zt), "%9.3f")
+ 31.     zandrews `v', break(both) lagmethod(AIC)
+ 32.     local z_l = string(r(tmin), "%9.3f")
+ 33.     
+.     * Test Diferencias
+.     dfuller d.`v', lags(1)
+ 34.     local a_d = string(r(Zt), "%9.3f")
+ 35.     pperron d.`v'
+ 36.     local p_d = string(r(Zt), "%9.3f")
+ 37.     zandrews d.`v', break(both) lagmethod(AIC)
+ 38.     local z_d = string(r(tmin), "%9.3f")
+ 39.     
+.     * Llenado Tabla 1
+.     putdocx table t1(`row',1) = ("`name'")
+ 40.     putdocx table t1(`row',2) = ("`a_l'")
+ 41.     putdocx table t1(`row',3) = ("`p_l'")
+ 42.     putdocx table t1(`row',4) = ("`z_l'")
+ 43.     putdocx table t1(`row',5) = ("`by'")
+ 44.     putdocx table t1(`row',6) = ("I(1)")
+ 45.     
+.     * Llenado Tabla 2
+.     putdocx table t2(`row',1) = ("`name'")
+ 46.     putdocx table t2(`row',2) = ("`a_d'")
+ 47.     putdocx table t2(`row',3) = ("`p_d'")
+ 48.     putdocx table t2(`row',4) = ("`z_d'")
+ 49.     putdocx table t2(`row',5) = ("`bdy'")
+ 50.     putdocx table t2(`row',6) = ("I(0)")
+ 51.     
+.     local row = `row' + 1
+ 52. }
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: ln_afiliados_i~s                 Number of obs  = 22
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -1.196       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9113.
+
+Phillips–Perron test for unit root        Number of obs   = 23
+Variable: ln_afiliados_i~s                Newey–West lags =  2
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)          -1.468      -22.500      -17.900      -15.600
+ Z(t)            -0.568       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9805.
+
+Zivot-Andrews unit root test for  ln_afiliados_iess
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.ln_afiliados_iess included = 2
+
+Minimum t-statistic -5.159 at 2011  (obs 12)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: D.ln_afiliados~s                 Number of obs  = 21
+                                           Number of lags =  1
+
+H0: Random walk without drift, d = 0
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -1.460       -3.750       -3.000       -2.630
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.5533.
+
+Phillips–Perron test for unit root        Number of obs   = 22
+Variable: D.ln_afiliados~s                Newey–West lags =  2
+
+H0: Random walk without drift, d = 0
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)          -6.024      -17.200      -12.500      -10.200
+ Z(t)            -1.755       -3.750       -3.000       -2.630
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.4028.
+
+Zivot-Andrews unit root test for  D.ln_afiliados_iess
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.D.ln_afiliados_iess included = 0
+
+Minimum t-statistic -4.771 at 2013  (obs 14)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: ln_fuerza_labo~l                 Number of obs  = 22
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -2.269       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.4514.
+
+Phillips–Perron test for unit root        Number of obs   = 23
+Variable: ln_fuerza_labo~l                Newey–West lags =  2
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -11.768      -22.500      -17.900      -15.600
+ Z(t)            -2.637       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.2632.
+
+Zivot-Andrews unit root test for  ln_fuerza_laboral
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.ln_fuerza_laboral included = 0
+
+Minimum t-statistic -3.414 at 2015  (obs 16)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: D.ln_fuerza_la~l                 Number of obs  = 21
+                                           Number of lags =  1
+
+H0: Random walk without drift, d = 0
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -3.169       -3.750       -3.000       -2.630
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0218.
+
+Phillips–Perron test for unit root        Number of obs   = 22
+Variable: D.ln_fuerza_la~l                Newey–West lags =  2
+
+H0: Random walk without drift, d = 0
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -26.750      -17.200      -12.500      -10.200
+ Z(t)            -5.451       -3.750       -3.000       -2.630
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0000.
+
+Zivot-Andrews unit root test for  D.ln_fuerza_laboral
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.D.ln_fuerza_laboral included = 0
+
+Minimum t-statistic -5.901 at 2012  (obs 13)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: ln_embi_ecuador                  Number of obs  = 22
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -2.470       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.3432.
+
+Phillips–Perron test for unit root        Number of obs   = 23
+Variable: ln_embi_ecuador                 Newey–West lags =  2
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -15.762      -22.500      -17.900      -15.600
+ Z(t)            -4.815       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0004.
+
+Zivot-Andrews unit root test for  ln_embi_ecuador
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.ln_embi_ecuador included = 0
+
+Minimum t-statistic -5.363 at 2019  (obs 20)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: D.ln_embi_ecua~r                 Number of obs  = 21
+                                           Number of lags =  1
+
+H0: Random walk without drift, d = 0
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -3.819       -3.750       -3.000       -2.630
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0027.
+
+Phillips–Perron test for unit root        Number of obs   = 22
+Variable: D.ln_embi_ecua~r                Newey–West lags =  2
+
+H0: Random walk without drift, d = 0
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -24.856      -17.200      -12.500      -10.200
+ Z(t)            -7.445       -3.750       -3.000       -2.630
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0000.
+
+Zivot-Andrews unit root test for  D.ln_embi_ecuador
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.D.ln_embi_ecuador included = 1
+
+Minimum t-statistic -5.225 at 2010  (obs 11)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: ln_gdp_pc_ppp                    Number of obs  = 22
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -1.604       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.7910.
+
+Phillips–Perron test for unit root        Number of obs   = 23
+Variable: ln_gdp_pc_ppp                   Newey–West lags =  2
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)          -5.301      -22.500      -17.900      -15.600
+ Z(t)            -1.599       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.7930.
+
+Zivot-Andrews unit root test for  ln_gdp_pc_ppp
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.ln_gdp_pc_ppp included = 0
+
+Minimum t-statistic -3.660 at 2013  (obs 14)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: D.ln_gdp_pc_ppp                  Number of obs  = 21
+                                           Number of lags =  1
+
+H0: Random walk without drift, d = 0
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -3.390       -3.750       -3.000       -2.630
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0113.
+
+Phillips–Perron test for unit root        Number of obs   = 22
+Variable: D.ln_gdp_pc_ppp                 Newey–West lags =  2
+
+H0: Random walk without drift, d = 0
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -21.506      -17.200      -12.500      -10.200
+ Z(t)            -4.544       -3.750       -3.000       -2.630
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0002.
+
+Zivot-Andrews unit root test for  D.ln_gdp_pc_ppp
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.D.ln_gdp_pc_ppp included = 2
+
+Minimum t-statistic -4.490 at 2011  (obs 12)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: ln_sbu                           Number of obs  = 22
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -0.961       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9491.
+
+Phillips–Perron test for unit root        Number of obs   = 23
+Variable: ln_sbu                          Newey–West lags =  2
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)          -7.522      -22.500      -17.900      -15.600
+ Z(t)            -4.038       -4.380       -3.600       -3.240
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0078.
+
+Zivot-Andrews unit root test for  ln_sbu
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.ln_sbu included = 0
+
+Minimum t-statistic -15.022 at 2014  (obs 15)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: D.ln_sbu                         Number of obs  = 21
+                                           Number of lags =  1
+
+H0: Random walk without drift, d = 0
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -2.522       -3.750       -3.000       -2.630
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.1101.
+
+Phillips–Perron test for unit root        Number of obs   = 22
+Variable: D.ln_sbu                        Newey–West lags =  2
+
+H0: Random walk without drift, d = 0
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -16.831      -17.200      -12.500      -10.200
+ Z(t)            -7.455       -3.750       -3.000       -2.630
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0000.
+
+Zivot-Andrews unit root test for  D.ln_sbu
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.D.ln_sbu included = 0
+
+Minimum t-statistic -11.610 at 2020  (obs 21)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+. 
+. putdocx table t1(.,.), halign(center)
+
+. putdocx table t1(.,1), halign(left)
+
+. putdocx table t2(.,.), halign(center)
+
+. putdocx table t2(.,1), halign(left)
+
+. 
+. putdocx save "reports/Tabla_Paper_Final.docx", replace
+successfully replaced "Z:/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/ap
+> plied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/repo
+> rts/Tabla_Paper_Final.docx"
+
+. log close
+      name:  <unnamed>
+       log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econ
+> ometrics_2026\docs\vaults\u1-aa-01-applied-econometrics\ape2-crisis-iess\logs/stata_int
+> egrated_word_export.log
+  log type:  text
+ closed on:   4 May 2026, 11:22:41
+-----------------------------------------------------------------------------------------

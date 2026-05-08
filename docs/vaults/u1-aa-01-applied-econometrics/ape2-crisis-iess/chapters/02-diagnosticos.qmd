@@ -1,0 +1,103 @@
+# Diagnósticos Econométricos y Dinámica Temporal
+
+La evaluación de la estacionariedad es un requisito fundamental para evitar regresiones espurias [@greene2019]. Se emplea la prueba de **Dickey-Fuller Aumentada (ADF)** para identificar el orden de integración de las series, garantizando que el modelo ARDL sea la especificación adecuada.
+
+## Análisis de Correlación y Dinámica Temporal
+
+El primer paso analítico consiste en caracterizar la interdependencia entre el agregado de afiliación y los regresores exógenos seleccionados.
+
+```{python}
+#| label: fig-correlation
+#| fig-cap: "Matriz de Correlación de Determinantes del IESS"
+import seaborn as sns
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Generación de la matriz de correlación con nombres académicos
+corr = df[vars_model].corr()
+corr.index = corr.index.map(var_map)
+corr.columns = corr.columns.map(var_map)
+
+plt.figure(figsize=(10, 7))
+mask = np.triu(np.ones_like(corr, dtype=bool))
+sns.heatmap(corr, annot=True, mask=mask, cmap='RdBu_r', center=0, fmt=".2f",
+            cbar_kws={"shrink": .8}, annot_kws={"size": 9})
+plt.title("Interdependencia de Determinantes (Log-Log, 2000-2023)")
+plt.show()
+```
+
+La dinámica trimestral ratifica que el vector demográfico exhibit una correlación inversa severa con la afiliación, identificando a la transición poblacional como el principal "techo de cristal" del sistema.
+
+## Trayectoria Temporal de los Regresores Exógenos
+
+Se presenta la dinámica longitudinal de cada determinante estratégico para identificar tendencias seculares y posibles quiebres estructurales.
+
+```{python}
+#| label: fig-evolution
+#| fig-cap: "Dinámica Longitudinal de los Determinantes de Vanguardia"
+
+# Visualización de regresores en niveles con etiquetas académicas
+vars_to_plot = [v for v in vars_model if v != 'ln_afiliados_iess']
+
+fig, axes = plt.subplots(3, 2, figsize=(14, 12))
+axes = axes.flatten()
+
+for i, var in enumerate(vars_to_plot):
+    if i < len(axes):
+        sns.lineplot(data=df, x='fecha', y=var, ax=axes[i], color='#2c3e50', linewidth=1.5)
+        axes[i].set_title(var_map.get(var, var), fontsize=10)
+        axes[i].set_xlabel("")
+        axes[i].set_ylabel("Valor")
+        axes[i].grid(True, alpha=0.2)
+
+# Ocultar subplots vacíos
+for j in range(i + 1, len(axes)):
+    axes[j].axis('off')
+
+plt.tight_layout()
+plt.show()
+```
+
+## Pruebas de Raíz Unitaria (ADF)
+
+```{python}
+#| echo: false
+#| label: tbl-adf
+#| tbl-cap: "Prueba de Dickey-Fuller Aumentada (Niveles en Log)"
+from statsmodels.tsa.stattools import adfuller
+
+def run_adf_test(series, name):
+    result = adfuller(series.dropna())
+    return {
+        "Variable": var_map.get(name, name),
+        "Estadístico ADF": result[0],
+        "p-valor": result[1],
+        "Estacionaria": "Sí" if result[1] < 0.05 else "No"
+    }
+
+adf_results = [run_adf_test(df[var], var) for var in vars_model]
+pd.DataFrame(adf_results).style.format({
+    "Estadístico ADF": "{:.4f}", 
+    "p-valor": "{:.4f}"
+}, decimal='.').hide(axis='index')
+```
+
+**Evidencia de Estacionariedad:** La mayoría de las variables sociales presentan tendencias estocásticas (No Estacionarias en niveles), lo cual es consistente con la naturaleza de las series de tiempo económicas.
+
+## Evaluación de Multicolinealidad (VIF)
+
+La presencia de un Factor de Inflación de la Varianza (VIF) elevado en niveles es un síntoma esperado de **tendencia estocástica común**.
+
+```{python}
+#| echo: false
+#| label: tbl-vif-central
+#| tbl-cap: "Factor de Inflación de la Varianza (VIF en Niveles)"
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+X_vif = df[vars_model[1:]] 
+vif_data = pd.DataFrame()
+vif_data["Variable"] = X_vif.columns.map(var_map)
+vif_data["VIF"] = [variance_inflation_factor(X_vif.values, i) for i in range(len(X_vif.columns))]
+
+vif_data.style.format({"VIF": "{:.2f}"}, decimal='.').hide(axis='index')
+```

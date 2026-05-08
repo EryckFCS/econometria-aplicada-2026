@@ -1,0 +1,19 @@
+# **Definición de Variables**
+
+Se han seleccionado variables que capturan las dimensiones críticas de demografía, movilidad y estabilidad institucional. Para facilitar la lectura técnica en tablas y figuras, se utilizarán códigos de dos letras.
+
+## **Matriz de Variables de Investigación**
+
+| Código | Variable | Definición | Unidad | Fuente de Datos |
+| :--- | :--- | :--- | :--- | :--- |
+| **AF** | **Afiliados** | Personas registradas que aportan activamente al IESS (SGO + SSC). | Conteo | IESS / Boletines Estadísticos |
+| **DE** | **Dependencia** | Ratio de personas >64 años respecto a la población de 15-64 años. | Porcentaje (%) | Banco Mundial (WDI) |
+| **MI** | **Migración** | Saldo neto de personas que ingresan menos las que salen del país. | Conteo | Banco Mundial (WDI) |
+| **HO** | **Homicidios** | Muertes ilegales causadas intencionalmente por violencia interpersonal. | Tasa por 100k hab. | Banco Mundial / UNODC |
+| **GM** | **Gasto Militar** | Gasto en defensa y seguridad pública. | % del PIB | Banco Mundial (WDI) |
+| **RN** | **Rentas Nat.** | Rentas provenientes de recursos naturales agotables. | % del PIB | Banco Mundial (WDI) |
+
+: Matriz de Variables de Investigación {#tbl-variables}
+
+La inclusión de la **Tasa de Homicidios (HO)** representa un aporte al análisis de la seguridad social en Ecuador. La violencia destruye la confianza institucional y altera la tasa de preferencia temporal de los agentes, reduciendo el incentivo para participar en sistemas de previsión formal de largo plazo.
+
