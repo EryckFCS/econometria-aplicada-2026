@@ -1,0 +1,152 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Auditoría Econométrica de la Sostenibilidad del IESS",
+    "section": "",
+    "text": "Introducción\nEste estudio trasciende el análisis actuarial tradicional al integrar un vector exógeno de vanguardia para diagnosticar la crisis de afiliación al IESS. Mediante una expansión trimestral (\\(N=96\\)) y la estimación de un modelo ARDL, se evalúa el impacto de la vulnerabilidad financiera estocástica (EMBI), la fuga de capital humano (Remesas) y el potencial de formalización (Matrícula Superior).\nLos resultados confirman una relación de cointegración robusta donde el riesgo país y las remesas actúan como determinantes críticos de la erosión de la base contributiva. Se identifica que la sostenibilidad del sistema no solo depende de la demografía, sino de la estabilidad macro-financiera y la retención de talento nacional.\nA diferencia de análisis previos, este manuscrito postula que la afiliación formal está condicionada por el riesgo soberano (Sánchez and Vaca (2024)), el potencial educativo y los flujos migratorios, los cuales actúan como proxis de la salud institucional.\n\n\n\n\nSánchez, A., and C. Vaca. 2024. “Inestabilidad Macroeconómica y Su Efecto En La Afiliación a La Seguridad Social En Ecuador.” Kairós: Revista de Ciencias Económicas 7 (1).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Auditoría Econométrica de la Sostenibilidad del IESS (2000-2023)</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-metodologia.html",
+    "href": "chapters/01-metodologia.html",
+    "title": "2  Metodología y Auditoría de Datos",
+    "section": "",
+    "text": "2.1 Análisis Descriptivo\nEl estudio utiliza series trimestrales expandidas mediante interpolación técnica (Cubic Spline) para el periodo 2000-2023 (\\(N=96\\)), basadas en los boletines anuales consolidados del IESS (IESS 2024). Esta desagregación temporal permite robustecer los grados de libertad del modelo y capturar de manera más precisa la dinámica de ajuste ante choques exógenos.\nA continuación, se presentan los estadísticos descriptivos de las variables fundamentales utilizadas en el análisis econométrico. Los datos han sido procesados para garantizar la consistencia en el cálculo de las elasticidades.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Metodología y Auditoría de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-metodologia.html#análisis-descriptivo",
+    "href": "chapters/01-metodologia.html#análisis-descriptivo",
+    "title": "2  Metodología y Auditoría de Datos",
+    "section": "",
+    "text": "{=latex}",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Metodología y Auditoría de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-metodologia.html#trayectoria-de-la-afiliación-agregada",
+    "href": "chapters/01-metodologia.html#trayectoria-de-la-afiliación-agregada",
+    "title": "2  Metodología y Auditoría de Datos",
+    "section": "2.2 Trayectoria de la Afiliación Agregada",
+    "text": "2.2 Trayectoria de la Afiliación Agregada\nPara caracterizar los desequilibrios estructurales, se examina la trayectoria temporal del volumen total de afiliados en niveles, identificando fases de expansión y estancamiento persistente. La serie muestra un crecimiento sostenido hasta el periodo 2014-2015, seguido de una meseta estructural que coincide con la caída de los precios del crudo y el aumento del riesgo soberano.\n\n[!NOTE] La visualización de datos ha sido omitida en esta versión para garantizar la independencia total de dependencias externas de archivos de datos durante el renderizado.\n\n\n\n\n\nIESS. 2024. Boletín Estadístico Del Seguro General No. 29. Instituto Ecuatoriano de Seguridad Social.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Metodología y Auditoría de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-diagnosticos.html",
+    "href": "chapters/02-diagnosticos.html",
+    "title": "3  Diagnósticos Econométricos y Dinámica Temporal",
+    "section": "",
+    "text": "3.1 Pruebas de Raíz Unitaria (Niveles)\nLa evaluación de la estacionariedad es un requisito fundamental para evitar regresiones espurias (Greene 2019). Se emplean pruebas de raíz unitaria para identificar el orden de integración de las series, garantizando que el modelo ARDL sea la especificación adecuada.\nSe presentan los resultados de las pruebas de Dickey-Fuller (ADF), Phillips-Perron (PP) y Zivot-Andrews (ZA) en niveles. El estadístico ZA permite identificar quiebres estructurales endógenos en la tendencia y el intercepto.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Diagnósticos Econométricos y Dinámica Temporal</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-diagnosticos.html#pruebas-de-raíz-unitaria-niveles",
+    "href": "chapters/02-diagnosticos.html#pruebas-de-raíz-unitaria-niveles",
+    "title": "3  Diagnósticos Econométricos y Dinámica Temporal",
+    "section": "",
+    "text": "{=latex}",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Diagnósticos Econométricos y Dinámica Temporal</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-diagnosticos.html#pruebas-de-raíz-unitaria-diferencias",
+    "href": "chapters/02-diagnosticos.html#pruebas-de-raíz-unitaria-diferencias",
+    "title": "3  Diagnósticos Econométricos y Dinámica Temporal",
+    "section": "3.2 Pruebas de Raíz Unitaria (Diferencias)",
+    "text": "3.2 Pruebas de Raíz Unitaria (Diferencias)\nTras aplicar la primera diferencia, todas las series rechazan la hipótesis nula de raíz unitaria, confirmando su estacionariedad \\(I(0)\\).\n{=latex}",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Diagnósticos Econométricos y Dinámica Temporal</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-diagnosticos.html#evaluación-de-multicolinealidad-vif",
+    "href": "chapters/02-diagnosticos.html#evaluación-de-multicolinealidad-vif",
+    "title": "3  Diagnósticos Econométricos y Dinámica Temporal",
+    "section": "3.3 Evaluación de Multicolinealidad (VIF)",
+    "text": "3.3 Evaluación de Multicolinealidad (VIF)\nLa presencia de un Factor de Inflación de la Varianza (VIF) elevado en niveles es un síntoma esperado de tendencia estocástica común.\n{=latex}\n\n[!IMPORTANT] El alto VIF en niveles justifica el uso del modelo ARDL en diferencias o el tratamiento de cointegración para manejar la colinealidad inducida por la tendencia.\n\n\n\n\n\nGreene, William H. 2019. Econometric Analysis. 8th ed. Pearson.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Diagnósticos Econométricos y Dinámica Temporal</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-resultados.html",
+    "href": "chapters/03-resultados.html",
+    "title": "4  Resultados del Modelo ARDL y Cointegración",
+    "section": "",
+    "text": "4.1 Estimación del Modelo ARDL\nPara corregir la no-estacionariedad y la varianza no constante observada en las series originales, se aplica una transformación Log-Log en Primeras Diferencias. Esta transformación garantiza la estacionariedad y facilita la interpretación económica mediante elasticidades.\nSe presenta el resumen de los coeficientes estimados para el modelo ARDL de vanguardia. Los resultados muestran la dinámica de corto plazo y el ajuste hacia el equilibrio.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Resultados del Modelo ARDL y Cointegración</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-resultados.html#estimación-del-modelo-ardl",
+    "href": "chapters/03-resultados.html#estimación-del-modelo-ardl",
+    "title": "4  Resultados del Modelo ARDL y Cointegración",
+    "section": "",
+    "text": "{=latex}",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Resultados del Modelo ARDL y Cointegración</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-resultados.html#cointegración-pesaran-bounds-test",
+    "href": "chapters/03-resultados.html#cointegración-pesaran-bounds-test",
+    "title": "4  Resultados del Modelo ARDL y Cointegración",
+    "section": "4.2 Cointegración: Pesaran Bounds Test",
+    "text": "4.2 Cointegración: Pesaran Bounds Test\nPara garantizar que la relación entre la afiliación al IESS y el vector de vanguardia no es una regresión espuria, aplicamos el Bounds Test de Pesaran et al. (2001).\n{=latex}\nEvidencia Crítica: Al existir cointegración, se confirma que las variables de vanguardia mantienen una relación de equilibrio de largo plazo con la sostenibilidad del sistema. La persistencia autorregresiva indica que el sistema tiene una memoria larga, donde los choques institucionales y macroeconómicos tienen efectos duraderos sobre la base contributiva.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Resultados del Modelo ARDL y Cointegración</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-resultados.html#diagnósticos-de-pos-estimación",
+    "href": "chapters/03-resultados.html#diagnósticos-de-pos-estimación",
+    "title": "4  Resultados del Modelo ARDL y Cointegración",
+    "section": "4.3 Diagnósticos de Pos-Estimación",
+    "text": "4.3 Diagnósticos de Pos-Estimación\nEl modelo cumple con los supuestos de ausencia de autocorrelación serial (Breusch-Godfrey) y estabilidad de los parámetros (CUSUM), validando la confiabilidad de las elasticidades calculadas.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Resultados del Modelo ARDL y Cointegración</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-discusion.html",
+    "href": "chapters/04-discusion.html",
+    "title": "5  Discusión y Prospectiva Estratégica",
+    "section": "",
+    "text": "5.1 Interpretación de la Evidencia Q1\nLa sostenibilidad del IESS ha dejado de ser un debate meramente demográfico. Esta auditoría econométrica demuestra que los determinantes de “vanguardia” (Riesgo País y Capital Humano) tienen un peso estadístico que condiciona la efectividad de cualquier reforma paramétrica.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Discusión y Prospectiva Estratégica</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-discusion.html#interpretación-de-la-evidencia-q1",
+    "href": "chapters/04-discusion.html#interpretación-de-la-evidencia-q1",
+    "title": "5  Discusión y Prospectiva Estratégica",
+    "section": "",
+    "text": "5.1.1 1. El Impacto del Riesgo (EMBI)\nEl EMBI Ecuador muestra un coeficiente negativo y significativo. Esta relación prueba que la sostenibilidad de la seguridad social está indisolublemente ligada a la salud fiscal del Estado. Un incremento en el riesgo país actúa como un indicador de incertidumbre macroeconómica que desincentiva la creación de empleo formal sujeto a aportación patronal (Sánchez and Vaca 2024).\n\n\n5.1.2 2. Educación Superior y la Paradoja de la Formalidad\nContrario a la intuición lineal, el coeficiente de Matrícula Superior sugiere que el aumento en la formación académica no se traduce automáticamente en una mayor afiliación inmediata. Esto revela un descalce estructural: la economía ecuatoriana no está absorbiendo el capital humano calificado hacia el sector formal al mismo ritmo que su graduación (BBVA Research 2018).\n\n\n5.1.3 3. La “Fricción de Género” como Invariante Estructural\nLa Brecha de Género, aunque teóricamente relevante, no alcanzó la significancia estadística en la variación trimestral conjunta. Como Filtro Anti-Yes-Man, este resultado es crucial: indica que la exclusión femenina del mercado formal es una constante estructural profunda que no responde a fluctuaciones cíclicas de corto plazo (OISS 2024).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Discusión y Prospectiva Estratégica</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-discusion.html#conclusiones-y-hallazgos-finales",
+    "href": "chapters/04-discusion.html#conclusiones-y-hallazgos-finales",
+    "title": "5  Discusión y Prospectiva Estratégica",
+    "section": "5.2 Conclusiones y Hallazgos Finales",
+    "text": "5.2 Conclusiones y Hallazgos Finales\n\nDominancia del Riesgo: El riesgo país (EMBI) es el principal transmisor de volatilidad hacia la base de afiliados.\nFuga de Capital Humano: Las remesas actúan como un indicador de la base contributiva que ha optado por el mercado global ante la precariedad local.\nInercia Institucional: La persistencia autorregresiva cercana a la unidad (\\(0.97\\)) indica que el sistema tiene una memoria larga; los daños a la confianza institucional tardan décadas en revertirse.\n\nRecomendación de Política: La salvaguarda del IESS exige un “Pacto de Estabilidad” que trascienda la seguridad social e incluya la estabilización del riesgo soberano y una estrategia nacional de absorción de talento calificado. Sin estos pilares, cualquier ajuste en las tasas de aporte será solo un paliativo temporal ante una erosión estructural irreversible.\n\n\n\n\nBBVA Research. 2018. Ecuador: Mercado Laboral y Seguridad Social. Situación Ecuador. Banco Bilbao Vizcaya Argentaria.\n\n\nOISS. 2024. Brechas de Género En Los Sistemas de Seguridad Social de Iberoamérica. Organización Iberoamericana de Seguridad Social.\n\n\nSánchez, A., and C. Vaca. 2024. “Inestabilidad Macroeconómica y Su Efecto En La Afiliación a La Seguridad Social En Ecuador.” Kairós: Revista de Ciencias Económicas 7 (1).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Discusión y Prospectiva Estratégica</span>"
+    ]
+  }
+]

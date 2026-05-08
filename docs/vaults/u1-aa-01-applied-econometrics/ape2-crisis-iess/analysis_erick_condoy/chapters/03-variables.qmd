@@ -1,19 +1,44 @@
-# **Definición de Variables**
+# **Variables y Modelo**
+
+En esta sección se detallan los determinantes seleccionados, el marco analítico y la especificación técnica del modelo econométrico para evaluar la sostenibilidad del sistema de seguridad social.
+
+## **Hipótesis de Investigación**
+
+Se plantean las siguientes hipótesis sobre la sostenibilidad institucional del IESS:
+
+- **H1:** El incremento del gasto militar genera un efecto de desplazamiento fiscal (*crowding-out*) que erosiona la capacidad de financiamiento y la sostenibilidad del sistema de seguridad social civil.
+- **H2:** La inestabilidad social y la inseguridad ciudadana desincentivan la formalización laboral, reduciendo la base de cotizantes activos en el largo plazo.
+- **H3:** Existe una relación de equilibrio inestable en el sistema del IESS, donde choques externos en el gasto fiscal o la seguridad nacional provocan trayectorias divergentes en la masa de afiliados.
+
+## **Definición de Variables**
 
 Se han seleccionado variables que capturan las dimensiones críticas de demografía, movilidad y estabilidad institucional. Para facilitar la lectura técnica en tablas y figuras, se utilizarán códigos de dos letras.
 
-## **Matriz de Variables de Investigación**
-
+::: {#tbl-variables tbl-pos='H' tbl-colwidths='[10, 15, 40, 10, 25]'}
 | Código | Variable | Definición | Unidad | Fuente de Datos |
 | :--- | :--- | :--- | :--- | :--- |
 | **AF** | **Afiliados** | Personas registradas que aportan activamente al IESS (SGO + SSC). | Conteo | IESS / Boletines Estadísticos |
-| **DE** | **Dependencia** | Ratio de personas >64 años respecto a la población de 15-64 años. | Porcentaje (%) | Banco Mundial (WDI) |
+| **GM** | **Gasto Militar** | Gasto en defensa y fuerzas armadas como proporción del producto interno. | % del PIB | Banco Mundial (WDI) |
 | **MI** | **Migración** | Saldo neto de personas que ingresan menos las que salen del país. | Conteo | Banco Mundial (WDI) |
 | **HO** | **Homicidios** | Muertes ilegales causadas intencionalmente por violencia interpersonal. | Tasa por 100k hab. | Banco Mundial / UNODC |
-| **GM** | **Gasto Militar** | Gasto en defensa y seguridad pública. | % del PIB | Banco Mundial (WDI) |
-| **RN** | **Rentas Nat.** | Rentas provenientes de recursos naturales agotables. | % del PIB | Banco Mundial (WDI) |
+| **FL** | **Fuerza Laboral** | Población económicamente activa total. | Conteo | Banco Mundial (WDI) |
 
-: Matriz de Variables de Investigación {#tbl-variables}
+: Matriz de Variables de Investigación 
+:::
 
-La inclusión de la **Tasa de Homicidios (HO)** representa un aporte al análisis de la seguridad social en Ecuador. La violencia destruye la confianza institucional y altera la tasa de preferencia temporal de los agentes, reduciendo el incentivo para participar en sistemas de previsión formal de largo plazo.
+La inclusión del **Gasto Militar (GM)** permite analizar la **competencia por recursos fiscales**. En Ecuador, la existencia de sistemas de seguridad social específicos para las fuerzas armadas (ISSFA) genera una presión presupuestaria que compite directamente con el financiamiento del sistema civil (IESS). Por otro lado, la **Tasa de Homicidios (HO)** captura el impacto de la inseguridad en la confianza institucional y los incentivos para la formalización de largo plazo.
 
+## **Especificación del Modelo Econométrico**
+
+Para analizar la dinámica de largo plazo y los mecanismos de ajuste, se emplea un modelo de **Rezagos Distribuidos Autorregresivos (ARDL)**. Esta técnica es superior a las estimaciones estáticas tradicionales ya que permite tratar variables con diferentes órdenes de integración, $I(0)$ e $I(1)$, evitando el riesgo de regresiones espurias y permitiendo la identificación de cointegración incluso en muestras pequeñas.
+
+La forma funcional del modelo de corrección de error (ECM) derivado del ARDL ($p, q_1, q_2, q_3, q_4$) se define en la Ecuación (@eq-ardl-ecm):
+
+$$
+\Delta \ln(AF_t) = \alpha + \sum_{i=1}^{p} \phi_i \Delta \ln(AF_{t-i}) + \sum_{j=0}^{q} \delta_j \Delta X_{t-j} + \lambda ECT_{t-1} + \epsilon_t 
+$$ {#eq-ardl-ecm}
+
+Donde:
+- $\Delta$: Operador de primera diferencia.
+- $X_t$: Vector de regresores explicativos (**GM**, **MI**, **HO**, **FL**).
+- $\lambda$: Parámetro de corrección de error. Un valor de $\lambda < 0$ indica que el sistema converge al equilibrio tras un choque. Por el contrario, un valor de $\lambda > 0$ es evidencia de **inestabilidad sistémica o divergencia**, sugiriendo que el sistema es estructuralmente insostenible ante perturbaciones externas.

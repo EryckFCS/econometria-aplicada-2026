@@ -1,0 +1,801 @@
+-----------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econ
+> ometrics_2026\docs\vaults\u1-aa-01-applied-econometrics\ape2-crisis-iess\analysis_erick
+> _condoy\logs/econometric_audit.log
+  log type:  text
+ opened on:   8 May 2026, 08:10:32
+
+. 
+. * 0.1 Instalación de Comandos (Zandrews, ARDL, Estout)
+. foreach cmd in zandrews ardl estout {
+  2.     capture which `cmd'
+  3.     if _rc ssc install `cmd'
+  4. }
+
+. 
+. * 2. Cargar y Preparar Datos
+. import delimited "data/base_analisis.csv", clear 
+(encoding automatically selected: ISO-8859-1)
+(8 vars, 35 obs)
+
+. tsset anio
+
+Time variable: anio, 1990 to 2024
+        Delta: 1 unit
+
+. 
+. * 3. Generación de Variables (Log-Transformaciones)
+. capture drop AF GM MI HO FL
+
+. gen AF = ln(afiliados_iess)
+
+. gen GM = gasto_militar_pib
+
+. gen MI = migracion_neta
+
+. gen HO = ln(tasa_homicidios)
+
+. gen FL = ln(fuerza_laboral)
+
+. 
+. * Etiquetado profesional
+. label variable AF "Log Afiliados IESS"
+
+. label variable GM "Gasto Militar (% del PIB)"
+
+. label variable MI "Migración Neta"
+
+. label variable HO "Log Tasa Homicidios"
+
+. label variable FL "Log Fuerza Laboral"
+
+. 
+. * ----------------------------------------------------------------------------
+. * PASO 3.1: VISUALIZACIÓN DE TENDENCIAS (STATA GRAPHICS)
+. * ----------------------------------------------------------------------------
+. set scheme s1color
+
+. 
+. * Opciones generales optimizadas
+. local graph_opts "msize(small) xlabel(1990(10)2024, labsize(vsmall)) ylabel(, labsize(v
+> small)) xtitle("Año", size(vsmall)) graphregion(color(white)) plotregion(color(white))"
+
+. 
+. * 1. Afiliados (Millones)
+. gen af_millones = afiliados_iess / 1000000
+
+. twoway (line af_millones anio, lcolor(navy) lwidth(medium) `graph_opts'), title("Afilia
+> dos (Millones)", size(vsmall)) ytitle("Millones", size(vsmall)) name(g1, replace)
+
+. 
+. * 2. Gasto Militar
+. twoway (line gasto_militar_pib anio, lcolor(orange) lwidth(medium) `graph_opts'), title
+> ("Gasto Militar (% PIB)", size(vsmall)) ytitle("Porcentaje", size(vsmall)) name(g2, rep
+> lace)
+
+. 
+. * 3. Tasa de Homicidios
+. twoway (line tasa_homicidios anio, lcolor(red) lwidth(medium) `graph_opts'), title("Tas
+> a de Homicidios", size(vsmall)) ytitle("Tasa", size(vsmall)) name(g3, replace)
+
+. 
+. * 4. Migración Neta (Miles)
+. gen mi_miles = migracion_neta / 1000
+
+. twoway (line mi_miles anio, lcolor(green) lwidth(medium) `graph_opts'), title("Migració
+> n Neta (Miles)", size(vsmall)) ytitle("Miles", size(vsmall)) name(g4, replace)
+
+. 
+. * 5. Fuerza Laboral (Millones)
+. gen fl_millones = fuerza_laboral / 1000000
+
+. twoway (line fl_millones anio, lcolor(purple) lwidth(medium) `graph_opts'), title("Fuer
+> za Laboral (Millones)", size(vsmall)) ytitle("Millones", size(vsmall)) name(g5, replace
+> )
+
+. 
+. * Combinar las 5 variables en una matriz de 2x3 para máxima claridad
+. graph combine g1 g2 g3 g4 g5, cols(3) iscale(0.9) title("Determinantes de la Crisis del
+>  IESS", size(small)) graphregion(color(white))
+
+. graph export "assets/fig-tendencias-stata.png", replace width(3200)
+file assets/fig-tendencias-stata.png saved as PNG format
+
+. 
+. * 3.2 Estadísticos Descriptivos y Auditoría de Correlación
+. * ----------------------------------------------------------------------------
+. di as text "{hline}"
+-----------------------------------------------------------------------------------------
+
+. di as res "PASO 3.2: ESTADÍSTICOS DESCRIPTIVOS Y MATRIZ DE CORRELACIÓN"
+PASO 3.2: ESTADÍSTICOS DESCRIPTIVOS Y MATRIZ DE CORRELACIÓN
+
+. di as text "{hline}"
+-----------------------------------------------------------------------------------------
+
+. summarize AF GM MI HO FL, detail
+
+                     Log Afiliados IESS
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%       13.742         13.742
+ 5%     13.77238       13.77238
+10%     13.85348        13.8177       Obs                  35
+25%     14.04227       13.85348       Sum of wgt.          35
+
+50%     14.34739                      Mean           14.49695
+                        Largest       Std. dev.      .5159864
+75%     15.07652       15.13328
+90%     15.13328       15.13968       Variance        .266242
+95%     15.14535       15.14535       Skewness       .0865781
+99%     15.14929       15.14929       Kurtosis       1.352432
+
+                  Gasto Militar (% del PIB)
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     1.213305       1.213305
+ 5%     1.271472       1.271472
+10%     1.351222       1.315691       Obs                  35
+25%     1.689725       1.351222       Sum of wgt.          35
+
+50%     2.221948                      Mean           2.183339
+                        Largest       Std. dev.      .5559983
+75%     2.627951       2.951815
+90%     2.951815       3.072574       Variance       .3091341
+95%     3.106474       3.106474       Skewness      -.0204731
+99%       3.2432         3.2432       Kurtosis       2.144335
+
+                       Migración Neta
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%       -47287         -47287
+ 5%       -46082         -46082
+10%       -44399         -45201       Obs                  35
+25%       -35275         -44399       Sum of wgt.          35
+
+50%       -20940                      Mean           -13606.2
+                        Largest       Std. dev.       31691.4
+75%        -8167          35461
+90%        35461          53707       Variance       1.00e+09
+95%        54921          54921       Skewness       1.699622
+99%        95482          95482       Kurtosis       5.950768
+
+                     Log Tasa Homicidios
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     1.755745       1.755745
+ 5%     1.759634       1.759634
+10%     1.864869       1.763029       Obs                  35
+25%     2.142016       1.864869       Sum of wgt.          35
+
+50%     2.552723                      Mean           2.522243
+                        Largest       Std. dev.      .4907787
+75%     2.729206       2.884049
+90%     2.884049       3.311004       Variance       .2408638
+95%     3.822597       3.822597       Skewness        .727501
+99%     3.822597       3.822597       Kurtosis       3.989334
+
+                     Log Fuerza Laboral
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     15.21274       15.21274
+ 5%     15.24333       15.24333
+10%     15.29503       15.26967       Obs                  35
+25%     15.46341       15.29503       Sum of wgt.          35
+
+50%     15.67959                      Mean           15.63942
+                        Largest       Std. dev.      .2401969
+75%     15.86362       15.96701
+90%     15.96701       15.97836       Variance       .0576946
+95%     15.98339       15.98339       Skewness      -.1408586
+99%     15.99504       15.99504       Kurtosis       1.859361
+
+. correlate AF GM MI HO FL
+(obs=35)
+
+             |       AF       GM       MI       HO       FL
+-------------+---------------------------------------------
+          AF |   1.0000
+          GM |   0.6972   1.0000
+          MI |   0.6568   0.4622   1.0000
+          HO |   0.0398   0.1225  -0.4544   1.0000
+          FL |   0.9520   0.6677   0.6335   0.1751   1.0000
+
+
+. 
+. * Auditoría de Multicolinealidad (VIF)
+. regress AF GM MI HO FL
+
+      Source |       SS           df       MS      Number of obs   =        35
+-------------+----------------------------------   F(4, 30)        =    103.34
+       Model |  8.43970037         4  2.10992509   Prob > F        =    0.0000
+    Residual |  .612527516        30  .020417584   R-squared       =    0.9323
+-------------+----------------------------------   Adj R-squared   =    0.9233
+       Total |  9.05222789        34  .266241997   Root MSE        =    .14289
+
+------------------------------------------------------------------------------
+          AF | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          GM |   .1109337   .0595718     1.86   0.072     -.010728    .2325955
+          MI |  -1.54e-06   1.50e-06    -1.02   0.314    -4.60e-06    1.53e-06
+          HO |  -.1962016   .0759414    -2.58   0.015    -.3512945   -.0411086
+          FL |   2.072239   .1934802    10.71   0.000     1.677099    2.467378
+       _cons |   -17.6799   2.881841    -6.13   0.000    -23.56541    -11.7944
+------------------------------------------------------------------------------
+
+. estat vif
+
+    Variable |       VIF       1/VIF  
+-------------+----------------------
+          MI |      3.76    0.265795
+          FL |      3.60    0.278046
+          HO |      2.31    0.432312
+          GM |      1.83    0.547391
+-------------+----------------------
+    Mean VIF |      2.87
+
+. 
+. * ----------------------------------------------------------------------------
+. * PASO 4: PRUEBAS DE RAÍZ UNITARIA CON QUIEBRE ESTRUCTURAL (ZA)
+. * ----------------------------------------------------------------------------
+. foreach v in AF GM MI HO FL {
+  2.     di as text ">>> Variable (Levels): `v'"
+  3.     dfuller `v', trend lags(1)
+  4.     pperron `v', trend
+  5.     zandrews `v', break(both) lagmethod(AIC)
+  6. }
+>>> Variable (Levels): AF
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: AF                               Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -1.529       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.8190.
+
+Phillips–Perron test for unit root        Number of obs   = 34
+Variable: AF                              Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)          -4.621      -23.652      -18.584      -16.032
+ Z(t)            -1.367       -4.297       -3.564       -3.218
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.8704.
+
+Zivot-Andrews unit root test for  AF
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.AF included = 2
+
+Minimum t-statistic -2.707 at 2010  (obs 21)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+>>> Variable (Levels): GM
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: GM                               Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -0.863       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9600.
+
+Phillips–Perron test for unit root        Number of obs   = 34
+Variable: GM                              Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)          -5.790      -23.652      -18.584      -16.032
+ Z(t)            -1.566       -4.297       -3.564       -3.218
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.8055.
+
+Zivot-Andrews unit root test for  GM
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.GM included = 2
+
+Minimum t-statistic -4.458 at 2008  (obs 19)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+>>> Variable (Levels): MI
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: MI                               Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -3.269       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0715.
+
+Phillips–Perron test for unit root        Number of obs   = 34
+Variable: MI                              Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -10.526      -23.652      -18.584      -16.032
+ Z(t)            -2.220       -4.297       -3.564       -3.218
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.4785.
+
+Zivot-Andrews unit root test for  MI
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.MI included = 1
+
+Minimum t-statistic -5.665 at 2016  (obs 27)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+>>> Variable (Levels): HO
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: HO                               Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -2.264       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.4542.
+
+Phillips–Perron test for unit root        Number of obs   = 34
+Variable: HO                              Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)          -4.755      -23.652      -18.584      -16.032
+ Z(t)            -1.154       -4.297       -3.564       -3.218
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9195.
+
+Zivot-Andrews unit root test for  HO
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.HO included = 2
+
+Minimum t-statistic -3.791 at 1998  (obs 9)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+>>> Variable (Levels): FL
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: FL                               Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -2.423       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.3677.
+
+Phillips–Perron test for unit root        Number of obs   = 34
+Variable: FL                              Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -14.036      -23.652      -18.584      -16.032
+ Z(t)            -2.785       -4.297       -3.564       -3.218
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.2027.
+
+Zivot-Andrews unit root test for  FL
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.FL included = 0
+
+Minimum t-statistic -3.657 at 2009  (obs 20)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+. 
+. foreach v in AF GM MI HO FL {
+  2.     di as text ">>> Variable (Diffs): `v'"
+  3.     dfuller d.`v', trend lags(1)
+  4.     pperron d.`v', trend
+  5.     zandrews d.`v', break(both) lagmethod(AIC)
+  6. }
+>>> Variable (Diffs): AF
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: D.AF                             Number of obs  = 32
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -1.936       -4.316       -3.572       -3.223
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.6358.
+
+Phillips–Perron test for unit root        Number of obs   = 33
+Variable: D.AF                            Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -15.249      -23.524      -18.508      -15.984
+ Z(t)            -2.963       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.1427.
+
+Zivot-Andrews unit root test for  D.AF
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.D.AF included = 0
+
+Minimum t-statistic -4.578 at 2008  (obs 19)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+>>> Variable (Diffs): GM
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: D.GM                             Number of obs  = 32
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -3.817       -4.316       -3.572       -3.223
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0157.
+
+Phillips–Perron test for unit root        Number of obs   = 33
+Variable: D.GM                            Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -50.179      -23.524      -18.508      -15.984
+ Z(t)            -8.747       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0000.
+
+Zivot-Andrews unit root test for  D.GM
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.D.GM included = 0
+
+Minimum t-statistic -10.371 at 2011  (obs 22)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+>>> Variable (Diffs): MI
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: D.MI                             Number of obs  = 32
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -4.347       -4.316       -3.572       -3.223
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0027.
+
+Phillips–Perron test for unit root        Number of obs   = 33
+Variable: D.MI                            Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -17.799      -23.524      -18.508      -15.984
+ Z(t)            -3.544       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0349.
+
+Zivot-Andrews unit root test for  D.MI
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.D.MI included = 1
+
+Minimum t-statistic -9.270 at 2019  (obs 30)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+>>> Variable (Diffs): HO
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: D.HO                             Number of obs  = 32
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -2.423       -4.316       -3.572       -3.223
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.3673.
+
+Phillips–Perron test for unit root        Number of obs   = 33
+Variable: D.HO                            Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -15.823      -23.524      -18.508      -15.984
+ Z(t)            -3.128       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0998.
+
+Zivot-Andrews unit root test for  D.HO
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.D.HO included = 0
+
+Minimum t-statistic -4.308 at 2011  (obs 22)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+>>> Variable (Diffs): FL
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: D.FL                             Number of obs  = 32
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -4.212       -4.316       -3.572       -3.223
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0043.
+
+Phillips–Perron test for unit root        Number of obs   = 33
+Variable: D.FL                            Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -37.804      -23.524      -18.508      -15.984
+ Z(t)            -6.756       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0000.
+
+Zivot-Andrews unit root test for  D.FL
+
+Allowing for break in both intercept and trend
+
+Lag selection via AIC: lags of D.D.FL included = 0
+
+Minimum t-statistic -7.020 at 2015  (obs 26)
+
+Critical values: 1%: -5.57 5%: -5.08 10%: -4.82
+
+. 
+. * 5. ESTIMACIÓN JERÁRQUICA Y DIAGNÓSTICO CLÁSICO
+. * ----------------------------------------------------------------------------
+. regress AF GM MI HO FL
+
+      Source |       SS           df       MS      Number of obs   =        35
+-------------+----------------------------------   F(4, 30)        =    103.34
+       Model |  8.43970037         4  2.10992509   Prob > F        =    0.0000
+    Residual |  .612527516        30  .020417584   R-squared       =    0.9323
+-------------+----------------------------------   Adj R-squared   =    0.9233
+       Total |  9.05222789        34  .266241997   Root MSE        =    .14289
+
+------------------------------------------------------------------------------
+          AF | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          GM |   .1109337   .0595718     1.86   0.072     -.010728    .2325955
+          MI |  -1.54e-06   1.50e-06    -1.02   0.314    -4.60e-06    1.53e-06
+          HO |  -.1962016   .0759414    -2.58   0.015    -.3512945   -.0411086
+          FL |   2.072239   .1934802    10.71   0.000     1.677099    2.467378
+       _cons |   -17.6799   2.881841    -6.13   0.000    -23.56541    -11.7944
+------------------------------------------------------------------------------
+
+. estimates store Modelo_Final
+
+. 
+. * --- Diagnósticos de Residuos ---
+. capture drop r_ols
+
+. predict r_ols, resid
+
+. sktest r_ols
+
+Skewness and kurtosis tests for normality
+                                                         ----- Joint test -----
+    Variable |       Obs   Pr(skewness)   Pr(kurtosis)   Adj chi2(2)  Prob>chi2
+-------------+-----------------------------------------------------------------
+       r_ols |        35         0.3136         0.3733          1.94     0.3792
+
+. estat hettest
+
+Breusch–Pagan/Cook–Weisberg test for heteroskedasticity 
+Assumption: Normal error terms
+Variable: Fitted values of AF
+
+H0: Constant variance
+
+    chi2(1) =   0.01
+Prob > chi2 = 0.9056
+
+. estat bgodfrey, lags(1 2)
+
+Breusch–Godfrey LM test for autocorrelation
+---------------------------------------------------------------------------
+    lags(p)  |          chi2               df                 Prob > chi2
+-------------+-------------------------------------------------------------
+       1     |         27.967               1                   0.0000
+       2     |         28.104               2                   0.0000
+---------------------------------------------------------------------------
+                        H0: no serial correlation
+
+. estat ovtest
+
+Ramsey RESET test for omitted variables
+Omitted: Powers of fitted values of AF
+
+H0: Model has no omitted variables
+
+F(3, 27) =  24.20
+Prob > F = 0.0000
+
+. 
+. * 6. ANÁLISIS DE COINTEGRACIÓN ARDL (Pesaran et al., 2001)
+. * ----------------------------------------------------------------------------
+. ardl AF GM MI HO FL, maxlags(2) aic ec
+
+ARDL(1,2,2,1,1) regression
+
+Sample:     1992 thru     2024                          Number of obs =     33
+                                                        R-squared     = 0.7599
+                                                        Adj R-squared = 0.6342
+Log likelihood = 78.834303                              Root MSE      = 0.0278
+
+------------------------------------------------------------------------------
+        D.AF | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ADJ          |
+          AF |
+         L1. |   .0042389   .0439148     0.10   0.924    -.0870869    .0955648
+-------------+----------------------------------------------------------------
+LR           |
+          GM |  -24.69876   256.8259    -0.10   0.924    -558.7975       509.4
+          MI |  -.0004927   .0050638    -0.10   0.923    -.0110235    .0100381
+          HO |  -22.97252   235.2434    -0.10   0.923    -512.1879    466.2428
+          FL |   106.0743    1074.17     0.10   0.922    -2127.784    2339.932
+-------------+----------------------------------------------------------------
+SR           |
+          GM |
+         D1. |  -.0698798   .0281938    -2.48   0.022     -.128512   -.0112476
+         LD. |   -.067228   .0267747    -2.51   0.020    -.1229091   -.0115469
+             |
+          MI |
+         D1. |  -8.55e-07   4.68e-07    -1.83   0.082    -1.83e-06    1.19e-07
+         LD. |  -8.35e-07   4.61e-07    -1.81   0.085    -1.79e-06    1.24e-07
+             |
+          HO |
+         D1. |   .0515741   .0372983     1.38   0.181     -.025992    .1291403
+             |
+          FL |
+         D1. |   .7986492   .2553542     3.13   0.005     .2676111    1.329687
+             |
+       _cons |   6.552837   1.530267     4.28   0.000     3.370474    9.735201
+------------------------------------------------------------------------------
+
+. capture estat btest
+
+. if _rc estat bounds
+
+. 
+. * 7. ESTABILIDAD ESTRUCTURAL (CUSUM sobre Residuos ARDL)
+. * ----------------------------------------------------------------------------
+. capture drop r_ardl cumsum
+
+. predict r_ardl, resid
+(2 missing values generated)
+
+. gen cumsum = sum(r_ardl)
+
+. line cumsum anio, title("Prueba CUSUM de Estabilidad (Residuos ARDL)", size(small)) yli
+> ne(0, lcolor(red)) lcolor(navy) graphregion(color(white)) plotregion(color(white)) xtit
+> le("Año", size(vsmall)) ylabel(, labsize(vsmall)) xlabel(, labsize(vsmall)) name(cusum_
+> plot, replace)
+
+. graph export "assets/cusum_plot.png", replace width(2000)
+file assets/cusum_plot.png saved as PNG format
+
+. 
+. * 8. CIERRE
+. log close
+      name:  <unnamed>
+       log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econ
+> ometrics_2026\docs\vaults\u1-aa-01-applied-econometrics\ape2-crisis-iess\analysis_erick
+> _condoy\logs/econometric_audit.log
+  log type:  text
+ closed on:   8 May 2026, 08:10:59
+-----------------------------------------------------------------------------------------

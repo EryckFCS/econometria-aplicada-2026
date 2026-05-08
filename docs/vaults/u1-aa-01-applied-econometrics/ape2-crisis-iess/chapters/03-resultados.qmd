@@ -1,93 +1,49 @@
 # Resultados del Modelo ARDL y Cointegración
 
-Para corregir la no-estacionariedad y la varianza no constante observada en las series originales, aplicamos una transformación **Log-Log en Primeras Diferencias**. Esta transformación permite abordar dos requerimientos críticos: garantiza la estacionariedad mediante la conversión de variables con tendencia en procesos estables ($\Delta \ln X_t$) y facilita la interpretación económica mediante elasticidades.
+Para corregir la no-estacionariedad y la varianza no constante observada en las series originales, se aplica una transformación **Log-Log en Primeras Diferencias**. Esta transformación garantiza la estacionariedad y facilita la interpretación económica mediante elasticidades.
 
-## Comparativa de Modelos: Base vs. Vanguardia
+## Estimación del Modelo ARDL
 
-Para validar la robustez de los hallazgos y el valor predictivo de las variables de frontera, se presentan dos especificaciones: el **Modelo 1 (Base)** que captura la dinámica macro-demográfica tradicional, y el **Modelo 2 (Vanguardia)** que integra choques financieros y estructurales.
+Se presenta el resumen de los coeficientes estimados para el modelo ARDL de vanguardia. Los resultados muestran la dinámica de corto plazo y el ajuste hacia el equilibrio.
 
-```{python}
-#| label: tbl-comparison
-#| echo: false
-#| output: asis
-
-from IPython.display import display, HTML, Markdown
-
-# Estilo CSS para tabla "Premium"
-display(HTML("""
-<style>
-.premium-table-container {
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    margin: 25px 0;
-}
-.premium-table {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    border-collapse: separate;
-    border-spacing: 0;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-}
-.premium-table thead tr {
-    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-    color: #f8fafc;
-}
-.premium-table th {
-    padding: 16px;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    font-weight: 700;
-}
-.premium-table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid #e2e8f0;
-    font-size: 0.875rem;
-}
-.premium-table tr:last-child td {
-    border-bottom: none;
-}
-.premium-table tbody tr:hover {
-    background-color: #f1f5f9;
-}
-.stars { color: #f59e0b; font-weight: 800; }
-</style>
-"""))
-
-try:
-    with open("assets/premium_table.html", "r") as f:
-        html_content = f.read()
-        display(HTML(f'<div class="premium-table-container">{html_content}</div>'))
-except:
-    display(Markdown("> [!WARNING]\n> No se encontró el archivo assets/premium_table.html."))
-```
+{=latex}
+\begin{center}
+\small
+\begin{tabular}{lcccc}
+\hline
+\textbf{Variable} & \textbf{Coeficiente} & \textbf{Error Est.} & \textbf{z} & \textbf{P>|z|} \\
+\hline
+Constante & -1.0781 & 0.227 & -4.754 & 0.000 \\
+Ln(Afiliados).L1 & 1.7361 & 0.040 & 43.178 & 0.000 \\
+Ln(Afiliados).L2 & -0.7412 & 0.041 & -18.233 & 0.000 \\
+Ln(WTI).L0 & 0.0097 & 0.005 & 1.829 & 0.071 \\
+Ln(WTI).L1 & -0.0181 & 0.004 & -4.041 & 0.000 \\
+Ln(Remesas).L0 & 0.0242 & 0.009 & 2.724 & 0.008 \\
+Ln(EMBI).L0 & -0.0073 & 0.002 & -3.926 & 0.000 \\
+Ln(Matrícula).L0 & -0.0727 & 0.024 & -3.025 & 0.003 \\
+Ln(SBU).L0 & 0.2129 & 0.037 & 5.763 & 0.000 \\
+\hline
+\end{tabular}
+\end{center}
 
 ## Cointegración: Pesaran Bounds Test
 
 Para garantizar que la relación entre la afiliación al IESS y el vector de vanguardia no es una regresión espuria, aplicamos el **Bounds Test** de Pesaran et al. (2001).
 
-```{python}
-#| label: bounds-test
-#| echo: false
-import pickle
-from IPython.display import Markdown
+{=latex}
+\begin{center}
+\small
+\begin{tabular}{ccccc}
+\hline
+\textbf{Estadístico F} & \textbf{Signif.} & \textbf{I(0)} & \textbf{I(1)} & \textbf{Veredicto} \\
+\hline
+\textbf{5.84} & 1\% & 2.88 & 3.97 & \textbf{Cointegración Existe} \\
+\hline
+\end{tabular}
+\end{center}
 
-# Intentar cargar resultados de auditoría previa
-try:
-    with open('logs/models_comparison.pkl', 'rb') as f:
-        res = pickle.load(f)
-        model_2 = res['model_2']
-except:
-    pass
+**Evidencia Crítica:** Al existir cointegración, se confirma que las variables de vanguardia mantienen una relación de equilibrio de largo plazo con la sostenibilidad del sistema. La persistencia autorregresiva indica que el sistema tiene una memoria larga, donde los choques institucionales y macroeconómicos tienen efectos duraderos sobre la base contributiva.
 
-display(Markdown("""
-| Estadístico F | Nivel de Signif. | Valor Crítico I(0) | Valor Crítico I(1) | Veredicto |
-|:---:|:---:|:---:|:---:|:---:|
-| **5.84** | 1% | 2.88 | 3.97 | **Cointegración Existe** |
-"""))
-```
+## Diagnósticos de Pos-Estimación
 
-**Evidencia Crítica:** Al existir cointegración, se confirma que las variables de vanguardia (especialmente el EMBI y la Matrícula) mantienen una relación de equilibrio de largo plazo con la sostenibilidad del sistema, validando las elasticidades estimadas. La persistencia autorregresiva cercana a la unidad ($0.97$) indica que el sistema tiene una memoria larga.
+El modelo cumple con los supuestos de ausencia de autocorrelación serial (Breusch-Godfrey) y estabilidad de los parámetros (CUSUM), validando la confiabilidad de las elasticidades calculadas.

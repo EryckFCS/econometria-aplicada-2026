@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Parsear el log de Stata y generar Excel y Word con la tabla de unit root tests.
+"""Parsear el log de Stata más reciente y generar la tabla de unit root tests.
 
 Ubicación del log por defecto:
- logs/stata_master_table.log
+ logs/replicate_analysis_ultra_robust.log
 
 Salida:
  reports/unit_root_tests.xlsx
@@ -15,7 +15,7 @@ from docx import Document
 
 
 PROJECT_ROOT = Path(__file__).parents[1]
-LOG_PATH = PROJECT_ROOT / "logs" / "stata_master_table.log"
+LOG_PATH = PROJECT_ROOT / "logs" / "replicate_analysis_ultra_robust.log"
 OUT_DIR = PROJECT_ROOT / "reports"
 OUT_DIR.mkdir(exist_ok=True)
 
@@ -52,66 +52,40 @@ def stars_from_za(statistic: float | None) -> str:
 
 
 def parse_log(text: str):
-    # Patterns for the statistic values; we map them by order because Stata truncates
-    # variable names in the console output.
+    # Updated pattern to capture (Levels) or (Diffs) - making type optional for compatibility
+    var_block_pattern = re.compile(
+        r">>> Variable(?:\s*\((?P<type>Levels|Diffs)\))?:\s*(?P<var>[A-Z]{2}|D\.[A-Z]{2})\n(?P<body>[\s\S]*?)(?=(>>> Variable|\n\. \* 5\.|\Z))"
+    )
     adf_pattern = re.compile(r"Augmented Dickey–Fuller test for unit root[\s\S]*?Z\(t\)\s*(?P<zt>-?\d+\.\d+)", re.S)
     pp_pattern = re.compile(r"Phillips–Perron test for unit root[\s\S]*?Z\(t\)\s*(?P<zt>-?\d+\.\d+)", re.S)
     adf_p_pattern = re.compile(r"Augmented Dickey–Fuller test for unit root[\s\S]*?MacKinnon approximate p-value for Z\(t\) = (?P<p>\d+\.\d+)", re.S)
     pp_p_pattern = re.compile(r"Phillips–Perron test for unit root[\s\S]*?MacKinnon approximate p-value for Z\(t\) = (?P<p>\d+\.\d+)", re.S)
-    za_pattern = re.compile(r"Zivot-Andrews unit root test for[\s\S]*?Minimum t-statistic\s*(?P<tmin>-?\d+\.\d+) at (?P<year>\d{4})", re.S)
+    za_pattern = re.compile(r"Minimum t-statistic\s*(?P<tmin>-?\d+\.\d+)\s*at\s*(?P<year>\d{4})")
 
-    adf_values = [float(m.group("zt")) for m in adf_pattern.finditer(text)]
-    pp_values = [float(m.group("zt")) for m in pp_pattern.finditer(text)]
-    adf_p_values = [float(m.group("p")) for m in adf_p_pattern.finditer(text)]
-    pp_p_values = [float(m.group("p")) for m in pp_p_pattern.finditer(text)]
-    za_matches = [(float(m.group("tmin")), int(m.group("year"))) for m in za_pattern.finditer(text)]
+    parsed = {"Levels": {}, "Diffs": {}}
+    for match in var_block_pattern.finditer(text):
+        vtype = match.group("type") or "Levels"  # Levels or Diffs
+        raw_var = match.group("var")
+        # clean variable name (remove D. for diffs)
+        var = raw_var.replace("D.", "")
+        
+        body = match.group("body")
+        adf_m = adf_pattern.search(body)
+        pp_m = pp_pattern.search(body)
+        adf_p_m = adf_p_pattern.search(body)
+        pp_p_m = pp_p_pattern.search(body)
+        za_m = za_pattern.search(body)
 
-    vars_full = [
-        ("ln_afiliados_iess", "AF"),
-        ("ln_fuerza_laboral", "FL"),
-        ("ln_embi_ecuador", "EM"),
-        ("ln_gdp_pc_ppp", "GDP"),
-        ("ln_sbu", "SBU"),
-    ]
+        parsed[vtype][var] = {
+            "adf": float(adf_m.group("zt")) if adf_m else None,
+            "pp": float(pp_m.group("zt")) if pp_m else None,
+            "adf_p": float(adf_p_m.group("p")) if adf_p_m else None,
+            "pp_p": float(pp_p_m.group("p")) if pp_p_m else None,
+            "za": float(za_m.group("tmin")) if za_m else None,
+            "break": int(za_m.group("year")) if za_m else None,
+        }
 
-    adf = {}
-    pp = {}
-    adf_p = {}
-    pp_p = {}
-    za = {}
-
-    for idx, (full, _) in enumerate(vars_full):
-        level_pos = idx * 2
-        diff_pos = level_pos + 1
-
-        if level_pos < len(adf_values):
-            adf[normalize_varname(full)] = adf_values[level_pos]
-        if level_pos < len(pp_values):
-            pp[normalize_varname(full)] = pp_values[level_pos]
-        if idx < len(adf_p_values):
-            adf_p[normalize_varname(full)] = adf_p_values[idx]
-        if idx < len(pp_p_values):
-            pp_p[normalize_varname(full)] = pp_p_values[idx]
-        if level_pos < len(za_matches):
-            tmin, year = za_matches[level_pos]
-            za[normalize_varname(full)] = {"tmin": tmin, "year": year}
-
-    for idx, (full, _) in enumerate(vars_full):
-        dkey = normalize_varname("d." + full)
-        diff_pos = idx * 2 + 1
-        if diff_pos < len(adf_values):
-            adf[dkey] = adf_values[diff_pos]
-        if diff_pos < len(pp_values):
-            pp[dkey] = pp_values[diff_pos]
-        if idx < len(adf_p_values):
-            adf_p[dkey] = adf_p_values[idx]
-        if idx < len(pp_p_values):
-            pp_p[dkey] = pp_p_values[idx]
-        if diff_pos < len(za_matches):
-            tmin, year = za_matches[diff_pos]
-            za[dkey] = {"tmin": tmin, "year": year}
-
-    return adf, pp, adf_p, pp_p, za
+    return parsed
 
 
 def main():
@@ -121,49 +95,43 @@ def main():
 
     text = LOG_PATH.read_text(encoding="utf-8", errors="ignore")
 
-    # variables objetivo en el orden esperado (según el do-file)
-    vars_full = [
-        ("ln_afiliados_iess", "AF"),
-        ("ln_fuerza_laboral", "FL"),
-        ("ln_embi_ecuador", "EM"),
-        ("ln_gdp_pc_ppp", "GDP"),
-        ("ln_sbu", "SBU"),
-    ]
-
-    adf, pp, adf_p, pp_p, za = parse_log(text)
+    vars_order = ["AF", "GM", "MI", "HO", "FL"]
+    parsed = parse_log(text)
 
     rows = []
-    for full, short in vars_full:
-        key = normalize_varname(full)
+    for short in vars_order:
+        # Levels
+        l_vals = parsed["Levels"].get(short, {})
+        # Diffs
+        d_vals = parsed["Diffs"].get(short, {})
+        
+        # Level Stats
+        a_l = l_vals.get("adf")
+        p_l = l_vals.get("pp")
+        a_l_p = l_vals.get("adf_p")
+        p_l_p = l_vals.get("pp_p")
+        z_l = l_vals.get("za")
+        b_l = l_vals.get("break")
 
-        # level values
-        a_l = adf.get(key)
-        p_l = pp.get(key)
-        a_l_p = adf_p.get(key)
-        p_l_p = pp_p.get(key)
-        z_l = za.get(key, {}).get("tmin") if za.get(key) else None
-        by = za.get(key, {}).get("year") if za.get(key) else None
-
-        # difference keys: in log the diff variable often appears as D.<var>
-        dkey = normalize_varname("d." + full)
-        a_d = adf.get(dkey)
-        p_d = pp.get(dkey)
-        a_d_p = adf_p.get(dkey)
-        p_d_p = pp_p.get(dkey)
-        z_d = za.get(dkey, {}).get("tmin") if za.get(dkey) else None
-        bdy = za.get(dkey, {}).get("year") if za.get(dkey) else None
+        # Diff Stats
+        a_d = d_vals.get("adf")
+        p_d = d_vals.get("pp")
+        a_d_p = d_vals.get("adf_p")
+        p_d_p = d_vals.get("pp_p")
+        z_d = d_vals.get("za")
+        b_d = d_vals.get("break")
 
         rows.append(
             {
                 "Variable": short,
-                "ADF_Level": f"{a_l:.3f}{stars_from_pvalue(a_l_p)}" if a_l is not None else "",
-                "PP_Level": f"{p_l:.3f}{stars_from_pvalue(p_l_p)}" if p_l is not None else "",
-                "ZA_Level": f"{z_l:.3f}{stars_from_za(z_l)}" if z_l is not None else "",
-                "Break_Level": by if by is not None else "",
-                "ADF_Diff": f"{a_d:.3f}{stars_from_pvalue(a_d_p)}" if a_d is not None else "",
-                "PP_Diff": f"{p_d:.3f}{stars_from_pvalue(p_d_p)}" if p_d is not None else "",
-                "ZA_Diff": f"{z_d:.3f}{stars_from_za(z_d)}" if z_d is not None else "",
-                "Break_Diff": bdy if bdy is not None else "",
+                "ADF_Level": f"{a_l:.3f}{stars_from_pvalue(a_l_p)}" if a_l is not None else "-",
+                "PP_Level": f"{p_l:.3f}{stars_from_pvalue(p_l_p)}" if p_l is not None else "-",
+                "ZA_Level": f"{z_l:.3f}{stars_from_za(z_l)}" if z_l is not None else "-",
+                "Break_Level": b_l if b_l is not None else "-",
+                "ADF_Diff": f"{a_d:.3f}{stars_from_pvalue(a_d_p)}" if a_d is not None else "-",
+                "PP_Diff": f"{p_d:.3f}{stars_from_pvalue(p_d_p)}" if p_d is not None else "-",
+                "ZA_Diff": f"{z_d:.3f}{stars_from_za(z_d)}" if z_d is not None else "-",
+                "Break_Diff": b_d if b_d is not None else "-",
                 "I(d)": "I(1)",
             }
         )
@@ -187,7 +155,7 @@ def main():
     ]
 
     df_export = df_out.copy()
-    df_export.columns = ["", "(ADF)", "(PP)", "(ZA)", "Break", "(ADF)", "(PP)", "(ZA)", "Break", ""]
+    df_export.columns = ["Serie", "ADF", "PP", "ZA", "Break", "ADF", "PP", "ZA", "Break", "I(d)"]
 
     xlsx_path = OUT_DIR / "unit_root_tests.xlsx"
     df_export.to_excel(xlsx_path, index=False)

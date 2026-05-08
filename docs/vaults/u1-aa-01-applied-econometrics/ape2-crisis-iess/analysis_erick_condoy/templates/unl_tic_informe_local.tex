@@ -128,12 +128,13 @@
 
 $header-includes$
 
-% Compactar tablas: reducir interlineado y espacio entre filas
+% Compactar tablas: reducir interlineado y espacio entre filas a 10pt (small)
 \usepackage{etoolbox}
-\BeforeBeginEnvironment{table}{\begin{singlespace}\renewcommand{\arraystretch}{0.85}}
-\AfterEndEnvironment{table}{\end{singlespace}}
-\BeforeBeginEnvironment{longtable}{\begin{singlespace}\renewcommand{\arraystretch}{0.85}}
-\AfterEndEnvironment{longtable}{\end{singlespace}}
+\AtBeginEnvironment{table}{\begingroup\small\selectfont\begin{singlespace}\renewcommand{\arraystretch}{0.9}}
+\AtEndEnvironment{table}{\end{singlespace}\endgroup}
+\AtBeginEnvironment{longtable}{\begingroup\small\selectfont\renewcommand{\arraystretch}{0.9}}
+\AfterEndEnvironment{longtable}{\endgroup}
+\AtBeginEnvironment{tabular}{\small\selectfont}
 
 \begin{document}
 
@@ -185,7 +186,7 @@ $header-includes$
 \newpage
 \pagenumbering{arabic}
 \setcounter{page}{2} % La portada es 1
-\setstretch{1.5}
+\setstretch{1.0}
 
 $body$
 

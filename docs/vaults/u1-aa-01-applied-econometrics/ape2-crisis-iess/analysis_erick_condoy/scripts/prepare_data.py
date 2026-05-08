@@ -14,15 +14,12 @@ if df['tasa_homicidios'].isnull().iloc[-1]:
     # In Ecuador 2024, the rate is expected to stay high. We forward fill the 2023 value.
     df['tasa_homicidios'] = df['tasa_homicidios'].ffill()
 
-# 2. Imputation of Rentas Naturales (has 32 counts)
-df['rentas_recursos_naturales_pib'] = df['rentas_recursos_naturales_pib'].interpolate(method='linear').bfill().ffill()
-
-# 3. Final verification
+# 2. Final verification
 print("--- Datos después de Imputación ---")
 print(df.isnull().sum())
 print(df.tail())
 
-# 4. Save to the new vault location
+# 3. Save to the new vault location
 output_vault_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/analysis_erick_condoy/data/base_analisis.csv"
 df.to_csv(output_vault_path, index=False)
 print(f"\nBase de análisis guardada en: {output_vault_path}")

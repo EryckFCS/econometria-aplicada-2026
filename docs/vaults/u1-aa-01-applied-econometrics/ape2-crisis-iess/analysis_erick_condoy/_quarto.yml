@@ -23,7 +23,7 @@ format:
       - right=2.54cm
     fontfamily: times
     fontsize: 12pt
-    linestretch: 1.5
+    linestretch: 1.0
     toc: true
     number-sections: true
     indent: true
