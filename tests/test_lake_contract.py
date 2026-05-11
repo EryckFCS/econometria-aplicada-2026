@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from ecs_quantitative.management.lake import LakeManager
+from ecs_quantitative.core.lake import LakeManager
 
 from src.core.lake import build_bibliography_manifest, write_bibliography_manifest
 

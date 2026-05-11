@@ -1,0 +1,17 @@
+{
+  "default": true,
+  "MD033": {
+    "allowed_elements": [
+      "context_engineering",
+      "identity",
+      "role",
+      "scope",
+      "architecture",
+      "guardrails",
+      "rule",
+      "quant_contract",
+      "infra",
+      "paradigm"
+    ]
+  }
+}

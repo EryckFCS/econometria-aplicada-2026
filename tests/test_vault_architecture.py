@@ -19,7 +19,7 @@ def test_level_5_vaults_exist() -> None:
         REPO_ROOT / "src" / "orchestration" / "M01-U1-APE-Master_Build.py",
         REPO_ROOT / "docs" / "vaults",
         REPO_ROOT / "docs" / "vaults" / "u1-aa-01-applied-econometrics",
-        REPO_ROOT / "writing",
+        REPO_ROOT / "docs" / "writing",
         REPO_ROOT / "bibliography",
         REPO_ROOT / "bibliography" / "raw",
         REPO_ROOT / "data" / "curation" / "group_work" / "standardized",
@@ -61,12 +61,12 @@ def test_level_5_vaults_exist() -> None:
         / "bibliography"
         / "raw"
         / "manuals"
-        / "metodologia_enemdu_general.pdf"
+        / "inec_metodologia_enemdu.pdf"
     ).is_file()
     assert (
         REPO_ROOT
         / "bibliography"
         / "raw"
         / "manuals"
-        / "06-statistical-bulletin-29-2024.pdf"
+        / "iess_2024_bulletin_29.pdf"
     ).is_file()
