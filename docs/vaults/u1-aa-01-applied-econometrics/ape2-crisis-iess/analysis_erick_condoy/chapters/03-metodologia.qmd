@@ -1,4 +1,4 @@
-# **Variables y Modelo**
+# Metodología y Datos
 
 En esta sección se detallan los determinantes seleccionados, el marco analítico y la especificación técnica del modelo econométrico para evaluar la sostenibilidad del sistema de seguridad social.
 
@@ -12,7 +12,7 @@ Se plantean las siguientes hipótesis sobre la sostenibilidad institucional del 
 
 ## **Definición de Variables**
 
-Se han seleccionado variables que capturan las dimensiones críticas de demografía, movilidad y estabilidad institucional. Para facilitar la lectura técnica en tablas y figuras, se utilizarán códigos de dos letras.
+La especificación empírica define al número de afiliados (AF) como la variable dependiente de interés. Los regresores independientes principales son el gasto militar (GM) y la tasa de homicidios (HO), seleccionados para testear las hipótesis de desplazamiento fiscal e inestabilidad social. Asimismo, se integran la migración neta (MI) y la fuerza laboral total (FL) como variables de control para capturar la dinámica demográfica y la escala del mercado de trabajo ecuatoriano.
 
 ::: {#tbl-variables tbl-pos='H' tbl-colwidths='[10, 15, 40, 10, 25]'}
 | Código | Variable | Definición | Unidad | Fuente de Datos |

@@ -1,5 +1,5 @@
 ---
-title: "Determinantes de la crisis de sostenibilidad del IESS y el impacto de la inestabilidad social en el Ecuador durante el periodo 1990-2024"
+title: "Determinantes de la sostenibilidad del IESS y el impacto de la inestabilidad social en el Ecuador durante el periodo 1990-2024"
 subtitle: "Análisis Econométrico Aplicado"
 author: "Erick Fabricio Condoy Seraquive"
 date: "2026-05-07"
@@ -15,22 +15,46 @@ format:
     tbl-pos: 'H'
     fig-pos: 'H'
     tbl-cap-location: top
+  docx:
+    toc: false
+    number-sections: true
+    highlight-style: github
+    fig-cap-location: bottom
+    tbl-cap-location: top
+    reference-doc: templates/custom-reference.docx
 header-includes:
   - \usepackage{multirow}
+  - \setlength{\parindent}{0pt}
+  - \setlength{\parskip}{1em}
 ---
 
+{{< include chapters/00-resumen.qmd >}}
 
-{{< include chapters/01-problema.qmd >}}
+\newpage
 
-{{< include chapters/02-teoria.qmd >}}
+{{< include chapters/01-introduccion.qmd >}}
 
-{{< include chapters/03-variables.qmd >}}
+\newpage
 
-{{< include chapters/04-estadisticos.qmd >}}
+{{< include chapters/02-literatura.qmd >}}
+
+\newpage
+
+{{< include chapters/03-metodologia.qmd >}}
+
+\newpage
+
+{{< include chapters/04-analisis-descriptivo.qmd >}}
+
+\newpage
 
 {{< include chapters/05-resultados.qmd >}}
 
+\newpage
+
 {{< include chapters/06-conclusiones.qmd >}}
+
+\newpage
 
 # Referencias {.unnumbered}
 

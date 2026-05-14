@@ -15,7 +15,7 @@ from docx import Document
 
 
 PROJECT_ROOT = Path(__file__).parents[1]
-LOG_PATH = PROJECT_ROOT / "logs" / "replicate_analysis_ultra_robust.log"
+LOG_PATH = PROJECT_ROOT / "logs" / "master_econometric_pipeline.log"
 OUT_DIR = PROJECT_ROOT / "reports"
 OUT_DIR.mkdir(exist_ok=True)
 
