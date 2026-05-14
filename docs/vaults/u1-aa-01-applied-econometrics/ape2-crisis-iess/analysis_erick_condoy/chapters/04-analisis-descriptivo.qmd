@@ -1,4 +1,4 @@
-# Estadísticos Descriptivos
+# Análisis Descriptivo
 
 El análisis de variabilidad confirma que las series temporales capturan los choques estructurales del periodo 1990-2024.
 

@@ -1,3 +1,0 @@
-# **Teoría**
-
-La investigación se fundamenta en el Modelo de Generaciones Traslapadas (OLG) [@diamond1965] para analizar la sostenibilidad del sistema de reparto ante el desequilibrio demográfico, y en la Economía del Crimen [@becker1968] para explicar cómo la inseguridad ciudadana incentiva la informalidad. Estos marcos permiten evaluar empíricamente cómo la violencia y la competencia por recursos públicos (Gasto Militar) erosionan el contrato social intergeneracional del IESS.

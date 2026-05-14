@@ -1,0 +1,37 @@
+# Revisión de Literatura
+
+La sostenibilidad de los sistemas de seguridad social de reparto, como el gestionado por el Instituto Ecuatoriano de Seguridad Social (IESS), se fundamenta en el equilibrio entre la base de contribuyentes activos y la población beneficiaria de prestaciones. Esta sección analiza los marcos teóricos y la evidencia empírica que sustentan la relación entre demografía, estabilidad institucional y afiliación.
+
+## Marcos Teóricos Fundacionales
+
+### Modelo de Generaciones Traslapadas (OLG)
+El análisis de la sostenibilidad financiera del IESS se inscribe en el Modelo de Generaciones Traslapadas (OLG) propuesto por @diamond1965. En un sistema de reparto, el bienestar de la generación jubilada depende directamente de las contribuciones de la generación joven activa. Sin embargo, el desequilibrio demográfico —caracterizado por la transición regresiva de la pirámide poblacional en Ecuador— amenaza este contrato intergeneracional. Según el @pnd2025, se proyecta una reducción del 2.73% en la población de primera infancia y un incremento del 2% en la de adultos mayores para 2025, lo que reduce la tasa de soporte del sistema.
+
+### Economía del Crimen e Institucionalidad
+La decisión de afiliación no solo depende de factores demográficos, sino de los incentivos institucionales. @becker1968 plantea que los individuos evalúan el costo de oportunidad de la legalidad frente a los beneficios esperados. En contextos de alta inseguridad ciudadana y extorsión, el incentivo para operar en la economía formal se debilita, desplazando a los trabajadores hacia la informalidad. Este desplazamiento erosiona la base contributiva del IESS, transformando la crisis de seguridad en una crisis de solvencia previsional.
+
+## Enfoques de la Informalidad y Seguridad Social
+
+### Modelos de Protección Social
+@murillo2025factors distinguen entre los modelos de seguridad social Bismarckianos —basados en seguros obligatorios contributivos— y los Beveridgeanos —enfocados en la cobertura universal financiada por impuestos—. Ecuador opera bajo un esquema híbrido donde la obligatoriedad se enfrenta a una estructura económica predominantemente informal. La informalidad en Ecuador no es un fenómeno coyuntural, sino estructural; según el @pnd2025, el sector informal absorbe casi la mitad del empleo total (46.74%), lo que limita la efectividad del modelo contributivo.
+
+### Determinantes de la Afiliación en Ecuador
+La literatura identifica tres enfoques principales para explicar la informalidad: dualista, estructuralista y neoclásico (@quejada2014; @murillo2025factors). El enfoque estructuralista sugiere que la incapacidad del sector formal para absorber la oferta laboral obliga a los trabajadores a refugiarse en el autoempleo precario. Empíricamente, @murillo2025factors demuestran que el ingreso laboral es el principal determinante de la afiliación voluntaria en Ecuador; sin embargo, los ingresos promedio del sector informal se mantienen por debajo del Salario Básico Unificado (SBU), lo que genera una barrera económica insuperable para el cumplimiento de las tasas de aportación.
+
+## Modelo Base de Sostenibilidad
+
+A partir de la síntesis de los marcos OLG y de la Economía del Crimen, se establece un modelo base de sostenibilidad para el sistema previsional ecuatoriano. Este modelo postula que la capacidad de soporte del IESS es una función multivariante de la estructura demográfica, la presión fiscal y el entorno de seguridad ciudadana. La relación funcional se define en la Ecuación (@eq-modelo-base):
+
+$$
+AF_t = \beta_0 + \beta_1 GM_t + \beta_2 HO_t + \beta_3 MI_t + \beta_4 FL_t + \mu_t
+$$ {#eq-modelo-base}
+
+Donde:
+- **$AF_t$ (Afiliados)**: Representa la variable dependiente de sostenibilidad. Es el flujo de recursos que garantiza el pago de prestaciones en el esquema de reparto.
+- **$GM_t$ (Gasto Militar)**: Variable de competencia fiscal. Captura el efecto de desplazamiento de recursos públicos hacia sectores de defensa no contributivos.
+- **$HO_t$ (Tasa de Homicidios)**: Indicador de inestabilidad social. Representa el riesgo institucional que incentiva la informalidad y reduce el horizonte de planeación de los agentes.
+- **$MI_t$ (Migración)** y **$FL_t$ (Fuerza Laboral)**: Variables de control demográfico. Representan la escala y la oferta laboral disponible para alimentar el sistema.
+
+## Evidencia Empírica Local
+
+La brecha de protección en Ecuador es crítica. Datos del @inec2022 y @murillo2025factors indican que aproximadamente el 77.06% de los trabajadores informales no cuentan con ninguna forma de seguridad social. Además, el @pnd2025 señala que la inseguridad ciudadana se ha convertido en la principal preocupación social, lo que sugiere un posible efecto de desplazamiento del gasto público hacia la defensa y seguridad, limitando la capacidad fiscal para sanear las deudas del Estado con el IESS.
