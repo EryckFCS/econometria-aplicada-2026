@@ -1,0 +1,28 @@
+# Especificación de Variables y Modelo
+
+## 3.1. Definición de Variables y Fuentes
+
+El estudio de la demanda de importaciones utiliza una especificación pentavariante que integra determinantes estructurales de la inversión, el sector extractivo y la estabilidad macroeconómica (@tbl-variables). Las series abarcan el periodo 1970-2021, lo que permite capturar diversos ciclos económicos y cambios en el régimen monetario de la economía ecuatoriana. Los datos han sido deflactados y transformados logarítmicamente para asegurar la interpretación de los parámetros como elasticidades y estabilizar la varianza de las series.
+
+::: {#tbl-variables}
+
+| Variable | Símbolo | Descripción Técnica | Fuente |
+|:---|:---:|:---|:---|
+| Log-Import. | $\ln(M_t)$ | Importaciones de bienes y servicios (Log USD) | Banco Mundial |
+| Log-PIB | $\ln(Y_t)$ | Producto Interno Bruto Real (Log USD constantes) | Banco Mundial |
+| Inversión | $IED_t$ | Flujos netos de Inversión Extranjera (% PIB) | WDI / QOG |
+| Petróleo | $Pet_t$ | Rentas provenientes del petróleo (% PIB) | WDI / QOG |
+| Estabilidad | $\pi_t$ | Inflación, precios al consumidor (% anual) | WDI / QOG |
+
+Definición de Variables, Símbolos y Fuentes de Información.
+:::
+
+## 3.2. Especificación del Modelo Econométrico
+
+La modelización dinámica se realiza mediante un modelo Autoregresivo con Rezagos Distribuidos (ARDL 1, 0), el cual permite cuantificar tanto la elasticidad ingreso inmediata como el efecto de persistencia intertemporal. Esta especificación es adecuada para series que presentan cointegración y permite derivar el Modelo de Corrección de Errores para evaluar la velocidad de ajuste hacia el equilibrio de largo plazo:
+
+$$ \ln(M_t) = \alpha + \beta_1 \ln(Y_t) + \gamma \ln(M_{t-1}) + \beta_2 IED_t + \beta_3 Pet_t + \beta_4 \pi_t + \varepsilon_t $$ {#eq-ardl}
+
+## 3.3. Hipótesis de Investigación
+
+La investigación se fundamenta en la premisa de que el ingreso nacional ejerce un impacto positivo y significativo sobre la demanda de importaciones, con una elasticidad de largo plazo que refleja la dependencia estructural de la economía. Asimismo, se postula que las importaciones exhiben una inercia temporal considerable, indicando que las decisiones comerciales actuales están condicionadas por los flujos y contratos del periodo previo. Finalmente, se asume que las variables de control estructural, como la renta petrolera y la inversión extranjera, actúan como impulsores de la demanda externa, mientras que la inflación ejerce una presión contractiva sobre el volumen de bienes adquiridos en el mercado internacional.

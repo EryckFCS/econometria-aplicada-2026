@@ -1,0 +1,20 @@
+{
+  "vault": "u1-aa-02-aa1-series-tiempo",
+  "unit": 1,
+  "activity": "AA1",
+  "category": "Aprendizaje Autónomo",
+  "topic": "Modelado de Series de Tiempo (ARMA, ARCH, GARCH)",
+  "status": "initialization",
+  "created_at": "2026-05-11",
+  "architecture_version": "8.1.5",
+  "sources": [
+    "docs/readings/guia_modelos_series_tiempo.md",
+    "docs/vaults/u1-aa-02-aa1-series-tiempo/data/aa1_import_function.xlsx"
+  ],
+  "structure": {
+    "scripts": "Lógica analítica local (Python y Stata)",
+    "logs": "Evidencia de ejecución",
+    "assets": "Gráficos y tablas finales",
+    "data": "aa1_import_function.xlsx (Data + Dictionary)"
+  }
+}

@@ -1,0 +1,66 @@
+# Estimación y Resultados
+
+## 5.1. Diagnóstico de Series (Pre-estimación)
+
+Antes de proceder con la estimación estructural, se valida la naturaleza estocástica de las series mediante pruebas de raíz unitaria (@tbl-roots). Los resultados confirman que las series fundamentales son integradas de orden uno I(1), lo que justifica el uso de modelos de cointegración.
+
+::: {#tbl-roots}
+
+| Variable | ADF (p-valor) | PP (p-valor) | Orden |
+|:---|:---:|:---:|:---:|
+| Log-Import. ($ln\_M$) | 0.0814 | 0.0877 | I(1) |
+| Log-PIB ($ln\_Y$) | 0.1148 | 0.1156 | I(1) |
+| IED (% PIB) | 0.0222** | 0.0422** | I(0) |
+| Renta Pet. (% PIB) | 0.0821 | 0.1173 | I(1) |
+| Inflación (%) | 0.2202 | 0.2385 | I(0) |
+
+Pruebas de Estacionariedad (Niveles). Nota: * p<0.1, ** p<0.05.
+:::
+
+Adicionalmente, el test de causalidad de Granger (@tbl-granger) revela una precedencia temporal significativa de todas las variables independientes hacia las importaciones, descartando relaciones espurias.
+
+::: {#tbl-granger}
+
+| Variable Excluida | Chi2 | gl | Prob > Chi2 |
+|:---|:---:|:---:|:---:|
+| Log-PIB ($ln\_Y$) | 31.75 | 1 | 0.000*** |
+| IED (% PIB) | 6.41 | 1 | 0.011** |
+| Renta Pet. (% PIB) | 7.04 | 1 | 0.008*** |
+| Inflación (%) | 23.39 | 1 | 0.000*** |
+
+Test de Causalidad de Granger hacia las Importaciones.
+:::
+
+## 5.2. Comparación de Modelos de Estimación
+
+Se evalúan cuatro especificaciones para garantizar la robustez de los hallazgos (@tbl-results). El modelo ARDL (3) y el ECM (4) proporcionan la mejor descripción de la dinámica económica del país.
+
+::: {#tbl-results}
+
+| Variable | Model 1 | Model 2 | Model 3 | Model 4 |
+| :--- | :---: | :---: | :---: | :---: |
+| | (Lineal) | (Log-Log) | (ARDL) | (ECM) |
+| PIB ($ln\_Y$) | 0.228*** | 0.920*** | 0.626*** | 1.661*** |
+| $ln(M)_{t-1}$ | -- | -- | 0.284** | -- |
+| IED (% PIB) | -2.7e8* | -0.034** | -0.020 | 0.014 |
+| Renta Pet. | 1.16e+08*** | 0.006* | 0.006* | -0.000 |
+| Inflación | -4.58e+07*** | -0.003*** | -0.003*** | -0.001 |
+| Resid. ($t-1$) | -- | -- | -- | -0.794*** |
+| Constant | 1.36e+09** | 0.6287 | 1.2508* | -0.0224 |
+| $N$ | 52 | 52 | 51 | 50 |
+| Adj. $R^2$ | 0.9721 | 0.9641 | 0.9669 | 0.5799 |
+
+Resultados Comparativos de Estimación. Nota: * p<0.1, ** p<0.05, *** p<0.01.
+:::
+
+## 5.3. Análisis de Resultados y Ajuste
+
+El modelo **ARDL (3)** confirma que el ingreso nacional es el principal determinante, con una elasticidad inmediata del 0.62. La inclusión de controles revela que la bonanza petrolera impulsa la demanda externa, mientras que la inflación actúa como un factor disuasorio. El **Modelo de Corrección de Errores (4)** confirma una velocidad de ajuste de -0.79, indicando una rápida convergencia hacia el equilibrio tras choques exógenos.
+
+El ajuste visual del modelo (@fig-ajuste) demuestra la capacidad del ARDL para capturar tanto las tendencias de largo plazo como la volatilidad cíclica de las importaciones ecuatorianas.
+
+::: {#fig-ajuste}
+![](assets/stata_import_plot_expanded.png)
+
+Ajuste del Modelo Dinámico ARDL(1, 0) frente a Datos Observados (1970-2021).
+:::

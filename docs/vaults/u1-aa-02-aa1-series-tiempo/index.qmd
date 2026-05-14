@@ -1,0 +1,47 @@
+---
+title: "AA1: Modelado de Series de Tiempo"
+subtitle: "Unidad 1 - Econometría Aplicada"
+author: "Erick Fabricio Condoy Seraquive"
+date: "2026-05-11"
+format:
+  pdf:
+    toc: false
+    number-sections: true
+    colorlinks: true
+    fig-pos: 'H'
+    mainfont: "Times New Roman"
+    header-includes:
+      - \usepackage{indentfirst}
+      - \usepackage{float}
+      - \floatplacement{table}{H}
+  docx:
+    toc: false
+    number-sections: true
+    highlight-style: github
+---
+
+{{< include chapters/01_problema.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/02_teoria.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/03_variables_modelos.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/04_analisis_grafico.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/05_estadisticos.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/06_estimacion.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/07_conclusiones.qmd >}}

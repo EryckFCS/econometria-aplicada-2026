@@ -1,0 +1,19 @@
+/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/.venv/lib/python3.13/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: An unsupported index was provided. As a result, forecasts cannot be generated. To use the model for forecasting, use one of the supported classes of index.
+  self._init_dates(dates, freq)
+/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/.venv/lib/python3.13/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: An unsupported index was provided. As a result, forecasts cannot be generated. To use the model for forecasting, use one of the supported classes of index.
+  self._init_dates(dates, freq)
+
+ESTADÍSTICOS DESCRIPTIVOS:
+         count          mean  ...           75%           max
+GDP       65.0  5.232114e+10  ...  7.485988e+10  1.154340e+11
+Imports   65.0  1.283321e+10  ...  1.990376e+10  2.954620e+10
+
+[2 rows x 8 columns]
+Traceback (most recent call last):
+  File "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-02-aa1-series-tiempo/scripts/analysis.py", line 123, in <module>
+    estimate_import_function()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-02-aa1-series-tiempo/scripts/analysis.py", line 74, in estimate_import_function
+    print(f"\nREZACOS ÓPTIMOS (AIC): {sel.selected_order}")
+                                      ^^^^^^^^^^^^^^^^^^
+AttributeError: 'ARDLOrderSelectionResults' object has no attribute 'selected_order'

@@ -1,0 +1,13 @@
+# Análisis Gráfico de las Series
+
+La identificación visual de patrones de tendencia, estacionalidad y quiebres estructurales es fundamental para comprender la naturaleza estocástica de las series macroeconómicas ecuatorianas (@fig-series). La evolución de las variables durante el periodo 1970-2021 revela comportamientos diferenciados que condicionan la especificación del modelo dinámico.
+
+::: {#fig-series}
+![](assets/time_series_plot.png)
+
+Evolución Temporal de las Variables del Modelo (1970-2021).
+:::
+
+## Análisis de Tendencia e Inercia
+
+Las importaciones y el producto interno bruto real exhiben una tendencia determinística creciente de largo plazo, lo cual sugiere la presencia de procesos no estacionarios que requieren validación mediante pruebas de raíz unitaria. Por su parte, la Inversión Extranjera Directa y la Renta Petrolera muestran una volatilidad significativamente mayor, característica de las economías dependientes de la exportación de materias primas. Los picos registrados en la renta petrolera durante los periodos de altos precios internacionales coinciden visualmente con las fases de expansión en la demanda de bienes externos. Finalmente, la inflación presenta una volatilidad extrema hasta el año 2000, momento en el que el esquema de dolarización estabiliza la serie y elimina la incertidumbre nominal en la función de importaciones.

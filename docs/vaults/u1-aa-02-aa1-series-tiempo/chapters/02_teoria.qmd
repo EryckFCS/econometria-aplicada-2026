@@ -1,0 +1,7 @@
+# Teoría
+
+La demanda de importaciones se fundamenta teóricamente en el enfoque de absorción, donde el volumen de compras externas está condicionado primordialmente por el nivel de ingreso nacional y los precios relativos. Esta relación económica se formaliza mediante una función donde el ingreso real actúa como el determinante de la capacidad de gasto de los agentes, sugiriendo que un incremento en el producto interno bruto desplaza la restricción presupuestaria y eleva sistemáticamente la demanda de bienes extranjeros.
+
+$$ M_t = \beta_0 Y_t^{\beta_1} e^{\varepsilon_t} $$ {#eq-teoria}
+
+La dinámica de esta relación implica que el ajuste hacia el equilibrio estable no es instantáneo debido a la presencia de rigideces contractuales, costos de transacción e inercia en los hábitos de consumo. Por tanto, la teoría moderna de series de tiempo sugiere que la función de importaciones debe modelarse bajo una estructura de ajuste parcial, donde los niveles actuales de comercio exterior están influenciados por su propio comportamiento pasado, justificando así el uso de especificaciones dinámicas.

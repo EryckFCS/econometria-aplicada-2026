@@ -1,0 +1,884 @@
+-----------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econ
+> ometrics_2026\docs\vaults\u1-aa-02-aa1-series-tiempo\logs/stata_output.log
+  log type:  text
+ opened on:  11 May 2026, 11:39:09
+
+. 
+. * 2. CARGA DE DATOS (DATASET EXPANDIDO)
+. import excel "data/aa1_expanded_data.xlsx", sheet("data") firstrow clear
+(6 vars, 52 obs)
+
+. 
+. * Configuración de Serie de Tiempo
+. tsset year
+
+Time variable: year, 1970 to 2021
+        Delta: 1 unit
+
+. 
+. * 3. TRANSFORMACIONES Y LOGARITMOS
+. gen l_imports = ln(imports)
+
+. gen l_gdp = ln(gdp)
+
+. 
+. label var l_imports "Log de Importaciones"
+
+. label var l_gdp "Log del PIB Real"
+
+. label var fdi "IED (% PIB)"
+
+. label var oil_rent "Renta Petrolera (% PIB)"
+
+. label var inflation "Inflación (%)"
+
+. 
+. * 4. ANÁLISIS DE ESTACIONARIEDAD (UNIDADES RAÍCES)
+. display "===================================================="
+====================================================
+
+. display "PRUEBAS DE RAÍZ UNITARIA (ADF Y PHILLIPS-PERRON)"
+PRUEBAS DE RAÍZ UNITARIA (ADF Y PHILLIPS-PERRON)
+
+. display "===================================================="
+====================================================
+
+. 
+. foreach var in l_imports l_gdp fdi oil_rent inflation {
+  2.     display "Variable: `var'"
+  3.     dfuller `var', trend
+  4.     pperron `var', trend
+  5. }
+Variable: l_imports
+
+Dickey–Fuller test for unit root           Number of obs  = 51
+Variable: l_imports                        Number of lags =  0
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -3.215       -4.148       -3.499       -3.179
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0814.
+
+Phillips–Perron test for unit root        Number of obs   = 51
+Variable: l_imports                       Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -14.605      -25.734      -19.818      -16.814
+ Z(t)            -3.184       -4.148       -3.499       -3.179
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0877.
+Variable: l_gdp
+
+Dickey–Fuller test for unit root           Number of obs  = 51
+Variable: l_gdp                            Number of lags =  0
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -3.065       -4.148       -3.499       -3.179
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.1148.
+
+Phillips–Perron test for unit root        Number of obs   = 51
+Variable: l_gdp                           Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -10.051      -25.734      -19.818      -16.814
+ Z(t)            -3.062       -4.148       -3.499       -3.179
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.1156.
+Variable: fdi
+
+Dickey–Fuller test for unit root           Number of obs  = 51
+Variable: fdi                              Number of lags =  0
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -3.702       -4.148       -3.499       -3.179
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0222.
+
+Phillips–Perron test for unit root        Number of obs   = 51
+Variable: fdi                             Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -17.911      -25.734      -19.818      -16.814
+ Z(t)            -3.475       -4.148       -3.499       -3.179
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0422.
+Variable: oil_rent
+
+Dickey–Fuller test for unit root           Number of obs  = 51
+Variable: oil_rent                         Number of lags =  0
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -3.212       -4.148       -3.499       -3.179
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.0821.
+
+Phillips–Perron test for unit root        Number of obs   = 51
+Variable: oil_rent                        Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -15.704      -25.734      -19.818      -16.814
+ Z(t)            -3.055       -4.148       -3.499       -3.179
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.1173.
+Variable: inflation
+
+Dickey–Fuller test for unit root           Number of obs  = 51
+Variable: inflation                        Number of lags =  0
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -2.739       -4.148       -3.499       -3.179
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.2202.
+
+Phillips–Perron test for unit root        Number of obs   = 51
+Variable: inflation                       Newey–West lags =  3
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(rho)         -12.545      -25.734      -19.818      -16.814
+ Z(t)            -2.694       -4.148       -3.499       -3.179
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.2385.
+
+. 
+. * 5. SELECCIÓN DE REZAGOS Y CAUSALIDAD (MULTIVARIANTE)
+. di _newline(2) ">>> TABLA 1: SELECCIÓN DE REZAGOS (VAR) <<<"
+
+
+>>> TABLA 1: SELECCIÓN DE REZAGOS (VAR) <<<
+
+. varsoc l_imports l_gdp fdi oil_rent inflation, maxlag(4)
+
+Lag-order selection criteria
+
+   Sample: 1974 thru 2021                                   Number of obs = 48
+  +---------------------------------------------------------------------------+
+  | Lag |    LL      LR      df    p     FPE       AIC      HQIC      SBIC    |
+  |-----+---------------------------------------------------------------------|
+  |   0 | -383.072                     7.24508   16.1697   16.2433   16.3646  |
+  |   1 | -192.574     381*  25  0.000 .007381*  9.27392*  9.71588*  10.4434* |
+  |   2 | -176.046  33.056   25  0.130 .010878   9.62692   10.4372    11.771  |
+  |   3 | -162.158  27.776   25  0.318 .018929   10.0899   11.2685   13.2086  |
+  |   4 |   -143.6  37.117   25  0.056 .029756   10.3583   11.9052   14.4516  |
+  +---------------------------------------------------------------------------+
+   * optimal lag
+   Endogenous: l_imports l_gdp fdi oil_rent inflation
+    Exogenous: _cons
+
+. 
+. di _newline(2) ">>> TABLA 2: CAUSALIDAD DE GRANGER <<<"
+
+
+>>> TABLA 2: CAUSALIDAD DE GRANGER <<<
+
+. var l_imports l_gdp fdi oil_rent inflation, lags(1/1)
+
+Vector autoregression
+
+Sample: 1971 thru 2021                          Number of obs     =         51
+Log likelihood =   -222.857                     AIC               =   9.915959
+FPE            =   .0140104                     HQIC              =    10.3502
+Det(Sigma_ml)  =   .0042967                     SBIC              =   11.05233
+
+Equation           Parms      RMSE     R-sq      chi2     P>chi2
+----------------------------------------------------------------
+l_imports             6     .098119   0.9654   1424.166   0.0000
+l_gdp                 6     .033526   0.9958   12003.76   0.0000
+fdi                   6      .92635   0.3790   31.12287   0.0000
+oil_rent              6      3.2775   0.4951    50.0189   0.0000
+inflation             6     13.7499   0.6320   87.60225   0.0000
+----------------------------------------------------------------
+
+------------------------------------------------------------------------------
+             | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+l_imports    |
+   l_imports |
+         L1. |   .1428806    .135172     1.06   0.290    -.1220516    .4078129
+             |
+       l_gdp |
+         L1. |   .7219032   .1281178     5.63   0.000      .470797    .9730095
+             |
+         fdi |
+         L1. |  -.0334153   .0131945    -2.53   0.011    -.0592761   -.0075546
+             |
+    oil_rent |
+         L1. |   .0092761   .0034947     2.65   0.008     .0024265    .0161257
+             |
+   inflation |
+         L1. |  -.0039284   .0008121    -4.84   0.000    -.0055202   -.0023366
+             |
+       _cons |   2.209429   .7391874     2.99   0.003     .7606481     3.65821
+-------------+----------------------------------------------------------------
+l_gdp        |
+   l_imports |
+         L1. |  -.0891833   .0461867    -1.93   0.053    -.1797076    .0013411
+             |
+       l_gdp |
+         L1. |   1.044645   .0437764    23.86   0.000     .9588444    1.130445
+             |
+         fdi |
+         L1. |  -.0020693   .0045084    -0.46   0.646    -.0109056     .006767
+             |
+    oil_rent |
+         L1. |   .0024607   .0011941     2.06   0.039     .0001202    .0048011
+             |
+   inflation |
+         L1. |  -.0007641   .0002775    -2.75   0.006     -.001308   -.0002202
+             |
+       _cons |   1.005353    .252572     3.98   0.000     .5103208    1.500385
+-------------+----------------------------------------------------------------
+fdi          |
+   l_imports |
+         L1. |  -.4630171   1.276168    -0.36   0.717    -2.964261    2.038226
+             |
+       l_gdp |
+         L1. |   .5143595   1.209569     0.43   0.671    -1.856352    2.885071
+             |
+         fdi |
+         L1. |   .5346378   .1245703     4.29   0.000     .2904846     .778791
+             |
+    oil_rent |
+         L1. |  -.0206861   .0329941    -0.63   0.531    -.0853533    .0439812
+             |
+   inflation |
+         L1. |   .0069181   .0076675     0.90   0.367      -.00811    .0219462
+             |
+       _cons |  -1.333349    6.97872    -0.19   0.848    -15.01139    12.34469
+-------------+----------------------------------------------------------------
+oil_rent     |
+   l_imports |
+         L1. |  -2.692026   4.515183    -0.60   0.551    -11.54162    6.157571
+             |
+       l_gdp |
+         L1. |   2.801924    4.27955     0.65   0.513    -5.585839    11.18969
+             |
+         fdi |
+         L1. |   .1434365   .4407394     0.33   0.745    -.7203968     1.00727
+             |
+    oil_rent |
+         L1. |    .700855   .1167357     6.00   0.000     .4720571    .9296528
+             |
+   inflation |
+         L1. |  -.0168732   .0271284    -0.62   0.534    -.0700438    .0362974
+             |
+       _cons |  -3.793209   24.69126    -0.15   0.878    -52.18719    44.60077
+-------------+----------------------------------------------------------------
+inflation    |
+   l_imports |
+         L1. |   .1209618   18.94229     0.01   0.995    -37.00524    37.24716
+             |
+       l_gdp |
+         L1. |  -1.494761   17.95375    -0.08   0.934    -36.68346    33.69393
+             |
+         fdi |
+         L1. |    .561902   1.849008     0.30   0.761    -3.062088    4.185891
+             |
+    oil_rent |
+         L1. |  -.7308277   .4897346    -1.49   0.136     -1.69069    .2290345
+             |
+   inflation |
+         L1. |   .7764501   .1138101     6.82   0.000     .5533864    .9995137
+             |
+       _cons |   43.66051   103.5858     0.42   0.673    -159.3639     246.685
+------------------------------------------------------------------------------
+
+. vargranger
+
+   Granger causality Wald tests
+  +------------------------------------------------------------------+
+  |          Equation           Excluded |   chi2     df Prob > chi2 |
+  |--------------------------------------+---------------------------|
+  |         l_imports              l_gdp |   31.75     1    0.000    |
+  |         l_imports                fdi |  6.4137     1    0.011    |
+  |         l_imports           oil_rent |  7.0453     1    0.008    |
+  |         l_imports          inflation |  23.397     1    0.000    |
+  |         l_imports                ALL |  39.156     4    0.000    |
+  |--------------------------------------+---------------------------|
+  |             l_gdp          l_imports |  3.7285     1    0.053    |
+  |             l_gdp                fdi |  .21067     1    0.646    |
+  |             l_gdp           oil_rent |  4.2463     1    0.039    |
+  |             l_gdp          inflation |  7.5811     1    0.006    |
+  |             l_gdp                ALL |  9.4726     4    0.050    |
+  |--------------------------------------+---------------------------|
+  |               fdi          l_imports |  .13164     1    0.717    |
+  |               fdi              l_gdp |  .18083     1    0.671    |
+  |               fdi           oil_rent |  .39308     1    0.531    |
+  |               fdi          inflation |  .81407     1    0.367    |
+  |               fdi                ALL |  2.5577     4    0.634    |
+  |--------------------------------------+---------------------------|
+  |          oil_rent          l_imports |  .35547     1    0.551    |
+  |          oil_rent              l_gdp |  .42866     1    0.513    |
+  |          oil_rent                fdi |  .10591     1    0.745    |
+  |          oil_rent          inflation |  .38685     1    0.534    |
+  |          oil_rent                ALL |    .958     4    0.916    |
+  |--------------------------------------+---------------------------|
+  |         inflation          l_imports |  4.1e-05    1    0.995    |
+  |         inflation              l_gdp |  .00693     1    0.934    |
+  |         inflation                fdi |  .09235     1    0.761    |
+  |         inflation           oil_rent |  2.2269     1    0.136    |
+  |         inflation                ALL |  4.6103     4    0.330    |
+  +------------------------------------------------------------------+
+
+. 
+. di _newline(2) ">>> TABLA 3: COINTEGRACIÓN DE JOHANSEN <<<"
+
+
+>>> TABLA 3: COINTEGRACIÓN DE JOHANSEN <<<
+
+. vecrank l_imports l_gdp fdi oil_rent inflation, trend(constant)
+
+Johansen tests for cointegration
+Trend: Constant                            Number of obs  = 50
+Sample: 1972 thru 2021                     Number of lags =  2
+--------------------------------------------------------------
+                                                      Critical
+Maximum                                        Trace     value
+   rank  Params           LL  Eigenvalue   statistic        5%
+      0      30   -232.24498           .     83.7205     68.52
+      1      39   -209.02099     0.60504     37.2725*    47.21
+      2      46   -199.80096     0.30844     18.8324     29.68
+      3      51   -195.26152     0.16605      9.7535     15.41
+      4      54    -191.6284     0.13526      2.4873      3.76
+      5      55   -190.38474     0.04853
+--------------------------------------------------------------
+* selected rank
+
+. 
+. * 6. ESTIMACIÓN DE MODELOS DINÁMICOS (SÍLABO: TEMAS 1.1 Y 1.2)
+. display "===================================================="
+====================================================
+
+. display "ESTIMACIÓN DE MODELOS COMPARATIVOS (5 VARIABLES)"
+ESTIMACIÓN DE MODELOS COMPARATIVOS (5 VARIABLES)
+
+. display "===================================================="
+====================================================
+
+. 
+. * Modelo 1: Lineal Estático
+. reg imports gdp fdi oil_rent inflation
+
+      Source |       SS           df       MS      Number of obs   =        52
+-------------+----------------------------------   F(4, 47)        =    444.86
+       Model |  2.4452e+21         4  6.1129e+20   Prob > F        =    0.0000
+    Residual |  6.4584e+19        47  1.3741e+18   R-squared       =    0.9743
+-------------+----------------------------------   Adj R-squared   =    0.9721
+       Total |  2.5097e+21        51  4.9211e+19   Root MSE        =    1.2e+09
+
+------------------------------------------------------------------------------
+     imports | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         gdp |   .2285235   .0069528    32.87   0.000     .2145363    .2425108
+         fdi |  -2.77e+08   1.56e+08    -1.77   0.083    -5.91e+08    3.75e+07
+    oil_rent |   1.16e+08   4.09e+07     2.83   0.007     3.37e+07    1.98e+08
+   inflation |  -4.58e+07    8531389    -5.37   0.000    -6.30e+07   -2.86e+07
+       _cons |   1.36e+09   6.20e+08     2.20   0.033     1.14e+08    2.61e+09
+------------------------------------------------------------------------------
+
+. estimates store m1
+
+. 
+. * Modelo 2: Log-Log Estático
+. reg l_imports l_gdp fdi oil_rent inflation
+
+      Source |       SS           df       MS      Number of obs   =        52
+-------------+----------------------------------   F(4, 47)        =    342.97
+       Model |  13.5802327         4  3.39505818   Prob > F        =    0.0000
+    Residual |  .465259189        47  .009899132   R-squared       =    0.9669
+-------------+----------------------------------   Adj R-squared   =    0.9641
+       Total |  14.0454919        51  .275401802   Root MSE        =    .09949
+
+------------------------------------------------------------------------------
+   l_imports | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       l_gdp |   .9200484   .0316531    29.07   0.000     .8563705    .9837263
+         fdi |   -.034799   .0132375    -2.63   0.012    -.0614294   -.0081686
+    oil_rent |   .0064105   .0036111     1.78   0.082    -.0008541     .013675
+   inflation |  -.0037006    .000689    -5.37   0.000    -.0050866   -.0023146
+       _cons |   .6286704   .7755974     0.81   0.422    -.9316303    2.188971
+------------------------------------------------------------------------------
+
+. estimates store m2
+
+. 
+. * Modelo 3: ARDL(1, 0) Dinámico (Ajuste Parcial)
+. reg l_imports l_gdp L.l_imports fdi oil_rent inflation
+
+      Source |       SS           df       MS      Number of obs   =        51
+-------------+----------------------------------   F(5, 45)        =    293.19
+       Model |   12.157937         5   2.4315874   Prob > F        =    0.0000
+    Residual |  .373209518        45  .008293545   R-squared       =    0.9702
+-------------+----------------------------------   Adj R-squared   =    0.9669
+       Total |  12.5311465        50   .25062293   Root MSE        =    .09107
+
+------------------------------------------------------------------------------
+   l_imports | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       l_gdp |    .626169   .1094619     5.72   0.000     .4057013    .8466366
+             |
+   l_imports |
+         L1. |   .2844526   .1077141     2.64   0.011     .0675053    .5013999
+             |
+         fdi |  -.0206479    .012895    -1.60   0.116    -.0466198     .005324
+    oil_rent |   .0060943   .0033162     1.84   0.073    -.0005849    .0127734
+   inflation |  -.0032414   .0006917    -4.69   0.000    -.0046346   -.0018483
+       _cons |   1.250782    .741493     1.69   0.099    -.2426616    2.744225
+------------------------------------------------------------------------------
+
+. estimates store m3
+
+. 
+. * Diagnóstico para M3 (Mejor Modelo)
+. estat bgodfrey, lags(1)
+
+Breusch–Godfrey LM test for autocorrelation
+---------------------------------------------------------------------------
+    lags(p)  |          chi2               df                 Prob > chi2
+-------------+-------------------------------------------------------------
+       1     |          0.788               1                   0.3747
+---------------------------------------------------------------------------
+                        H0: no serial correlation
+
+. estat hettest
+
+Breusch–Pagan/Cook–Weisberg test for heteroskedasticity 
+Assumption: Normal error terms
+Variable: Fitted values of l_imports
+
+H0: Constant variance
+
+    chi2(1) =   4.58
+Prob > chi2 = 0.0323
+
+. vif
+
+    Variable |       VIF       1/VIF  
+-------------+----------------------
+   l_imports |
+         L1. |     18.80    0.053199
+       l_gdp |     17.27    0.057895
+   inflation |      1.33    0.749703
+    oil_rent |      1.27    0.787650
+         fdi |      1.25    0.802122
+-------------+----------------------
+    Mean VIF |      7.98
+
+. 
+. * Visualización para M3
+. capture drop l_imports_hat
+
+. predict l_imports_hat, xb
+(1 missing value generated)
+
+. label var l_imports_hat "Predicción ARDL"
+
+. line l_imports l_imports_hat year, ///
+>     title("Modelo de Importaciones con Controles") ///
+>     subtitle("Ecuador 1970-2021 (5 Variables)") ///
+>     ytitle("Logaritmo de Importaciones") ///
+>     xtitle("Año") ///
+>     legend(order(1 "Observado" 2 "Ajuste Dinámico")) ///
+>     note("Controles: IED, Renta Petrolera e Inflación.")
+
+. graph export "assets/stata_import_plot_expanded.png", replace as(png)
+file assets/stata_import_plot_expanded.png saved as PNG format
+
+. 
+. * Modelo 4: Modelo de Corrección de Errores (ECM)
+. capture drop res_m2
+
+. predict res_m2, resid
+(1 missing value generated)
+
+. reg d.l_imports d.l_gdp d.fdi d.oil_rent d.inflation L.res_m2
+
+      Source |       SS           df       MS      Number of obs   =        50
+-------------+----------------------------------   F(5, 44)        =     14.53
+       Model |  .497875872         5  .099575174   Prob > F        =    0.0000
+    Residual |  .301571222        44  .006853891   R-squared       =    0.6228
+-------------+----------------------------------   Adj R-squared   =    0.5799
+       Total |  .799447094        49  .016315247   Root MSE        =    .08279
+
+------------------------------------------------------------------------------
+ D.l_imports | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       l_gdp |
+         D1. |   1.661356   .3400303     4.89   0.000     .9760697    2.346642
+             |
+         fdi |
+         D1. |   .0147746   .0141175     1.05   0.301    -.0136774    .0432267
+             |
+    oil_rent |
+         D1. |   -.000405   .0039585    -0.10   0.919    -.0083829    .0075729
+             |
+   inflation |
+         D1. |  -.0010581   .0009862    -1.07   0.289    -.0030456    .0009294
+             |
+      res_m2 |
+         L1. |  -.7947615   .1428325    -5.56   0.000    -1.082622   -.5069014
+             |
+       _cons |  -.0223752   .0166768    -1.34   0.187    -.0559852    .0112347
+------------------------------------------------------------------------------
+
+. estimates store m4
+
+. 
+. * 7. MODELOS ARIMA (SÍLABO: TEMA 1.3)
+. display "===================================================="
+====================================================
+
+. display "MODELO ARIMA (BOX-JENKINS)"
+MODELO ARIMA (BOX-JENKINS)
+
+. display "===================================================="
+====================================================
+
+. * Identificación (ACF/PACF)
+. corrgram d.l_imports, lags(10)
+
+                                          -1       0       1 -1       0       1
+ LAG       AC       PAC      Q     Prob>Q  [Autocorrelation]  [Partial autocor]
+-------------------------------------------------------------------------------
+1       -0.1580  -0.1634   1.3497  0.2453         -|                 -|        
+2       -0.0920  -0.1225   1.8162  0.4033          |                  |        
+3        0.1339   0.1189   2.8264  0.4192          |-                 |        
+4        0.0668   0.1083   3.0833  0.5440          |                  |        
+5        0.0171   0.0799   3.1004  0.6845          |                  |        
+6       -0.0720  -0.0582    3.412  0.7556          |                  |        
+7        0.0016  -0.0200   3.4122  0.8444          |                  |        
+8       -0.0284  -0.0620    3.463  0.9020          |                  |        
+9       -0.2267  -0.2934   6.7715  0.6609         -|                --|        
+10      -0.0212  -0.1788   6.8012  0.7441          |                 -|        
+
+. * Estimación ARIMA(1,1,1) como benchmark univariante
+. arima l_imports, arima(1,1,1) iterate(50) difficult
+
+(setting optimization to BHHH)
+Iteration 0:  Log likelihood =   32.43866  
+Iteration 1:  Log likelihood =  32.799131  
+Iteration 2:  Log likelihood =  33.646985  
+Iteration 3:  Log likelihood =  33.654281  
+Iteration 4:  Log likelihood =  33.684427  
+(switching optimization to BFGS)
+Iteration 5:  Log likelihood =  33.690215  
+Iteration 6:  Log likelihood =  33.709701  
+Iteration 7:  Log likelihood =  33.710893  
+Iteration 8:  Log likelihood =  33.710929  
+Iteration 9:  Log likelihood =  33.710964  
+Iteration 10: Log likelihood =  33.710964  
+
+ARIMA regression
+
+Sample: 1971 thru 2021                          Number of obs     =         51
+                                                Wald chi2(2)      =       0.98
+Log likelihood = 33.71096                       Prob > chi2       =     0.6130
+
+------------------------------------------------------------------------------
+             |                 OPG
+ D.l_imports | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+l_imports    |
+       _cons |   .0381724   .0156948     2.43   0.015     .0074112    .0689337
+-------------+----------------------------------------------------------------
+ARMA         |
+          ar |
+         L1. |    .062884    1.55258     0.04   0.968    -2.980118    3.105886
+             |
+          ma |
+         L1. |   -.242298   1.521566    -0.16   0.873    -3.224513    2.739917
+-------------+----------------------------------------------------------------
+      /sigma |   .1248966   .0099439    12.56   0.000      .105407    .1443862
+------------------------------------------------------------------------------
+Note: The test of the variance against zero is one sided, and the two-sided
+      confidence interval is truncated at zero.
+
+. estimates store m_arima
+
+. 
+. * 8. MODELOS ARCH Y GARCH (SÍLABO: TEMA 1.4)
+. display "===================================================="
+====================================================
+
+. display "MODELOS DE VOLATILIDAD (ARCH/GARCH)"
+MODELOS DE VOLATILIDAD (ARCH/GARCH)
+
+. display "===================================================="
+====================================================
+
+. * Test de efectos ARCH en los residuos del ARDL (M3)
+. quietly reg l_imports l_gdp L.l_imports fdi oil_rent inflation
+
+. archlm, lags(1)
+LM test for autoregressive conditional heteroskedasticity (ARCH)
+---------------------------------------------------------------------------
+    lags(p)  |          chi2               df                 Prob > chi2
+-------------+-------------------------------------------------------------
+       1     |          2.471               1                   0.1160
+---------------------------------------------------------------------------
+         H0: no ARCH effects      vs.  H1: ARCH(p) disturbance
+
+. * Estimación ARCH(1) - Simplificado para asegurar convergencia en muestra pequeña
+. display "Nota: Estimando ARCH(1) univariante para asegurar convergencia (N=52)"
+Nota: Estimando ARCH(1) univariante para asegurar convergencia (N=52)
+
+. arch l_imports, arch(1) iterate(50) difficult
+
+(setting optimization to BHHH)
+Iteration 0:  Log likelihood = -25.577207  
+Iteration 1:  Log likelihood = -23.308858  
+Iteration 2:  Log likelihood = -22.745779  
+Iteration 3:  Log likelihood = -22.563934  
+Iteration 4:  Log likelihood = -21.604206  
+(switching optimization to BFGS)
+Iteration 5:  Log likelihood = -20.729544  
+Iteration 6:  Log likelihood = -18.719902  
+Iteration 7:  Log likelihood = -17.761632  
+Iteration 8:  Log likelihood = -17.304868  
+Iteration 9:  Log likelihood = -17.193267  
+Iteration 10: Log likelihood = -17.071978  
+Iteration 11: Log likelihood = -17.071175  
+Iteration 12: Log likelihood = -17.071026  
+Iteration 13: Log likelihood = -17.071025  
+Iteration 14: Log likelihood = -17.071025  
+
+ARCH family regression
+
+Sample: 1970 thru 2021                          Number of obs     =         52
+                                                Wald chi2(.)      =          .
+Log likelihood = -17.07102                      Prob > chi2       =          .
+
+------------------------------------------------------------------------------
+             |                 OPG
+   l_imports | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+l_imports    |
+       _cons |   22.97073   .0265552   865.02   0.000     22.91868    23.02277
+-------------+----------------------------------------------------------------
+ARCH         |
+        arch |
+         L1. |   1.049971   .5730405     1.83   0.067    -.0731682    2.173109
+             |
+       _cons |    .008815   .0060471     1.46   0.145     -.003037    .0206671
+------------------------------------------------------------------------------
+
+. estimates store m_garch
+
+. 
+. * 9. MODELOS DE ECUACIONES SIMULTÁNEAS (SÍLABO: TEMA 1.5)
+. display "===================================================="
+====================================================
+
+. display "ECUACIONES SIMULTÁNEAS (IV / 2SLS)"
+ECUACIONES SIMULTÁNEAS (IV / 2SLS)
+
+. display "===================================================="
+====================================================
+
+. * Hipótesis: El PIB es endógeno a las importaciones. 
+. * Instrumento: Renta Petrolera (fuente de divisas externa).
+. ivregress 2sls l_imports fdi inflation (l_gdp = oil_rent)
+
+Instrumental variables 2SLS regression            Number of obs   =         52
+                                                  Wald chi2(3)    =     397.18
+                                                  Prob > chi2     =     0.0000
+                                                  R-squared       =     0.9514
+                                                  Root MSE        =     .11461
+
+------------------------------------------------------------------------------
+   l_imports | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       l_gdp |   1.068502   .0891596    11.98   0.000     .8937522    1.243251
+         fdi |  -.0296379   .0165733    -1.79   0.074    -.0621209    .0028451
+   inflation |  -.0026608   .0009475    -2.81   0.005    -.0045179   -.0008037
+       _cons |  -3.003881   2.219057    -1.35   0.176    -7.353152    1.345391
+------------------------------------------------------------------------------
+Endogenous: l_gdp
+Exogenous:  fdi inflation oil_rent
+
+. estimates store m_2sls
+
+. 
+. * 10. TABLA COMPARATIVA FINAL (COBERTURA TOTAL SÍLABO)
+. display _newline(2) ">>> TABLA FINAL: COBERTURA TOTAL DE LA UNIDAD 1 <<<"
+
+
+>>> TABLA FINAL: COBERTURA TOTAL DE LA UNIDAD 1 <<<
+
+. estimates table m1 m2 m3 m4 m_arima m_garch m_2sls, b(%9.4f) star(0.1 0.05 0.01) stats(
+> N r2 r2_a)
+
+-----------------------------------------------------------------------------------------
+    Variable |      m1             m2             m3             m4          m_arima     
+-------------+---------------------------------------------------------------------------
+_            |
+         gdp |    0.2285***                                                              
+         fdi | -2.77e+08*       -0.0348**      -0.0206                                   
+    oil_rent |  1.16e+08***      0.0064*        0.0061*                                  
+   inflation | -4.58e+07***     -0.0037***     -0.0032***                                
+       l_gdp |                   0.9200***      0.6262***                                
+             |
+   l_imports |
+         L1. |                                  0.2845**                                 
+             |
+       l_gdp |
+         D1. |                                                 1.6614***                 
+             |
+         fdi |
+         D1. |                                                 0.0148                    
+             |
+    oil_rent |
+         D1. |                                                -0.0004                    
+             |
+   inflation |
+         D1. |                                                -0.0011                    
+             |
+      res_m2 |
+         L1. |                                                -0.7948***                 
+             |
+       _cons |  1.36e+09**       0.6287         1.2508*       -0.0224                    
+-------------+---------------------------------------------------------------------------
+l_imports    |
+       _cons |                                                                0.0382**   
+-------------+---------------------------------------------------------------------------
+ARMA         |
+          ar |
+         L1. |                                                                0.0629     
+             |
+          ma |
+         L1. |                                                               -0.2423     
+-------------+---------------------------------------------------------------------------
+sigma        |
+       _cons |                                                                0.1249***  
+-------------+---------------------------------------------------------------------------
+ARCH         |
+        arch |
+         L1. |                                                                           
+             |
+       _cons |                                                                           
+-------------+---------------------------------------------------------------------------
+Statistics   |                                                                           
+           N |        52             52             51             50             51     
+          r2 |    0.9743         0.9669         0.9702         0.6228                    
+        r2_a |    0.9721         0.9641         0.9669         0.5799                    
+-----------------------------------------------------------------------------------------
+                                                      Legend: * p<.1; ** p<.05; *** p<.01
+
+
+--------------------------------------------
+    Variable |   m_garch         m_2sls     
+-------------+------------------------------
+_            |
+         gdp |                              
+         fdi |                  -0.0296*    
+    oil_rent |                              
+   inflation |                  -0.0027***  
+       l_gdp |                   1.0685***  
+             |
+   l_imports |
+         L1. |                              
+             |
+       l_gdp |
+         D1. |                              
+             |
+         fdi |
+         D1. |                              
+             |
+    oil_rent |
+         D1. |                              
+             |
+   inflation |
+         D1. |                              
+             |
+      res_m2 |
+         L1. |                              
+             |
+       _cons |                  -3.0039     
+-------------+------------------------------
+l_imports    |
+       _cons |   22.9707***                 
+-------------+------------------------------
+ARMA         |
+          ar |
+         L1. |                              
+             |
+          ma |
+         L1. |                              
+-------------+------------------------------
+sigma        |
+       _cons |                              
+-------------+------------------------------
+ARCH         |
+        arch |
+         L1. |    1.0500*                   
+             |
+       _cons |    0.0088                    
+-------------+------------------------------
+Statistics   |                              
+           N |        52             52     
+          r2 |                   0.9514     
+        r2_a |                   0.9483     
+--------------------------------------------
+         Legend: * p<.1; ** p<.05; *** p<.01
+
+. 
+. * --- CIERRE DE LOG ---
+. log close
+      name:  <unnamed>
+       log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econ
+> ometrics_2026\docs\vaults\u1-aa-02-aa1-series-tiempo\logs/stata_output.log
+  log type:  text
+ closed on:  11 May 2026, 11:39:14
+-----------------------------------------------------------------------------------------
