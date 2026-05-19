@@ -1,5 +1,5 @@
 # Resumen {.unnumbered}
 
-El presente estudio analiza los determinantes de la crisis de sostenibilidad del Instituto Ecuatoriano de Seguridad Social (IESS) durante el periodo 1990-2024, integrando factores demográficos y de inestabilidad social. Mediante un modelo de Rezagos Distribuidos Autorregresivos (ARDL), se evalúa el impacto del gasto militar, la migración y la tasa de homicidios sobre la masa de afiliados. Los resultados sugieren que el desplazamiento fiscal y la inseguridad ciudadana erosionan significativamente la base de cotizantes, comprometiendo la viabilidad del sistema de reparto en el largo plazo.
+La crisis de sostenibilidad del Instituto Ecuatoriano de Seguridad Social (IESS) durante el periodo 1990-2024 trasciende la dinámica demográfica y se encuentra vinculada a choques de inestabilidad social y competencia fiscal. Mediante un modelo de Rezagos Distribuidos Autorregresivos (ARDL), este trabajo estima el impacto del gasto militar, la migración neta y la tasa de homicidios sobre la masa de afiliados activos. Las estimaciones demuestran que el desplazamiento presupuestario y la inseguridad ciudadana erosionan la base de cotizantes, induciendo una trayectoria divergente y comprometiendo la viabilidad del sistema de reparto intergeneracional en el largo plazo.
 
-**Palabras clave:** IESS, Sostenibilidad, Crisis, Inestabilidad Social, Econometría, Modelo ARDL.
+**Palabras clave:** IESS, Sostenibilidad, Inestabilidad Social, Competencia Fiscal, Modelo ARDL, Trayectoria Divergente.

@@ -1,59 +1,75 @@
 # Análisis Descriptivo
 
-El análisis de variabilidad confirma que las series temporales capturan los choques estructurales del periodo 1990-2024.
+Las series temporales del periodo 1990-2024 registran variaciones y quiebres estructurales asociados a crisis macroeconómicas e institucionales en el Ecuador. A continuación, se caracterizan las tendencias temporales y las propiedades estadísticas de las variables estudiadas.
 
 ## Visualización de Tendencias Estructurales
 
-Se presenta la evolución longitudinal de los determinantes críticos para identificar posibles quiebres estructurales y tendencias seculares en el periodo analizado. Las series han sido escaladas para facilitar la comparativa visual (Afiliados y Fuerza Laboral en millones; Migración en miles).
+La evolución longitudinal de los determinantes permite identificar visualmente tendencias de largo plazo y posibles perturbaciones estructurales en el periodo de análisis. En la @fig-tendencias, las series han sido escaladas para facilitar la comparación analítica (Afiliados y Fuerza Laboral se reportan en millones; Migración en miles de personas).
 
 ![Evolución temporal de los determinantes de la crisis del IESS (1990-2024)](assets/fig-tendencias-stata.png){#fig-tendencias width=100%}
 
+## Narrativa de Correlación: La Trayectoria Económica
+
+Para examinar la interacción dinámica entre los determinantes, se implementa un **Gráfico de Dispersión Conectado** (*Connected Scatter Plot*). Esta técnica visual supera la simple correlación estática bidimensional al trazar secuencialmente la trayectoria temporal conjunta de la variable de prioridad fiscal (**Gasto Militar**) y de escala demográfica (**Fuerza Laboral**) durante las últimas tres décadas.
+
+![Trayectoria histórica de la Fuerza Laboral y el Gasto Militar (1990-2024)](assets/correlation_story_militar_laboral.png){#fig-correlation-story width=100%}
+
+La @fig-correlation-story evidencia el crecimiento secular del mercado laboral ecuatoriano, en contraste con el comportamiento del gasto militar, el cual opera como una variable de ajuste fiscal ante perturbaciones críticas (como el conflicto del Cenepa en 1995 y la dolarización en 2000). La trayectoria serpenteante del gráfico corrobora que la relación entre la prioridad del gasto y la escala del mercado laboral no es lineal, sino que se encuentra sujeta a choques histórico-estructurales profundos.
+
 | Variable | N | Media | Desv. Est. | Mín. | Máx. |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| Log Afiliados (AF) | 35 | 14.4970 | 0.5160 | 13.7420 | 15.1493 |
-| Gasto Militar (GM) | 35 | 2.1833 | 0.5560 | 1.2133 | 3.2432 |
-| Migración Neta (MI) | 35 | -13606.2 | 31691.4 | -47287.0 | 95482.0 |
-| Log Tasa Homicidios (HO) | 35 | 2.5222 | 0.4908 | 1.7557 | 3.8226 |
-| Log Fuerza Laboral (FL) | 35 | 15.6394 | 0.2402 | 15.2127 | 15.9950 |
+| Log Afiliados ($\ln(AF)$) | 35 | 14.4970 | 0.5160 | 13.7420 | 15.1493 |
+| Gasto Militar ($GM$) | 35 | 2.1833 | 0.5560 | 1.2133 | 3.2432 |
+| Migración Neta ($MI$) | 35 | -13606.2 | 31691.4 | -47287.0 | 95482.0 |
+| Log Tasa Homicidios ($\ln(HO)$) | 35 | 2.5222 | 0.4908 | 1.7557 | 3.8226 |
+| Log Fuerza Laboral ($\ln(FL)$) | 35 | 15.6394 | 0.2402 | 15.2127 | 15.9950 |
 
-: Estadísticos descriptivos de las variables de investigación (1990-2024) {#tbl-resumen}
+: Estadísticos Descriptivos de las Variables de Investigación (1990-2024) {#tbl-resumen}
+
+*Nota: La variable dependiente $\ln(AF)$ representa el logaritmo natural del total de afiliados activos cotizantes. La variable $GM$ denota el Gasto Militar expresado como porcentaje del PIB. Las variables $\ln(HO)$ y $\ln(FL)$ representan los logaritmos naturales de la tasa de homicidios por cada 100,000 habitantes y de la Fuerza Laboral total, respectivamente. La variable $MI$ mide el flujo neto de migración. Las series abarcan 35 observaciones anuales integradas con base en el Banco Mundial y los anuarios estadísticos de la Dirección Actuarial del IESS.*
 
 ## Diagnósticos Econométricos
 
-La validez de las inferencias en series de tiempo depende de la estructura dinámica de los datos y el cumplimiento de condiciones de estabilidad. Se aplican pruebas para asegurar la robustez ante multicolinealidad y no-estacionariedad.
+La validez de las inferencias en series de tiempo depende críticamente de la estructura dinámica de los datos y de la estacionariedad de las series. Se aplican pruebas diagnósticas para descartar multicolinealidad y determinar el orden de integración de las variables.
 
 ### Multicolinealidad (VIF)
 
+Para asegurar que la varianza de los estimadores no se encuentre inflada por redundancia de información entre los regresores, se calcula el Factor de Inflación de la Varianza (VIF). Los resultados en la @tbl-vif reportan un VIF promedio de 2.87, manteniéndose todas las variables por debajo del umbral crítico de 5.0. Esto confirma la ausencia de multicolinealidad severa y valida la estimación conjunta de todos los regresores explicativos.
+
 | Variable | VIF | 1/VIF |
 |:---|:---:|:---:|
-| Migración Neta (MI) | 3.76 | 0.2658 |
-| Log Fuerza Laboral (FL) | 3.60 | 0.2780 |
-| Log Tasa Homicidios (HO) | 2.31 | 0.4323 |
-| Gasto Militar (GM) | 1.83 | 0.5474 |
+| Migración Neta ($MI$) | 3.76 | 0.2658 |
+| Log Fuerza Laboral ($\ln(FL)$) | 3.60 | 0.2780 |
+| Log Tasa Homicidios ($\ln(HO)$) | 2.31 | 0.4323 |
+| Gasto Militar ($GM$) | 1.83 | 0.5474 |
 | **Promedio VIF** | **2.87** | |
 
 : Factor de Inflación de la Varianza (VIF) {#tbl-vif}
 
-### Pruebas de Raíz Unitaria (Zivot-Andrews)
+*Nota: Un Factor de Inflación de la Varianza (VIF) inferior al umbral conservador de 5.0 (VIF < 5.0) y un valor VIF promedio de 2.87 confirman la ausencia de multicolinealidad severa en la especificación conjunta de los regresores. El valor 1/VIF mide la tolerancia estadística, manteniéndose todos los valores por encima de 0.10, lo que garantiza errores estándar insesgados en las estimaciones paramétricas del modelo base.*
 
-Se consolidan los resultados de ADF, PP y ZA para niveles e integración.
+### Pruebas de Raíz Unitaria y Quiebre Estructural
+
+Dado que las pruebas tradicionales de raíz unitaria como Dickey-Fuller Aumentado (ADF) y Phillips-Perron (PP) sesgan el resultado hacia la no-estacionariedad en presencia de quiebres estructurales, se incorpora la metodología de Zivot-Andrews (ZA) propuesta por @zivot1992. Esta prueba determina de manera endógena la presencia de una raíz unitaria permitiendo un cambio estructural único en la tendencia, en el intercepto, o en ambos.
+
+Los resultados consolidados en la @tbl-za confirman que los logaritmos de Afiliados, Tasa de Homicidios y Fuerza Laboral, junto con el Gasto Militar, son variables no-estacionarias en niveles ($I(1)$), pero convergen a la estacionariedad tras la aplicación de la primera diferencia ($I(0)$). Los puntos de quiebre endógenos detectados coinciden con la crisis financiera y dolarización (1998-2000) y la reforma previsional constitucional post-2008. Por el contrario, la variable de migración neta ($MI$) resulta estacionaria en niveles ($I(0)$) de forma unánime. Esta combinación de variables con orden de integración mixto ($I(0)$ e $I(1)$) invalida el uso del modelo clásico de Johansen y justifica plenamente el uso del enfoque ARDL para evaluar relaciones de cointegración.
 
 ```{=latex}
 \begin{center}
 \small
 \begin{tabular}{lccccccccc}
 \hline \hline
- & \multicolumn{4}{c}{Test-statistics (Level)} & \multicolumn{4}{c}{Test-statistics (First Diff)} & I(d) \\
+ & \multicolumn{4}{c}{Estadísticos de Prueba (Niveles)} & \multicolumn{4}{c}{Estadísticos de Prueba (Primeras Dif.)} & \multirow{2}{*}{I(d)} \\
 \cline{2-5} \cline{6-9}
- & (ADF) & (PP) & (ZA) & Break & (ADF) & (PP) & (ZA) & Break & \\
+Variable & (ADF) & (PP) & (ZA) & Quiebre & (ADF) & (PP) & (ZA) & Quiebre & \\
 \hline
-AF & -1.529 & -1.367 & -2.707 & 2010 & -1.936 & -2.963 & -4.578 & 2008 & I(1) \\
-GM & -0.863 & -1.566 & -4.458 & 2008 & -3.817* & -8.747*** & -10.371*** & 2011 & I(1) \\
-MI & -3.269 & -2.22 & -5.665*** & 2016 & -4.347** & -3.544* & -9.270*** & 2019 & I(0) \\
-HO & -2.264 & -1.154 & -3.791 & 1998 & -3.824** & -3.128 & -5.109** & 2011 & I(1) \\
-FL & -2.423 & -2.785 & -3.657 & 2009 & -4.212** & -6.756*** & -7.020*** & 2015 & I(1) \\
+$\ln(AF)$ & -1.529 & -1.367 & -2.707 & 2010 & -1.936 & -2.963 & -4.578 & 2008 & I(1) \\
+GM        & -0.863 & -1.566 & -4.458 & 2008 & -3.817* & -8.747*** & -10.371*** & 2011 & I(1) \\
+MI        & -3.269 & -2.220 & -5.665*** & 2016 & -4.347** & -3.544* & -9.270*** & 2019 & I(0) \\
+$\ln(HO)$ & -2.264 & -1.154 & -3.791 & 1998 & -3.824** & -3.128 & -5.109** & 2011 & I(1) \\
+$\ln(FL)$ & -2.423 & -2.785 & -3.657 & 2009 & -4.212** & -6.756*** & -7.020*** & 2015 & I(1) \\
 \hline \hline 
-\multicolumn{10}{l}{\footnotesize Nota: * p $<$ 0.1, ** p $<$ 0.05, *** p $<$ 0.01.}
+\multicolumn{10}{p{15cm}}{\footnotesize \textit{Nota: * p $<$ 0.1, ** p $<$ 0.05, *** p $<$ 0.01. Los valores críticos de la prueba de Zivot-Andrews (ZA) con quiebre estructural en intercepto y tendencia al 1\%, 5\% y 10\% de significancia son -5.57, -5.08 y -4.82, respectivamente. Las columnas (ADF) y (PP) muestran los estadísticos de las pruebas clásicas de Dickey-Fuller Aumentado y Phillips-Perron. Los años denotan los puntos de quiebre estructurales endógenos calculados de manera óptima en cada serie temporal.*}}
 \end{tabular}
 \captionof{table}{Pruebas de raíz unitaria con quiebre estructural (Zivot-Andrews)} \label{tbl-za}
 \end{center}

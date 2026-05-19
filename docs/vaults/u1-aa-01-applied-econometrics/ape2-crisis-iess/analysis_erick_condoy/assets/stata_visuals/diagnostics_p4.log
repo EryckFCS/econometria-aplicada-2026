@@ -1,0 +1,424 @@
+-----------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  Z:/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econ
+> ometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/analysis_erick
+> _condoy/assets/stata_visuals/diagnostics_p4.log
+  log type:  text
+ opened on:  15 May 2026, 09:26:56
+
+. 
+. di "============================================================"
+============================================================
+
+. di " BLOQUE A: PRUEBAS ADF — Raíz Unitaria (Ho: raíz unitaria)"
+ BLOQUE A: PRUEBAS ADF — Raíz Unitaria (Ho: raíz unitaria)
+
+. di "============================================================"
+============================================================
+
+. 
+. * ADF con constante y tendencia para variables en niveles
+. foreach v in afi mil dep hom {
+  2.     di _newline "--- Variable: `v' (niveles) ---"
+  3.     dfuller `v', trend lags(1)
+  4. }
+
+--- Variable: afi (niveles) ---
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: afi                              Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -1.890       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.6600.
+
+--- Variable: mil (niveles) ---
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: mil                              Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -0.863       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9600.
+
+--- Variable: dep (niveles) ---
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: dep                              Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)             0.588       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9970.
+
+--- Variable: hom (niveles) ---
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: hom                              Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -2.789       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.2009.
+
+. 
+. di _newline "============================================================"
+
+============================================================
+
+. di " BLOQUE B: ADF EN PRIMERAS DIFERENCIAS"
+ BLOQUE B: ADF EN PRIMERAS DIFERENCIAS
+
+. di "============================================================"
+============================================================
+
+. foreach v in afi mil dep hom {
+  2.     di _newline "--- D.`v' ---"
+  3.     dfuller `v', trend lags(1) regress
+  4. }
+
+--- D.afi ---
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: afi                              Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -1.890       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.6600.
+
+Regression table
+------------------------------------------------------------------------------
+       D.afi | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         afi |
+         L1. |  -.0885852   .0468769    -1.89   0.069    -.1844593    .0072888
+         LD. |   .6146858   .1434146     4.29   0.000       .32137    .9080016
+             |
+      _trend |   9481.353   5273.093     1.80   0.083    -1303.334    20266.04
+       _cons |   60333.06   36576.33     1.65   0.110    -14473.93    135140.1
+------------------------------------------------------------------------------
+
+--- D.mil ---
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: mil                              Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -0.863       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9600.
+
+Regression table
+------------------------------------------------------------------------------
+       D.mil | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mil |
+         L1. |  -.1017545   .1179215    -0.86   0.395    -.3429311     .139422
+         LD. |  -.3973024   .1750475    -2.27   0.031    -.7553149     -.03929
+             |
+      _trend |  -.0030319   .0067079    -0.45   0.655     -.016751    .0106873
+       _cons |   .3189903   .1969785     1.62   0.116     -.083876    .7218566
+------------------------------------------------------------------------------
+
+--- D.dep ---
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: dep                              Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)             0.588       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.9970.
+
+Regression table
+------------------------------------------------------------------------------
+       D.dep | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         dep |
+         L1. |   .0219759   .0373755     0.59   0.561    -.0544656    .0984174
+         LD. |   .5895905   .1736667     3.39   0.002     .2344021    .9447789
+             |
+      _trend |  -.0019268   .0061849    -0.31   0.758    -.0145763    .0107226
+       _cons |  -.0861314   .2171031    -0.40   0.694    -.5301572    .3578944
+------------------------------------------------------------------------------
+
+--- D.hom ---
+
+Augmented Dickey–Fuller test for unit root
+
+Variable: hom                              Number of obs  = 33
+                                           Number of lags =  1
+
+H0: Random walk with or without drift
+
+                                       Dickey–Fuller
+                   Test      -------- critical value ---------
+              statistic           1%           5%          10%
+--------------------------------------------------------------
+ Z(t)            -2.789       -4.306       -3.568       -3.221
+--------------------------------------------------------------
+MacKinnon approximate p-value for Z(t) = 0.2009.
+
+Regression table
+------------------------------------------------------------------------------
+       D.hom | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         hom |
+         L1. |  -.3839388   .1376497    -2.79   0.009    -.6654641   -.1024134
+         LD. |   1.030471   .2488169     4.14   0.000     .5215833    1.539359
+             |
+      _trend |   .0644507   .0641448     1.00   0.323    -.0667403    .1956416
+       _cons |   3.898366   2.142218     1.82   0.079    -.4829614    8.279694
+------------------------------------------------------------------------------
+
+. 
+. * ==============================================================================
+. * 4. DECISIÓN CONDICIONAL: Niveles vs. Primeras Diferencias
+. *    Lógica: si todas las vars son I(1) → usar primeras diferencias (o ECM)
+. *            si al menos una es I(0) → OLS en niveles con Newey-West
+. * ==============================================================================
+. 
+. * Generar primeras diferencias
+. foreach v in afi mil dep hom {
+  2.     gen d_`v' = D.`v'
+  3. }
+(1 missing value generated)
+(1 missing value generated)
+(1 missing value generated)
+(1 missing value generated)
+
+. 
+. di _newline "============================================================"
+
+============================================================
+
+. di " BLOQUE C: OLS EN NIVELES — Regresión base (comparación)"
+ BLOQUE C: OLS EN NIVELES — Regresión base (comparación)
+
+. di "============================================================"
+============================================================
+
+. reg afi mil dep hom
+
+      Source |       SS           df       MS      Number of obs   =        35
+-------------+----------------------------------   F(3, 31)        =    183.97
+       Model |  3.9938e+13         3  1.3313e+13   Prob > F        =    0.0000
+    Residual |  2.2432e+12        31  7.2363e+10   R-squared       =    0.9468
+-------------+----------------------------------   Adj R-squared   =    0.9417
+       Total |  4.2181e+13        34  1.2406e+12   Root MSE        =    2.7e+05
+
+------------------------------------------------------------------------------
+         afi | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mil |   43921.27   104923.5     0.42   0.678    -170071.5    257914.1
+         dep |     644572   35905.68    17.95   0.000     571341.9    717802.1
+         hom |  -23203.71   5655.809    -4.10   0.000    -34738.81   -11668.61
+       _cons |   -3351207   246708.9   -13.58   0.000     -3854373    -2848041
+------------------------------------------------------------------------------
+
+. estat ic
+
+Akaike's information criterion and Bayesian information criterion
+
+-----------------------------------------------------------------------------
+       Model |          N   ll(null)  ll(model)      df        AIC        BIC
+-------------+---------------------------------------------------------------
+           . |         35  -536.4717  -485.1258       4   978.2516    984.473
+-----------------------------------------------------------------------------
+Note: BIC uses N = number of observations. See [R] IC note.
+
+. estat bgodfrey, lags(1 2)   // Breusch-Godfrey: Ho = sin autocorrelación
+
+Breusch–Godfrey LM test for autocorrelation
+---------------------------------------------------------------------------
+    lags(p)  |          chi2               df                 Prob > chi2
+-------------+-------------------------------------------------------------
+       1     |         26.641               1                   0.0000
+       2     |         27.157               2                   0.0000
+---------------------------------------------------------------------------
+                        H0: no serial correlation
+
+. 
+. di _newline "============================================================"
+
+============================================================
+
+. di " BLOQUE D: OLS NIVELES con Errores Newey-West (HAC, lag=2)"
+ BLOQUE D: OLS NIVELES con Errores Newey-West (HAC, lag=2)
+
+. di "   Corrección robusta a heteroscedasticidad Y autocorrelación"
+   Corrección robusta a heteroscedasticidad Y autocorrelación
+
+. di "============================================================"
+============================================================
+
+. newey afi mil dep hom, lag(2)
+
+Regression with Newey–West standard errors      Number of obs     =         35
+Maximum lag = 2                                 F(  3,        31) =     115.86
+                                                Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+             |             Newey–West
+         afi | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mil |   43921.27   137885.8     0.32   0.752    -237298.7    325141.2
+         dep |     644572   42362.69    15.22   0.000     558172.7    730971.3
+         hom |  -23203.71   6805.049    -3.41   0.002     -37082.7   -9324.717
+       _cons |   -3351207     339525    -9.87   0.000     -4043673    -2658741
+------------------------------------------------------------------------------
+
+. * Guardamos coeficiente y estadístico t para anotación en gráfico
+. matrix B_nw = e(b)
+
+. scalar coef_mil_nw  = B_nw[1,1]
+
+. scalar se_mil_nw    = sqrt(e(V)[1,1])
+
+. scalar t_mil_nw     = coef_mil_nw / se_mil_nw
+
+. 
+. di "Coef mil (NW): " coef_mil_nw
+Coef mil (NW): 43921.272
+
+. di "SE    mil (NW): " se_mil_nw
+SE    mil (NW): 137885.79
+
+. di "t-stat mil (NW): " t_mil_nw
+t-stat mil (NW): .3185337
+
+. 
+. di _newline "============================================================"
+
+============================================================
+
+. di " BLOQUE E: MODELO EN PRIMERAS DIFERENCIAS (si I(1) confirmado)"
+ BLOQUE E: MODELO EN PRIMERAS DIFERENCIAS (si I(1) confirmado)
+
+. di "============================================================"
+============================================================
+
+. reg d_afi d_mil d_dep d_hom
+
+      Source |       SS           df       MS      Number of obs   =        34
+-------------+----------------------------------   F(3, 30)        =      0.35
+       Model |  1.3379e+10         3  4.4597e+09   Prob > F        =    0.7912
+    Residual |  3.8506e+11        30  1.2835e+10   R-squared       =    0.0336
+-------------+----------------------------------   Adj R-squared   =   -0.0631
+       Total |  3.9844e+11        33  1.2074e+10   Root MSE        =    1.1e+05
+
+------------------------------------------------------------------------------
+       d_afi | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       d_mil |  -19047.51   72205.54    -0.26   0.794    -166510.9    128415.9
+       d_dep |   32351.39   380494.7     0.09   0.933    -744722.5    809425.3
+       d_hom |  -4727.023   4946.195    -0.96   0.347     -14828.5    5374.455
+       _cons |    84217.9   69224.97     1.22   0.233    -57158.34    225594.1
+------------------------------------------------------------------------------
+
+. estat bgodfrey, lags(1 2)
+
+Breusch–Godfrey LM test for autocorrelation
+---------------------------------------------------------------------------
+    lags(p)  |          chi2               df                 Prob > chi2
+-------------+-------------------------------------------------------------
+       1     |         12.270               1                   0.0005
+       2     |         13.798               2                   0.0010
+---------------------------------------------------------------------------
+                        H0: no serial correlation
+
+. newey d_afi d_mil d_dep d_hom, lag(2)
+
+Regression with Newey–West standard errors      Number of obs     =         34
+Maximum lag = 2                                 F(  3,        30) =       0.39
+                                                Prob > F          =     0.7611
+
+------------------------------------------------------------------------------
+             |             Newey–West
+       d_afi | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       d_mil |  -19047.51   64346.75    -0.30   0.769    -150461.1    112366.1
+       d_dep |   32351.39   290934.9     0.11   0.912    -561816.9    626519.7
+       d_hom |  -4727.023   5007.749    -0.94   0.353    -14954.21    5500.166
+       _cons |    84217.9   55781.79     1.51   0.142    -29703.71    198139.5
+------------------------------------------------------------------------------
+
+. matrix B_fd = e(b)
+
+. scalar coef_mil_fd  = B_fd[1,1]
+
+. scalar se_mil_fd    = sqrt(e(V)[1,1])
+
+. scalar t_mil_fd     = coef_mil_fd / se_mil_fd
+
+. 
+. di "Coef D.mil (NW): " coef_mil_fd
+Coef D.mil (NW): -19047.505
+
+. di "SE    D.mil (NW): " se_mil_fd
+SE    D.mil (NW): 64346.754
+
+. di "t-stat D.mil (NW): " t_mil_fd
+t-stat D.mil (NW): -.29601346
+
+. 
+. log close
+      name:  <unnamed>
+       log:  Z:/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econ
+> ometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/analysis_erick
+> _condoy/assets/stata_visuals/diagnostics_p4.log
+  log type:  text
+ closed on:  15 May 2026, 09:26:57
+-----------------------------------------------------------------------------------------

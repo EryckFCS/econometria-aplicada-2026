@@ -1,44 +1,48 @@
 # Metodología y Datos
 
-En esta sección se detallan los determinantes seleccionados, el marco analítico y la especificación técnica del modelo econométrico para evaluar la sostenibilidad del sistema de seguridad social.
+La evaluación empírica de la crisis previsional ecuatoriana se fundamenta en un marco de modelado dinámico de series de tiempo. A continuación, se detallan las hipótesis de investigación, la definición de variables y la especificación técnica del modelo econométrico estimado.
 
-## **Hipótesis de Investigación**
+## Hipótesis de Investigación
 
-Se plantean las siguientes hipótesis sobre la sostenibilidad institucional del IESS:
+Se formulan tres hipótesis centrales para diagnosticar la sostenibilidad del IESS:
 
-- **H1:** El incremento del gasto militar genera un efecto de desplazamiento fiscal (*crowding-out*) que erosiona la capacidad de financiamiento y la sostenibilidad del sistema de seguridad social civil.
-- **H2:** La inestabilidad social y la inseguridad ciudadana desincentivan la formalización laboral, reduciendo la base de cotizantes activos en el largo plazo.
-- **H3:** Existe una relación de equilibrio inestable en el sistema del IESS, donde choques externos en el gasto fiscal o la seguridad nacional provocan trayectorias divergentes en la masa de afiliados.
+- **H1 (Desplazamiento Fiscal):** El incremento del gasto de defensa y seguridad nacional genera un efecto de desplazamiento presupuestario (*crowding-out*) que contrae la liquidez del Estado para honrar su contribución obligatoria al sistema civil.
+- **H2 (Inestabilidad Social):** El aumento de la inseguridad ciudadana y la violencia delictiva desincentiva la formalización productiva, forzando a los agentes hacia la informalidad y reduciendo la masa de cotizantes activos en el largo plazo.
+- **H3 (Divergencia Actuarial):** El sistema previsional opera en un régimen de equilibrio inestable, donde choques macroeconómicos o institucionales inducen trayectorias explosivas y no convergentes en el volumen de afiliados.
 
-## **Definición de Variables**
+## Definición de Variables
 
-La especificación empírica define al número de afiliados (AF) como la variable dependiente de interés. Los regresores independientes principales son el gasto militar (GM) y la tasa de homicidios (HO), seleccionados para testear las hipótesis de desplazamiento fiscal e inestabilidad social. Asimismo, se integran la migración neta (MI) y la fuerza laboral total (FL) como variables de control para capturar la dinámica demográfica y la escala del mercado de trabajo ecuatoriano.
+La base de datos cubre el periodo 1990-2024 a nivel nacional con periodicidad anual. La variable dependiente es el logaritmo de afiliados activos ($\ln(AF)$), que consolidan los regímenes contributivos del Seguro General Obligatorio y del Seguro Social Campesino. Como regresores de interés, se incluye el Gasto Militar ($GM$, como % del PIB) para testear la competencia fiscal, y el logaritmo de la Tasa de Homicidios ($\ln(HO)$, por cada 100,000 habitantes) como proxy de inestabilidad social. Como controles demográficos, se incorporan la Migración Neta ($MI$, en miles de personas) y el logaritmo de la Fuerza Laboral total ($\ln(FL)$). 
 
-::: {#tbl-variables tbl-pos='H' tbl-colwidths='[10, 15, 40, 10, 25]'}
-| Código | Variable | Definición | Unidad | Fuente de Datos |
+Las variables $\ln(AF)$, $\ln(HO)$ y $\ln(FL)$ se especifican en logaritmos naturales para estimar elasticidades directas y mitigar problemas de escala y heterocedasticidad, mientras que $GM$ y $MI$ se modelan en niveles debido a su naturaleza de tasa porcentual y flujo de saldo neto con valores negativos, respectivamente.
+
+::: {#tbl-variables tbl-pos='H' tbl-colwidths='[15, 20, 35, 15, 15]'}
+| Código | Variable | Definición Operativa | Unidad | Fuente |
 | :--- | :--- | :--- | :--- | :--- |
-| **AF** | **Afiliados** | Personas registradas que aportan activamente al IESS (SGO + SSC). | Conteo | IESS / Boletines Estadísticos |
-| **GM** | **Gasto Militar** | Gasto en defensa y fuerzas armadas como proporción del producto interno. | % del PIB | Banco Mundial (WDI) |
-| **MI** | **Migración** | Saldo neto de personas que ingresan menos las que salen del país. | Conteo | Banco Mundial (WDI) |
-| **HO** | **Homicidios** | Muertes ilegales causadas intencionalmente por violencia interpersonal. | Tasa por 100k hab. | Banco Mundial / UNODC |
-| **FL** | **Fuerza Laboral** | Población económicamente activa total. | Conteo | Banco Mundial (WDI) |
+| **$\ln(AF)$** | **Log Afiliados** | Logaritmo de cotizantes activos del IESS (SGO y SSC). | Log (Conteo) | IESS / Boletines |
+| **$GM$** | **Gasto Militar** | Gasto fiscal en defensa nacional como proporción del PIB. | % del PIB | Banco Mundial |
+| **$MI$** | **Migración** | Saldo migratorio neto (inmigrantes menos emigrantes). | Conteo (Nivel) | Banco Mundial |
+| **$\ln(HO)$** | **Log Homicidios** | Logaritmo de la tasa de muertes violentas intencionales. | Log (por 100k) | BM / UNODC |
+| **$\ln(FL)$** | **Log Fuerza Laboral** | Logaritmo de la población económicamente activa. | Log (Conteo) | Banco Mundial |
 
-: Matriz de Variables de Investigación 
+: Matriz de Variables y Fuentes Estadísticas (1990-2024)
 :::
 
-La inclusión del **Gasto Militar (GM)** permite analizar la **competencia por recursos fiscales**. En Ecuador, la existencia de sistemas de seguridad social específicos para las fuerzas armadas (ISSFA) genera una presión presupuestaria que compite directamente con el financiamiento del sistema civil (IESS). Por otro lado, la **Tasa de Homicidios (HO)** captura el impacto de la inseguridad en la confianza institucional y los incentivos para la formalización de largo plazo.
+## Especificación del Modelo Econométrico
 
-## **Especificación del Modelo Econométrico**
+Para evaluar la dinámica de corto plazo y las trayectorias de equilibrio de largo plazo, se implementa la metodología de **Rezagos Distribuidos Autorregresivos (ARDL)** propuesta por @pesaran2001. Este enfoque econométrico es robusto ante muestras pequeñas y resulta idóneo para sistemas que combinan variables de diferente orden de integración ($I(0)$ e $I(1)$), eludiendo el riesgo de regresión espuria y eliminando sesgos de endogeneidad mediante la parametrización dinámica de rezagos.
 
-Para analizar la dinámica de largo plazo y los mecanismos de ajuste, se emplea un modelo de **Rezagos Distribuidos Autorregresivos (ARDL)**. Esta técnica es superior a las estimaciones estáticas tradicionales ya que permite tratar variables con diferentes órdenes de integración, $I(0)$ e $I(1)$, evitando el riesgo de regresiones espurias y permitiendo la identificación de cointegración incluso en muestras pequeñas.
-
-La forma funcional del modelo de corrección de error (ECM) derivado del ARDL ($p, q_1, q_2, q_3, q_4$) se define en la Ecuación (@eq-ardl-ecm):
+La forma funcional del modelo de corrección de error (ECM) derivado del ARDL ($p, q_1, q_2, q_3, q_4$) se especifica en la Ecuación (@eq-ardl-ecm):
 
 $$
-\Delta \ln(AF_t) = \alpha + \sum_{i=1}^{p} \phi_i \Delta \ln(AF_{t-i}) + \sum_{j=0}^{q} \delta_j \Delta X_{t-j} + \lambda ECT_{t-1} + \epsilon_t 
+\Delta \ln(AF_t) = \alpha + \sum_{i=1}^{p} \phi_i \Delta \ln(AF_{t-i}) + \sum_{k=1}^{4} \sum_{j=0}^{q_k} \delta_{k,j} \Delta X_{k,t-j} + \lambda ECT_{t-1} + \epsilon_t 
 $$ {#eq-ardl-ecm}
 
 Donde:
 - $\Delta$: Operador de primera diferencia.
-- $X_t$: Vector de regresores explicativos (**GM**, **MI**, **HO**, **FL**).
-- $\lambda$: Parámetro de corrección de error. Un valor de $\lambda < 0$ indica que el sistema converge al equilibrio tras un choque. Por el contrario, un valor de $\lambda > 0$ es evidencia de **inestabilidad sistémica o divergencia**, sugiriendo que el sistema es estructuralmente insostenible ante perturbaciones externas.
+- $X_{t}$: Vector de regresores explicativos independientes ($GM_{t}$, $MI_{t}$, $\ln(HO_{t})$, $\ln(FL_{t})$).
+- $\epsilon_t$: Término de error estocástico ruido blanco.
+- $ECT_{t-1}$: Término de corrección de error rezagado, definido como $ECT_{t-1} = \ln(AF_{t-1}) - \boldsymbol{\beta}' \boldsymbol{X}_{t-1}$.
+- $\lambda$: Parámetro de velocidad de ajuste actuarial. 
+
+Bajo la teoría econométrica estándar, un coeficiente de ajuste negativo y significativo ($\lambda < 0$) demuestra convergencia y estabilidad, es decir, la capacidad del sistema para asimilar perturbaciones y retornar a su senda de equilibrio estable de largo plazo. Por el contrario, un coeficiente positivo ($\lambda > 0$) provee evidencia matemática de **inestabilidad sistémica o dinámica divergente**, lo que denota que los choques externos se amplifican y desestabilizan de forma permanente la base de cotizantes del sistema.
