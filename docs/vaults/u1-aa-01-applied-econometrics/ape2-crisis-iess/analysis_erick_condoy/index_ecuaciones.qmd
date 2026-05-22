@@ -16,11 +16,10 @@ format:
     colorlinks: true
     tbl-pos: 'H'
     fig-pos: 'H'
-  html:
-    theme: cosmo
+  docx:
     toc: false
     number-sections: true
-    embed-resources: true
+    highlight-style: github
 header-includes:
   - \usepackage{amsmath}
   - \usepackage{amssymb}
@@ -32,115 +31,135 @@ header-includes:
   - \setlength{\parskip}{0.5em}
 ---
 
-# Planteamiento y Contraste de Ecuaciones de Raíz Unitaria
+# Ecuaciones de Raíz Unitaria y Estacionariedad
 
-De acuerdo con lo establecido por Gujarati (2009, Cap. 21), la evaluación de estacionariedad para una serie de tiempo genérica $z_t \in \mathbf{Z}_t$ se realiza a través de pruebas de raíz unitaria. Definimos el vector del sistema para el estudio de la sostenibilidad del IESS como $\mathbf{Z}_t = [y_t, \mathbf{X}_t]'$, donde $y_t = \ln(AF_t)$ representa el logaritmo de afiliados activos, y el vector de regresores es $\mathbf{X}_t = [GM_t, MI_t, \ln(HO_t), \ln(FL_t)]'$.
+La evaluación del orden de integración de las series temporales del sistema se realiza de forma individual para cada variable $v_t \in \{\ln(AF_t), GM_t, MI_t, \ln(HO_t), \ln(FL_t)\}$, donde $AF_t$ es el número de afiliados cotizantes activos del IESS, $GM_t$ es el gasto militar (% del PIB), $MI_t$ es la migración neta (miles de personas), $HO_t$ es la tasa de homicidios por cada 100,000 habitantes y $FL_t$ es la fuerza laboral total.
 
-## Dickey-Fuller Aumentada (ADF)
+## Prueba Dickey-Fuller Aumentada (ADF)
 
-La formulación empírica general del test ADF con constante y tendencia determinista se define como:
+Se estima la regresión auxiliar con constante y tendencia temporal determinista para cada variable:
 
-$$\Delta z_t = \alpha_0 + \alpha_1 t + \delta z_{t-1} + \sum_{j=1}^{k} \theta_j \Delta z_{t-j} + \epsilon_t$$ {#eq-adf-trend}
+$$\Delta v_t = \alpha_0 + \alpha_1 t + \delta v_{t-1} + \sum_{j=1}^{k} \theta_j \Delta v_{t-j} + \epsilon_t$$ {#eq-adf}
 
-Donde $\Delta$ es el operador de primera diferencia ($\Delta z_t = z_t - z_{t-1}$), $t$ representa la tendencia temporal, $k$ es el rezago óptimo seleccionado mediante AIC o SIC, y $\epsilon_t \sim i.i.d.(0, \sigma^2)$.
+Donde $\Delta$ representa la primera diferencia ($\Delta v_t = v_t - v_{t-1}$), $t$ denota la tendencia determinista, $k$ es el número de rezagos óptimos determinado mediante el Criterio de Información de Schwarz (SIC) para garantizar la ausencia de autocorrelación, y $\epsilon_t \sim i.i.d.(0, \sigma^2)$.
 
-**Contraste con Gujarati (2009):** Esta ecuación se deriva del modelo de paseo aleatorio con deriva y tendencia temporal determinista especificado en Gujarati (Cap. 21, Ec. 21.9.5):
-$$\Delta Y_t = \beta_1 + \beta_2 t + \delta Y_{t-1} + \sum_{i=1}^{m} \alpha_i \Delta Y_{t-i} + u_t$$
-Donde $Y_t$ se corresponde con cada variable del vector $\mathbf{Z}_t$. Gujarati define la hipótesis nula de no estacionariedad como $H_0: \delta = 0$ (la serie posee raíz unitaria, equivalente a $\rho = 1$ en el modelo AR(1) subyacente $Y_t = \rho Y_{t-1} + u_t$) y la hipótesis alternativa como $H_1: \delta < 0$ (la serie es estacionaria en tendencia). Las diferencias de rezago $\sum_{j=1}^{k} \theta_j \Delta z_{t-j}$ se incorporan para corregir la autocorrelación de orden $k$ en el término de error $\epsilon_t$, asegurando la validez del estadístico t de Dickey-Fuller.
+El contraste se define mediante las hipótesis:
+
+- $H_0: \delta = 0$ (La serie temporal posee raíz unitaria; es no estacionaria).
+- $H_1: \delta < 0$ (La serie temporal es estacionaria en torno a una tendencia determinista).
+
+El estadístico de prueba $t_{\hat{\delta}}$ se contrasta con los valores críticos tabulados por MacKinnon.
 
 ## Prueba KPSS (Kwiatkowski-Phillips-Schmidt-Shin)
 
-Como contraste robusto al test ADF, se emplea la prueba KPSS. La serie se descompone aditivamente en una tendencia determinista, un paseo aleatorio y un error estacionario:
+Como contraste de confirmación robusto, se aplica la prueba KPSS sobre la hipótesis nula de estacionariedad. La serie se descompone como:
 
-$$z_t = \xi t + r_t + \eta_t, \quad \text{donde } r_t = r_{t-1} + v_t \text{ con } v_t \sim i.i.d.(0, \sigma_v^2)$$ {#eq-kpss}
+$$v_t = \xi t + r_t + \eta_t, \quad r_t = r_{t-1} + v_t \quad \text{con } v_t \sim i.i.d.(0, \sigma_v^2)$$ {#eq-kpss}
 
-**Contraste con Gujarati (2009):** Gujarati resalta la complementariedad de KPSS debido a que invierte el rol de las hipótesis. A diferencia de las pruebas DF/ADF, la hipótesis nula en KPSS es la estacionariedad:
-- $H_0: \sigma_v^2 = 0$ (la varianza del paseo aleatorio es nula; la serie es estacionaria en tendencia).
-- $H_1: \sigma_v^2 > 0$ (la serie posee un componente de paseo aleatorio; no es estacionaria).
-El estadístico de contraste se basa en el multiplicador de Lagrange ($LM = T^{-2} s^{-2}(l) \sum_{t=1}^{T} S_t^2$), donde $S_t = \sum_{i=1}^t \hat{e}_i$ es la suma acumulada de los residuos $\hat{e}_i$ de la regresión en niveles de $z_t$, y $s^2(l)$ es un estimador consistente de la varianza de largo plazo.
+Donde $\eta_t$ es un error estacionario y $r_t$ representa un paseo aleatorio con hipótesis:
 
----
+- $H_0: \sigma_v^2 = 0$ (La varianza del paseo aleatorio es nula; la serie es estacionaria).
+- $H_1: \sigma_v^2 > 0$ (La serie posee paseo aleatorio; es no estacionaria).
 
-# Planteamiento y Contraste de Ecuaciones de Cointegración
-
-Cuando las series del vector $\mathbf{Z}_t$ son integradas de orden uno, $I(1)$, se evalúa la existencia de relaciones de equilibrio a largo plazo.
-
-## Cointegración de Johansen (Enfoque Multivariado)
-
-El método de Johansen parte de la representación vectorial autorregresiva (VAR) de orden $p$ en niveles, reparametrizada en su forma de Corrección de Error Vectorial (VECM):
-
-$$\Delta \mathbf{Z}_t = \Pi \mathbf{Z}_{t-1} + \sum_{i=1}^{p-1} \Gamma_i \Delta \mathbf{Z}_{t-i} + \mathbf{\Phi D}_t + \mathbf{\varepsilon}_t$$ {#eq-johansen-vecm}
-
-Donde $\Pi = \sum_{i=1}^{p} \mathbf{A}_i - \mathbf{I}_K$ y $\Gamma_i = -\sum_{j=i+1}^{p} \mathbf{A}_j$. $\mathbf{D}_t$ es una matriz de términos deterministas, y $\mathbf{\varepsilon}_t \sim N(\mathbf{0}, \mathbf{\Sigma})$.
-
-**Contraste con Gujarati (2009):** Gujarati (Cap. 22) explica que la prueba examina el rango $r$ de la matriz de impacto de largo plazo $\Pi$. Si el rango es $r$, existen $r$ vectores de cointegración, permitiendo la factorización $\Pi = \alpha\beta'$, donde $\beta$ representa los vectores de cointegración y $\alpha$ la velocidad de ajuste. Johansen especifica dos estadísticos para determinar $r$:
-1. **Prueba de la Traza ($\lambda_{\text{trace}}$):**
-   $$\lambda_{\text{trace}}(r) = -T \sum_{i=r+1}^{K} \ln(1 - \hat{\lambda}_i) \quad \text{con } H_0: \text{vectores } \le r \text{ vs } H_1: \text{vectores } > r$$
-2. **Prueba del Máximo Valor Propio ($\lambda_{\text{max}}$):**
-   $$\lambda_{\text{max}}(r, r+1) = -T \ln(1 - \hat{\lambda}_{r+1}) \quad \text{con } H_0: \text{vectores } = r \text{ vs } H_1: \text{vectores } = r+1$$
-
-## Cointegración por Límites (ARDL F-Bounds Test)
-
-Cuando el orden de integración de las variables es mixto, $I(0)$ e $I(1)$, la prueba de Johansen pierde validez. Se formula el modelo autorregresivo con rezagos distribuidos (ARDL) para $\ln(AF_t)$:
-
-$$\Delta \ln(AF_t) = \alpha_0 + \delta_0 \ln(AF_{t-1}) + \sum_{k=1}^{4} \delta_k X_{k,t-1} + \sum_{i=1}^{p-1} \phi_i \Delta \ln(AF_{t-i}) + \sum_{k=1}^{4} \sum_{j=0}^{q_k-1} \gamma_{k,j} \Delta X_{k,t-j} + e_t$$ {#eq-ardl-bounds}
-
-Donde $X_{1,t}=GM_t, X_{2,t}=MI_t, X_{3,t}=\ln(HO_t), X_{4,t}=\ln(FL_t)$.
-
-**Contraste con Gujarati (2009):** Gujarati (Cap. 22) destaca que el Bounds Test de Pesaran, Shin y Smith (2001) evita la restricción restrictiva de que todas las variables sean estrictamente $I(1)$. Contrasta la presencia de cointegración mediante una hipótesis conjunta de nulidad sobre los coeficientes rezagados en niveles:
-- $H_0: \delta_0 = \delta_1 = \delta_2 = \delta_3 = \delta_4 = 0$ (no existe relación de largo plazo).
-- $H_1: \text{Al menos un } \delta_i \neq 0$ (existe relación de largo plazo).
-El estadístico F calculado se compara con las tablas críticas de límites de Pesaran, que definen una cota inferior asumiendo que todas las variables son $I(0)$ y una cota superior asumiendo que son $I(1)$.
+El estadístico LM se calcula como $LM = T^{-2} s^{-2}(l) \sum_{t=1}^{T} S_t^2$, donde $S_t = \sum_{i=1}^t \hat{e}_i$ es la suma acumulada de los residuos de la regresión en niveles, y $s^2(l)$ es el estimador de Newey-West de la varianza de largo plazo.
 
 ---
 
-# Planteamiento y Contraste de Ecuaciones de Corrección de Error (ECM)
+# Ecuaciones de Cointegración
 
-La existencia de cointegración garantiza que cualquier desviación del equilibrio a largo plazo es corregida a corto plazo.
+Si las variables son integradas de orden uno, $I(1)$, se evalúa la existencia de relaciones de equilibrio de largo plazo mediante metodologías complementarias.
 
-## Modelo de Corrección de Error Vectorial (VECM)
+## Cointegración Multivariada de Johansen
 
-Para el sistema cointegrado con $r=1$, la dinámica de corto plazo de la variable dependiente $\Delta \ln(AF_t)$ se modela como:
+Se formula el modelo de Corrección de Error Vectorial (VECM) para el vector de variables $\mathbf{W}_t = [\ln(AF_t), GM_t, MI_t, \ln(HO_t), \ln(FL_t)]'$:
 
-$$\Delta \ln(AF_t) = a_0 + \lambda_1 ECT_{t-1} + \sum_{j=1}^{p-1} \gamma_{1,j}' \Delta \mathbf{Z}_{t-j} + u_{1,t}$$ {#eq-vecm-single}
+$$\Delta \mathbf{W}_t = \Pi \mathbf{W}_{t-1} + \sum_{i=1}^{p-1} \Gamma_i \Delta \mathbf{W}_{t-i} + \mathbf{\Phi D}_t + \mathbf{\varepsilon}_t$$ {#eq-johansen}
 
-Donde el término de corrección de error rezagado es $ECT_{t-1} = \ln(AF_{t-1}) - \beta' \mathbf{X}_{t-1}$.
+Donde $\Pi = \sum_{i=1}^{p} \mathbf{A}_i - \mathbf{I}_K$ representa la matriz de impacto de largo plazo, $\Gamma_i = -\sum_{j=i+1}^{p} \mathbf{A}_j$ captura las respuestas dinámicas de corto plazo, y $\mathbf{D}_t$ contiene la constante y tendencias. El rango de $\Pi$ determina el número de vectores de cointegración $r$ mediante dos contrastes:
 
-**Contraste con Gujarati (2009):** De acuerdo con el Teorema de Representación de Granger, detallado por Gujarati (Cap. 22), si dos variables o vectores cointegran, existe un mecanismo de corrección de error válido. En la Ecuación (@eq-vecm-single), $\lambda_1$ es el coeficiente de velocidad de ajuste (parámetro actuarial en este estudio). Gujarati enfatiza la restricción teórica de que este parámetro debe cumplir con:
-$$\lambda_1 < 0 \quad \text{y ser estadísticamente significativo}$$
-Esto garantiza que cualquier choque que desvíe al sistema del equilibrio a largo plazo se corregirá en periodos posteriores, regresando a la trayectoria estacionaria conjunta.
+### Prueba de la Traza ($\lambda_{\text{trace}}$)
 
-## Modelo ARDL-ECM
+$$\lambda_{\text{trace}}(r) = -T \sum_{i=r+1}^{K} \ln(1 - \hat{\lambda}_i)$$ {#eq-trace}
 
-La especificación empírica uniecuacional derivada del ARDL ($p, q_1, q_2, q_3, q_4$) óptimo es:
+- $H_0: \text{El número de vectores de cointegración } \le r$.
+- $H_1: \text{El número de vectores de cointegración } > r$.
 
-$$\Delta \ln(AF_t) = \alpha_0 + \sum_{i=1}^{p-1} \phi_i^* \Delta \ln(AF_{t-i}) + \sum_{k=1}^{4} \sum_{j=0}^{q_k-1} \delta_{k,j}^* \Delta X_{k,t-j} + \lambda ECT_{t-1} + \epsilon_t$$ {#eq-ardl-ecm}
+### Prueba del Máximo Valor Propio ($\lambda_{\text{max}}$)
 
-Donde los parámetros sumatorios $\phi_i^*$ y $\delta_{k,j}^*$ representan los multiplicadores dinámicos de corto plazo, el término de corrección de error es $ECT_{t-1} = \ln(AF_{t-1}) - \theta_0 - \sum_{k=1}^{4} \theta_k X_{k,t-1}$ con los coeficientes de largo plazo calculados como $\theta_k = -\delta_k/\delta_0$, y el parámetro de velocidad de ajuste es $\lambda = \delta_0 < 0$.
+$$\lambda_{\text{max}}(r, r+1) = -T \ln(1 - \hat{\lambda}_{r+1})$$ {#eq-max}
+
+- $H_0: \text{El número de vectores de cointegración } = r$.
+- $H_1: \text{El número de vectores de cointegración } = r+1$.
+
+## Prueba de Cointegración por Límites (ARDL F-Bounds Test)
+
+Para evaluar la cointegración bajo órdenes de integración mixtos $I(0)$ e $I(1)$, se estima la ecuación auxiliar condicional de corrección de error para la variable de afiliados $\ln(AF_t)$:
+
+$$\Delta \ln(AF_t) = \alpha_0 + \delta_0 \ln(AF_{t-1}) + \delta_1 GM_{t-1} + \delta_2 MI_{t-1} + \delta_3 \ln(HO_{t-1}) + \delta_4 \ln(FL_{t-1}) + \sum_{i=1}^{p-1} \phi_i \Delta \ln(AF_{t-i}) + \sum_{j=0}^{q_1-1} \gamma_{1,j} \Delta GM_{t-j} + \sum_{j=0}^{q_2-1} \gamma_{2,j} \Delta MI_{t-j} + \sum_{j=0}^{q_3-1} \gamma_{3,j} \Delta \ln(HO_{t-j}) + \sum_{j=0}^{q_4-1} \gamma_{4,j} \Delta \ln(FL_{t-j}) + e_t$$ {#eq-bounds}
+
+El contraste F conjunto de cointegración se plantea como:
+
+- $H_0: \delta_0 = \delta_1 = \delta_2 = \delta_3 = \delta_4 = 0$ (No existe relación de largo plazo).
+- $H_1: \text{Al menos un } \delta_i \neq 0$ (Existe una relación de equilibrio de largo plazo).
+
+El estadístico F calculado se evalúa contra las cotas críticas inferiores $I(0)$ y superiores $I(1)$ de Pesaran.
 
 ---
 
-# Planteamiento y Contraste de Ecuaciones de Causalidad
+# Ecuaciones de Corrección de Error (ECM)
 
-La cointegración implica la presencia de causalidad en al menos una dirección, pero no define su sentido.
+La presencia de cointegración permite especificar la velocidad de ajuste dinámico hacia el equilibrio a largo plazo.
 
-## Causalidad de Granger en el marco de un VAR (Variables Estacionarias)
+## Ecuación de Corrección de Error del VECM
 
-Cuando las variables del sistema no cointegran pero son estacionarias, la prueba se realiza en un marco VAR en diferencias. Para evaluar si $X_t$ causa en el sentido de Granger a $Y_t$, se estima:
+Para el sistema cointegrado con rango $r=1$, la ecuación para la dinámica de corto plazo de la afiliación al IESS es:
 
-$$Y_t = \alpha_0 + \sum_{i=1}^{p} \beta_i Y_{t-i} + \sum_{j=1}^{p} \gamma_j X_{t-j} + \varepsilon_t$$ {#eq-granger-var}
+$$\Delta \ln(AF_t) = a_0 + \lambda_1 ECT_{t-1} + \sum_{j=1}^{p-1} \gamma_{1,j}' \Delta \mathbf{W}_{t-j} + u_{1,t}$$ {#eq-vecm-ecm}
 
-**Contraste con Gujarati (2009):** Gujarati (Cap. 22, Sec. 22.12) define este test clásico asumiendo que la información relevante para la predicción de cada variable se encuentra contenida exclusivamente en sus valores históricos y en los de las demás variables del sistema. La hipótesis nula indica que los valores rezagados de $X_t$ no contribuyen a la predicción de $Y_t$:
-$$H_0: \gamma_1 = \gamma_2 = \dots = \gamma_p = 0 \quad (\text{no Granger-causa})$$
-Se contrasta mediante un test Wald-F bajo la hipótesis nula conjunta de coeficientes nulos.
+Donde el término de corrección de error de largo plazo rezagado es:
 
-## Causalidad de Granger en el marco de un VECM (Variables Cointegradas)
+$$ECT_{t-1} = \ln(AF_{t-1}) - \beta_1 GM_{t-1} - \beta_2 MI_{t-1} - \beta_3 \ln(HO_{t-1}) - \beta_4 \ln(FL_{t-1}) - \beta_0$$ {#eq-vecm-ect}
 
-Si existe cointegración, la omisión del término de corrección de error en el test de Granger tradicional sesga los resultados. Se formula el sistema dinámico basado en VECM:
+El coeficiente $\lambda_1$ representa la velocidad de ajuste actuarial. Fisiológicamente se requiere que $\lambda_1 < 0$ y sea estadísticamente significativo para asegurar la convergencia dinámica.
 
-$$\Delta Y_t = c_1 + \lambda_1 ECT_{t-1} + \sum_{i=1}^{p-1} a_{1,i} \Delta Y_{t-i} + \sum_{j=1}^{p-1} b_{1,j} \Delta X_{t-j} + e_{1,t}$$ {#eq-granger-vecm}
+## Ecuación de Corrección de Error del ARDL-ECM
 
-**Contraste con Gujarati (2009):** Gujarati señala que la cointegración introduce un canal de causalidad adicional. A partir de la Ecuación (@eq-granger-vecm), se contrastan tres formas de causalidad de $X$ hacia $Y$:
-1. **Causalidad de Corto Plazo:** Evaluada mediante la significación conjunta de las variables explicativas rezagadas en diferencias ($H_0: b_{1,1} = \dots = b_{1,p-1} = 0$), utilizando un test Wald-F.
-2. **Causalidad de Largo Plazo:** Determinada por el término de corrección de error ($H_0: \lambda_1 = 0$), evaluada mediante un test t estándar. Si $\lambda_1$ es significativo, la variable dependiente responde a las desviaciones del equilibrio a largo plazo, demostrando causalidad a través del vector de cointegración.
-3. **Causalidad Fuerte o Conjunta:** Examina la influencia simultánea de los canales de corto y largo plazo ($H_0: \lambda_1 = b_{1,1} = \dots = b_{1,p-1} = 0$), mediante una prueba Wald F conjunta.
+La especificación uniecuacional óptima estimada para evaluar la dinámica de los afiliados es:
+
+$$\Delta \ln(AF_t) = \alpha_0 + \sum_{i=1}^{p-1} \phi_i^* \Delta \ln(AF_{t-i}) + \sum_{j=0}^{q_1-1} \gamma_{1,j}^* \Delta GM_{t-j} + \sum_{j=0}^{q_2-1} \gamma_{2,j}^* \Delta MI_{t-j} + \sum_{j=0}^{q_3-1} \gamma_{3,j}^* \Delta \ln(HO_{t-j}) + \sum_{j=0}^{q_4-1} \gamma_{4,j}^* \Delta \ln(FL_{t-j}) + \lambda ECT_{t-1} + \epsilon_t$$ {#eq-ardl-ecm}
+
+Donde $\lambda = \delta_0 < 0$ es la velocidad de ajuste actuarial y el término de error rezagado es:
+
+$$ECT_{t-1} = \ln(AF_{t-1}) - \theta_1 GM_{t-1} - \theta_2 MI_{t-1} - \theta_3 \ln(HO_{t-1}) - \theta_4 \ln(FL_{t-1}) - \theta_0$$ {#eq-ardl-ect}
+
+Los coeficientes de elasticidad de largo plazo se derivan mediante $\theta_k = -\frac{\delta_k}{\delta_0}$.
+
+---
+
+# Ecuaciones de Causalidad
+
+La dirección causal de las relaciones dinámicas se contrasta formalmente mediante dos enfoques metodológicos complementarios.
+
+## Causalidad de Granger en el Marco del VAR (Variables Estacionarias)
+
+Para cualquier par de variables estacionarias en diferencias del sistema, $A_t$ y $B_t$, la prueba de causalidad temporal estima la regresión:
+
+$$A_t = \alpha_0 + \sum_{i=1}^{p} \beta_i A_{t-i} + \sum_{j=1}^{p} \gamma_j B_{t-j} + \varepsilon_t$$ {#eq-granger-var}
+
+La hipótesis nula de ausencia de causalidad de Granger de $B_t$ hacia $A_t$ es:
+
+$$H_0: \gamma_1 = \gamma_2 = \dots = \gamma_p = 0$$ {#eq-granger-var-null}
+
+Se evalúa mediante un test Wald-F conjunto sobre los coeficientes rezagados de la variable explicativa.
+
+## Causalidad de Granger en el Marco del VECM (Variables Cointegradas)
+
+Si las variables están cointegradas, la prueba se especifica incorporando el término de corrección de error rezagado para evitar sesgos por omisión de variables:
+
+$$\Delta \ln(AF_t) = c_1 + \lambda_1 ECT_{t-1} + \sum_{i=1}^{p-1} a_{1,i} \Delta \ln(AF_{t-i}) + \sum_{j=1}^{p-1} b_{1,j} \Delta X_{k,t-j} + e_{1,t}$$ {#eq-granger-vecm}
+
+Donde $X_k$ es cualquiera de los regresores explicativos ($GM, MI, \ln(HO), \ln(FL)$). La formulación permite verificar tres dimensiones independientes de causalidad:
+
+1. **Causalidad de Corto Plazo:** Contraste conjunto $H_0: b_{1,1} = \dots = b_{1,p-1} = 0$ (test Wald-F sobre los coeficientes de las variables explicativas rezagadas en diferencias).
+2. **Causalidad de Largo Plazo:** Contraste $H_0: \lambda_1 = 0$ (test de significación t estándar sobre la velocidad de ajuste actuarial).
+3. **Causalidad Fuerte o Conjunta:** Contraste conjunto de corto y largo plazo $H_0: \lambda_1 = b_{1,1} = \dots = b_{1,p-1} = 0$ (test Wald F conjunto sobre todas las variables explicativas y el término $ECT_{t-1}$).
