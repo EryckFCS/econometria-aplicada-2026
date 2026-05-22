@@ -1,0 +1,305 @@
+---
+title: "Modelación Econométrica Dinámica: Especificación Matemática de Ecuaciones"
+subtitle: "Análisis de Raíz Unitaria, Cointegración, Corrección de Error y Causalidad de Granger"
+author: "Erick Fabricio Condoy Seraquive"
+date: "2026-05-22"
+format:
+  pdf:
+    pdf-engine: lualatex
+    papersize: letter
+    geometry:
+      - top=2.54cm
+      - bottom=2.54cm
+      - left=2.54cm
+      - right=2.54cm
+    fontfamily: times
+    fontsize: 11pt
+    linestretch: 1.15
+    toc: true
+    number-sections: true
+    colorlinks: true
+    tbl-pos: 'H'
+    fig-pos: 'H'
+  html:
+    theme: cosmo
+    toc: true
+    number-sections: true
+    embed-resources: true
+header-includes:
+  - \usepackage{amsmath}
+  - \usepackage{amssymb}
+  - \usepackage{amsfonts}
+  - \usepackage{bm}
+  - \usepackage{booktabs}
+  - \setlength{\parindent}{0pt}
+  - \setlength{\parskip}{0.8em}
+---
+
+# Introducción y Definición de Variables
+
+Este documento detalla la formulación matemática e identificación formal de las ecuaciones dinámicas que componen el diseño empírico para evaluar la sostenibilidad del Instituto Ecuatoriano de Seguridad Social (IESS) bajo choques fiscales, demográficos y de inestabilidad social durante el periodo 1990-2024.
+
+Para asegurar la máxima consistencia metodológica, las ecuaciones se estructuran en función del vector de variables endógenas y exógenas del sistema:
+
+$$\mathbf{Z}_t = \begin{bmatrix} y_t \\ \mathbf{X}_t \end{bmatrix}$$
+
+Donde:
+
+- **$y_t = \ln(AF_t)$**: Logaritmo natural de los afiliados activos cotizantes al IESS (Seguro General Obligatorio y Seguro Social Campesino), que representa la variable dependiente de interés actuarial.
+- **$\mathbf{X}_t = \begin{bmatrix} GM_t & MI_t & \ln(HO_t) & \ln(FL_t) \end{bmatrix}'$**: Vector de regresores explicativos de control e hipótesis:
+  - **$GM_t$**: Gasto Militar como porcentaje del PIB (capturando la hipótesis de desplazamiento presupuestario o *crowding-out* fiscal).
+  - **$MI_t$**: Migración Neta (en miles de personas, proxy del flujo de fuerza de trabajo externa).
+  - **$\ln(HO_t)$**: Logaritmo natural de la Tasa de Homicidios por cada 100,000 habitantes (proxy cuantitativa de la inestabilidad social e inseguridad).
+  - **$\ln(FL_t)$**: Logaritmo natural de la Fuerza Laboral total (capturando el tamaño dinámico de la Población Económicamente Activa).
+
+---
+
+# Ecuaciones de Raíz Unitaria y Estacionariedad
+
+Antes de establecer cualquier relación de largo plazo, es indispensable evaluar las propiedades de integración de las series temporales individuales para descartar regresiones espurias. Se especifican los modelos formales para tres pruebas clásicas de raíz unitaria con hipótesis complementarias.
+
+## Prueba Dickey-Fuller Aumentada (ADF)
+
+La prueba ADF controla la autocorrelación serial mediante la adición de diferencias rezagadas de la variable bajo análisis. Para una variable genérica $z_t \in \mathbf{Z}_t$, se estiman tres especificaciones alternativas:
+
+### Modelo I: Sin constante ni tendencia determinista (Paseo Aleatorio)
+$$\Delta z_t = \delta z_{t-1} + \sum_{j=1}^{k} \theta_j \Delta z_{t-j} + \epsilon_{1,t}$$ {#eq-adf-none}
+
+### Modelo II: Con constante (Paseo Aleatorio con deriva)
+$$\Delta z_t = \alpha_0 + \delta z_{t-1} + \sum_{j=1}^{k} \theta_j \Delta z_{t-j} + \epsilon_{2,t}$$ {#eq-adf-drift}
+
+### Modelo III: Con constante y tendencia determinista lineal
+$$\Delta z_t = \alpha_0 + \alpha_1 t + \delta z_{t-1} + \sum_{j=1}^{k} \theta_j \Delta z_{t-j} + \epsilon_{3,t}$$ {#eq-adf-trend}
+
+Donde $\Delta$ es el operador de primera diferencia ($\Delta z_t = z_t - z_{t-1}$), $t$ representa la tendencia lineal temporal, $k$ es el número de rezagos óptimos determinado mediante el Criterio de Información de Akaike (AIC) o Schwarz (SIC), y $\epsilon_{i,t} \sim N(0, \sigma^2)$ es un error ruido blanco.
+
+**Hipótesis de la Prueba:**
+$$H_0: \delta = 0 \quad \text{(La serie posee raíz unitaria, es no estacionaria: } I(1)\text{)}$$
+$$H_1: \delta < 0 \quad \text{(La serie es estacionaria en niveles o en tendencia: } I(0)\text{)}$$
+
+El contraste se realiza mediante el estadístico $t$-tau ($\tau$), comparándolo con los valores críticos tabulados por MacKinnon.
+
+---
+
+## Prueba Phillips-Perron (PP)
+
+La prueba PP es una alternativa no paramétrica a la ADF que corrige la autocorrelación y la heterocedasticidad en el término de perturbación sin necesidad de incluir diferencias rezagadas. La ecuación de estimación auxiliar es:
+
+$$z_t = \mu_0 + \mu_1 \left(t - \frac{T}{2}\right) + \rho z_{t-1} + u_t$$ {#eq-pp-aux}
+
+Donde $T$ es el tamaño de la muestra y el error $u_t$ está serialmente correlacionado. Las hipótesis son:
+
+$$H_0: \rho = 1 \quad \text{(Presencia de raíz unitaria)}$$
+$$H_1: |\rho| < 1 \quad \text{(Serie estacionaria)}$$
+
+El estadístico de prueba modifica el estimador de mínimos cuadrados de $\rho$ mediante un estimador de varianza de largo plazo (usualmente empleando un kernel de Bartlett con ventana espectral de Newey-West) para generar un estadístico $Z_t$ robusto.
+
+---
+
+## Prueba KPSS (Kwiatkowski-Phillips-Schmidt-Shin)
+
+A diferencia de ADF y PP, la prueba KPSS invierte la carga de la prueba, asumiendo estacionariedad bajo la hipótesis nula. La serie se descompone aditivamente en una tendencia determinista, un paseo aleatorio y un error estacionario:
+
+$$z_t = \xi t + r_t + \eta_t$$ {#eq-kpss-decomp}
+
+Donde $\eta_t$ es un error estacionario, y $r_t$ es un paseo aleatorio definido por:
+
+$$r_t = r_{t-1} + v_t, \quad v_t \sim i.i.d.(0, \sigma_v^2)$$ {#eq-kpss-rw}
+
+**Hipótesis de la Prueba:**
+$$H_0: \sigma_v^2 = 0 \quad \text{(La varianza del paseo aleatorio es nula; la serie } z_t \text{ es estacionaria)}$$
+$$H_1: \sigma_v^2 > 0 \quad \text{(La serie posee paseo aleatorio; no es estacionaria)}$$
+
+El estadístico de prueba LM se calcula a partir de los residuos acumulados de la regresión de mínimos cuadrados:
+
+$$LM = \frac{\sum_{t=1}^{T} S_t^2}{T^2 s^2(l)}$$ {#eq-kpss-stat}
+
+Donde $S_t = \sum_{i=1}^{t} \hat{e}_i$ representa la suma acumulada de los residuos $\hat{e}_i$ de la ecuación de regresión en niveles, y $s^2(l)$ es el estimador de la varianza de largo plazo con rezago $l$.
+
+---
+
+# Ecuaciones de Cointegración
+
+Si las series son no estacionarias integradas de primer orden ($I(1)$), se evalúa la existencia de una combinación lineal estable que no pierda información de largo plazo, lo que se conoce como cointegración. Se plantean tres metodologías teóricas y operativas.
+
+## Método de Engle-Granger (en dos etapas)
+
+Válido para dos variables o sistemas donde existe una única relación de cointegración explícita.
+
+### Etapa 1: Estimación de la relación estática de largo plazo por MCO
+$$\ln(AF_t) = \beta_0 + \beta_1 GM_t + \beta_2 MI_t + \beta_3 \ln(HO_t) + \beta_4 \ln(FL_t) + \epsilon_t$$ {#eq-eg-longrun}
+
+Se obtienen los residuos estimados de la regresión:
+$$\hat{\epsilon}_t = \ln(AF_t) - \hat{\beta}_0 - \hat{\beta}_1 GM_t - \hat{\beta}_2 MI_t - \hat{\beta}_3 \ln(HO_t) - \hat{\beta}_4 \ln(FL_t)$$ {#eq-eg-residuals}
+
+### Etapa 2: Evaluación de estacionariedad de los residuos mediante una prueba ADF auxiliar sin constante
+$$\Delta \hat{\epsilon}_t = \delta \hat{\epsilon}_{t-1} + \sum_{j=1}^{m} \theta_j \Delta \hat{\epsilon}_{t-j} + \nu_t$$ {#eq-eg-adf}
+
+**Hipótesis de Cointegración:**
+$$H_0: \delta = 0 \quad \text{(Los residuos poseen raíz unitaria; las variables no están cointegradas)}$$
+$$H_1: \delta < 0 \quad \text{(Los residuos son estacionarios } I(0)\text{; las variables están cointegradas)}$$
+
+*Nota:* Debido a que los residuos se calculan a partir de parámetros estimados, se deben utilizar los valores críticos ajustados de Engle y Yoo en lugar de los tabulados ordinarios de Dickey-Fuller.
+
+---
+
+## Método de Johansen (Máxima Verosimilitud Multivariado)
+
+Es una extensión multivariada basada en un modelo Vectorial Autorregresivo (VAR) de orden $p$ para un vector $\mathbf{Z}_t = [y_t, \mathbf{X}_t]'$ de $K$ variables $I(1)$:
+
+$$\mathbf{Z}_t = \mathbf{A}_1 \mathbf{Z}_{t-1} + \mathbf{A}_2 \mathbf{Z}_{t-2} + \dots + \mathbf{A}_p \mathbf{Z}_{t-p} + \mathbf{\Phi D}_t + \mathbf{\varepsilon}_t$$ {#eq-var-base}
+
+Donde $\mathbf{D}_t$ es una matriz de términos deterministas (constantes, tendencias) y $\mathbf{\varepsilon}_t \sim N(\mathbf{0}, \mathbf{\Sigma})$. Reescribiendo el VAR en su forma de Corrección de Error Vectorial (VECM):
+
+$$\Delta \mathbf{Z}_t = \Pi \mathbf{Z}_{t-1} + \sum_{i=1}^{p-1} \Gamma_i \Delta \mathbf{Z}_{t-i} + \mathbf{\Phi D}_t + \mathbf{\varepsilon}_t$$ {#eq-johansen-vecm}
+
+Donde la matriz de impacto de largo plazo $\Pi$ y las matrices dinámicas de corto plazo $\Gamma_i$ se definen como:
+
+$$\Pi = \sum_{j=1}^{p} \mathbf{A}_j - \mathbf{I}_K, \quad \Gamma_i = -\sum_{j=i+1}^{p} \mathbf{A}_j$$ {#eq-johansen-matrices}
+
+El rango $r$ de la matriz $\Pi$ determina el número de vectores de cointegración. Si $0 < r < K$, la matriz se descompone como $\Pi = \alpha\beta'$, donde:
+
+- $\beta$ es una matriz de dimensión $K \times r$ conteniendo los $r$ vectores de cointegración de largo plazo.
+- $\alpha$ es una matriz de dimensión $K \times r$ conteniendo los parámetros de velocidad de ajuste actuarial y correctora de desequilibrios de corto plazo.
+
+Para determinar el rango $r$, se estiman dos pruebas estadísticas basadas en los valores propios ordenados ($\hat{\lambda}_1 > \hat{\lambda}_2 > \dots > \hat{\lambda}_K$):
+
+### 1. Estadístico de la Traza ($\lambda_{\text{trace}}$)
+$$H_0: \text{El número de vectores de cointegración es } \le r \quad \text{vs} \quad H_1: \text{El número es } > r$$
+$$\lambda_{\text{trace}}(r) = -T \sum_{i=r+1}^{K} \ln(1 - \hat{\lambda}_i)$$ {#eq-johansen-trace}
+
+### 2. Estadístico del Máximo Valor Propio ($\lambda_{\text{max}}$)
+$$H_0: \text{El número de vectores es } r \quad \text{vs} \quad H_1: \text{El número es } r+1$$
+$$\lambda_{\text{max}}(r, r+1) = -T \ln(1 - \hat{\lambda}_{r+1})$$ {#eq-johansen-max}
+
+---
+
+## Método de Pesaran, Shin y Smith (ARDL Bounds Test)
+
+Permite contrastar cointegración independientemente de si las variables del sistema $\mathbf{Z}_t$ son de orden $I(0)$, $I(1)$ o de integración mixta, eludiendo la pre-evaluación estricta de raíces unitarias. El modelo ARDL ($p, q_1, q_2, q_3, q_4$) re-parametrizado en forma de Corrección de Error condicional se especifica como:
+
+$$\begin{aligned}
+\Delta \ln(AF_t) = &\alpha_0 + \delta_0 \ln(AF_{t-1}) + \delta_1 GM_{t-1} + \delta_2 MI_{t-1} + \delta_3 \ln(HO_{t-1}) + \delta_4 \ln(FL_{t-1}) \\
+&+ \sum_{i=1}^{p-1} \phi_i \Delta \ln(AF_{t-i}) + \sum_{j=0}^{q_1-1} \gamma_{1,j} \Delta GM_{t-j} + \sum_{j=0}^{q_2-1} \gamma_{2,j} \Delta MI_{t-j} \\
+&+ \sum_{j=0}^{q_3-1} \gamma_{3,j} \Delta \ln(HO_{t-j}) + \sum_{j=0}^{q_4-1} \gamma_{4,j} \Delta \ln(FL_{t-j}) + e_t
+\end{aligned}$$ {#eq-ardl-bounds}
+
+Donde $\delta_0, \dots, \delta_4$ representan la dinámica de largo plazo, mientras que los parámetros sumatorios denotan la dinámica de corto plazo.
+
+**Hipótesis del Bounds Test:**
+$$H_0: \delta_0 = \delta_1 = \delta_2 = \delta_3 = \delta_4 = 0 \quad \text{(No existe cointegración o relación de largo plazo)}$$
+$$H_1: \text{Al menos un } \delta_i \neq 0 \quad \text{(Existe una relación de largo plazo estable)}$$
+
+El contraste se realiza mediante una prueba F (o Wald) conjunta. Los límites críticos construivos por Pesaran et al. definen dos cotas:
+- **Cota Inferior $I(0)$**: Asume que todas las variables regresoras son estacionarias en niveles.
+- **Cota Superior $I(1)$**: Asume que todas las variables son integradas de orden uno.
+
+**Regla de Decisión:**
+- Si $F_{\text{calculado}} > I(1)_{\text{crítico}}$, se rechaza $H_0$; existe cointegración.
+- Si $F_{\text{calculado}} < I(0)_{\text{crítico}}$, no se puede rechazar $H_0$; no existe cointegración.
+- Si $I(0)_{\text{crítico}} \le F_{\text{calculado}} \le I(1)_{\text{crítico}}$, la inferencia es no concluyente.
+
+---
+
+# Ecuaciones de Corrección de Error (ECM)
+
+Si las variables cointegran, el Teorema de Representación de Granger establece que el sistema puede ser modelado mediante un mecanismo de corrección de error para capturar simultáneamente las dinámicas transitorias y el ajuste hacia el equilibrio.
+
+## Modelo de Corrección de Error Vectorial (VECM)
+
+Para el caso multivariante de Johansen, si existe una única relación de cointegración ($r=1$), la ecuación individual para la dinámica de la variable dependiente $\Delta \ln(AF_t)$ se descompone a partir de la Ecuación (@eq-johansen-vecm) como:
+
+$$\begin{aligned}
+\Delta \ln(AF_t) = &a_0 + \lambda_1 ECT_{t-1} + \sum_{j=1}^{p-1} \gamma_{11,j} \Delta \ln(AF_{t-j}) + \sum_{j=1}^{p-1} \gamma_{12,j} \Delta GM_{t-j} \\
+&+ \sum_{j=1}^{p-1} \gamma_{13,j} \Delta MI_{t-j} + \sum_{j=1}^{p-1} \gamma_{14,j} \Delta \ln(HO_{t-j}) + \sum_{j=1}^{p-1} \gamma_{15,j} \Delta \ln(FL_{t-j}) + u_{1,t}
+\end{aligned}$$ {#eq-vecm-single}
+
+Donde el término de error rezagado es el residuo normalizado de largo plazo:
+$$ECT_{t-1} = \ln(AF_{t-1}) - \beta_1 GM_{t-1} - \beta_2 MI_{t-1} - \beta_3 \ln(HO_{t-1}) - \beta_4 \ln(FL_{t-1})$$ {#eq-vecm-ect}
+
+Y el coeficiente $\lambda_1$ denota la velocidad de ajuste. Se espera teóricamente que $\lambda_1 < 0$ y sea estadísticamente significativo para asegurar la estabilidad del sistema actuarial.
+
+---
+
+## Modelo de Corrección de Error derivado del ARDL (ARDL-ECM)
+
+Corresponde a la especificación empírica de este estudio. A partir del modelo ARDL ($p, q_1, q_2, q_3, q_4$) óptimo seleccionado, la especificación en su forma de corrección de error está dada por:
+
+$$\Delta \ln(AF_t) = \alpha_0 + \sum_{i=1}^{p-1} \phi_i^* \Delta \ln(AF_{t-i}) + \sum_{k=1}^{4} \sum_{j=0}^{q_k-1} \delta_{k,j}^* \Delta X_{k,t-j} + \lambda ECT_{t-1} + \epsilon_t$$ {#eq-ardl-ecm-explicit}
+
+Donde:
+
+- $\Delta X_{1,t} = \Delta GM_t$, $\Delta X_{2,t} = \Delta MI_t$, $\Delta X_{3,t} = \Delta \ln(HO_t)$, $\Delta X_{4,t} = \Delta \ln(FL_t)$.
+- $\phi_i^*$ y $\delta_{k,j}^*$ capturan los efectos dinámicos de corto plazo de las variables.
+- $\lambda$ es la velocidad de ajuste del modelo, calculada a partir de los coeficientes de niveles: $\lambda = \delta_0$.
+- $ECT_{t-1}$ es el término de error definido por:
+  $$ECT_{t-1} = \ln(AF_{t-1}) - \theta_0 - \theta_1 GM_{t-1} - \theta_2 MI_{t-1} - \theta_3 \ln(HO_{t-1}) - \theta_4 \ln(FL_{t-1})$$ {#eq-ardl-ect}
+  Donde los coeficientes de largo plazo se obtienen como $\theta_i = -\frac{\delta_i}{\delta_0}$ para $i \in \{1, 2, 3, 4\}$.
+
+**Análisis de Estabilidad y Regímenes Actuariales:**
+- **$\lambda < 0$ significativo:** Estabilidad sistémica. Tras choques externos, el volumen de afiliados retorna a la senda de equilibrio con una velocidad de ajuste del $|\lambda \times 100|\%$ anual.
+- **$\lambda > 0$ significativo o no significativo:** Inestabilidad sistémica o divergencia dinámica. Los choques desvían al sistema permanentemente de su equilibrio ordinario, amplificando la crisis de reservas del IESS.
+
+---
+
+# Ecuaciones de Causalidad de Granger
+
+La cointegración garantiza una relación de equilibrio de largo plazo y descarta regresiones espurias, pero no indica la dirección causal del sistema de variables. La causalidad se plantea en dos marcos metodológicos alternativos.
+
+## Causalidad de Granger en un marco VAR (Variables Estacionarias)
+
+Si las variables son estacionarias $I(0)$ en niveles o se han modelado en primeras diferencias $\Delta \mathbf{Z}_t$ omitiendo cointegración, se evalúa si el comportamiento rezagado de una variable explicativa ayuda a predecir a la variable dependiente. Para un par de variables $(X_t, Y_t)$:
+
+$$Y_t = \alpha_0 + \sum_{i=1}^{p} \beta_i Y_{t-i} + \sum_{j=1}^{p} \gamma_j X_{t-j} + \varepsilon_{1,t}$$ {#eq-granger-var-y}
+$$X_t = \mu_0 + \sum_{i=1}^{p} \phi_i X_{t-i} + \sum_{j=1}^{p} \theta_j Y_{t-j} + \varepsilon_{2,t}$$ {#eq-granger-var-x}
+
+Para testear si **$X$ no causa en el sentido de Granger a $Y$**, se aplica una prueba F de restricciones lineales sobre la Ecuación (@eq-granger-var-y):
+
+$$H_0: \gamma_1 = \gamma_2 = \dots = \gamma_p = 0$$
+$$H_1: \text{Al menos un } \gamma_j \neq 0$$
+
+El estadístico F de Wald es:
+$$F = \frac{(RSS_R - RSS_{UR}) / p}{RSS_{UR} / (T - 2p - 1)}$$ {#eq-granger-f}
+
+Donde $RSS_R$ es la suma de cuadrados de los residuos del modelo restringido (excluyendo los rezagos de $X$), y $RSS_{UR}$ es la del modelo no restringido.
+
+---
+
+## Causalidad de Granger en un marco VECM (Causalidad Bidimensional)
+
+Si las variables están cointegradas, la prueba estándar en el VAR en diferencias está mal especificada debido a la omisión del término de corrección de error. Por tanto, se evalúa la causalidad utilizando el VECM multivariante de la Ecuación (@eq-johansen-vecm). Para un par cointegrado $(X_t, Y_t)$, el VECM de dos variables es:
+
+$$\Delta Y_t = c_1 + \lambda_1 ECT_{t-1} + \sum_{i=1}^{p-1} a_{1,i} \Delta Y_{t-i} + \sum_{j=1}^{p-1} b_{1,j} \Delta X_{t-j} + e_{1,t}$$ {#eq-granger-vecm-y}
+$$\Delta X_t = c_2 + \lambda_2 ECT_{t-1} + \sum_{i=1}^{p-1} a_{2,i} \Delta Y_{t-i} + \sum_{j=1}^{p-1} b_{2,j} \Delta X_{t-j} + e_{2,t}$$ {#eq-granger-vecm-x}
+
+Este marco descompone la causalidad de $X$ hacia $Y$ en tres canales evaluables estadísticamente en la Ecuación (@eq-granger-vecm-y):
+
+### 1. Causalidad de Corto Plazo
+Evalúa si las variaciones de corto plazo de la variable independiente causan fluctuaciones temporales en la dependiente.
+$$H_0: b_{1,1} = b_{1,2} = \dots = b_{1,p-1} = 0$$
+Se contrasta mediante una prueba de Wald (distribución $\chi^2$ o F).
+
+### 2. Causalidad de Largo Plazo (Causalidad a través del ajuste)
+Evalúa si la velocidad de ajuste al equilibrio responde a desequilibrios del sistema en el largo plazo.
+$$H_0: \lambda_1 = 0$$
+Se contrasta mediante una prueba $t$ de Student estándar sobre el coeficiente del error.
+
+### 3. Causalidad Fuerte o Conjunta (Corto y Largo Plazo)
+Prueba de robustez global que evalúa simultáneamente el impacto conjunto de los coeficientes de corto plazo y el ajuste.
+$$H_0: \lambda_1 = b_{1,1} = b_{1,2} = \dots = b_{1,p-1} = 0$$
+Se contrasta mediante una prueba de Wald conjunta con $p$ grados de libertad.
+
+---
+
+# Resumen de Especificación Aplicada al IESS
+
+La siguiente matriz conceptual resume el rol metodológico de cada una de las ecuaciones especificadas frente a las variables específicas de la investigación sobre la sostenibilidad actuarial del sistema previsional en Ecuador.
+
+| Sección | Metodología Principal | Ecuación Operativa | Objetivo Empírico |
+| :--- | :--- | :--- | :--- |
+| **Raíz Unitaria** | ADF, PP, KPSS | @eq-adf-trend, @eq-pp-aux, @eq-kpss-decomp | Determinar el orden de integración de $\ln(AF_t)$, $GM_t$, $MI_t$, $\ln(HO_t)$ y $\ln(FL_t)$. |
+| **Cointegración** | ARDL Bounds Test | @eq-ardl-bounds | Validar la existencia de un vector de cointegración estable ante órdenes de integración mixtos. |
+| **Corrección de Error** | ARDL-ECM | @eq-ardl-ecm-explicit | Estimar el coeficiente de velocidad de ajuste ($\lambda$) y diferenciar impactos transitorios y estructurales. |
+| **Causalidad** | Granger en VECM | @eq-granger-vecm-y | Determinar la direccionalidad causal (corto, largo plazo o conjunta) de la inestabilidad social y la presión militar hacia la masa de afiliados. |
+
+: Matriz de Integración Metodológica y Ecuaciones del Estudio de Sostenibilidad del IESS.
