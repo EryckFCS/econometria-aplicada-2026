@@ -73,3 +73,15 @@ def test_governance_files():
     ]
     for f in required_files:
         assert (REPO_ROOT / f).is_file(), f"Archivo de gobernanza ausente: {f}"
+
+
+def test_main_build_status():
+    """Valida el estado e identidad del nodo."""
+    from main import build_status
+    status = build_status()
+    assert "project_root" in status
+    assert "project_name" in status
+    assert "rag_collection" in status
+    assert "rag_available" in status
+    assert "Applied Econometrics" in status["project_name"]
+
