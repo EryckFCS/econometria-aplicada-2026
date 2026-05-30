@@ -1,0 +1,42 @@
+# Nota de Curación de Datos e Ingesta Previsional
+
+Esta nota técnica detalla el proceso de ingesta, limpieza e inyección de metadatos para las series previsionales extraídas del Boletín Estadístico No. 29 (2024) del IESS.
+
+## Matriz Completa de Variables de Investigación
+
+A continuación se registra la matriz metodológica completa con los códigos de las variables, definiciones operativas y fuentes de origen estadísticas utilizadas en el modelado dinámico:
+
+| Código | Variable | Definición Operativa | Unidad | Fuente |
+| :--- | :--- | :--- | :--- | :--- |
+| **$\ln(AF)$** | **Log Afiliados** | Logaritmo de cotizantes activos del IESS ( Seguro General Obligatorio y Seguro Social Campesino). | Log (Conteo) | IESS / Anuarios |
+| **$GM$** | **Gasto Militar** | Gasto fiscal en defensa nacional como proporción del PIB. | % del PIB | Banco Mundial |
+| **$MI$** | **Migración** | Saldo migratorio neto (inmigrantes menos emigrantes). | Conteo (Nivel) | Banco Mundial |
+| **$\ln(HO)$** | **Log Homicidios** | Logaritmo de la tasa de muertes violentas intencionales. | Log (por 100k) | BM / UNODC |
+| **$\ln(FL)$** | **Log Fuerza Laboral** | Logaritmo de la población económicamente activa. | Log (Conteo) | Banco Mundial |
+| **$\ln(MS)$** | **Log Masa Salarial** | Logaritmo de la masa salarial anual gravada total (SGO en USD). | Log (USD) | IESS / Boletín 4.1.1 |
+| **$\ln(PE)$** | **Log Pensionistas** | Logaritmo del total de pensionistas beneficiarios vigentes. | Log (Conteo) | IESS / Boletín 9.1.1 |
+| **$COV_t$** | **Cobertura de Caja** | Ratio de cobertura real de flujo ($Masa\ Salarial_t\ /\ Pensionistas_t$). | Ratio ($USD/Jubilado$) | Elaboración propia |
+
+## Proceso de Extracción y Curation de Parquet
+
+Las series históricas se extrajeron del archivo Markdown de alta fidelidad `~/.capital/lake/06_BOLETIN_ESTADISTICO_29_2024.md` y se procesaron mediante Python.
+
+### Tabla 4.1.1: Evolución Histórica de la Masa Salarial
+- **Claves de parsing**: Identificada bajo `### Tabla 1 (Página 61)`.
+- **Limpieza**: Remoción de marcadores visuales de tendencia (`▲`, `▼`, `◀`) y unificación de separadores de miles y decimales del formato local ecuatoriano a estándar americano (puntos eliminados para enteros, coma decimal convertida a punto).
+- **Esquema de Metadatos PyArrow**:
+  - `Año`: Dimensión Temporal, Tipo: `Int64`
+  - `Afiliados_SGO_Voluntario`: Afiliados del Seguro General Obligatorio y Seguro Voluntario, Tipo: `Int64`
+  - `Cotizacion_Dolar`: Cotización del Dólar (mercado de intervención promedio compra-venta), Tipo: `Float64`
+  - `Masa_Salarial_Sucres`: Masa salarial anual gravada en sucres (vigente hasta el año 2000), Tipo: `Int64`
+  - `Masa_Salarial_Dolares`: Masa salarial anual gravada en dólares (USD), Tipo: `Int64`
+
+### Tabla 9.1.1: Evolución Histórica de Pensionistas
+- **Claves de parsing**: Identificada bajo `### Tabla 1 (Página 107)`.
+- **Esquema de Metadatos PyArrow**:
+  - `Año`: Dimensión Temporal, Tipo: `Int64`
+  - `Montepio`: Pensionistas de Montepío (Viudez y Orfandad), Tipo: `Int64`
+  - `Invalidez`: Pensionistas por Invalidez, Tipo: `Int64`
+  - `Discapacidad`: Pensionistas por Discapacidad (registrado a partir de 2018), Tipo: `Int64`
+  - `Vejez`: Pensionistas por Vejez (Jubilados), Tipo: `Int64`
+  - `Total_Pensionistas`: Total de pensionistas del IESS (Suma consolidada), Tipo: `Int64`

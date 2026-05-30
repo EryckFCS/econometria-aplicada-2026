@@ -354,6 +354,21 @@
       "id": "erick_condoy_u1_ape_20260420_1642",
       "local_path": "reports/legacy_deliveries/ERICK_CONDOY_U1_APE_20260420_1642.zip",
       "lake_path": "/home/erick-fcs/.capital/lake/raw_data/ERICK_CONDOY_U1_APE_20260420_1642.zip"
+    },
+    {
+      "id": "evolucion_asegurados_iess_parquet",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/evolucion_asegurados_iess.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/evolucion_asegurados_iess.parquet"
+    },
+    {
+      "id": "evolucion_masa_salarial_parquet",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/evolucion_masa_salarial.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/evolucion_masa_salarial.parquet"
+    },
+    {
+      "id": "evolucion_pensionistas_gastos_parquet",
+      "local_path": "docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/processed/evolucion_pensionistas_gastos.parquet",
+      "lake_path": "/home/erick-fcs/.capital/lake/raw_data/evolucion_pensionistas_gastos.parquet"
     }
   ],
   "bibliography": [

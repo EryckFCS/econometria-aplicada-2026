@@ -1,0 +1,45 @@
+# Análisis Descriptivo e Hitos Históricos
+
+La evolución temporal conjunta de las series previsionales macroeconómicas y demográficas impositivas de inestabilidad en el Ecuador (1990-2024) se expone en la @fig-evolucion-unica. Todas las variables se indexan a su nivel de 1990 (Base 100) para permitir la contrastación directa de tendencias, a excepción de la Migración Neta que se presenta bajo escala normalizada Min-Max $[0, 100]$ debido a sus valores negativos históricos.
+
+![Trayectoria longitudinal y quiebres estructurales de las variables impositivas y de inestabilidad en el Ecuador (1990-2024)](assets/fig-evolucion-unica.png){#fig-evolucion-unica width=100%}
+
+La trayectoria de la @fig-evolucion-unica delimita hitos crítico-institucionales de la economía política del país: (1) el *Feriado Bancario (1999) y Dolarización (2000)* que desataron la primera ola de drenaje demográfico migratorio; (2) la *Constitución de Montecristi (2008)* que expandió la cobertura del Seguro General Obligatorio; (3) la *Penalización Penal de la No Afiliación en el COIP (2014)* que infló artificialmente el padrón contributivo (pico de 3.1 millones de afiliados en 2015); (4) la *Polémica del Aporte Estatal del 40% (2015)* decretado por Rafael Correa, descapitalizando las reservas técnicas líquidas del BIESS; y (5) el *Estallido Criminal y Extorsiones (2020-2024)* que forzó la informalización defensiva de microempresarios de Becker y la segunda crisis de emigración nacional.
+
+La @tbl-resumen detalla los descriptivos de las variables, confirmando la heterogeneidad de magnitudes y escalas temporales en las 35 observaciones integradas del IESS y Banco Mundial:
+
+| Variable | N | Media | Desv. Est. | Mín. | Máx. |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| Log Afiliados ($\ln(AF)$) | 35 | 14.4970 | 0.5160 | 13.7420 | 15.1493 |
+| Gasto Militar ($GM$) | 35 | 2.1833 | 0.5560 | 1.2133 | 3.2432 |
+| Migración Neta ($MI$) | 35 | -13606.2 | 31691.4 | -47287.0 | 95482.0 |
+| Log Tasa Homicidios ($\ln(HO)$) | 35 | 2.5222 | 0.4908 | 1.7557 | 3.8226 |
+| Log Fuerza Laboral ($\ln(FL)$) | 35 | 15.6394 | 0.2402 | 15.2127 | 15.9950 |
+
+: Estadísticos Descriptivos de las Variables de Investigación (1990-2024) {#tbl-resumen}
+
+Para asegurar la validez de los regresores paramétricos, la @tbl-vif presenta el Factor de Inflación de la Varianza (VIF). El VIF promedio de **2.87** y la ausencia de valores individuales superiores al umbral de 5.0 descartan problemas de multicolinealidad severa:
+
+| Variable | VIF | 1/VIF |
+| :--- | :---: | :---: |
+| Migración Neta ($MI$) | 3.76 | 0.2658 |
+| Log Fuerza Laboral ($\ln(FL)$) | 3.60 | 0.2780 |
+| Log Tasa Homicidios ($\ln(HO)$) | 2.31 | 0.4323 |
+| Gasto Militar ($GM$) | 1.83 | 0.5474 |
+| **Promedio VIF** | **2.87** | |
+
+: Factor de Inflación de la Varianza (VIF) {#tbl-vif}
+
+La @tbl-za presenta los resultados de las pruebas de raíz unitaria clásicas y de quiebre estructural de **Zivot-Andrews (ZA)**. Los quiebres endógenos coinciden con precisión histórica con los choques impositivos y cambios constitucionales del país (2008 y 2011), validando la existencia de procesos de integración mixta $I(0)$ e $I(1)$ idóneos para cointegración dinámica ARDL:
+
+| Variable | ADF (Niveles) | PP (Niveles) | ZA (Niveles) | Quiebre (Niv.) | ADF (Dif.) | PP (Dif.) | ZA (Dif.) | Quiebre (Dif.) | Integración |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **$\ln(AF)$** | -1.529 | -1.367 | -2.707 | 2010 | -1.936 | -2.963 | -4.578 | 2008 | $I(1)$ |
+| **$GM$** | -0.863 | -1.566 | -4.458 | 2008 | -3.817* | -8.747*** | -10.371*** | 2011 | $I(1)$ |
+| **$MI$** | -3.269 | -2.220 | -5.665*** | 2016 | -4.347** | -3.544* | -9.270*** | 2019 | $I(0)$ |
+| **$\ln(HO)$** | -2.264 | -1.154 | -3.791 | 1998 | -3.824** | -3.128 | -5.109** | 2011 | $I(1)$ |
+| **$\ln(FL)$** | -2.423 | -2.785 | -3.657 | 2009 | -4.212** | -6.756*** | -7.020*** | 2015 | $I(1)$ |
+
+: Pruebas de Raíz Unitaria Clásicas (ADF, PP) y con Quiebre Estructural (Zivot-Andrews) (1990-2024) {#tbl-za}
+
+*Nota: * p < 0.1, ** p < 0.05, *** p < 0.01. Los valores críticos de la prueba de Zivot-Andrews (ZA) con quiebre estructural en intercepto y tendencia al 1%, 5% y 10% de significancia son -5.57, -5.08 y -4.82, respectivamente. Los años denotan los puntos de quiebre estructurales endógenos calculados de manera óptima en cada serie temporal.*

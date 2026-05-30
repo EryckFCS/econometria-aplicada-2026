@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"name": "capital-workstation-libs",
+			"path": "../../../../../Capital_Workstation/capital-workstation-libs"
+		},
+		{
+			"name": "applied_econometrics_2026",
+			"path": "."
+		}
+	],
+	"settings": {
+		"python.languageServer": "Pylance",
+		"quarto.path": "/usr/local/bin/quarto"
+	}
+}

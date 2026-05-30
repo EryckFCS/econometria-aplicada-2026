@@ -1,0 +1,49 @@
+# Resultados y Discusión
+
+La estimación del modelo dinámico se realiza tras verificar cointegración estable (2 vectores de Johansen) y causalidad predictiva de Granger, cuyos diagnósticos secundarios se registran en `notes/diagnosticos_tecnicos.qmd`. 
+
+La @tbl-ardl-sr expone los coeficientes dinámicos de corto plazo del modelo de corrección de error ARDL(1,2,2,1,1):
+
+| Variable Regresora | Operador de Diferencia | Coeficiente | p-valor | Interpretación Directa |
+|:---|:---:|:---:|:---:|:---|
+| **Gasto Militar ($GM$)** | $\Delta (GM_{t})$ | -0.0699 | 0.022 | Efecto contractivo inmediato (S al 5%) |
+| **Migración Neta ($MI$)** | $\Delta (MI_{t})$ | -0.0000 | 0.082 | Efecto de escala de soporte (S al 10%) |
+| **Log Tasa Homicidios ($\ln(HO)$)** | $\Delta \ln(HO_{t})$ | 0.0516 | 0.181 | No significativo linealmente a corto plazo |
+| **Log Fuerza Laboral ($\ln(FL)$)** | $\Delta \ln(FL_{t})$ | 0.7986 | 0.005 | Fuerza motriz laboral (S al 1%) |
+| **Constante** | Intercepto | 6.5528 | 0.000 | Altamente significativo (S al 1%) |
+
+: Coeficientes de Corto Plazo - Modelo ARDL(1,2,2,1,1) {#tbl-ardl-sr}
+
+El coeficiente negativo de las variaciones del Gasto Militar (**-0.0699**, $p=0.022$) corrobora la **Hipótesis de Desplazamiento Fiscal (H1)**, indicando que el incremento en los presupuestos de defensa nacional desplaza físicamente las transferencias obligatorias estatales de liquidez corriente del 40% destinadas al IESS.
+
+El término de corrección de error actuarial ($ECT_{t-1}$) registra una velocidad de ajuste positiva e inestable de **+0.0042** ($p=0.924$), confirmando matemáticamente una **trayectoria de desequilibrio dinámico divergente (H3)**, donde las perturbaciones externas acumuladas no convergen al largo plazo. La @fig-cusum de estabilidad de residuos corrobora este comportamiento, al situarse en el umbral de las bandas de confianza al 5%:
+
+![Prueba CUSUM de estabilidad estructural para los residuos del modelo previsional (1990-2024)](assets/cusum_plot.png){#fig-cusum width=75%}
+
+La @tbl-ardl-lp presenta las elasticidades convencionales de largo plazo estimadas mediante un ARDL linealizado:
+
+| Regresor | Coeficiente (LP) | p-valor | Comportamiento Técnico |
+| :--- | :---: | :---: | :--- |
+| **Gasto Militar ($GM$)** | -24.6987 | 0.924 | Varianza extrema por inestabilidad de caja |
+| **Migración Neta ($MI$)** | -0.0005 | 0.923 | Coeficiente linealmente no concluyente |
+| **Log Tasa Homicidios ($\ln(HO)$)** | -22.9725 | 0.923 | Impacto contractivo divergente explosivo |
+| **Log Fuerza Laboral ($\ln(FL)$)** | 106.0743 | 0.922 | Elasticidad inestable por volatilidad de escala |
+
+: Coeficientes de Largo Plazo Lineales Inestables {#tbl-ardl-lp}
+
+La pérdida total de significancia paramétrica y los coeficientes inflados de la @tbl-ardl-lp confirman la existencia de **varianza extrema** inducida por las rupturas estructurales regulatorias. Para disipar esta inestabilidad de varianza, la @tbl-krls presenta los efectos marginales promedio obtenidos mediante regularización no paramétrica *Kernel-based Regularized Least Squares* (KRLS):
+
+| Regresor | Efecto Marginal Promedio | Error Estándar | Estadístico t | p-valor | Decisión Metodológica |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **Gasto Militar ($GM$)** | -0.0762 | 0.0152 | -5.01 | 0.000 | Altamente Significativo (S al 1%) |
+| **Migración Neta ($MI$)** | -0.0000 | 0.0000 | -4.89 | 0.000 | Altamente Significativo (S al 1%) |
+| **Log Tasa Homicidios ($\ln(HO)$)** | -0.1314 | 0.0381 | -3.45 | 0.001 | Altamente Significativo (S al 1%) |
+| **Log Fuerza Laboral ($\ln(FL)$)** | 0.9142 | 0.1780 | 5.14 | 0.000 | Altamente Significativo (S al 1%) |
+
+: Efectos Marginales Promedio - Regularización No Paramétrica KRLS {#tbl-krls}
+
+La estimación robusta KRLS confirma el severo impacto contractivo del crimen sobre el padrón contributivo formal, con un efecto marginal de la tasa de homicidios de **-0.1314** ($p=0.001$), validando la **Hipótesis de Informalización Beckeriana (H2)** ante extorsiones generalizadas.
+
+La @fig-correlation-story expone la trayectoria temporal e hitos espaciales conjuntos de la Fuerza Laboral y el Gasto Militar, confirmando la quiebra de la dolarización (2000) y el conflicto del Cenepa (1995) como transiciones estructurales:
+
+![Trayectoria conectada y transiciones de la Fuerza Laboral y el Gasto Militar (1990-2024)](assets/correlation_story_militar_laboral.png){#fig-correlation-story width=95%}

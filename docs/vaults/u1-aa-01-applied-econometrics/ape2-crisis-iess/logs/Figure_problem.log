@@ -1,0 +1,212 @@
+-----------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econ
+> ometrics_2026\docs\vaults\u1-aa-01-applied-econometrics\ape2-crisis-iess\analysis_erick
+> _condoy\logs/Figure_problem.log
+  log type:  text
+ opened on:  28 May 2026, 20:48:02
+
+. 
+. di as text "{hline}"
+-----------------------------------------------------------------------------------------
+
+. di as res "INICIANDO PROCESAMIENTO: RADIOGRAFÍA DE LA CRISIS DEL IESS"
+INICIANDO PROCESAMIENTO: RADIOGRAFÍA DE LA CRISIS DEL IESS
+
+. di as text "{hline}"
+-----------------------------------------------------------------------------------------
+
+. 
+. * 2. Ingesta de Datos (Idempotente)
+. local dta_file "data/base_analisis.dta"
+
+. local csv_file "data/base_analisis.csv"
+
+. 
+. capture use "`dta_file'", clear
+
+. if _rc {
+.     di ">>> Base .dta no encontrada. Intentando importar desde .csv..."
+.     capture import delimited "`csv_file'", clear
+.     if _rc {
+.         di ">>> ERROR CRÍTICO: No se encontró ni .dta ni .csv en data/."
+.         exit 199
+.     }
+.     save "`dta_file'", replace
+.     di ">>> Base convertida y guardada en formato .dta."
+. }
+
+. 
+. * Declarar estructura de serie de tiempo
+. tsset anio
+
+Time variable: anio, 1990 to 2024
+        Delta: 1 unit
+
+. 
+. * 3. Construcción y Etiquetado de Indicadores Clave
+. * Tasa de Cobertura Previsional (Ratio de soporte alternativo según Diamond, 1965)
+. gen cobertura = (afiliados_iess / fuerza_laboral) * 100
+
+. label variable cobertura "Tasa de Cobertura Previsional (%)"
+
+. 
+. * Migración Neta escalada a miles para mejorar la legibilidad visual
+. gen migracion_miles = migracion_neta / 1000
+
+. label variable migracion_miles "Migración Neta (Miles de personas)"
+
+. 
+. * Logaritmo de la tasa de homicidios
+. gen ln_homicidios = ln(tasa_homicidios)
+
+. label variable ln_homicidios "Log Tasa Homicidios"
+
+. 
+. * Crecimiento anual de afiliados
+. gen growth_afiliados = (afiliados_iess - L.afiliados_iess) / L.afiliados_iess * 100
+(1 missing value generated)
+
+. label variable growth_afiliados "Crecimiento Anual de Afiliados (%)"
+
+. 
+. * 4. Auditoría Analítica en el Log (Evidencia Reproducible)
+. di _newline(1) as res ">>> ANÁLISIS DE CORRELACIÓN Y REGRESIÓN BÁSICA <<<"
+
+>>> ANÁLISIS DE CORRELACIÓN Y REGRESIÓN BÁSICA <<<
+
+. di as text "{hline}"
+-----------------------------------------------------------------------------------------
+
+. correlate cobertura tasa_homicidios gasto_militar_pib migracion_miles
+(obs=35)
+
+             | cobert~a tasa_h~s gasto_~b migrac~s
+-------------+------------------------------------
+   cobertura |   1.0000
+tasa_homic~s |   0.1035   1.0000
+gasto_mili~b |   0.6511   0.1198   1.0000
+migracion_~s |   0.6319  -0.2563   0.4622   1.0000
+
+
+. 
+. di _newline(1) as res ">>> ESTIMACIÓN DE ASOCIACIONES (MCO de Referencia) <<<"
+
+>>> ESTIMACIÓN DE ASOCIACIONES (MCO de Referencia) <<<
+
+. di as text "{hline}"
+-----------------------------------------------------------------------------------------
+
+. regress cobertura tasa_homicidios gasto_militar_pib migracion_miles
+
+      Source |       SS           df       MS      Number of obs   =        35
+-------------+----------------------------------   F(3, 31)        =     14.97
+       Model |  1997.80385         3  665.934615   Prob > F        =    0.0000
+    Residual |  1378.74074        31  44.4755076   R-squared       =    0.5917
+-------------+----------------------------------   Adj R-squared   =    0.5522
+       Total |  3376.54458        34  99.3101347   Root MSE        =     6.669
+
+-----------------------------------------------------------------------------------
+        cobertura | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+------------------+----------------------------------------------------------------
+  tasa_homicidios |    .200497   .1363747     1.47   0.152     -.077641    .4786349
+gasto_militar_pib |    7.19677   2.414802     2.98   0.006     2.271748    12.12179
+  migracion_miles |   .1549845   .0435137     3.56   0.001     .0662377    .2437313
+            _cons |   16.85206   5.467211     3.08   0.004     5.701613    28.00252
+-----------------------------------------------------------------------------------
+
+. 
+. * 5. Cálculo de Índices de Evolución Relativa (Base 100 = 1990)
+. * Para variables de escala estrictamente positiva, indexamos a su valor de 1990.
+. * Para la Migración Neta, al contener valores negativos, aplicamos normalización Min-Ma
+> x [0, 100].
+. 
+. quietly summarize afiliados_iess if anio == 1990
+
+. local af_1990 = r(mean)
+
+. gen af_idx = (afiliados_iess / `af_1990') * 100
+
+. 
+. quietly summarize fuerza_laboral if anio == 1990
+
+. local fl_1990 = r(mean)
+
+. gen fl_idx = (fuerza_laboral / `fl_1990') * 100
+
+. 
+. quietly summarize gasto_militar_pib if anio == 1990
+
+. local gm_1990 = r(mean)
+
+. gen gm_idx = (gasto_militar_pib / `gm_1990') * 100
+
+. 
+. quietly summarize tasa_homicidios if anio == 1990
+
+. local ho_1990 = r(mean)
+
+. gen ho_idx = (tasa_homicidios / `ho_1990') * 100
+
+. 
+. quietly summarize migracion_neta
+
+. local mi_min = r(min)
+
+. local mi_max = r(max)
+
+. gen mi_idx = ((migracion_neta - `mi_min') / (`mi_max' - `mi_min')) * 100
+
+. 
+. * 6. Diseño del Gráfico Único de Evolución Temporal Homogénea
+. set scheme s1color
+
+. 
+. twoway (line af_idx anio, lcolor(navy) lwidth(thick)) ///
+>        (line fl_idx anio, lcolor(purple) lwidth(medium) lpattern(dash)) ///
+>        (line gm_idx anio, lcolor(orange) lwidth(medium) lpattern(dash_dot)) ///
+>        (line ho_idx anio, lcolor(red) lwidth(thick)) ///
+>        (line mi_idx anio, lcolor(teal) lwidth(medium) lpattern(shortdash)), ///
+>        title("Trayectoria Longitudinal Homogénea de las Series (1990-2024)", size(small
+> ) color(black)) ///
+>        ytitle("Índice de Evolución Relativa (Base 100 = 1990)", size(vsmall)) ///
+>        xtitle("Año", size(vsmall)) ///
+>        xlabel(1990(5)2024, labsize(vsmall)) ylabel(, labsize(vsmall)) ///
+>        xline(2000, lcolor(gs12) lpattern(dot)) ///
+>        xline(2008, lcolor(gs12) lpattern(dot)) ///
+>        xline(2014, lcolor(gs12) lpattern(dot)) ///
+>        xline(2020, lcolor(gs12) lpattern(dot)) ///
+>        legend(order(1 "Afiliados IESS" 2 "Fuerza Laboral" 3 "Gasto Militar % PIB" 4 "Ta
+> sa de Homicidios" 5 "Migración Neta (Min-Max)") size(vsmall) pos(6) cols(2) ring(1)) //
+> /
+>        note("Fuente: Anuarios Estadísticos del IESS, Banco Mundial (WDI). Elaboración p
+> ropia.", size(tiny) color(gs10)) ///
+>        graphregion(color(white)) plotregion(color(white))
+
+. 
+. graph export "assets/fig-evolucion-unica.png", replace width(3200)
+file assets/fig-evolucion-unica.png saved as PNG format
+
+. 
+. di as text "{hline}"
+-----------------------------------------------------------------------------------------
+
+. di as res "PROCESAMIENTO DE EVOLUCIÓN UNIFICADA FINALIZADO CON ÉXITO."
+PROCESAMIENTO DE EVOLUCIÓN UNIFICADA FINALIZADO CON ÉXITO.
+
+. di as text "La gráfica de panel único ha sido guardada en: assets/fig-evolucion-unica.p
+> ng"
+La gráfica de panel único ha sido guardada en: assets/fig-evolucion-unica.png
+
+. di as text "{hline}"
+-----------------------------------------------------------------------------------------
+
+. 
+. log close
+      name:  <unnamed>
+       log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econ
+> ometrics_2026\docs\vaults\u1-aa-01-applied-econometrics\ape2-crisis-iess\analysis_erick
+> _condoy\logs/Figure_problem.log
+  log type:  text
+ closed on:  28 May 2026, 20:48:06
+-----------------------------------------------------------------------------------------

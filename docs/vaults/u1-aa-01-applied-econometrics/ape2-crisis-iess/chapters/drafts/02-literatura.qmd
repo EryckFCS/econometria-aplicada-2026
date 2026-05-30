@@ -1,0 +1,11 @@
+# Revisión de Literatura
+
+La sostenibilidad financiera de un sistema previsional de reparto intergeneracional descansa en el balance dinámico continuo entre cotizantes activos y pensionistas pasivos, tal como lo formaliza el modelo de generaciones traslapadas (OLG) de @diamond1965. En el Ecuador, este balance dinámico enfrenta no solo una transición demográfica regresiva characterized por el envejecimiento poblacional (@pnd2025), sino también fricciones de informalización laboral severas. Bajo el enfoque de la economía del crimen de @becker1968, la inestabilidad social y la extorsión comercial violenta operan como un gravamen informal directo para las empresas formales. Esto incentiva el repliegue defensivo de microempresarios e independientes hacia la informalidad indocumentada para eludir la detección criminal y retener liquidez, retirando flujos de aportación activa del Seguro General Obligatorio.
+
+Paralelamente, la economía política previsional señala que la reasignación de gasto impositivo hacia prioridades de seguridad interna y gasto militar ($GM_t$) genera un desplazamiento presupuestario (*crowding-out*) directo que asfixia la transferencia obligatoria estatal del $40\%$ al fondo de pensiones civil, induciendo insolvencia de caja. Sintetizando estos canales demográficos, fiscales e institucionales, el modelo base de sostenibilidad para la masa de cotizantes activos del IESS se formula en la Ecuación (@eq-modelo-base):
+
+$$
+\ln(AF_t) = \beta_0 + \beta_1 GM_t + \beta_2 \ln(HO_t) + \beta_3 MI_t + \beta_4 \ln(FL_t) + \mu_t
+$$ {#eq-modelo-base}
+
+Donde $\ln(AF_t)$ representa el logaritmo de afiliados activos cotizantes; $GM_t$ es el gasto militar (% del PIB) como proxy de prioridad fiscal; $\ln(HO_t)$ es el logaritmo de la tasa de homicidios que captura la inestabilidad social y la informalización defensiva de Becker; y $MI_t$ (migración neta) junto con $\ln(FL_t)$ (logaritmo de la fuerza laboral) actúan como controles de escala demográfica y del mercado de trabajo nacional.

@@ -1,0 +1,5 @@
+# Resumen {.unnumbered}
+
+La crisis de sostenibilidad del Instituto Ecuatoriano de Seguridad Social (IESS) en el periodo 1990-2024 responde directamente a choques de inestabilidad social y competencia fiscal. Un modelo de Rezagos Distribuidos Autorregresivos (ARDL) cuantifica el impacto del gasto militar, la migración neta y la tasa de homicidios sobre la masa de afiliados activos. El desplazamiento presupuestario de la defensa y la inseguridad ciudadana erosionan la base de cotizantes, induciendo una trayectoria dinámica divergente que compromete la viabilidad del reparto intergeneracional.
+
+**Palabras clave:** IESS, Sostenibilidad, Inestabilidad Social, Competencia Fiscal, Modelo ARDL, Trayectoria Divergente.

@@ -1,0 +1,21 @@
+# Metodología y Datos
+
+La base empírica para examinar la sostenibilidad previsional en el Ecuador abarca una serie temporal anual de 35 observaciones (1990-2024), integrada a partir de registros de la Dirección Actuarial del IESS y bases globales del Banco Mundial. La @tbl-variables detalla el diseño metodológico de las variables utilizadas:
+
+| Código | Variable | Definición Operativa | Unidad | Fuente de Información |
+| :--- | :--- | :--- | :--- | :--- |
+| **$\ln(AF)$** | **Log Afiliados** | Logaritmo del total de afiliados activos cotizantes del Seguro General Obligatorio y Campesino. | Log (Conteo) | Anuarios Estadísticos IESS |
+| **$GM$** | **Gasto Militar** | Gasto fiscal en defensa y seguridad nacional como proporción del PIB. | % del PIB | Banco Mundial (WDI) |
+| **$MI$** | **Migración Neta** | Saldo neto anual migratorio impositivo (inmigrantes menos emigrantes). | Conteo (Nivel) | Banco Mundial (WDI) |
+| **$\ln(HO)$** | **Log Homicidios** | Logaritmo de la tasa de muertes violentas por cada 100,000 habitantes. | Log (por 100k hab.) | BM / UNODC / Min. Interior |
+| **$\ln(FL)$** | **Log Fuerza Laboral** | Logaritmo de la población económicamente activa mayor a 15 años. | Log (Conteo) | Banco Mundial (WDI) |
+
+: Matriz Metodológica de Variables de la Investigación (1990-2024) {#tbl-variables}
+
+Para modelar las elasticidades de corto y largo plazo con variables de integración mixta ($I(0)$ e $I(1)$) y quiebres estructurales endógenos, se especifica el modelo dinámico de corrección de error **ARDL** de @pesaran2001 en la Ecuación (@eq-ardl-ecm):
+
+$$
+\Delta \ln(AF_t) = \alpha + \sum_{i=1}^{p} \phi_i \Delta \ln(AF_{t-i}) + \sum_{k=1}^{4} \sum_{j=0}^{q_k} \delta_{k,j} \Delta X_{k,t-j} + \lambda ECT_{t-1} + \epsilon_t 
+$$ {#eq-ardl-ecm}
+
+Donde $\Delta$ es el operador de diferencia; $X_{t}$ es el vector de regresores explicativos ($GM_{t}$, $MI_{t}$, $\ln(HO_{t})$, $\ln(FL_{t})$); y $ECT_{t-1}$ es el término de corrección de error rezagado. Un coeficiente actuarial positivo ($\lambda > 0$) denota una **inestabilidad sistémica o desequilibrio dinámico divergente**, donde las perturbaciones externas alejan permanentemente la base de cotizantes de la senda estable.
