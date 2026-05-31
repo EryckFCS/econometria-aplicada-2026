@@ -55,3 +55,7 @@ exclude = ["**/node_modules", ".venv", "build", "dist"]
 
 [tool.ruff.lint]
 per-file-ignores = {"tests/*" = ["D", "S101"]}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+

@@ -67,12 +67,13 @@ def test_evidence_naming_convention():
 def test_governance_files():
     """Valida la presencia de archivos críticos de gobernanza."""
     required_files = [
-        "AGENTS.md",
+        "GEMINI.md",
         "pyproject.toml",
         "uv.lock"
     ]
     for f in required_files:
         assert (REPO_ROOT / f).is_file(), f"Archivo de gobernanza ausente: {f}"
+
 
 
 def test_main_build_status():

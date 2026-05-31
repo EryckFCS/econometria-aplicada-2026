@@ -1,9 +1,9 @@
-# AGENTS.md - Federated Node: Applied Econometrics 2026
+# GEMINI.md - Federated Node: Applied Econometrics 2026
 
 > This repository is a **Level 5 Pure Node** in the Federated Architecture v8.1.5.
 > It operates under the Constitution centralized in `capital-workstation-libs`.
 
-## Constitucion
+## Constitución
 
 ```text
 /home/erick-fcs/Capital_Workstation/capital-workstation-libs/.github/copilot-instructions.md
@@ -36,7 +36,7 @@ Este nodo esta disenado para producir econometria aplicada reproducible con traz
 ### 3.1. Contractual QA Protocol
 
 - Invariante: ningun cambio se considera estable si rompe los contratos del sistema o los contratos de datos.
-- Accion: ejecutar `PYTHONPATH=src .venv/bin/python -m pytest tests/test_system_contract.py tests/governance/test_data_contracts.py` antes de cerrar cambios de conducta o estructura.
+- Accion: ejecutar `/home/erick-fcs/.local/bin/uv run pytest` antes de cerrar cambios de conducta o estructura.
 - Falla: si alguno falla, se corrige la causa raiz antes de continuar.
 
 ### 3.2. Research Protocol
@@ -53,18 +53,18 @@ Este nodo esta disenado para producir econometria aplicada reproducible con traz
 .
 |-- docs/
 |   |-- vaults/            # Evidencia reproducible por unidad
-|   `-- bibliography/        # Master Knowledge Vault (RAG Origin)
-|       |-- manuals/         # Guías de operación y boletines técnicos
-|       |-- readings/        # Lecturas críticas y teoría
-|       `-- syllabus/        # Marco institucional
-|   |-- writing/                 # Capa de presentacion y reportes Quarto
+|   `-- bibliography/      # Master Knowledge Vault (RAG Origin)
+|       |-- manuals/       # Guías de operación y boletines técnicos
+|       |-- readings/      # Lecturas críticas y teoría
+|       `-- syllabus/      # Marco institucional
+|   |-- writing/           # Capa de presentacion y reportes Quarto
 |-- src/
-|   |-- core/                # Ingesta, configuracion y utilidades
-|   |-- lib/                 # Motor de paneles, catalogo y data doctor
-|   |-- tasks/               # Tareas institucionales de la unidad
-|   `-- orchestration/       # Orquestador maestro
-|-- tests/                   # Contratos, gobernanza y smoke checks
-`-- main.py                  # Entrada principal del nodo
+|   |-- core/              # Ingesta, configuracion y utilidades
+|   |-- lib/               # Motor de paneles, catalogo y data doctor
+|   |-- tasks/             # Tareas institucionales de la unidad
+|   `-- orchestration/     # Orquestador maestro
+|-- tests/                 # Contratos, gobernanza y smoke checks
+`-- main.py                # Entrada principal del nodo
 ```
 
 ### 4.2. Capas Documentales
@@ -84,18 +84,18 @@ Este nodo esta disenado para producir econometria aplicada reproducible con traz
 
 ```bash
 uv sync
-PYTHONPATH=src .venv/bin/python -m pytest tests/test_main.py tests/test_system_contract.py tests/governance/test_data_contracts.py tests/test_vault_architecture.py
+/home/erick-fcs/.local/bin/uv run pytest
 uv run python main.py
 ```
 
 ## 7. Regla de Oro
 
 > Si algo que se construye aqui sirve para otras materias, proponlo para la libreria central.
-# AGENTS.md Update: Centralized Lake Protocol (v8.1.5)
+
+## 8. Protocolo de Recursos (Centralized Lake v8.1.5)
 
 Este repositorio utiliza el **Data Lake Centralizado** de Capital Workstation para gestionar archivos pesados (Datasets y Bibliografía).
 
-## 1. Protocolo de Recursos
 - **Ubicación Física**: Los archivos reales residen en `~/.capital/lake/`.
 - **Punteros Locales**: El archivo `config/resources.json` define qué recursos requiere este nodo.
 - **Resolución**: Al inicializar el entorno o clonar por primera vez, se debe ejecutar la resolución de recursos para crear los enlaces simbólicos (Symlinks).
@@ -104,17 +104,11 @@ Este repositorio utiliza el **Data Lake Centralizado** de Capital Workstation pa
 uv run python -c "from src.core.config import settings; settings.resolve_resources()"
 ```
 
-## 2. Invariante de Git
-- **Prohibido**: No se deben subir archivos `.xlsx`, `.dta`, `.pdf` o `.csv` pesados al repositorio.
+- **Invariante de Git**: No se deben subir archivos `.xlsx`, `.dta`, `.pdf` o `.csv` pesados al repositorio.
 - **Acción**: Si necesitas un nuevo archivo pesado, regístralo en el Lake y añade el puntero en `config/resources.json`.
 
 ---
-*Actualización aplicada automáticamente durante la migración a Arquitectura v8.1.5.*
-
-## Architecture v8.1.5 (Final Validation)
-- Status: ✅ Synchronized and Lake-Linked.
-- Date: 2026-05-01
-- Operation: Massive Data Lake Centralization and RAG intelligence decoupling.
+*Actualización de gobernanza aplicada durante la limpieza de código legado y federación de GEMINI.md.*
 
 ## Capital Libs Reference
 Para consultar contratos de capital-workstation-libs:
@@ -122,5 +116,3 @@ cargar @../../../../../Capital_Workstation/capital-workstation-libs/CONTEXT.md
 Nunca navegar el repo completo del lib sin `confirmed` explícito.
 Nunca asumir que una función del lib existe sin verificarla en CONTEXT.md.
 Si CONTEXT.md no refleja la función buscada: reportar [missing-context] y detener.
-
-
