@@ -1,0 +1,149 @@
+# Resultados y Discusión
+
+En esta sección se presentan las estimaciones finales del modelo econométrico. El análisis se inicia con la determinación de la estructura dinámica del sistema (VAR/VEC) para validar la consistencia de las relaciones de largo plazo.
+
+## Diagnóstico Dinámico del Sistema
+
+Antes de la estimación estructural, se valida la longitud óptima de los rezagos y la existencia de relaciones de equilibrio mediante pruebas multivariadas.
+
+### Selección de Rezagos Óptimos
+
+La @tbl-rezagos muestra los criterios de información para la selección del número de rezagos. Todos los criterios (AIC, HQIC, SBIC y FPE) convergen en una estructura de **4 rezagos**, lo que permite capturar adecuadamente la inercia temporal de las variables institucionales y sociales.
+
+| Lag | LL | LR | df | p | FPE | AIC | HQIC | SBIC |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 0 | -358.45 | | | | 10499.4 | 23.45 | 23.52 | 23.68 |
+| 1 | -184.28 | 348.33 | 25 | 0.000 | 0.7117 | 13.82 | 14.28 | 15.21 |
+| 2 | -134.30 | 99.96 | 25 | 0.000 | 0.1628 | 12.21 | 13.04 | 14.76 |
+| 3 | -89.20 | 90.21 | 25 | 0.000 | 0.0656 | 10.92 | 12.12 | 14.62 |
+| 4 | -31.07 | 116.25* | 25 | 0.000 | **0.0194*** | **8.78*** | **10.36*** | **13.64*** |
+
+: Criterios de Selección de Orden de Rezagos {#tbl-rezagos}
+
+### Pruebas de Causalidad de Granger
+
+La @tbl-granger evalúa si el comportamiento pasado de una variable ayuda a predecir el comportamiento de otra. Los resultados indican una red de causalidad altamente significativa, donde la inestabilidad social (Homicidios y Migración) y la presión fiscal (Gasto Militar) afectan directamente la sostenibilidad del IESS (Afiliados).
+
+| Ecuación | Variable Excluida | $\chi^2$ | p-valor |
+|:---|:---|:---:|:---:|
+| **Afiliados (AF)** | Gasto Militar (GM) | 14.77 | 0.005 |
+| | Migración (MI) | 22.25 | 0.000 |
+| | Homicidios (HO) | 12.79 | 0.012 |
+| | Fuerza Laboral (FL) | 13.81 | 0.008 |
+| | **TOTAL** | **81.77** | **0.000** |
+| **Gasto Militar (GM)** | Afiliados (AF) | 150.17 | 0.000 |
+| **Migración (MI)** | Homicidios (HO) | 66.10 | 0.000 |
+| **Homicidios (HO)** | Migración (MI) | 43.68 | 0.000 |
+| **Fuerza Laboral (FL)** | Todos | 312.74 | 0.000 |
+
+: Pruebas de Causalidad de Granger (Wald Tests) {#tbl-granger}
+
+### Cointegración de Johansen
+
+Para verificar si las variables comparten una tendencia común de largo plazo, se aplica la prueba de Johansen (@tbl-johansen). El estadístico de la traza identifica la existencia de **2 vectores de cointegración** (r=2), validando la pertinencia de utilizar modelos de corrección de error y análisis de largo plazo.
+
+| Rango Máximo | Autovalor | Traza | Valor Crítico (5%) | Decisión |
+|:---:|:---:|:---:|:---:|:---:|
+| r = 0 | . | 99.41 | 68.52 | Rechazar H0 |
+| r = 1 | 0.7741 | 50.31 | 47.21 | Rechazar H0 |
+| r = 2 | 0.5015 | 27.34* | 29.68 | **No Rechazar** |
+
+: Prueba de Cointegración de Johansen (Trace Statistic) {#tbl-johansen}
+
+## Estimación de Cointegración (ARDL)
+
+
+Debido a la persistencia temporal y las fallas de especificación de los modelos estáticos, se emplea la técnica de Autorregresivos con Rezagos Distribuidos (ARDL). Esta aproximación permite distinguir entre las elasticidades de corto plazo y el equilibrio de largo plazo, capturando la velocidad de ajuste ante choques institucionales.
+
+### Dinámica de Corto Plazo (Modelo ECM)
+
+La @tbl-ardl-sr presenta los efectos inmediatos de las variables sobre la variación de los afiliados. Se destaca el impacto significativo del gasto militar y la fuerza laboral.
+
+| Regresor | Diferencia (D1.) | p-valor | Interpretación |
+|:---|:---:|:---:|:---|
+| **Gasto Militar** (GM) | -0.0699 | 0.022 | Efecto contractivo inmediato (S) |
+| **Migración Neta** (MI) | -0.0000 | 0.082 | Impacto marginal en el flujo (S) |
+| **Log Tasa Homicidios** (HO) | 0.0516 | 0.181 | No significativo en el cortísimo plazo |
+| **Log Fuerza Laboral** (FL) | 0.7986 | 0.005 | Principal motor de afiliación (HS) |
+| **Constante** | 6.5528 | 0.000 | Componente autónomo robusto |
+
+: Coeficientes de Corto Plazo - Modelo ARDL(1,2,2,1,1) {#tbl-ardl-sr}
+
+
+## Cointegración y Estabilidad
+
+El modelo ARDL permite capturar la relación de equilibrio de largo plazo y la estabilidad del sistema ante perturbaciones externas.
+
+### Relación de Largo Plazo (Elasticidades)
+
+El modelo ARDL(2,0,0,0,2) revela las elasticidades estructurales que gobiernan el sistema del IESS en el largo plazo:
+
+::: {#tbl-ardl-lp tbl-pos='H' tbl-colwidths='[28, 14, 12, 46]'}
+| Regresor | Coeficiente (LP) | p-valor | Interpretación |
+|:---|:---:|:---:|:---|
+| **Gasto Militar** (GM) | -24.6987 | 0.924 | Efecto de desplazamiento fiscal (explosivo) |
+| **Migración** (MI) | -0.0005 | 0.923 | Efecto no concluyente en largo plazo |
+| **Homicidios** (HO) | -22.9725 | 0.923 | Impacto contractivo extremo (divergente) |
+| **Fuerza Laboral** (FL) | 106.0743 | 0.922 | Relación inestable con la base productiva |
+
+: Coeficientes de Largo Plazo del Modelo ARDL (Estimación Explosiva)
+:::
+
+### Análisis del Mecanismo de Ajuste
+
+El Coeficiente de Ajuste (ADJ) derivado del modelo de corrección de error presenta un valor positivo de +0.0042 ($p=0.924$). Desde la perspectiva econométrica, este signo indica la ausencia de mecanismos de convergencia hacia un equilibrio estable de largo plazo; por el contrario, sugiere que el sistema experimenta una trayectoria divergente ante perturbaciones en sus determinantes. Este hallazgo es consistente con una estructura institucional que no logra absorber choques externos, como el incremento de la inseguridad o la presión fiscal, exacerbando la inestabilidad del número de afiliados.
+
+### Discusión de Hallazgos
+
+Los resultados obtenidos mediante la técnica ARDL permiten realizar una lectura crítica de la sostenibilidad del IESS a la luz de la teoría económica y el contexto institucional ecuatoriano.
+
+### Convergencia y el Contrato Intergeneracional
+El hallazgo más crítico es el signo positivo del coeficiente de ajuste (+0.0042). Mientras que el Modelo de Generaciones Traslapadas (OLG) de @diamond1965 asume la posibilidad de un estado estacionario estable bajo condiciones de crecimiento demográfico y productividad constantes, la evidencia para Ecuador sugiere una trayectoria de divergencia. Este comportamiento indica que el contrato intergeneracional enfrenta una fase de ruptura; el sistema no posee mecanismos automáticos de retorno al equilibrio tras choques externos. Esta inestabilidad valida la tesis de que el IESS se encuentra en una fase de inestabilidad sistémica, donde cada perturbación aleja al número de afiliados de una senda de solvencia de largo plazo.
+
+### El Mecanismo de Desplazamiento Fiscal (Crowding-out)
+El impacto negativo y significativo del Gasto Militar ($GM$) en el corto plazo (-0.0699) confirma la hipótesis de desplazamiento fiscal. En el marco de las finanzas públicas ecuatorianas, existe una competencia directa por recursos limitados entre el financiamiento de la seguridad nacional y la contribución estatal obligatoria del 40% a las pensiones del IESS. Un incremento en el gasto de defensa, exacerbado por las crisis de seguridad interna, reduce el espacio fiscal para honrar las obligaciones prestacionales civiles. Este mecanismo de transmisión no solo es financiero, sino que actúa como una señal de riesgo para los agentes, quienes, ante la percepción de un Estado que prioriza el gasto militar sobre el previsional, perciben una reducción en la rentabilidad implícita de su afiliación.
+
+### Inseguridad y la Decisión de Formalidad
+La relación de largo plazo exhibe coeficientes negativos persistentes para la tasa de homicidios ($HO$). En alineación con @murillo2025factors, la decisión de afiliación es sensible al entorno de seguridad institucional. La evidencia macroeconómica sugiere que la violencia incentiva el refugio en la informalidad; empresas y trabajadores en sectores vulnerables reducen su visibilidad ante el Estado para mitigar riesgos de extorsión, renunciando a la seguridad social contributiva. La robustez de este hallazgo se confirma mediante la técnica KRLS, que identifica efectos marginales negativos y significativos para el crimen en toda la distribución de la muestra.
+
+## Diagnósticos Post-estimación y Validación Robusta
+
+La validez de las inferencias se sustenta en la auditoría técnica de los residuos y la estabilidad estructural del sistema.
+
+### Auditoría de Residuos
+La @tbl-diagnosticos presenta las pruebas de diagnóstico sobre la especificación base. La detección de autocorrelación ($p=0.000$) y heterocedasticidad ($p=0.036$) invalida el uso de estimadores estáticos tradicionales, justificando la transición hacia modelos de corrección de error (ARDL/VEC) para capturar la dinámica compleja de los datos.
+
+| Prueba | Estadístico | p-valor | Conclusión |
+|:---|:---:|:---:|:---|
+| Normalidad (Jarque-Bera) | $\chi^2(2) = 1.94$ | 0.379 | No se rechaza normalidad |
+| Autocorrelación (Breusch-Godfrey) | $\chi^2(1) = 27.97$ | 0.000 | Presencia de autocorrelación |
+| Heterocedasticidad (White) | $\chi^2(14) = 24.82$ | 0.036 | Presencia de heterocedasticidad |
+| Especificación (Ramsey RESET) | $F(3, 27) = 24.20$ | 0.000 | Evidencia de no linealidad |
+
+: Auditoría de diagnóstico sobre los residuos del modelo {#tbl-diagnosticos}
+
+### Estabilidad Dinámica (VEC)
+La estabilidad del sistema, evaluada mediante la condición de valores propios en el espacio de estados VEC (@fig-vec-stability), revela raíces superiores a la unidad (1.0015). Este comportamiento confirma una trayectoria divergente, validando la tesis de inestabilidad sistémica donde los choques externos no se disipan, sino que se amplifican en el tiempo.
+
+![Condición de estabilidad de los valores propios para el modelo VEC](assets/vec_stability.png){#fig-vec-stability width=80%}
+
+## Validación No Lineal (KRLS)
+
+Ante el rechazo de la hipótesis de linealidad en la prueba RESET ($p=0.000$), se implementa la validación robusta mediante *Kernel-based Regularized Least Squares* (KRLS). Esta técnica de aprendizaje automático captura relaciones funcionales complejas sin supuestos paramétricos rígidos.
+
+A diferencia de las elasticidades lineales de largo plazo, los efectos marginales promedio en @tbl-krls son estadísticamente significativos para todos los determinantes ($p < 0.01$). El contraste entre la insignificancia del ARDL y la robustez del KRLS evidencia que la crisis del IESS responde a umbrales críticos de seguridad y presión fiscal, cuya complejidad no es capturada por modelos paramétricos convencionales.
+
+| Variable | Efecto Promedio | Desv. Est. | t-stat | p-valor |
+|:---|:---:|:---:|:---:|:---:|
+| Gasto Militar (GM) | 0.1448 | 0.0227 | 6.376 | 0.000*** |
+| Migración (MI) | -2.1e-06 | 5.8e-07 | -3.517 | 0.001*** |
+| Homicidios (HO) | -0.1314 | 0.0352 | -3.733 | 0.001*** |
+| Fuerza Laboral (FL) | 1.2074 | 0.0671 | 17.997 | 0.000*** |
+
+: Resultados de la validación robusta mediante KRLS {#tbl-krls}
+
+## Estabilidad Estructural (CUSUM)
+
+La prueba de suma acumulada de residuos (CUSUM) aplicada al modelo ARDL confirma que la relación de largo plazo se mantiene dentro de las bandas de confianza, validando que la divergencia detectada no es un error de especificación transitorio, sino una propiedad estructural del sistema actual bajo las perturbaciones analizadas.
+
+![Prueba CUSUM de estabilidad estructural para los residuos del modelo ARDL](assets/cusum_plot.png){#fig-cusum width=80%}

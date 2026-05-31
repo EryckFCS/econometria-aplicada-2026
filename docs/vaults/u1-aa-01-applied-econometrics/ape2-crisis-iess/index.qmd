@@ -1,10 +1,9 @@
 ---
-title: "Determinantes de la crisis del IESS en Ecuador (2000-2023)"
-subtitle: "Informe econométrico aplicado y operativa económica"
+title: "Determinantes de la sostenibilidad del IESS y el impacto de la inestabilidad social en el Ecuador durante el periodo 1990-2024"
+subtitle: "Análisis Econométrico Aplicado"
 author: "Erick Fabricio Condoy Seraquive"
-date: "2026-05-28"
+date: "2026-05-07"
 lang: es
-fontsize: 11pt
 format:
   pdf:
     template: templates/unl_tic_informe_local.tex
@@ -17,7 +16,7 @@ format:
     fig-pos: 'H'
     tbl-cap-location: top
   docx:
-    toc: true
+    toc: false
     number-sections: true
     highlight-style: github
     fig-cap-location: bottom
@@ -26,301 +25,36 @@ format:
 header-includes:
   - \usepackage{multirow}
   - \setlength{\parindent}{0pt}
-  - \setlength{\parskip}{0.5em}
+  - \setlength{\parskip}{1em}
 ---
 
-# Resumen
+{{< include chapters/00-resumen.qmd >}}
 
-Este informe evalúa la sostenibilidad del IESS bajo un marco macro-social con cinco variables clave: afiliación (AF), gasto militar (GM), migración neta (MI), homicidios (HO) y fuerza laboral (FL). Con evidencia anual 2000-2023 se estiman diagnósticos de estacionariedad, cointegración, causalidad y un esquema VEC/ELS para corto plazo. Los resultados apuntan a un canal fiscal-social donde el gasto militar y el deterioro social se asocian con menor robustez de la afiliación contributiva.
+\newpage
 
-## Keywords (palabras claves)
+{{< include chapters/01-introduccion.qmd >}}
 
-IESS, sostenibilidad previsional, cointegración, VECM, causalidad de Granger, quiebres estructurales.
+\newpage
 
-# Introducción
+{{< include chapters/02-literatura.qmd >}}
 
-La sostenibilidad financiera del Instituto Ecuatoriano de Seguridad Social (IESS) atraviesa una profunda crisis estructural. Tradicionalmente, la literatura actuarial andina ha abordado la viabilidad del seguro obligatorio mediante proyecciones demográficas cerradas de largo plazo, centradas en la relación pasiva entre cotizantes y jubilados. Este enfoque tradicional, sin embargo, adolece de un importante vacío de investigación (*research gap*): ignora la vulnerabilidad de la liquidez corriente del fondo de Invalidez, Vejez y Muerte (IVM) ante choques macroeconómicos de corto plazo, decisiones de asignación fiscal y perturbaciones del entorno de seguridad. En particular, la investigación empírica regional ha desatendido el canal de transmisión de variables no previsionales sobre el padrón de contribuyentes activos. Trabajos recientes en el contexto latinoamericano, como los de Alvarado-Lopez [-@alvarado2023] y Murillo, Guerrero y Cuaical [-@murillo2025factors], han empezado a rescatar la relevancia del entorno de formalidad laboral y las presiones demográficas, pero persiste la necesidad de vincular estas dinámicas de forma integrada con el espacio fiscal y la seguridad ciudadana. 
+\newpage
 
-El presente estudio aborda este vacío mediante la formulación de un diseño econométrico multivariado para el periodo 2000-2023. El objetivo es modelar y cuantificar el impacto dinámico del gasto militar (GM), la migración neta (MI), la tasa de homicidios (HO), la fuerza laboral (FL), la deuda externa (DE) como indicador de solvencia y restricción fiscal, y las remesas netas (RN) como proxy de flujos externos e ingresos de los hogares. La justificación de estas variables descansa en una sólida base conceptual. Por un lado, la Teoría de la Agencia, formalizada por Jensen y Meckling [-@jensen1976], ilustra el conflicto de incentivos donde el aporte patronal rígido y la cotización obligatoria son asumidos como cuñas impositivas que incentivan la evasión y la informalidad laboral. Por otro lado, esta fricción microeconómica se integra con los modelos de superposición generacional desarrollados por Samuelson [-@samuelson1958] y Diamond [-@diamond1965], y la teoría económica del crimen de Becker [-@becker1968], que predice cómo el colapso de la seguridad interna y el repunte de la violencia destruyen la actividad productiva formal, forzando la exclusión laboral. 
+{{< include chapters/03-metodologia.qmd >}}
 
-A partir de este marco, se plantean dos hipótesis de investigación fundamentales:
-*   $H_1$: El deterioro de la seguridad interna (reflejado en la tasa de homicidios) y la contracción del espacio fiscal (representado por el endeudamiento y el desvío de gasto a defensa) reducen de forma sistemática y persistente el número de afiliados cotizantes activos al seguro social en el largo plazo.
-*   $H_2$: Existe una relación de causalidad de corto plazo que viaja desde las prioridades presupuestarias del Estado (gasto militar) y los choques externos (migración y remesas) hacia la dinámica corriente de afiliación activa del IESS.
+\newpage
 
-El diseño econométrico propuesto enfrenta dos desafíos metodológicos críticos que este estudio reconoce abiertamente. Primero, la muestra disponible está restringida a un tamaño pequeño ($N=24$ observaciones anuales). La literatura econométrica advierte con rigor que el uso de modelos multivariados como el de Corrección de Error Vectorial (VECM) bajo la prueba de cointegración de Johansen en muestras pequeñas suele sobreestimar el rango de cointegración y generar sesgos significativos debido a la inclusión de términos estacionarios irrelevantes, un problema ampliamente analizado por Abadir, Hadri y Tzavalis [-@abadir1999]. Segundo, el sistema de variables presenta un orden de integración mixto, conviviendo variables estacionarias $I(0)$ como la migración neta con variables no estacionarias $I(1)$ en niveles. Para subsanar esta limitación y garantizar la robustez del análisis, se implementan pruebas de quiebres estructurales endógenos (@zivot1992) y se complementa el contraste multivariado con especificaciones uniecuacionales robustas y controles de cortísimo plazo en diferencias.
+{{< include chapters/04-analisis-descriptivo.qmd >}}
 
-Los hallazgos de esta investigación confirman que el gasto militar ejerce una causalidad temporal significativa sobre la afiliación en el corto plazo, sugiriendo que la priorización fiscal de la defensa anticipa una contracción en la base de cotizantes formales. A largo plazo, se constata que las variables macro-sociales y fiscales operan bajo restricciones de cointegración conjuntas estables. La contribución falsificable de este trabajo radica en refutar la hipótesis de aislamiento demográfico del IESS y demostrar de forma empírica que el equilibrio actuarial andino depende críticamente de la solvencia fiscal externa y la estabilidad de la seguridad ciudadana. 
+\newpage
 
-El documento se divide en seis secciones lógicas para guiar al lector. Tras esta introducción, el segundo apartado discute el marco teórico y la revisión de literatura previa. La tercera sección detalla la base de datos construida a partir de registros oficiales del IESS, el Banco Mundial e indicadores nacionales, así como el diseño econométrico de estimación. En la cuarta parte, se presentan y discuten las estimaciones y pruebas econométricas mediante tablas estructuradas. La quinta sección ofrece análisis alternativos y pruebas de estabilidad estructural frente a quiebres históricos. Por último, la sexta parte cierra el informe con conclusiones y recomendaciones estratégicas para blindar el fondo de jubilación.
+{{< include chapters/05-resultados.qmd >}}
 
-# Revisión Literatura
+\newpage
 
-La literatura de sostenibilidad previsional converge en tres ejes: i) la base contributiva depende de formalidad y empleo efectivo; ii) choques de inseguridad y conflictividad reducen permanencia laboral formal; iii) cambios de prioridad fiscal pueden generar crowding-out sobre gasto social. En modelos de series temporales, ARDL y VECM son adecuados cuando conviven dinámicas de corto y largo plazo.
+{{< include chapters/06-conclusiones.qmd >}}
 
-# Datos y Metodología
-
-## 3.1. Datos
-
-Se construyó una base anual integrada (2000-2023, N=24) con fuentes IESS, WDI y series nacionales en Lake central.
-
-| Código | Variable | Definición operativa | Unidad | Fuente |
-|---|---|---|---|---|
-| AF | Afiliación IESS (log) | Log del total de afiliados activos (dependiente) | log(personas) | IESS |
-| GM | Gasto militar | Gasto militar como % del PIB | % PIB | WDI |
-| MI | Migración neta | Flujo neto migratorio anual | personas | WDI |
-| HO | Homicidios (log) | Log de tasa de homicidios por 100 mil hab. | log(tasa) | BM/UNODC |
-| FL | Fuerza laboral (log) | Log de la fuerza laboral total | log(personas) | IESS |
-
-## 3.2. Metodología
-
-Se aplicó un flujo de contraste secuencial conducente a validación de dinámicas de largo y corto plazo bajo supuestos de cointegración.
-
-### 3.2.1. Diagnóstico preliminar (descriptivos, correlación, colinealidad)
-
-Tabla 1
-
-*Estadísticos descriptivos de las variables en primeras diferencias (N = 23).* 
-
-| Variable | Media | Desv. Est. | Mín. | Máx. |
-|---|---:|---:|---:|---:|
-| d_ln_AF | 0.0467 | 0.0490 | -0.0568 | 0.1574 |
-| d_GM | 0.0325 | 0.2667 | -0.3692 | 0.5510 |
-| d_MI | 822.2174 | 20387.6388 | -65241.0000 | 41775.0000 |
-| d_ln_HO | 0.0501 | 0.2504 | -0.2895 | 0.6637 |
-| d_ln_FL | 0.0223 | 0.0340 | -0.0793 | 0.1034 |
-
-Nota. d_ln_AF = primera diferencia del logaritmo de afiliados IESS; d_GM = primera diferencia de gasto militar (% PIB); d_MI = primera diferencia de migración neta; d_ln_HO = primera diferencia del logaritmo de homicidios; d_ln_FL = primera diferencia del logaritmo de fuerza laboral. Fuente: elaboración propia con datos IESS, WDI y base de homicidios.
-
-Tabla 2
-
-*Matriz de correlación de las variables en primeras diferencias (N = 23).* 
-
-| | d_ln_AF | d_GM | d_MI | d_ln_HO | d_ln_FL |
-|---|---:|---:|---:|---:|---:|
-| d_ln_AF | 1.000 | -0.122 | 0.243 | -0.273 | 0.102 |
-| d_GM | -0.122 | 1.000 | -0.064 | -0.152 | -0.456 |
-| d_MI | 0.243 | -0.064 | 1.000 | -0.267 | 0.399 |
-| d_ln_HO | -0.273 | -0.152 | -0.267 | 1.000 | 0.056 |
-| d_ln_FL | 0.102 | -0.456 | 0.399 | 0.056 | 1.000 |
-
-Nota. Coeficientes de correlación de Pearson calculados sobre la muestra anual 2001-2023. Fuente: elaboración propia.
-
-Tabla 3
-
-*Factor de inflación de varianza (VIF) de los regresores en primeras diferencias.*
-
-| Variable | VIF |
-|---|---:|
-| d_GM | 1.112 |
-| d_MI | 1.288 |
-| d_ln_HO | 1.159 |
-| d_ln_FL | 1.341 |
-
-Nota. El VIF se estima con la especificación de regresores d_GM, d_MI, d_ln_HO y d_ln_FL. Fuente: elaboración propia.
-
-### 3.2.2. Pruebas de raíz unitaria (ADF, PP, Z-P, SB)
-
-Se ejecutaron tres contrastes de raíz unitaria en niveles sobre cada serie diferenciada logarítmicamente:
-
-**ADF (Augmented Dickey-Fuller):** Especificación con rezago automático (AIC). Resultados por variable: AF (p=0.1062), DE (p=1.000), MI (p=0.0705), HO (p=0.2524), GM (p=0.2034), RN (p=0.6307). Solo MI rechaza H₀ al nivel 10%, sugiriendo estacionariedad en migración neta. El resto no rechaza presencia de raíz unitaria.
-
-**PP (Phillips-Perron) - Proxy:** Implementación con rezago máximo fijo (lag=1) como aproximación. Los p-valores coinciden con ADF en magnitud relativa, corroborando diagnóstico de no estacionariedad en niveles para AF, DE, HO, GM, RN.
-
-**Z-P (Zivot-Andrews):** Test de raíz unitaria con quiebre estructural endógeno. Resultados: DE (p=0.3837), HO (p=0.1829), GM (p=0.0866, rechaza H₀ al 10%). El quiebre estimado en GM cae en 2009, coincidiendo con crisis financiera global e impacto presupuestario de defensa. AF, MI, RN no convergen a estimación de quiebre (matriz singular o configuración de datos).
-
-**Marcador SB (Structural Break - máxima variación absoluta):** Se identifica el año con mayor cambio de primer orden en cada serie: AF (2011: reforma previsional), DE (2017: cambio demográfico), MI (2020: COVID), HO (2022: crisis seguridad), GM (2009: crisis financiera), RN (2008: volatilidad remesas).
-
-### 3.2.3. Prueba de cointegración (Johansen - T-trace)
-
-Se ejecutó test de cointegración de Johansen sobre el vector de 6 variables en niveles, con orden de integración mixta detectado (I(0) y mayormente I(1)) y determinístico intercept. Estadístico T-trace para cada rango de cointegración r:
-
-| Hipótesis | T-trace | Crítico 95% | Decisión |
-|---|---:|---:|---|
-| r = 0 | 181.487 | 95.754 | Rechaza H₀ (al menos 1 vector) |
-| r ≤ 1 | 134.031 | 69.819 | Rechaza H₀ (al menos 2 vectores) |
-| r ≤ 2 | 90.070 | 47.854 | Rechaza H₀ (al menos 3 vectores) |
-| r ≤ 3 | 53.235 | 29.796 | Rechaza H₀ (al menos 4 vectores) |
-| r ≤ 4 | 23.552 | 15.494 | Rechaza H₀ (al menos 5 vectores) |
-| r ≤ 5 | 2.797 | 3.842 | No rechaza H₀ |
-
-**Interpretación:** Existe fuerte evidencia de 5 vectores de cointegración, indicando que la dinámica conjunta de AF, DE, MI, HO, GM, RN opera sobre una hipersuperficie con 5 restricciones de largo plazo, compatible con ajuste estructural del sistema previsional bajo múltiples canales.
-
-### 3.2.4. Modelo de corrección de error (VECM)
-
-Se estimó un VECM(1) con rango de cointegración r=1 (rango reducido para parsimonia operativa). Especificación: determinístico intercept, rezago en diferencias k_ar_diff=1. Los residuos del modelo (N=24):
-
-| Métrica | Valor |
-|---|---:|
-| Residuo medio (AF) | 0.0000 |
-| Residuo std (AF) | 0.0287 |
-| Rango de residuo | 0.1239 |
-| KRDS (kurtosis abs. residuo) | 1.1617 |
-
-Los residuos son centrados y de varianza moderada, sin evidencia de colas extremas que invaliden inferencia por mínimos cuadrados.
-
-### 3.2.5. Prueba de causalidad (Granger, lag=2)
-
-Se ejecutó test de causalidad de Granger en primeras diferencias (estacionaridad garantizada) con máximo rezago 2. Hipótesis: ¿Predice X el futuro de AF tras controlar por el pasado de AF?
-
-| Causa | p-valor (lag=2) | Causalidad @ 10% |
-|---|---:|---|
-| DE → AF | 0.6196 | No |
-| MI → AF | 0.3710 | No |
-| HO → AF | 0.3333 | No |
-| **GM → AF** | **0.0165** | **Sí** |
-| RN → AF | 0.6558 | No |
-
-Solo GM exhibe causalidad de Granger significativa al nivel 10%, sugiriendo que cambios rezagados en gasto militar contienen información predictiva de corto plazo sobre dinámica de afiliación.
-
-### 3.2.6. Modelo alternativo de corto plazo (ELS - OLS en primeras diferencias)
-
-Como verificación de robustez sin dependencia de rango de cointegración, se estimó regresión por mínimos cuadrados ordinarios en primeras diferencias: $\Delta AF_t = \alpha + \sum_{i=1}^{5} \beta_i \Delta X_{i,t} + \epsilon_t$. Resultados:
-
-| Variable | Coeficiente | p-valor | Significancia |
-|---|---:|---:|---|
-| Constante | 0.1726 | 0.1182 | - |
-| ΔDE | 9.5255 | 0.2369 | No |
-| ΔMI | 0.0004 | 0.4448 | No |
-| ΔHO | -0.0438 | 0.3161 | No |
-| ΔGM | -0.0427 | 0.2883 | No |
-| ΔRN | -0.0193 | 0.3424 | No |
-
-Ningún coeficiente alcanza significancia individual, coherente con bajo R² esperado en especificación univariada de corto plazo. El modelo ELS sirve como control de especificación errada, confirmando que la señal causal de GM es frágil en diferencias aisladas, validando la relevancia de la estructura de cointegración.
-
-# Resultados y Discusión -> Tablas
-
-## Resultados Principales
-
-El patrón más consistente es que GM presenta señal causal de corto plazo sobre AF (p=0.0165, lag 2), mientras que la matriz de correlaciones muestra alta interdependencia AF-DE y AF-RN. En raíces unitarias predomina no estacionariedad en niveles para AF, DE, HO, GM y RN.
-
-## Análisis de Resultados y Operativa Económica
-
-### Análisis Preliminar
-
-#### Tabla de variables
-
-| Variable | Rol en modelo |
-|---|---|
-| AF | Dependiente (sostenibilidad contributiva) |
-| DE, MI, HO, GM, RN | Explicativas estructurales |
-
-#### Est. descriptivos
-
-| Variable | Media | Desv. Std. | Mín | Máx |
-|---|---:|---:|---:|---:|
-| AF | 14.7073 | 0.4260 | 14.0723 | 15.1453 |
-| DE | 4.0574 | 0.0943 | 3.9014 | 4.2037 |
-| MI | -2.5887 | 32.2003 | -40.8590 | 95.4820 |
-| HO | 2.5422 | 0.5133 | 1.7557 | 3.8226 |
-| GM | 2.4364 | 0.4400 | 1.5173 | 3.2432 |
-| RN | 4.2989 | 1.5312 | 2.4070 | 7.5390 |
-
-#### Tabla de correlación
-
-|  | AF | DE | MI | HO | GM | RN |
-|---|---:|---:|---:|---:|---:|---:|
-| AF | 1.000 | -0.942 | 0.553 | -0.344 | 0.403 | -0.857 |
-| DE | -0.942 | 1.000 | -0.457 | 0.163 | -0.239 | 0.686 |
-| MI | 0.553 | -0.457 | 1.000 | -0.710 | 0.205 | -0.610 |
-| HO | -0.344 | 0.163 | -0.710 | 1.000 | -0.067 | 0.543 |
-| GM | 0.403 | -0.239 | 0.205 | -0.067 | 1.000 | -0.542 |
-| RN | -0.857 | 0.686 | -0.610 | 0.543 | -0.542 | 1.000 |
-
-#### Tabla de colinealidad
-
-| Variable | VIF |
-|---|---:|
-| DE | 2.844 |
-| MI | 2.711 |
-| HO | 3.238 |
-| GM | 1.861 |
-| RN | 5.101 |
-
-### Tabla de raíz unitaria
-
-#### ADF, PP, Z-P, SB -> Exp.
-
-Exp.: PP se reporta como proxy con ADF de rezago fijo; Z-P corresponde a quiebre endógeno tipo Zivot-Andrews; SB identifica año de mayor cambio absoluto (marcador de quiebre estructural).
-
-| Variable | ADF p-valor | PP p-valor (proxy) | Z-P p-valor | SB (año quiebre) |
-|---|---:|---:|---:|---:|
-| AF | 0.1062 | 0.5335 | NA | 2011 |
-| DE | 1.0000 | 0.8047 | 0.3837 | 2017 |
-| MI | 0.0705 | 0.0705 | NA | 2020 |
-| HO | 0.2524 | 0.4605 | 0.1829 | 2022 |
-| GM | 0.2034 | 0.2065 | 0.0866 | 2009 |
-| RN | 0.6307 | 0.5742 | NA | 2008 |
-
-### Caintegración -> Johansen, T, G-H, SB, GHJSP
-
-T corresponde al estadístico trace de Johansen. G-H, SB y GHJSP se usan aquí como lectura complementaria de estabilidad con quiebre (enfoque diagnóstico, no prueba aislada adicional).
-
-| Hipótesis | T (trace) | Crítico 95% | Decisión |
-|---|---:|---:|---|
-| r <= 0 | 181.487 | 95.754 | Rechaza H0 |
-| r <= 1 | 134.031 | 69.819 | Rechaza H0 |
-| r <= 2 | 90.070 | 47.854 | Rechaza H0 |
-| r <= 3 | 53.235 | 29.796 | Rechaza H0 |
-| r <= 4 | 23.552 | 15.494 | Rechaza H0 |
-| r <= 5 | 2.797 | 3.842 | No rechaza H0 |
-
-### VEC -> Residuo, KRDS
-
-KRDS se reporta como métrica de forma de residuo (proxy de curtosis de residuo absoluto para control operativo de colas).
-
-| Métrica VEC (AF) | Valor |
-|---|---:|
-| Residuo medio | 0.0000 |
-| Residuo std | 0.0287 |
-| Rango de residuo | 0.1239 |
-| KRDS (proxy) | 1.1617 |
-
-### Causalidad -> Granger -> Tabla, B-C -> Gráfico
-
-| Relación (lag 2) | p-valor | Causalidad al 10% |
-|---|---:|---|
-| DE -> AF | 0.6196 | No |
-| MI -> AF | 0.3710 | No |
-| HO -> AF | 0.3333 | No |
-| GM -> AF | 0.0165 | Sí |
-| RN -> AF | 0.6558 | No |
-
-El gráfico B-C (bidireccionalidad/causalidad visual) se interpreta junto con trayectorias históricas:
-
-
-# Modelos y Quiebres
-
-## 6' - H (quiebres estructurales)
-
-La combinación de SB por variable y señal Z-P en GM sugiere episodios de quiebre en torno a 2008-2011 y 2020-2022. Bajo lectura H, la estabilidad paramétrica no es global en toda la muestra.
-
-## ELS (modelo alternativo) corto plazo
-
-Se estimó un ELS en primeras diferencias como control de robustez de corto plazo:
-
-| Variable | Coeficiente | p-valor |
-|---|---:|---:|
-| const | 0.1726 | 0.1182 |
-| DE | 9.5255 | 0.2369 |
-| MI | 0.0004 | 0.4448 |
-| HO | -0.0438 | 0.3161 |
-| GM | -0.0427 | 0.2883 |
-| RN | -0.0193 | 0.3424 |
-
-## B-C
-
-Como verificación visual de estabilidad se mantiene el contraste CUSUM:
-
-![B-C estabilidad: CUSUM del modelo](assets/cusum_plot.png){width=72%}
-
-# Conclusiones y Recomendación
-
-1. La señal estadística más robusta en corto plazo es GM -> AF (Granger, lag 2).
-2. La alta correlación AF-DE y AF-RN exige vigilancia de colinealidad al especificar modelos.
-3. La evidencia de quiebres sugiere estimación por subperiodos o modelos con cambio de régimen.
-4. Operativamente, la gestión previsional requiere blindaje de liquidez frente a reasignaciones fiscales procíclicas.
-
-Recomendación: institucionalizar monitoreo trimestral con tablero AF-DE-GM-HO y recalibración anual de especificaciones con pruebas de estabilidad estructural.
+\newpage
 
 # Referencias {.unnumbered}
 

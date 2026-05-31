@@ -1,0 +1,60 @@
+# Análisis Descriptivo
+
+El análisis de variabilidad confirma que las series temporales capturan los choques estructurales del periodo 1990-2024.
+
+## Visualización de Tendencias Estructurales
+
+Se presenta la evolución longitudinal de los determinantes críticos para identificar posibles quiebres estructurales y tendencias seculares en el periodo analizado. Las series han sido escaladas para facilitar la comparativa visual (Afiliados y Fuerza Laboral en millones; Migración en miles).
+
+![Evolución temporal de los determinantes de la crisis del IESS (1990-2024)](assets/fig-tendencias-stata.png){#fig-tendencias width=100%}
+
+| Variable | N | Media | Desv. Est. | Mín. | Máx. |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| Log Afiliados (AF) | 35 | 14.4970 | 0.5160 | 13.7420 | 15.1493 |
+| Gasto Militar (GM) | 35 | 2.1833 | 0.5560 | 1.2133 | 3.2432 |
+| Migración Neta (MI) | 35 | -13606.2 | 31691.4 | -47287.0 | 95482.0 |
+| Log Tasa Homicidios (HO) | 35 | 2.5222 | 0.4908 | 1.7557 | 3.8226 |
+| Log Fuerza Laboral (FL) | 35 | 15.6394 | 0.2402 | 15.2127 | 15.9950 |
+
+: Estadísticos descriptivos de las variables de investigación (1990-2024) {#tbl-resumen}
+
+## Diagnósticos Econométricos
+
+La validez de las inferencias en series de tiempo depende de la estructura dinámica de los datos y el cumplimiento de condiciones de estabilidad. Se aplican pruebas para asegurar la robustez ante multicolinealidad y no-estacionariedad.
+
+### Multicolinealidad (VIF)
+
+| Variable | VIF | 1/VIF |
+|:---|:---:|:---:|
+| Migración Neta (MI) | 3.76 | 0.2658 |
+| Log Fuerza Laboral (FL) | 3.60 | 0.2780 |
+| Log Tasa Homicidios (HO) | 2.31 | 0.4323 |
+| Gasto Militar (GM) | 1.83 | 0.5474 |
+| **Promedio VIF** | **2.87** | |
+
+: Factor de Inflación de la Varianza (VIF) {#tbl-vif}
+
+### Pruebas de Raíz Unitaria (Zivot-Andrews)
+
+Se consolidan los resultados de ADF, PP y ZA para niveles e integración.
+
+```{=latex}
+\begin{center}
+\small
+\begin{tabular}{lccccccccc}
+\hline \hline
+ & \multicolumn{4}{c}{Test-statistics (Level)} & \multicolumn{4}{c}{Test-statistics (First Diff)} & I(d) \\
+\cline{2-5} \cline{6-9}
+ & (ADF) & (PP) & (ZA) & Break & (ADF) & (PP) & (ZA) & Break & \\
+\hline
+AF & -1.529 & -1.367 & -2.707 & 2010 & -1.936 & -2.963 & -4.578 & 2008 & I(1) \\
+GM & -0.863 & -1.566 & -4.458 & 2008 & -3.817* & -8.747*** & -10.371*** & 2011 & I(1) \\
+MI & -3.269 & -2.22 & -5.665*** & 2016 & -4.347** & -3.544* & -9.270*** & 2019 & I(0) \\
+HO & -2.264 & -1.154 & -3.791 & 1998 & -3.824** & -3.128 & -5.109** & 2011 & I(1) \\
+FL & -2.423 & -2.785 & -3.657 & 2009 & -4.212** & -6.756*** & -7.020*** & 2015 & I(1) \\
+\hline \hline 
+\multicolumn{10}{l}{\footnotesize Nota: * p $<$ 0.1, ** p $<$ 0.05, *** p $<$ 0.01.}
+\end{tabular}
+\captionof{table}{Pruebas de raíz unitaria con quiebre estructural (Zivot-Andrews)} \label{tbl-za}
+\end{center}
+```
