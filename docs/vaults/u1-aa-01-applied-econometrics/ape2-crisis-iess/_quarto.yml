@@ -1,24 +1,21 @@
 project:
-  type: book
+  type: default
   output-dir: _book
 
-bibliography: references.bib
+metadata:
+  university: "UNIVERSIDAD NACIONAL DE LOJA"
+  faculty: "FACULTAD JURÍDICA, SOCIAL Y ADMINISTRATIVA"
+  school: "CARRERA DE ECONOMÍA"
+  professor: "Econ. Jose Rafael Alvarado Lopez"
+  year: "2026"
 
-book:
-  title: "Auditoría Econométrica de la Sostenibilidad del IESS"
-  author: "Erick Fabricio Condoy Seraquive"
-  date: "2026-04-25"
-  chapters:
-    - index.qmd
-    - chapters/01-metodologia.qmd
-    - chapters/02-diagnosticos.qmd
-    - chapters/03-resultados.qmd
-    - chapters/04-discusion.qmd
+bibliography: references.bib
 
 format:
   pdf:
     documentclass: scrreprt
     papersize: letter
+    pdf-engine: lualatex
     geometry:
       - top=2.54cm
       - bottom=2.54cm
@@ -26,16 +23,19 @@ format:
       - right=2.54cm
     fontfamily: times
     fontsize: 12pt
-    linestretch: 1.5
-    indent: true
-    number-sections: true
-    top-level-division: chapter
-  html:
-    theme: cosmo
+    linestretch: 1.0
     toc: true
-    code-fold: true
+    number-sections: true
+    indent: true
+    fig-width: 2.8
+    fig-height: 1.8
+    fig-align: center
+    include-in-header:
+      text: |
+        \makeatletter
+        \def\pandocbounded#1{#1}
+        \makeatother
 
 crossref:
   tbl-prefix: "Tabla"
   fig-prefix: "Figura"
-  chapters: true

@@ -1,15 +1,62 @@
 ---
-title: "Auditoría Econométrica de la Sostenibilidad del IESS (2000-2023)"
-subtitle: "Inferencia de Vanguardia: Vulnerabilidad Financiera, Capital Humano y Flujos Migratorios"
+title: "Determinantes de la sostenibilidad del IESS y el impacto de la inestabilidad social en el Ecuador durante el periodo 1990-2024"
+subtitle: "Análisis Econométrico Aplicado"
 author: "Erick Fabricio Condoy Seraquive"
-date: "2026-04-25"
-bibliography: references.bib
+date: "2026-05-07"
+lang: es
+format:
+  pdf:
+    template: templates/unl_tic_informe_local.tex
+    pdf-engine: lualatex
+    toc: true
+    number-sections: true
+    top-level-division: section
+    citeproc: true
+    tbl-pos: 'H'
+    fig-pos: 'H'
+    tbl-cap-location: top
+  docx:
+    toc: false
+    number-sections: true
+    highlight-style: github
+    fig-cap-location: bottom
+    tbl-cap-location: top
+    reference-doc: templates/custom-reference.docx
+header-includes:
+  - \usepackage{multirow}
+  - \setlength{\parindent}{0pt}
+  - \setlength{\parskip}{1em}
 ---
 
-# Introducción {.unnumbered}
+{{< include chapters/00-resumen.qmd >}}
 
-Este estudio trasciende el análisis actuarial tradicional al integrar un vector exógeno de vanguardia para diagnosticar la crisis de afiliación al IESS. Mediante una expansión trimestral ($N=96$) y la estimación de un modelo ARDL, se evalúa el impacto de la vulnerabilidad financiera estocástica (EMBI), la fuga de capital humano (Remesas) y el potencial de formalización (Matrícula Superior).
+\newpage
 
-Los resultados confirman una relación de cointegración robusta donde el riesgo país y las remesas actúan como determinantes críticos de la erosión de la base contributiva. Se identifica que la sostenibilidad del sistema no solo depende de la demografía, sino de la estabilidad macro-financiera y la retención de talento nacional.
+{{< include chapters/01-introduccion.qmd >}}
 
-A diferencia de análisis previos, este manuscrito postula que la afiliación formal está condicionada por el riesgo soberano (@kairos2024), el potencial educativo y los flujos migratorios, los cuales actúan como proxis de la salud institucional.
+\newpage
+
+{{< include chapters/02-literatura.qmd >}}
+
+\newpage
+
+{{< include chapters/03-metodologia.qmd >}}
+
+\newpage
+
+{{< include chapters/04-analisis-descriptivo.qmd >}}
+
+\newpage
+
+{{< include chapters/05-resultados.qmd >}}
+
+\newpage
+
+{{< include chapters/06-conclusiones.qmd >}}
+
+\newpage
+
+# Referencias {.unnumbered}
+
+::: {#refs}
+:::
