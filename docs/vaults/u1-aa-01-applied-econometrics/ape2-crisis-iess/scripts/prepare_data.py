@@ -19,6 +19,6 @@ print(df.isnull().sum())
 print(df.tail())
 
 # 3. Save to the new vault location
-output_vault_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/analysis_erick_condoy/data/base_analisis.csv"
+output_vault_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data/base_analisis.csv"
 df.to_csv(output_vault_path, index=False)
 print(f"\nBase de análisis guardada en: {output_vault_path}")

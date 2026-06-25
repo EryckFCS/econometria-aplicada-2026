@@ -10,3 +10,8 @@ span.header-section-number {
     font-weight: bold;
     margin-right: 0.5em;
 }
+
+/* Quitar sangría de los párrafos en vista HTML */
+p {
+    text-indent: 0 !important;
+}

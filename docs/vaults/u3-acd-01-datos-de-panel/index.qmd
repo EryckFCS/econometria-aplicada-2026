@@ -1,0 +1,43 @@
+---
+title: "ACD1: Modelos de Datos de Panel en América Latina"
+subtitle: "Unidad 3 - Econometría Aplicada"
+author: "Erick Fabricio Condoy Seraquive"
+date: "2026-06-25"
+format:
+  pdf:
+    toc: false
+    number-sections: true
+    colorlinks: true
+    fig-pos: 'H'
+    mainfont: "Times New Roman"
+    header-includes:
+      - \usepackage{indentfirst}
+      - \usepackage{float}
+      - \floatplacement{table}{H}
+  docx:
+    toc: false
+    number-sections: true
+    highlight-style: github
+---
+
+{{< include chapters/00_resumen.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/01_introduccion.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/1.5_literatura.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/02_metodologia.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/03_resultados.qmd >}}
+
+{{< pagebreak >}}
+
+{{< include chapters/04_conclusiones.qmd >}}

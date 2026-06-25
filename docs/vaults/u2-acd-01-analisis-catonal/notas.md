@@ -1,0 +1,1 @@
+extraer los datos cantonales para armar una base de datos con base de datos del banco central , del enemdu,sacar la variable de pareticipacion del sector en la economia tota del canton

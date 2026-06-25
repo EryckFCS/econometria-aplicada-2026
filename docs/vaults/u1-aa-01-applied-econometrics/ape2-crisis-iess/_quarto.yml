@@ -1,6 +1,7 @@
 project:
   type: default
-  output-dir: _book
+  render:
+    - ape2_03_informe.qmd
 
 metadata:
   university: "UNIVERSIDAD NACIONAL DE LOJA"
@@ -26,7 +27,7 @@ format:
     linestretch: 1.0
     toc: true
     number-sections: true
-    indent: true
+    indent: false
     fig-width: 2.8
     fig-height: 1.8
     fig-align: center

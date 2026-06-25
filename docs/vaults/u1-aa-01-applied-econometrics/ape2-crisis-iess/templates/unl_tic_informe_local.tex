@@ -87,8 +87,18 @@
   \justifying
 }
 
-\captionsetup{
+\captionsetup[table]{
   position=top,
+  justification=RaggedRight,
+  singlelinecheck=false,
+  labelfont=bf,
+  textfont=it,
+  labelsep=newline,
+  font=small,
+  skip=10pt
+}
+\captionsetup[figure]{
+  position=bottom,
   justification=RaggedRight,
   singlelinecheck=false,
   labelfont=bf,
@@ -117,9 +127,9 @@
 \titleformat{\section}{\bfseries\large}{\thesection}{1em}{}
 \titleformat{\subsection}{\bfseries\normalsize}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}{\bfseries\normalsize\itshape}{\thesubsubsection}{1em}{}
-\titlespacing*{\section}{0pt}{18pt}{12pt}
-\titlespacing*{\subsection}{0pt}{12pt}{6pt}
-\titlespacing*{\subsubsection}{0pt}{12pt}{6pt}
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+\titlespacing*{\subsubsection}{0pt}{0pt}{0pt}
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
@@ -137,12 +147,12 @@ $header-includes$
 \begin{document}
 
 \pagenumbering{arabic}
-\setstretch{1.0}
+\setstretch{$if(linestretch)$$linestretch$$else$1.15$endif$}
 
 \begin{center}
     \setstretch{1.2}
     {\bfseries \Large $title$}\\[0.2cm]
-    {\bfseries \large $subtitle$}\\[0.4cm]
+    $if(subtitle)${\bfseries \large $subtitle$}\\[0.4cm]$endif$
     {\normalsize \bfseries Autor:} {\normalsize $author$} \quad | \quad {\normalsize \bfseries Profesor:} {\normalsize $professor$}\\[0.1cm]
     {\small Universidad Nacional de Loja --- Carrera de Economía \quad | \quad $year$}\\[0.6cm]
 \end{center}

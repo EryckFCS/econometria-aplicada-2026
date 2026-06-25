@@ -1,0 +1,7 @@
+# Resumen {.unnumbered}
+
+En este estudio analizo los determinantes de la vulnerabilidad financiera externa (VE) de 10 países de América del Sur durante el periodo 1994-2023, integrando factores fiscales, financieros y de estabilidad política e institucional. A través de un modelo de datos de panel balanceado estimado mediante Efectos Fijos (FE) y Efectos Aleatorios (RE), evalúo el impacto de la recaudación tributaria (PF), el crédito privado (AN), la estabilidad institucional (RI) y la inversión en energía (IE) sobre las rentas de recursos naturales. Los resultados empíricos indican la presencia de una fuerte rigidez estructural: la presión fiscal exhibe una elasticidad de transmisión positiva y altamente significativa, reflejando el carácter rentista y primario-exportador de las finanzas públicas sudamericanas, mientras que el desarrollo financiero y la estabilidad política institucional actúan como mitigadores estructurales del riesgo.
+
+**Palabras clave:** Vulnerabilidad Externa, Presión Fiscal, América del Sur, Datos de Panel, Efectos Fijos, Test de Hausman.
+
+**Clasificación JEL:** H21, H63, Q32, C23, O54.

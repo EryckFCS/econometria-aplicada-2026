@@ -1,0 +1,51 @@
+---
+title: "Determinantes de la sostenibilidad del IESS y el impacto de la inestabilidad social en el Ecuador durante el periodo 1990-2024"
+author: "Erick Fabricio Condoy Seraquive"
+date: "2026-05-07"
+lang: es
+title-block-render: false
+format:
+  pdf:
+    template: templates/unl_tic_informe_local.tex
+    pdf-engine: lualatex
+    toc: true
+    number-sections: true
+    top-level-division: section
+    citeproc: true
+    tbl-pos: 'H'
+    fig-pos: 'H'
+    tbl-cap-location: top
+    fig-cap-location: bottom
+    tbl-colwidths: auto
+    indent: false
+  docx:
+    toc: false
+    number-sections: true
+    highlight-style: github
+    fig-cap-location: bottom
+    tbl-cap-location: top
+    tbl-colwidths: auto
+    reference-doc: templates/custom-reference.docx
+    indent: false
+header-includes:
+  - \usepackage{multirow}
+  - \setlength{\parindent}{0pt}
+  - \setlength{\parskip}{6pt}
+---
+
+{{< include chapters/00-resumen.qmd >}}
+
+{{< include chapters/01-introduccion.qmd >}}
+
+{{< include chapters/02-literatura.qmd >}}
+
+{{< include chapters/03-metodologia.qmd >}}
+
+{{< include chapters/04-resultados.qmd >}}
+
+{{< include chapters/05-conclusiones.qmd >}}
+
+# Referencias {.unnumbered}
+
+::: {#refs}
+:::

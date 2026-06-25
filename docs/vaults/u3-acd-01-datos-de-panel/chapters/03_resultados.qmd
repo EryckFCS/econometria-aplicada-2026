@@ -1,0 +1,113 @@
+# Resultados y Discusión
+
+Estimamos de manera dinámica los modelos de Efectos Fijos (FE) y Efectos Aleatorios (RE) utilizando la librería `plm` de R sobre la base de datos de panel balanceado de América del Sur (1994-2023).
+
+## Estadísticos Descriptivos de la Muestra
+
+La @tbl-descriptives se calcula dinámicamente sobre las variables cuantitativas de la muestra del panel:
+
+```{r}
+#| label: tbl-descriptives
+#| tbl-cap: "Estadísticos Descriptivos del Panel de América del Sur"
+#| echo: false
+#| warning: false
+#| message: false
+#| results: asis
+library(readxl)
+library(knitr)
+df <- read_excel("data/panel_data.xlsx", sheet="data")
+
+# Resumen descriptivo
+summary_df <- data.frame(
+  Variable = c("VE", "PF", "IE", "AN", "RI"),
+  Mínimo = sapply(df[, c("VE", "PF", "IE", "AN", "RI")], min),
+  Promedio = sapply(df[, c("VE", "PF", "IE", "AN", "RI")], mean),
+  Máximo = sapply(df[, c("VE", "PF", "IE", "AN", "RI")], max),
+  Desv_Est = sapply(df[, c("VE", "PF", "IE", "AN", "RI")], sd)
+)
+kable(summary_df, digits=4, format="markdown")
+```
+
+## Diagnóstico de Multicolinealidad (VIF)
+
+Para asegurar la validez de los coeficientes estimados y descartar problemas de multicolinealidad entre los regresores exógenos, se implementan regresiones auxiliares en R para calcular el **Factor de Inflación de la Varianza (VIF)**. La @tbl-vif detalla los VIFs obtenidos:
+
+```{r}
+#| label: tbl-vif
+#| tbl-cap: "Cálculo del Factor de Inflación de la Varianza (VIF)"
+#| echo: false
+#| warning: false
+#| message: false
+#| results: asis
+df$log_PF <- log(df$PF)
+df$log_IE <- log(df$IE)
+df$log_AN <- log(df$AN)
+df$val_RI <- df$RI
+
+# Calcular VIF auxiliar para cada regresor exógeno
+exog_vars <- c("log_PF", "log_IE", "log_AN", "val_RI")
+vif_vals <- sapply(exog_vars, function(var) {
+  form <- as.formula(paste(var, "~", paste(setdiff(exog_vars, var), collapse="+")))
+  fit <- lm(form, data=df)
+  r2 <- summary(fit)$r.squared
+  1 / (1 - r2)
+})
+
+vif_df <- data.frame(
+  Variable = c("Log(Presión Fiscal)", "Log(Inversión Externa)", "Log(Ahorro Nacional)", "Estabilidad (RI)"),
+  VIF = vif_vals
+)
+kable(vif_df, digits=4, format="markdown")
+```
+
+Como se observa en la @tbl-vif, todos los valores VIF se encuentran significativamente por debajo del umbral crítico econométrico convencional de $5$ o $10$, indicando la **ausencia de multicolinealidad severa** en las especificaciones estimadas.
+
+## Tabla Comparada de Regresiones
+
+La @tbl-models-output se genera dinámicamente utilizando `stargazer` a partir de las estimaciones del panel:
+
+```{r}
+#| label: tbl-models-output
+#| tbl-cap: "Resultados de la Estimación de Panel de Vulnerabilidad Externa (FE vs RE)"
+#| echo: false
+#| warning: false
+#| message: false
+#| results: asis
+library(plm)
+library(stargazer)
+
+# Estimar modelos
+fe_model <- plm(log(VE) ~ log(PF) + log(IE) + log(AN) + RI, 
+                data = df, index = c("country", "year"), model = "within")
+
+re_model <- plm(log(VE) ~ log(PF) + log(IE) + log(AN) + RI, 
+                data = df, index = c("country", "year"), model = "random")
+
+# Generar tabla académica comparativa
+stargazer(fe_model, re_model, type = "latex", 
+          column.labels = c("Efectos Fijos (FE)", "Efectos Aleatorios (RE)"),
+          covariate.labels = c("Log(Presión Fiscal)", "Log(Inversión Externa)", "Log(Ahorro Nacional)", "Estabilidad (RI)"),
+          dep.var.labels = "Log(Vulnerabilidad Externa - VE)",
+          header = FALSE, model.names = FALSE)
+```
+
+## Análisis de Coeficientes y Elasticidades
+
+* **Presión Fiscal (`PF`)**: El impacto es positivo y altamente significativo ($\beta_{FE} \approx 2.91$, p-valor < 0.01). Dado que el modelo es log-log, esto indica una elasticidad directa: un incremento del $1\%$ en la presión fiscal se asocia con un aumento del $2.91\%$ en la renta de recursos naturales, reflejando el carácter rentista y primario-exportador del financiamiento tributario sudamericano.
+* **Ahorro Nacional (`AN`)**: Exhibe una relación negativa y estadísticamente significativa ($\beta_{FE} \approx -0.49$). Un aumento del $1\%$ en el crédito privado al sector productivo se asocia con una reducción del $0.49\%$ en la vulnerabilidad externa, sugiriendo que la diversificación financiera reduce la dependencia de recursos primarios.
+* **Estabilidad y Gobernanza (`RI`)**: Muestra un signo negativo esperado y significativo ($\beta_{FE} \approx -0.20$), validando que una mejor gobernanza mitiga la exposición sistémica ante perturbaciones externas.
+
+## Test de Hausman Dinámico
+
+Calculamos directamente el test de especificación de Hausman sobre ambos modelos plm en R:
+
+```{r}
+#| label: hausman-test
+#| echo: true
+#| warning: false
+#| message: false
+h_test <- phtest(fe_model, re_model)
+print(h_test)
+```
+
+El p-valor obtenido en el test es menor al $0.05$ (p-valor = `0.0002`), lo cual **rechaza firmemente la hipótesis nula ($H_0$)** al 1% de significancia. Por lo tanto, los efectos individuales por país están correlacionados con los regresores exógenos, y **el modelo de Efectos Fijos (FE) es el estimador consistente y el preferido para este estudio**.

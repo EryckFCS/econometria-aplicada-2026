@@ -1,0 +1,5 @@
+# Conclusiones
+
+1. **Importancia de la Heterogeneidad Regional**: La estimación por efectos fijos corrobora que las particularidades institucionales y geográficas específicas de cada nación (representadas por $\alpha_i$) juegan un rol significativo en el nivel base del crecimiento económico y deben ser controladas para evitar sesgos por variables omitidas.
+2. **Impacto de las Variables Clave**: La inversión extranjera directa y la apertura comercial muestran, de acuerdo a la literatura estándar, efectos positivos de largo plazo en el crecimiento del PIB, mientras que la inflación no controlada actúa como un desincentivo a la estabilidad económica.
+3. **Recomendación Metodológica**: La prueba de Hausman se consolida como el paso crítico fundamental en el análisis de datos de panel para definir si la correlación entre los efectos individuales y los regresores invalida el uso del estimador clásico MCG de Efectos Aleatorios.

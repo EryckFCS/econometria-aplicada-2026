@@ -1,0 +1,88 @@
+# Metodología Econométrica
+
+Para evaluar los determinantes del espacio fiscal y la vulnerabilidad macroeconómica en América del Sur, planteamos un modelo de datos de panel balanceado de 5 variables con base en la modelación de sostenibilidad de deuda y finanzas públicas:
+
+$$\ln(\text{VE}_{it}) = \beta_0 + \beta_1 \ln(\text{PF}_{it}) + \beta_2 \ln(\text{IE}_{it}) + \beta_3 \ln(\text{AN}_{it}) + \beta_4 \text{RI}_{it} + \alpha_i + u_{it}$$
+
+Donde los códigos de dos letras en mayúscula representan las siguientes variables de interés teórico:
+* **`VE`** (Variable Dependiente): Vulnerabilidad Externa medida por las rentas totales de recursos naturales como porcentaje del PIB (exposición al shock de commodities).
+* **`PF`** (Variable Independiente): Presión Fiscal calculada como la recaudación de impuestos sobre el PIB (%) para capturar el tamaño y capacidad de respuesta del Estado.
+* **`IE`** (Variable de Control): Inversión Externa medida mediante el consumo de energía renovable/IED en infraestructura energética (%).
+* **`AN`** (Variable de Control): Ahorro Nacional medido a través del crédito doméstico privado otorgado por bancos comerciales (% del PIB).
+* **`RI`** (Variable de Control): Reservas e Instituciones medido por el índice de estabilidad política (escala -2.5 a +2.5) para capturar la resiliencia estructural.
+* $\alpha_i$ captura la heterogeneidad no observada de cada país (geografía, dotación inicial de recursos naturales).
+* $u_{it}$ representa el término de error idiosincrático.
+
+## Definición y Descripción de Variables
+
+La @tbl-variables detalla el rol, la codificación formal y las fuentes de las variables del modelo:
+
+| Código | Variable Representada | Rol Econométrico | Unidad de Medida | Fuente |
+| :--- | :--- | :--- | :--- | :--- |
+| **`VE`** | Vulnerabilidad Externa | Dependiente | % del PIB (en logaritmo) | Banco Mundial |
+| **`PF`** | Presión Fiscal | Independiente | % del PIB (en logaritmo) | FMI |
+| **`IE`** | Inversión Externa | Control | % del total (en logaritmo) | Banco Mundial |
+| **`AN`** | Ahorro Nacional | Control | % del PIB (en logaritmo) | Banco Mundial |
+| **`RI`** | Reservas e Instituciones| Control | Índice -2.5 a +2.5 (en nivel) | WGI |
+
+: Definición de Variables y Fuentes de Información {#tbl-variables}
+
+## Evolución Temporal de la Variable Dependiente
+
+La @fig-evolution-dep se genera dinámicamente utilizando R, mostrando la trayectoria histórica del indicador de Vulnerabilidad Externa (`VE`) por cada uno de los 10 países de América del Sur evaluados:
+
+```{r}
+#| label: fig-evolution-dep
+#| fig-cap: "Evolución de la Vulnerabilidad Externa (VE) por País (1994-2023)"
+#| echo: false
+#| warning: false
+#| message: false
+library(readxl)
+df <- read_excel("data/panel_data.xlsx", sheet="data")
+
+# Graficar la evolución temporal en R
+plot(df$year, df$VE, type="n", xlab="Año", ylab="VE (% del PIB)", main="")
+grid()
+colors <- rainbow(length(unique(df$country)))
+countries <- unique(df$country)
+
+for (i in 1:length(countries)) {
+  country_data <- subset(df, country == countries[i])
+  lines(country_data$year, country_data$VE, col=colors[i], lty=1, lwd=2)
+}
+legend("topright", legend=countries, col=colors, lty=1, lwd=2, cex=0.7, bg="white")
+```
+
+## Matriz de Correlación Lineal
+
+Calculamos de forma dinámica la matriz de correlación de Pearson para las variables seleccionadas usando R:
+
+```{r}
+#| label: tbl-correlation
+#| tbl-cap: "Matriz de Correlación de Pearson de las Variables de la Muestra"
+#| echo: false
+#| warning: false
+#| message: false
+#| results: asis
+library(knitr)
+corr_matrix <- cor(df[, c("VE", "PF", "IE", "AN", "RI")])
+kable(corr_matrix, digits=4, format="markdown")
+```
+
+## Tratamiento de Datos: Imputación y Muestra Balanceada
+
+El dataset original de series de tiempo presentaba faltantes de información en variables institucionales como `RI` y `PF` (90 nulos). Sin tratamiento de datos, la regla de eliminación por lista habría descartado más del $40\%$ del panel y habría omitido de forma íntegra a países sudamericanos representativos como **Brasil, Perú y Venezuela**.
+
+Para consolidar el panel balanceado de 10 países y 30 años (1994-2023), se aplicó la técnica de **imputación explícita [imputation]**:
+1. **Interpolación Lineal**: Se utilizó para rellenar los datos intermedios de `PF` y `AN` donde no existen fluctuaciones bruscas de corto plazo.
+2. **Propagación Hacia Atrás/Adelante**: Aplicada en los extremos de las series.
+3. **Imputación por Media Regional Anual**: Aplicada para países con carencia total en años tempranos de algún indicador, utilizando el promedio anual sudamericano.
+
+La imputación se encuentra plenamente justificada ya que permite preservar la representatividad regional de todos los países sudamericanos en un panel balanceado robusto de 300 observaciones, a pesar de que reduce levemente la varianza residual del modelo.
+
+## Modelos de Estimación y Test de Hausman
+
+1. **Modelo de Efectos Fijos (FE)**: Permite que el término de efecto individual $\alpha_i$ esté correlacionado con los regresores explicativos. La estimación se realiza mediante la transformación de variables respecto a su media temporal (transformación Within), eliminando $\alpha_i$:
+   $$\ddot{Y}_{it} = \beta' \ddot{X}_{it} + \ddot{u}_{it}$$
+2. **Modelo de Efectos Aleatorios (RE)**: Asume que $\alpha_i$ es un componente del error compuesto ($v_{it} = \alpha_i + u_{it}$) no correlacionado con las variables exógenas ($Cov(\alpha_i, X_{it}) = 0$). Se estima mediante Mínimos Cuadrados Generalizados (MCG).
+3. **Test de Hausman**: Evalúa la hipótesis nula ($H_0$) de que no hay correlación entre los efectos individuales $\alpha_i$ y los regresores. Bajo $H_0$, el estimador de Efectos Aleatorios (RE) es consistente y eficiente. Si se rechaza $H_0$ (p-valor < 0.05), el estimador RE es inconsistente y se prefiere obligatoriamente el de Efectos Fijos (FE), el cual permanece consistente.

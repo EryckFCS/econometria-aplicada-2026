@@ -1,0 +1,22 @@
+# Revisión de la Literatura
+
+La vulnerabilidad macroeconómica ante shocks externos en economías en desarrollo se fundamenta en la relación entre sus ingresos fiscales y su dependencia estructural de la exportación de recursos naturales.
+
+## Síntesis de los enfoques teóricos
+
+Para comprender las fuerzas dinámicas que determinan la vulnerabilidad externa en América del Sur, sintetizamos tres enfoques teóricos fundamentales:
+
+1. **Teoría de la Enfermedad Holandesa (Dutch Disease)** (Corden & Neary, 1982): Postula que el descubrimiento o auge de precios de recursos naturales atrae flujos masivos de divisas, apreciando el tipo de cambio real y restando competitividad al sector manufacturero y transable no tradicional.
+2. **Teoría de la Voracidad Fiscal e Inestabilidad de Ingresos** (Tornell & Lane, 1999): Describe cómo los auges de recursos naturales desatan luchas distributivas entre grupos de interés por la apropiación de la renta fiscal, derivando en un gasto público ineficiente y procíclico que incrementa la vulnerabilidad en épocas de vacas flacas.
+3. **Teoría de la Fragilidad Financiera en Economías Primario-Exportadoras**: Plantea que la falta de un mercado financiero interno profundo y diversificado obliga a los Estados a depender de financiamiento externo y de rentas directas de materias primas para sostener el presupuesto público, exponiendo la balanza de pagos a shocks sistemáticos.
+
+## Síntesis de la evidencia empírica
+
+La evidencia empírica internacional de los últimos años aporta lecciones metodológicas y conceptuales en tres niveles espaciales:
+
+1. **A nivel mundial:** 
+   El análisis cuantitativo mediante modelos de equilibrio general dinámico ha examinado cómo los auges de recursos primarios e ingresos fiscales alteran la inversión en capital productivo. Autores como @gao2025 demuestran la necesidad de marcos de políticas fiscales contracíclicas y fondos de estabilización soberanos para desvincular el gasto público corriente de la volatilidad del mercado internacional de commodities.
+2. **A nivel latinoamericano:**
+   La interacción entre política impositiva e ingresos por recursos naturales en América del Sur se caracteriza por una marcada prociclicidad. Trabajos empíricos como el de @maydom2023 corroboran que los países con menor diversificación tributaria tienden a experimentar contracciones fiscales severas ante caídas de precios de materias primas, deteriorando los servicios públicos e incrementando el endeudamiento soberano.
+3. **A nivel nacional:**
+   Para el caso ecuatoriano, la sostenibilidad fiscal y previsional está intrínsecamente condicionada por las rigideces estructurales de la dolarización y por la alta dependencia del crudo. Modelos recientes como el MS-ARDL de @baculima2026 confirman la alternancia entre regímenes de sostenibilidad fiscal fuerte y débil condicionados por la dinámica del mercado petrolero, limitando el espacio fiscal para amortiguar shocks externos.

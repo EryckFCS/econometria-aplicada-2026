@@ -1,0 +1,465 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econometrics_2026\docs\vaults\u3-acd-01-datos-de-panel\scripts\../logs/s
+> tata_panel_estimation.log
+  log type:  text
+ opened on:  25 Jun 2026, 09:39:22
+
+. 
+. di "======================================================================"
+======================================================================
+
+. di "INICIO DEL PROCESO DE ESTIMACIÓN DE PANEL - CANTONES DE ECUADOR"
+INICIO DEL PROCESO DE ESTIMACIÓN DE PANEL - CANTONES DE ECUADOR
+
+. di "======================================================================"
+======================================================================
+
+. 
+. * Importar los datos de panel sanitizados
+. import excel "../data/datos_de_panel_sanitized.xlsx", sheet("panel_data") firstrow clear
+(10 vars, 2,210 obs)
+
+. 
+. * Generar variables transformadas logarítmicamente (elasticidades)
+. gen log_ventas = log(ventas_totales)
+
+. gen log_empresas = log(num_emp)
+
+. gen log_empleo = log(empleo_prom)
+
+. 
+. * Configurar el panel de datos
+. xtset canton_id year
+
+Panel variable: canton_id (strongly balanced)
+ Time variable: year, 2015 to 2024
+         Delta: 1 unit
+
+. 
+. * Describir y resumir las variables del panel
+. xtdes
+
+canton_id:  101, 102, ..., 2403                              n =        221
+    year:  2015, 2016, ..., 2024                             T =         10
+           Delta(year) = 1 unit
+           Span(year)  = 10 periods
+           (canton_id*year uniquely identifies each observation)
+
+Distribution of T_i:   min      5%     25%       50%       75%     95%     max
+                        10      10      10        10        10      10      10
+
+     Freq.  Percent    Cum. |  Pattern
+ ---------------------------+------------
+      221    100.00  100.00 |  1111111111
+ ---------------------------+------------
+      221    100.00         |  XXXXXXXXXX
+
+. xtsum log_ventas log_empresas log_empleo
+
+Variable         |      Mean   Std. dev.       Min        Max |    Observations
+-----------------+--------------------------------------------+----------------
+log_ve~s overall |  17.80579   2.305315   2.302585   25.26884 |     N =    2210
+         between |             2.195438   8.615338   25.08422 |     n =     221
+         within  |             .7170539   1.537711    19.9182 |     T =      10
+                 |                                            |
+log_em~s overall |  7.242053   1.307893   4.406719   12.62467 |     N =    2210
+         between |             1.309445   4.516697   12.55905 |     n =     221
+         within  |             .0540841   7.017575   7.534201 |     T =      10
+                 |                                            |
+log_em~o overall |  7.669271   1.483598   4.795791   13.71819 |     N =    2210
+         between |              1.48586   4.896385   13.66554 |     n =     221
+         within  |             .0477141   7.444067   7.894724 |     T =      10
+
+. 
+. *==============================================================================*
+. * 1. ESTIMACIÓN GLOBAL (TODOS LOS CANTONES)
+. *==============================================================================*
+. di ""
+
+
+. di ">>> ESTIMACIÓN DEL MODELO DE EFECTOS FIJOS (GLOBAL) <<<"
+>>> ESTIMACIÓN DEL MODELO DE EFECTOS FIJOS (GLOBAL) <<<
+
+. xtreg log_ventas log_empresas log_empleo, fe
+
+Fixed-effects (within) regression               Number of obs     =      2,210
+Group variable: canton_id                       Number of groups  =        221
+
+R-squared:                                      Obs per group:
+     Within  = 0.2443                                         min =         10
+     Between = 0.8143                                         avg =       10.0
+     Overall = 0.7441                                         max =         10
+
+                                                F(2, 1987)        =     321.21
+corr(u_i, Xb) = -0.9922                         Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+  log_ventas | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+log_empresas |   4.609608   .3991488    11.55   0.000     3.826814    5.392402
+  log_empleo |   2.631697   .4524365     5.82   0.000     1.744397    3.518997
+       _cons |  -35.76043    2.26125   -15.81   0.000     -40.1951   -31.32576
+-------------+----------------------------------------------------------------
+     sigma_u |  7.9341662
+     sigma_e |  .65723426
+         rho |  .99318497   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(220, 1987) = 20.72                  Prob > F = 0.0000
+
+. estimates store fe_global
+
+. 
+. di ""
+
+
+. di ">>> ESTIMACIÓN DEL MODELO DE EFECTOS ALEATORIOS (GLOBAL) <<<"
+>>> ESTIMACIÓN DEL MODELO DE EFECTOS ALEATORIOS (GLOBAL) <<<
+
+. xtreg log_ventas log_empresas log_empleo, re
+
+Random-effects GLS regression                   Number of obs     =      2,210
+Group variable: canton_id                       Number of groups  =        221
+
+R-squared:                                      Obs per group:
+     Within  = 0.2428                                         min =         10
+     Between = 0.8210                                         avg =       10.0
+     Overall = 0.7499                                         max =         10
+
+                                                Wald chi2(2)      =    1094.91
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+  log_ventas | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+log_empresas |    .829883   .1731107     4.79   0.000     .4905923    1.169174
+  log_empleo |   .7441312   .1535101     4.85   0.000     .4432569    1.045005
+       _cons |   6.088785   .3681396    16.54   0.000     5.367245    6.810326
+-------------+----------------------------------------------------------------
+     sigma_u |  .87819092
+     sigma_e |  .65723426
+         rho |  .64098618   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+
+. estimates store re_global
+
+. 
+. di ""
+
+
+. di ">>> TEST DE HAUSMAN (GLOBAL) <<<"
+>>> TEST DE HAUSMAN (GLOBAL) <<<
+
+. hausman fe_global re_global
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |   fe_global    re_global      Difference       Std. err.
+-------------+----------------------------------------------------------------
+log_empresas |    4.609608      .829883        3.779725         .359656
+  log_empleo |    2.631697     .7441312        1.887566        .4255978
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(2) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            = 428.21
+Prob > chi2 = 0.0000
+
+. 
+. *==============================================================================*
+. * 2. ESTIMACIÓN SEGMENTADA POR TERCILES DE VAB (Bajo, Medio, Alto)
+. *==============================================================================*
+. * Convertir vab_group a variable categórica numérica para Stata
+. encode vab_group, gen(vab_group_id)
+
+. 
+. levelsof vab_group_id, local(levels)
+1 2 3
+
+. foreach l of local levels {
+  2.     local grp_label : label vab_group_id `l'
+  3.     di ""
+  4.     di "======================================================================"
+  5.     di "GRUPO DE INGRESO VAB: `grp_label' (ID: `l')"
+  6.     di "======================================================================"
+  7.     
+.     di ">>> EFECTOS FIJOS (FE) - `grp_label' <<<"
+  8.     xtreg log_ventas log_empresas log_empleo if vab_group_id == `l', fe
+  9.     estimates store fe_`l'
+ 10.     
+.     di ">>> EFECTOS ALEATORIOS (RE) - `grp_label' <<<"
+ 11.     xtreg log_ventas log_empresas log_empleo if vab_group_id == `l', re
+ 12.     estimates store re_`l'
+ 13.     
+.     di ">>> TEST DE HAUSMAN - `grp_label' <<<"
+ 14.     hausman fe_`l' re_`l'
+ 15. }
+
+======================================================================
+GRUPO DE INGRESO VAB: Alto (ID: 1)
+======================================================================
+>>> EFECTOS FIJOS (FE) - Alto <<<
+
+Fixed-effects (within) regression               Number of obs     =        740
+Group variable: canton_id                       Number of groups  =         74
+
+R-squared:                                      Obs per group:
+     Within  = 0.2029                                         min =         10
+     Between = 0.6956                                         avg =       10.0
+     Overall = 0.4966                                         max =         10
+
+                                                F(2, 664)         =      84.51
+corr(u_i, Xb) = -0.9955                         Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+  log_ventas | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+log_empresas |   5.065512   .8834623     5.73   0.000     3.330796    6.800229
+  log_empleo |   3.091992   1.023624     3.02   0.003     1.082063    5.101921
+       _cons |  -51.51264   6.021902    -8.55   0.000     -63.3369   -39.68838
+-------------+----------------------------------------------------------------
+     sigma_u |  8.7890926
+     sigma_e |  .84981568
+         rho |  .99073767   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(73, 664) = 7.08                     Prob > F = 0.0000
+>>> EFECTOS ALEATORIOS (RE) - Alto <<<
+
+Random-effects GLS regression                   Number of obs     =        740
+Group variable: canton_id                       Number of groups  =         74
+
+R-squared:                                      Obs per group:
+     Within  = 0.1387                                         min =         10
+     Between = 0.7980                                         avg =       10.0
+     Overall = 0.5651                                         max =         10
+
+                                                Wald chi2(2)      =     266.29
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+  log_ventas | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+log_empresas |  -.1956441   .1694677    -1.15   0.248    -.5277947    .1365064
+  log_empleo |   1.193999   .1651028     7.23   0.000     .8704036    1.517595
+       _cons |   10.79516   .5827007    18.53   0.000     9.653086    11.93723
+-------------+----------------------------------------------------------------
+     sigma_u |   .5569055
+     sigma_e |  .84981568
+         rho |  .30043068   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+>>> TEST DE HAUSMAN - Alto <<<
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |      fe_1         re_1        Difference       Std. err.
+-------------+----------------------------------------------------------------
+log_empresas |    5.065512    -.1956441        5.261156        .8670562
+  log_empleo |    3.091992     1.193999        1.897993        1.010221
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(2) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            = 139.84
+Prob > chi2 = 0.0000
+
+======================================================================
+GRUPO DE INGRESO VAB: Bajo (ID: 2)
+======================================================================
+>>> EFECTOS FIJOS (FE) - Bajo <<<
+
+Fixed-effects (within) regression               Number of obs     =        740
+Group variable: canton_id                       Number of groups  =         74
+
+R-squared:                                      Obs per group:
+     Within  = 0.8066                                         min =         10
+     Between = 0.5350                                         avg =       10.0
+     Overall = 0.5319                                         max =         10
+
+                                                F(2, 664)         =    1385.05
+corr(u_i, Xb) = -0.8991                         Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+  log_ventas | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+log_empresas |    3.55755   .1260729    28.22   0.000         3.31      3.8051
+  log_empleo |   1.363462   .1396571     9.76   0.000     1.089239    1.637685
+       _cons |  -14.76404   .6185178   -23.87   0.000    -15.97852   -13.54955
+-------------+----------------------------------------------------------------
+     sigma_u |  2.0809206
+     sigma_e |  .12211002
+         rho |  .99656838   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(73, 664) = 556.17                   Prob > F = 0.0000
+>>> EFECTOS ALEATORIOS (RE) - Bajo <<<
+
+Random-effects GLS regression                   Number of obs     =        740
+Group variable: canton_id                       Number of groups  =         74
+
+R-squared:                                      Obs per group:
+     Within  = 0.8048                                         min =         10
+     Between = 0.5336                                         avg =       10.0
+     Overall = 0.5308                                         max =         10
+
+                                                Wald chi2(2)      =    1968.53
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+  log_ventas | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+log_empresas |    3.32217    .139081    23.89   0.000     3.049576    3.594764
+  log_empleo |   .8810662     .14876     5.92   0.000      .589502     1.17263
+       _cons |  -10.26333   .6354857   -16.15   0.000    -11.50886     -9.0178
+-------------+----------------------------------------------------------------
+     sigma_u |  .90861143
+     sigma_e |  .12211002
+         rho |  .98225924   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+>>> TEST DE HAUSMAN - Bajo <<<
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |      fe_2         re_2        Difference       Std. err.
+-------------+----------------------------------------------------------------
+log_empresas |     3.55755      3.32217        .2353796               .
+  log_empleo |    1.363462     .8810662        .4823961               .
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+chi2(2) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+        = -3859.26
+
+Warning: chi2 < 0 ==> model fitted on these data
+         fails to meet the asymptotic assumptions
+         of the Hausman test; see suest for a
+         generalized test.
+
+======================================================================
+GRUPO DE INGRESO VAB: Medio (ID: 3)
+======================================================================
+>>> EFECTOS FIJOS (FE) - Medio <<<
+
+Fixed-effects (within) regression               Number of obs     =        730
+Group variable: canton_id                       Number of groups  =         73
+
+R-squared:                                      Obs per group:
+     Within  = 0.2618                                         min =         10
+     Between = 0.2881                                         avg =       10.0
+     Overall = 0.1250                                         max =         10
+
+                                                F(2, 655)         =     116.13
+corr(u_i, Xb) = -0.9909                         Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+  log_ventas | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+log_empresas |   4.947983   .8047671     6.15   0.000     3.367748    6.528218
+  log_empleo |   3.509042   .9115207     3.85   0.000     1.719187    5.298897
+       _cons |  -43.56828   4.228796   -10.30   0.000    -51.87191   -35.26465
+-------------+----------------------------------------------------------------
+     sigma_u |  4.7945583
+     sigma_e |  .73781293
+         rho |  .97686706   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(72, 655) = 7.67                     Prob > F = 0.0000
+>>> EFECTOS ALEATORIOS (RE) - Medio <<<
+
+Random-effects GLS regression                   Number of obs     =        730
+Group variable: canton_id                       Number of groups  =         73
+
+R-squared:                                      Obs per group:
+     Within  = 0.2600                                         min =         10
+     Between = 0.2803                                         avg =       10.0
+     Overall = 0.1228                                         max =         10
+
+                                                Wald chi2(2)      =      50.87
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+  log_ventas | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+log_empresas |     .57765   .2309538     2.50   0.012     .1249888    1.030311
+  log_empleo |   .2369116   .2013907     1.18   0.239    -.1578069    .6316301
+       _cons |   11.83061   .8282999    14.28   0.000     10.20717    13.45404
+-------------+----------------------------------------------------------------
+     sigma_u |  .46493435
+     sigma_e |  .73781293
+         rho |  .28422734   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+>>> TEST DE HAUSMAN - Medio <<<
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |      fe_3         re_3        Difference       Std. err.
+-------------+----------------------------------------------------------------
+log_empresas |    4.947983       .57765        4.370333        .7709154
+  log_empleo |    3.509042     .2369116         3.27213        .8889948
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(2) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            = 199.60
+Prob > chi2 = 0.0000
+
+. 
+. *==============================================================================*
+. * 3. GRÁFICOS DE EVOLUCIÓN
+. *==============================================================================*
+. di ""
+
+
+. di ">>> GENERANDO GRÁFICOS DE EVOLUCIÓN TEMPORAL <<<"
+>>> GENERANDO GRÁFICOS DE EVOLUCIÓN TEMPORAL <<<
+
+. 
+. * Colapsar ventas promedio por año y grupo de VAB para visualizar tendencias
+. preserve
+
+.     collapse (mean) ventas_totales, by(year vab_group)
+
+.     
+.     * Graficar la evolución temporal por tercil de VAB
+.     twoway (line ventas_totales year if vab_group == "Alto", lcolor(navy) lwidth(medthick)) ///
+>            (line ventas_totales year if vab_group == "Medio", lcolor(orange) lwidth(medthick)) ///
+>            (line ventas_totales year if vab_group == "Bajo", lcolor(forest_green) lwidth(medthick)), ///
+>            title("Evolución de Ventas Promedio por Tercil de VAB (2015-2024)") ///
+>            xtitle("Año") ytitle("Ventas Promedio (USD)") ///
+>            legend(order(1 "Alto" 2 "Medio" 3 "Bajo")) ///
+>            xlabel(2015(1)2024, grid)
+
+.            
+.     graph export "../assets/evolution_by_vab.png", replace
+(file ../assets/evolution_by_vab.png not found)
+file ../assets/evolution_by_vab.png saved as PNG format
+
+. restore
+
+. 
+. di "======================================================================"
+======================================================================
+
+. di "PROCESO FINALIZADO CON ÉXITO"
+PROCESO FINALIZADO CON ÉXITO
+
+. di "======================================================================"
+======================================================================
+
+. 
+. log close
+      name:  <unnamed>
+       log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econometrics_2026\docs\vaults\u3-acd-01-datos-de-panel\scripts\../logs/s
+> tata_panel_estimation.log
+  log type:  text
+ closed on:  25 Jun 2026, 09:39:28
+-------------------------------------------------------------------------------------------------------------------------------------------------------------

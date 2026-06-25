@@ -1,20 +1,11 @@
-# Metodología y Datos
+# Datos y metodología
+En esta sección detallo la base de datos recopilada, el comportamiento de las variables de estudio y la estructura metodológica implementada para evaluar la crisis de sostenibilidad del sistema de reparto del IESS durante el periodo 1990-2024.
 
-En esta sección se detallan los determinantes seleccionados, el marco analítico y la especificación técnica del modelo econométrico para evaluar la sostenibilidad del sistema de seguridad social.
+## Datos
 
-## **Hipótesis de Investigación**
+La base de datos combina registros de afiliación previsional del IESS con series macroeconómicas y sociales del Banco Mundial. El conjunto de datos abarca 35 observaciones anuales que capturan la evolución del mercado laboral, la presión fiscal de defensa y el entorno de seguridad ciudadana en el Ecuador.
 
-Se plantean las siguientes hipótesis sobre la sostenibilidad institucional del IESS:
-
-- **H1:** El incremento del gasto militar genera un efecto de desplazamiento fiscal (*crowding-out*) que erosiona la capacidad de financiamiento y la sostenibilidad del sistema de seguridad social civil.
-- **H2:** La inestabilidad social y la inseguridad ciudadana desincentivan la formalización laboral, reduciendo la base de cotizantes activos en el largo plazo.
-- **H3:** Existe una relación de equilibrio inestable en el sistema del IESS, donde choques externos en el gasto fiscal o la seguridad nacional provocan trayectorias divergentes en la masa de afiliados.
-
-## **Definición de Variables**
-
-La especificación empírica define al número de afiliados (AF) como la variable dependiente de interés. Los regresores independientes principales son el gasto militar (GM) y la tasa de homicidios (HO), seleccionados para testear las hipótesis de desplazamiento fiscal e inestabilidad social. Asimismo, se integran la migración neta (MI) y la fuerza laboral total (FL) como variables de control para capturar la dinámica demográfica y la escala del mercado de trabajo ecuatoriano.
-
-::: {#tbl-variables tbl-pos='H' tbl-colwidths='[10, 15, 40, 10, 25]'}
+::: {#tbl-variables tbl-pos='H'}
 | Código | Variable | Definición | Unidad | Fuente de Datos |
 | :--- | :--- | :--- | :--- | :--- |
 | **AF** | **Afiliados** | Personas registradas que aportan activamente al IESS (SGO + SSC). | Conteo | IESS / Boletines Estadísticos |
@@ -23,22 +14,125 @@ La especificación empírica define al número de afiliados (AF) como la variabl
 | **HO** | **Homicidios** | Muertes ilegales causadas intencionalmente por violencia interpersonal. | Tasa por 100k hab. | Banco Mundial / UNODC |
 | **FL** | **Fuerza Laboral** | Población económicamente activa total. | Conteo | Banco Mundial (WDI) |
 
-: Matriz de Variables de Investigación 
+: Matriz de Variables de Investigación
 :::
 
-La inclusión del **Gasto Militar (GM)** permite analizar la **competencia por recursos fiscales**. En Ecuador, la existencia de sistemas de seguridad social específicos para las fuerzas armadas (ISSFA) genera una presión presupuestaria que compite directamente con el financiamiento del sistema civil (IESS). Por otro lado, la **Tasa de Homicidios (HO)** captura el impacto de la inseguridad en la confianza institucional y los incentivos para la formalización de largo plazo.
+Analizo las variables seleccionadas para comprender las tendencias históricas y la variabilidad física de las series temporales, las cuales se resumen a continuación a través de sus estadísticos descriptivos elementales.
 
-## **Especificación del Modelo Econométrico**
+| Variable | N | Media | Desv. Est. | Mín. | Máx. |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| Log Afiliados ($\ln(AF)$) | 35 | 14.4970 | 0.5160 | 13.7420 | 15.1493 |
+| Gasto Militar ($GM$) | 35 | 2.1833 | 0.5560 | 1.2133 | 3.2432 |
+| Migración Neta ($MI$) | 35 | -13606.2 | 31691.4 | -47287.0 | 95482.0 |
+| Log Tasa Homicidios ($\ln(HO)$) | 35 | 2.5222 | 0.4908 | 1.7557 | 3.8226 |
+| Log Fuerza Laboral ($\ln(FL)$) | 35 | 15.6394 | 0.2402 | 15.2127 | 15.9950 |
 
-Para analizar la dinámica de largo plazo y los mecanismos de ajuste, se emplea un modelo de **Rezagos Distribuidos Autorregresivos (ARDL)**. Esta técnica es superior a las estimaciones estáticas tradicionales ya que permite tratar variables con diferentes órdenes de integración, $I(0)$ e $I(1)$, evitando el riesgo de regresiones espurias y permitiendo la identificación de cointegración incluso en muestras pequeñas.
+: Estadísticos descriptivos de las variables de investigación (1990-2024) {#tbl-resumen}
 
-La forma funcional del modelo de corrección de error (ECM) derivado del ARDL ($p, q_1, q_2, q_3, q_4$) se define en la Ecuación (@eq-ardl-ecm):
+**Matriz de Correlación**
 
-$$
-\Delta \ln(AF_t) = \alpha + \sum_{i=1}^{p} \phi_i \Delta \ln(AF_{t-i}) + \sum_{j=0}^{q} \delta_j \Delta X_{t-j} + \lambda ECT_{t-1} + \epsilon_t 
-$$ {#eq-ardl-ecm}
+| Variable | $\ln(AF)$ | $GM$ | $MI$ | $\ln(HO)$ | $\ln(FL)$ |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Log Afiliados ($\ln(AF)$)** | 1.0000 | | | | |
+| **Gasto Militar ($GM$)** | 0.6972 | 1.0000 | | | |
+| **Migración Neta ($MI$)** | 0.6568 | 0.4622 | 1.0000 | | |
+| **Log Tasa Homicidios ($\ln(HO)$)** | 0.0398 | 0.1225 | -0.4544 | 1.0000 | |
+| **Log Fuerza Laboral ($\ln(FL)$)** | 0.9520 | 0.6677 | 0.6335 | 0.1751 | 1.0000 |
 
-Donde:
-- $\Delta$: Operador de primera diferencia.
-- $X_t$: Vector de regresores explicativos (**GM**, **MI**, **HO**, **FL**).
-- $\lambda$: Parámetro de corrección de error. Un valor de $\lambda < 0$ indica que el sistema converge al equilibrio tras un choque. Por el contrario, un valor de $\lambda > 0$ es evidencia de **inestabilidad sistémica o divergencia**, sugiriendo que el sistema es estructuralmente insostenible ante perturbaciones externas.
+: Matriz de Correlación de las variables de investigación {#tbl-correlacion}
+
+Para estimar conjuntamente las variables, descarto problemas de multicolinealidad severa mediante el cálculo del Factor de Inflación de la Varianza (VIF). Asimismo, evalúo la normalidad de la distribución de los residuos para garantizar que no existan distorsiones que invaliden las pruebas estadísticas subsiguientes. El VIF promedio para los regresores independientes es de 2.87 (Migración Neta: 3.76, Fuerza Laboral: 3.60, Tasa de Homicidios: 2.31 y Gasto Militar: 1.83), todos inferiores al límite de 5.0, descartando colinealidad grave. En cuanto a la normalidad residual, la prueba Jarque-Bera arroja un estadístico de $\chi^2(2) = 1.94$ con un p-valor de 0.379, lo que confirma que no rechazo la hipótesis nula de residuos normales.
+Para complementar el análisis descriptivo, presento la evolución temporal y longitudinal de las variables explicativas y demográficas. Esta visualización permite identificar los quiebres estructurales asociados a la dolarización en el año 2000 y al auge normativo previsional posterior al 2008.
+
+![Evolución temporal de los determinantes de la crisis del IESS (1990-2024)](assets/fig-tendencias-stata.png){#fig-tendencias width=100%}
+
+### Diagnósticos Econométricos de los Datos
+
+La validez de las inferencias en series de tiempo depende de la estructura dinámica de los datos y el cumplimiento de condiciones de estabilidad. Se aplican pruebas para asegurar la robustez ante multicolinealidad y no-estacionariedad.
+
+#### Multicolinealidad (VIF)
+
+| Variable | VIF | 1/VIF |
+|:---|:---:|:---:|
+| Migración Neta (MI) | 3.76 | 0.2658 |
+| Log Fuerza Laboral (FL) | 3.60 | 0.2780 |
+| Log Tasa Homicidios (HO) | 2.31 | 0.4323 |
+| Gasto Militar (GM) | 1.83 | 0.5474 |
+| **Promedio VIF** | **2.87** | |
+
+: Factor de Inflación de la Varianza (VIF) {#tbl-vif}
+
+#### Pruebas de Raíz Unitaria (Zivot-Andrews)
+
+Se consolidan los resultados de ADF, PP y ZA para niveles e integración.
+
+```{=latex}
+\begin{center}
+\small
+\begin{tabular}{lccccccccc}
+\hline \hline
+ & \multicolumn{4}{c}{Test-statistics (Level)} & \multicolumn{4}{c}{Test-statistics (First Diff)} & I(d) \\
+\cline{2-5} \cline{6-9}
+ & (ADF) & (PP) & (ZA) & Break & (ADF) & (PP) & (ZA) & Break & \\
+\hline
+AF & -1.529 & -1.367 & -2.707 & 2010 & -1.936 & -2.963 & -4.578 & 2008 & I(1) \\
+GM & -0.863 & -1.566 & -4.458 & 2008 & -3.817* & -8.747*** & -10.371*** & 2011 & I(1) \\
+MI & -3.269 & -2.22 & -5.665*** & 2016 & -4.347** & -3.544* & -9.270*** & 2019 & I(0) \\
+HO & -2.264 & -1.154 & -3.791 & 1998 & -3.824** & -3.128 & -5.109** & 2011 & I(1) \\
+FL & -2.423 & -2.785 & -3.657 & 2009 & -4.212** & -6.756*** & -7.020*** & 2015 & I(1) \\
+\hline \hline 
+\multicolumn{10}{l}{\footnotesize Nota: * p $<$ 0.1, ** p $<$ 0.05, *** p $<$ 0.01.}
+\end{tabular}
+\captionof{table}{Pruebas de raíz unitaria con quiebre estructural (Zivot-Andrews)} \label{tbl-za}
+\end{center}
+```
+
+## Metodología
+
+Para evaluar el orden de integración de las series temporales de forma individual y prevenir regresiones espurias, implemento pruebas de raíz unitaria con y sin quiebres estructurales. 
+
+La prueba de **Dickey-Fuller Aumentada (ADF)**, formulada originalmente por **David Dickey y Wayne Fuller (1979)**, evalúa la presencia de una raíz unitaria (no estacionariedad) frente a la alternativa de estacionariedad en torno a una tendencia determinista. La utilizo para verificar que ninguna serie del sistema supere el orden de integración $I(1)$, estimando la regresión auxiliar general:
+
+$$\Delta y_t = \alpha_0 + \alpha_1 t + \delta y_{t-1} + \sum_{j=1}^{k} \theta_j \Delta y_{t-j} + \epsilon_t$$ {#eq-adf}
+
+Donde $y_t$ es la variable genérica bajo análisis, $\Delta$ representa la primera diferencia, $t$ la tendencia y se selecciona el rezago óptimo $k$ mediante el Criterio de Schwarz para eliminar la autocorrelación en el residuo $\epsilon_t \sim i.i.d.(0, \sigma^2)$.
+
+De manera complementaria, aplico la prueba de **Phillips-Perron (PP)**, formulada por **Peter Phillips y Pierre Perron (1988)**. Mide la hipótesis de raíz unitaria aplicando correcciones no paramétricas directas a la matriz de varianza-covarianza para controlar la correlación serial y la heterocedasticidad en el término de error. Estima la ecuación:
+
+$$y_t = \mu_0 + \mu_1 \left( t - \frac{T}{2} \right) + \phi y_{t-1} + u_t$$ {#eq-pp}
+
+La empleo como contraste robusto para validar la estacionariedad de las series. 
+
+Adicionalmente, dado que los choques de política económica y las crisis estructurales en Ecuador (como la dolarización o reformas legales) pueden sesgar las pruebas tradicionales hacia la no-estacionariedad, estimo la prueba de **Zivot-Andrews (ZA)**, formulada por **Eric Zivot y Donald Andrews (1992)**. Esta prueba mide la existencia de raíz unitaria permitiendo la presencia de un quiebre estructural endógeno en la constante, en la tendencia o en ambos. Estimo la regresión auxiliar:
+
+$$y_t = \mu + \beta t + \theta D_t(\lambda) + \gamma DT_t(\lambda) + \alpha y_{t-1} + \sum_{j=1}^{k} c_j \Delta y_{t-j} + e_t$$ {#eq-za}
+
+Donde $D_t(\lambda)$ y $DT_t(\lambda)$ son variables dummy que capturan quiebres en intercepto y tendencia respectivamente para una fracción del punto de quiebre $\lambda = T_B/T$. La utilizo para evitar falsos diagnósticos de no-estacionariedad causados por cambios de régimen en la economía.
+
+Para evaluar el equilibrio de largo plazo en sistemas integrados de orden mixto, implemento la prueba de cointegración por límites (**Bounds Test**), formulada por **M. Hashem Pesaran, Yongcheol Shin y Richard J. Smith (2001)**. Esta metodología mide la existencia de una relación lineal de largo plazo entre un conjunto de variables sin importar si son integradas de orden $I(0)$, $I(1)$ o de forma mixta. Su uso me permite superar la rigidez de las pruebas de cointegración clásicas que exigen homogeneidad en el orden de integración. La ecuación condicional general de corrección de error uniecuacional (ARDL-ECM) la formulo como:
+
+$$\Delta y_t = c_0 + c_1 t + \alpha y_{t-1} + \sum_{i=1}^{K} \beta_i x_{i, t-1} + \sum_{j=1}^{p-1} \psi_j \Delta y_{t-j} + \sum_{i=1}^{K} \sum_{j=0}^{q_i-1} \gamma_{i,j} \Delta x_{i, t-j} + \epsilon_t$$ {#eq-bounds}
+
+Donde $y_t$ representa la variable dependiente genérica, $x_{i,t}$ denota el vector de regresores explicativos, $\alpha$ y $\beta_i$ capturan la dinámica de largo plazo, y $\psi_j$, $\gamma_{i,j}$ modelan las respuestas dinámicas de corto plazo. El contraste Wald-F conjunto evalúa la hipótesis nula de inexistencia de relación de largo plazo ($H_0: \alpha = \beta_1 = \dots = \beta_K = 0$) comparando el estadístico F calculado con las cotas críticas inferiores $I(0)$ y superiores $I(1)$. Ante la cointegración, derivo la velocidad de ajuste y el término de error rezagado ($ECT_{t-1}$) que mide el retorno al equilibrio dinámico.
+
+Adicionalmente, para modelar cambios de régimen de largo plazo ante posibles quiebres estructurales en la relación previsional, aplico pruebas de cointegración con quiebre estructural de **Gregory y Hansen (1996)**, estimando la especificación:
+
+$$y_{1t} = \mu_1 + \mu_2 \varphi_{t\tau} + \alpha^{\top} y_{2t} + e_t$$ {#eq-gh}
+
+Donde $\varphi_{t\tau}$ es una variable dicotómica de quiebre de régimen. Para lidiar con no linealidades en el sistema, aplico la validación no paramétrica robusta **Kernel-based Regularized Least Squares (KRLS)** de **Jens Hainmueller y Chad Hazlett (2014)**, modelando la función predictiva mediante:
+
+$$f(x) = \sum_{i=1}^{N} c_i K(x, x_i)$$ {#eq-krls}
+
+Donde $K(x, x_i) = \exp\left( -\frac{\|x - x_i\|^2}{\sigma^2} \right)$ es un kernel gaussiano que mapea interacciones no lineales de alta dimensión.
+
+La precedencia temporal y la dirección causal entre las variables las examino mediante la prueba de **Causalidad de Granger**, formulada por **Clive Granger (1969)**. Esta prueba evalúa si los valores rezagados de una variable contribuyen a predecir el comportamiento actual de otra, controlando por la historia de esta última. La utilizo para clarificar el flujo de precedencia temporal entre el entorno fiscal/seguridad y la afiliación, estimando la regresión auxiliar bivariada generalizada en un marco VAR:
+
+$$y_t = \alpha_0 + \sum_{i=1}^{p} \beta_i y_{t-i} + \sum_{j=1}^{p} \gamma_j x_{t-j} + \varepsilon_t$$ {#eq-granger-var}
+
+Donde la hipótesis nula establece la ausencia de causalidad de Granger de $x_t$ hacia $y_t$ ($H_0: \gamma_1 = \dots = \gamma_p = 0$). En caso de cointegración, extiendo el análisis al marco de la causalidad espectral de **Jörg Breitung y Jörg Candelon (2006)** en el dominio de la frecuencia para evaluar las relaciones dinámicas en horizontes de corto y largo plazo, estimando la medida causal:
+
+$$M_{y \to x}(\omega) = \log \left[ 1 + \frac{\text{var}(\eta_t)}{\text{var}(\epsilon_t)} |G(\omega)|^2 \right]$$ {#eq-bc}
+
+Donde $\omega \in (0, \pi)$ representa la frecuencia correspondiente a la periodicidad del ciclo bajo análisis.
+
+El soporte computacional y la estimación se sustentan en desarrollos científicos consolidados. Para la prueba KPSS adopto el algoritmo de Baum (1998); estimo el modelo ARDL mediante la especificación de Kripfganz y Schneider (2023); para las pruebas de raíz unitaria tradicionales sigo las directrices de StataCorp (2023) mediante sus módulos estándar `dfuller` y `pperron`. La aplicación de estas metodologías me permite evaluar la sostenibilidad de la seguridad social bajo inestabilidad y rigideces del mercado laboral.

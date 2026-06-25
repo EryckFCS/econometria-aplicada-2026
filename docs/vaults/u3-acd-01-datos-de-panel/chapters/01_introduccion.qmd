@@ -1,0 +1,5 @@
+# Introducción
+
+El análisis del crecimiento económico en América Latina ha sido históricamente un tema de debate central en la teoría del desarrollo. Las economías de la región comparten vulnerabilidades estructurales comunes, tales como la dependencia de los flujos de capital externo, fluctuaciones constantes en los términos de intercambio y regímenes de inflación volátiles. Sin embargo, debido a las características intrínsecas de cada nación, el uso de series de tiempo puras o análisis de sección cruzada por separado resulta insuficiente para capturar tanto la dinámica temporal de mediano plazo como la heterogeneidad no observada de los países.
+
+En este contexto, la metodología de **Datos de Panel** (u observaciones transversales seguidas en el tiempo) proporciona una herramienta robusta para modelar estos determinantes. Este informe tiene como objetivo evaluar el impacto del flujo de Inversión Extranjera Directa (IED), la apertura comercial y el control inflacionario sobre la tasa de crecimiento anual del PIB en 10 economías seleccionadas de América Latina durante el período 2010-2024.
