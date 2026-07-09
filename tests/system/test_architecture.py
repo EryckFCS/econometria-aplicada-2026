@@ -92,3 +92,31 @@ def test_main_build_status():
     assert "rag_available" in status
     assert "Applied Econometrics" in status["project_name"]
 
+
+def test_bibliography_validation():
+    """Valida la integridad de los DOIs y metadatos en el .bib del repositorio usando la librería central."""
+    from ecs_quantitative.audit.bibliography import BibliographyValidator
+    
+    # Buscar el archivo .bib de forma adaptativa
+    bib_path = REPO_ROOT / "bibliography" / "references.bib"
+    if not bib_path.exists():
+        bib_path = REPO_ROOT / "docs" / "writing" / "references.bib"
+    if not bib_path.exists():
+        pytest.skip("No se encontró ningún archivo de referencias .bib")
+        
+    validator = BibliographyValidator(timeout=4)
+    results = validator.validate_file(bib_path)
+    
+    mismatch_keys = []
+    for res in results:
+        if not res["valid"] and res["status"] == "ERROR_MISMATCH":
+            # Solo fallar si el mismatch es en el campo 'title' (error crítico de DOI)
+            critical_mismatches = [m for m in res["mismatches"] if m["field"] == "title"]
+            if critical_mismatches:
+                mismatch_keys.append((res["key"], res["details"]))
+            else:
+                print(f"Warning: Mismatch menor de publisher para {res['key']}: {res['details']}")
+            
+    assert not mismatch_keys, f"Se detectaron DOIs incorrectos (mismatch de título): {mismatch_keys}"
+
+
