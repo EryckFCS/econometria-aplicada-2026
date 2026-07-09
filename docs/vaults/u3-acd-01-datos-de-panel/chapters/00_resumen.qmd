@@ -1,7 +1,7 @@
 # Resumen {.unnumbered}
 
-En este estudio analizo los determinantes de la vulnerabilidad financiera externa (VE) de 10 países de América del Sur durante el periodo 1994-2023, integrando factores fiscales, financieros y de estabilidad política e institucional. A través de un modelo de datos de panel balanceado estimado mediante Efectos Fijos (FE) y Efectos Aleatorios (RE), evalúo el impacto de la recaudación tributaria (PF), el crédito privado (AN), la estabilidad institucional (RI) y la inversión en energía (IE) sobre las rentas de recursos naturales. Los resultados empíricos indican la presencia de una fuerte rigidez estructural: la presión fiscal exhibe una elasticidad de transmisión positiva y altamente significativa, reflejando el carácter rentista y primario-exportador de las finanzas públicas sudamericanas, mientras que el desarrollo financiero y la estabilidad política institucional actúan como mitigadores estructurales del riesgo.
+La dependencia de rentas extractivas en diez países de América del Sur (2001-2023) responde a factores fiscales y financieros. Un panel balanceado estimado mediante efectos fijos y mínimos cuadrados generalizados factibles (FGLS) evalúa el impacto de los ingresos impositivos, el crédito privado, la inversión extranjera directa y las reservas internacionales. Los ingresos impositivos muestran una elasticidad de transmisión positiva y significativa. Esto evidencia el carácter rentista de las finanzas públicas en la región. En contraste, el crédito doméstico privado mitiga la dependencia extractiva. Su efectividad depende del patrón de especialización productiva. El impacto es significativo únicamente en economías exportadoras de hidrocarburos.
 
-**Palabras clave:** Vulnerabilidad Externa, Presión Fiscal, América del Sur, Datos de Panel, Efectos Fijos, Test de Hausman.
+**Palabras clave:** Dependencia de Rentas Extractivas, Ingresos Impositivos, América del Sur, Datos de Panel, Efectos Fijos, Mínimos Cuadrados Generalizados Factibles.
 
-**Clasificación JEL:** H21, H63, Q32, C23, O54.
+**Clasificación JEL:** C23, H21, Q32, Q38, O54.

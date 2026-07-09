@@ -1,14 +1,14 @@
 # Resultados y Discusión
 
-Estimamos de manera dinámica los modelos de Efectos Fijos (FE) y Efectos Aleatorios (RE) utilizando la librería `plm` de R sobre la base de datos de panel balanceado de América del Sur (1994-2023).
+## Resultados Preliminares
 
-## Estadísticos Descriptivos de la Muestra
+### Estadísticos Descriptivos
 
-La @tbl-descriptives se calcula dinámicamente sobre las variables cuantitativas de la muestra del panel:
+Los estadísticos descriptivos del panel balanceado (2001-2023) constan en la @tbl-descriptives:
 
 ```{r}
 #| label: tbl-descriptives
-#| tbl-cap: "Estadísticos Descriptivos del Panel de América del Sur"
+#| tbl-cap: "Estadísticos Descriptivos del Panel de América del Sur (2001-2023)"
 #| echo: false
 #| warning: false
 #| message: false
@@ -19,95 +19,203 @@ df <- read_excel("data/panel_data.xlsx", sheet="data")
 
 # Resumen descriptivo
 summary_df <- data.frame(
-  Variable = c("VE", "PF", "IE", "AN", "RI"),
-  Mínimo = sapply(df[, c("VE", "PF", "IE", "AN", "RI")], min),
-  Promedio = sapply(df[, c("VE", "PF", "IE", "AN", "RI")], mean),
-  Máximo = sapply(df[, c("VE", "PF", "IE", "AN", "RI")], max),
-  Desv_Est = sapply(df[, c("VE", "PF", "IE", "AN", "RI")], sd)
+  Variable = c("VE (Dependencia de Rentas Extractivas)", "PF (Ingresos Impositivos)", "IE (Inversión Extranjera Directa)", "AN (Crédito Privado)", "RI (Reservas Internacionales)"),
+  Min = as.numeric(sapply(df[, c("VE", "PF", "IE", "AN", "RI")], min)),
+  Media = as.numeric(sapply(df[, c("VE", "PF", "IE", "AN", "RI")], mean)),
+  Max = as.numeric(sapply(df[, c("VE", "PF", "IE", "AN", "RI")], max)),
+  `Desv. Est.` = as.numeric(sapply(df[, c("VE", "PF", "IE", "AN", "RI")], sd)),
+  check.names = FALSE,
+  row.names = NULL
 )
-kable(summary_df, digits=4, format="markdown")
+kable(summary_df, digits=3, format="markdown")
 ```
 
-## Diagnóstico de Multicolinealidad (VIF)
+La varianza temporal e interindividual del panel consta en la @tbl-xtsum. La dependencia de rentas extractivas (`log_VE`) y los ingresos impositivos (`log_PF`) varían sobre todo entre países. La variación longitudinal es menor. Esta estructura espacial justifica el uso de efectos individuales.
 
-Para asegurar la validez de los coeficientes estimados y descartar problemas de multicolinealidad entre los regresores exógenos, se implementan regresiones auxiliares en R para calcular el **Factor de Inflación de la Varianza (VIF)**. La @tbl-vif detalla los VIFs obtenidos:
+| Variable | Variación | Media | Desv. Est. | Mínimo | Máximo | Observaciones |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **`log_VE`** | General | 1.569 | 0.889 | -1.528 | 3.375 | $N = 230$ |
+| | Entre países | | 0.791 | 0.242 | 2.764 | $n = 10$ |
+| | Temporal | | 0.473 | -0.201 | 2.360 | $T = 23$ |
+| **`log_PF`** | General | 2.646 | 0.209 | 2.059 | 3.079 | $N = 230$ |
+| | Entre países | | 0.201 | 2.204 | 2.886 | $n = 10$ |
+| | Temporal | | 0.084 | 2.327 | 2.906 | $T = 23$ |
+| **`log_IE`** | General | 3.282 | 0.594 | 2.041 | 4.246 | $N = 230$ |
+| | Entre países | | 0.599 | 2.247 | 4.150 | $n = 10$ |
+| | Temporal | | 0.167 | 2.933 | 3.977 | $T = 23$ |
+| **`log_AN`** | General | 3.504 | 0.597 | 2.187 | 4.817 | $N = 230$ |
+| | Entre países | | 0.530 | 2.618 | 4.585 | $n = 10$ |
+| | Temporal | | 0.319 | 2.627 | 4.455 | $T = 23$ |
+| **`log_RI`** | General | 2.601 | 0.629 | 0.697 | 3.940 | $N = 230$ |
+| | Entre países | | 0.523 | 1.444 | 3.277 | $n = 10$ |
+| | Temporal | | 0.385 | 0.742 | 3.446 | $T = 23$ |
+
+: Descomposición de Varianza de las Variables {#tbl-xtsum}
+
+### Pruebas de Diagnóstico
+
+Las matrices de correlación de Pearson para la muestra global y los subgrupos constan en la @tbl-correlation:
 
 ```{r}
-#| label: tbl-vif
-#| tbl-cap: "Cálculo del Factor de Inflación de la Varianza (VIF)"
+#| label: tbl-correlation
+#| tbl-cap: "Matrices de Correlación de Pearson con Niveles de Significancia (2001-2023)"
 #| echo: false
 #| warning: false
 #| message: false
 #| results: asis
-df$log_PF <- log(df$PF)
-df$log_IE <- log(df$IE)
-df$log_AN <- log(df$AN)
-df$val_RI <- df$RI
+library(knitr)
 
-# Calcular VIF auxiliar para cada regresor exógeno
-exog_vars <- c("log_PF", "log_IE", "log_AN", "val_RI")
-vif_vals <- sapply(exog_vars, function(var) {
-  form <- as.formula(paste(var, "~", paste(setdiff(exog_vars, var), collapse="+")))
-  fit <- lm(form, data=df)
-  r2 <- summary(fit)$r.squared
-  1 / (1 - r2)
-})
+vars <- c("VE", "PF", "IE", "AN", "RI")
+nombres_cortos <- c("VE", "PF", "IE", "AN", "RI")
+n <- length(vars)
 
-vif_df <- data.frame(
-  Variable = c("Log(Presión Fiscal)", "Log(Inversión Externa)", "Log(Ahorro Nacional)", "Estabilidad (RI)"),
-  VIF = vif_vals
-)
-kable(vif_df, digits=4, format="markdown")
+get_corr_matrix <- function(sub_df) {
+  corr_matrix_char <- matrix("", nrow=n, ncol=n, dimnames=list(nombres_cortos, nombres_cortos))
+  for (i in 1:n) {
+    for (j in 1:n) {
+      if (i == j) {
+        corr_matrix_char[i, j] <- "1.000"
+      } else {
+        res <- cor.test(sub_df[[vars[i]]], sub_df[[vars[j]]])
+        p <- res$p.value
+        r <- res$estimate
+        stars <- ""
+        if (p < 0.01) stars <- "***"
+        else if (p < 0.05) stars <- "**"
+        else if (p < 0.1) stars <- "*"
+        corr_matrix_char[i, j] <- paste0(format(round(r, 3), nsmall=3), stars)
+      }
+    }
+  }
+  return(corr_matrix_char)
+}
+
+cat("\n::: {.panel-tabset}\n\n")
+
+cat("## Global\n\n")
+print(kable(get_corr_matrix(df), format="markdown"))
+cat("\n\n")
+
+cat("## Hidrocarburos\n\n")
+hidro_df <- df[df$country %in% c("Bolivia", "Colombia", "Ecuador", "Venezuela"), ]
+print(kable(get_corr_matrix(hidro_df), format="markdown"))
+cat("\n\n")
+
+cat("## Minero-Agropecuario\n\n")
+minagro_df <- df[!df$country %in% c("Bolivia", "Colombia", "Ecuador", "Venezuela"), ]
+print(kable(get_corr_matrix(minagro_df), format="markdown"))
+cat("\n\n")
+
+cat(":::\n\n")
 ```
 
-Como se observa en la @tbl-vif, todos los valores VIF se encuentran significativamente por debajo del umbral crítico econométrico convencional de $5$ o $10$, indicando la **ausencia de multicolinealidad severa** en las especificaciones estimadas.
+El factor de inflación de la varianza (@tbl-vif) descarta problemas de multicolinealidad severa en el modelo global:
 
-## Tabla Comparada de Regresiones
+| Variable | VIF | Tolerancia |
+| :--- | :---: | :---: |
+| **`log_IE`** | 1.43 | 0.701 |
+| **`log_PF`** | 1.42 | 0.703 |
+| **`log_AN`** | 1.42 | 0.702 |
+| **`log_RI`** | 1.31 | 0.764 |
+| **Media VIF** | **1.40** | |
 
-La @tbl-models-output se genera dinámicamente utilizando `stargazer` a partir de las estimaciones del panel:
+: Diagnóstico de Multicolinealidad (VIF) {#tbl-vif}
 
-```{r}
-#| label: tbl-models-output
-#| tbl-cap: "Resultados de la Estimación de Panel de Vulnerabilidad Externa (FE vs RE)"
-#| echo: false
-#| warning: false
-#| message: false
-#| results: asis
-library(plm)
-library(stargazer)
+La prueba CD de Pesaran (@tbl-cd-pesaran) evalúa la dependencia transversal. La dependencia de rentas extractivas (`log_VE`), los ingresos impositivos (`log_PF`) y el crédito privado (`log_AN`) rechazan la hipótesis nula de independencia de sección cruzada ($p < 0.01$).
 
-# Estimar modelos
-fe_model <- plm(log(VE) ~ log(PF) + log(IE) + log(AN) + RI, 
-                data = df, index = c("country", "year"), model = "within")
+| Variable | CD-test | p-valor | promedio $\rho$ |
+| :--- | :---: | :---: | :---: |
+| **`log_VE`** | 11.361 | 0.000 | 0.35 |
+| **`log_PF`** | 8.446 | 0.000 | 0.26 |
+| **`log_IE`** | -0.168 | 0.867 | -0.01 |
+| **`log_AN`** | 16.581 | 0.000 | 0.52 |
+| **`log_RI`** | 1.098 | 0.272 | 0.03 |
 
-re_model <- plm(log(VE) ~ log(PF) + log(IE) + log(AN) + RI, 
-                data = df, index = c("country", "year"), model = "random")
+: Resultados del Test de Dependencia Transversal (CD de Pesaran) {#tbl-cd-pesaran}
 
-# Generar tabla académica comparativa
-stargazer(fe_model, re_model, type = "latex", 
-          column.labels = c("Efectos Fijos (FE)", "Efectos Aleatorios (RE)"),
-          covariate.labels = c("Log(Presión Fiscal)", "Log(Inversión Externa)", "Log(Ahorro Nacional)", "Estabilidad (RI)"),
-          dep.var.labels = "Log(Vulnerabilidad Externa - VE)",
-          header = FALSE, model.names = FALSE)
-```
+La prueba de Pesaran y Yamagata descarta coeficientes homogéneos. El estadístico Delta ($\Delta = 7.088$, $p < 0.001$) y el Delta ajustado ($\Delta_{adj} = 8.245$, $p < 0.001$) confirman la heterogeneidad de pendientes. Este resultado fundamenta la partición de la muestra por especialización productiva.
 
-## Análisis de Coeficientes y Elasticidades
+## Estimaciones y Discusión
 
-* **Presión Fiscal (`PF`)**: El impacto es positivo y altamente significativo ($\beta_{FE} \approx 2.91$, p-valor < 0.01). Dado que el modelo es log-log, esto indica una elasticidad directa: un incremento del $1\%$ en la presión fiscal se asocia con un aumento del $2.91\%$ en la renta de recursos naturales, reflejando el carácter rentista y primario-exportador del financiamiento tributario sudamericano.
-* **Ahorro Nacional (`AN`)**: Exhibe una relación negativa y estadísticamente significativa ($\beta_{FE} \approx -0.49$). Un aumento del $1\%$ en el crédito privado al sector productivo se asocia con una reducción del $0.49\%$ en la vulnerabilidad externa, sugiriendo que la diversificación financiera reduce la dependencia de recursos primarios.
-* **Estabilidad y Gobernanza (`RI`)**: Muestra un signo negativo esperado y significativo ($\beta_{FE} \approx -0.20$), validando que una mejor gobernanza mitiga la exposición sistémica ante perturbaciones externas.
+### Modelos Globales
 
-## Test de Hausman Dinámico
+Los estimadores globales de Efectos Fijos (FE), Efectos Aleatorios (RE) y Mínimos Cuadrados Generalizados Factibles (FGLS) constan en la @tbl-regression-output:
 
-Calculamos directamente el test de especificación de Hausman sobre ambos modelos plm en R:
 
-```{r}
-#| label: hausman-test
-#| echo: true
-#| warning: false
-#| message: false
-h_test <- phtest(fe_model, re_model)
-print(h_test)
-```
+| Regresor | Efectos Fijos (FE) | Efectos Aleatorios (RE) | FGLS Robusto (AR1) |
+| :--- | :---: | :---: | :---: |
+| **`log_PF`** | $2.202^{***}$ | $2.129^{***}$ | $1.406^{***}$ |
+| | $(0.354)$ | $(0.345)$ | $(0.298)$ |
+| **`log_IE`** | $0.158$ | $0.050$ | $-0.504^{***}$ |
+| | $(0.170)$ | $(0.159)$ | $(0.160)$ |
+| **`log_AN`** | $-0.534^{***}$ | $-0.520^{***}$ | $-0.245^{**}$ |
+| | $(0.089)$ | $(0.088)$ | $(0.123)$ |
+| **`log_RI`** | $0.197^{***}$ | $0.184^{**}$ | $-0.054$ |
+| | $(0.073)$ | $(0.073)$ | $(0.090)$ |
+| **Constante** | $-3.418^{***}$ | $-2.883^{**}$ | $0.539$ |
+| | $(1.172)$ | $(1.136)$ | $(1.084)$ |
+| **Observaciones** | 230 | 230 | 230 |
+| **Países** | 10 | 10 | 10 |
+| **R² (within)** | 0.266 | 0.265 | - |
+| **Estadístico** | $F(4, 216) = 19.58^{***}$ | $\chi^2(4) = 75.00^{***}$ | $\chi^2(4) = 61.49^{***}$ |
 
-El p-valor obtenido en el test es menor al $0.05$ (p-valor = `0.0002`), lo cual **rechaza firmemente la hipótesis nula ($H_0$)** al 1% de significancia. Por lo tanto, los efectos individuales por país están correlacionados con los regresores exógenos, y **el modelo de Efectos Fijos (FE) es el estimador consistente y el preferido para este estudio**.
+: Resultados Comparativos de Estimación de Datos de Panel Global {#tbl-regression-output}
+
+\begin{tablenotes}Significancia estadística: *** $p < 0.01$, ** $p < 0.05$, * $p < 0.1$. Errores estándar entre paréntesis.\end{tablenotes}
+
+### Estimaciones por Subgrupos
+
+La presencia de autocorrelación residual exige una corrección autorregresiva. La @tbl-xtregar expone la estimación de efectos fijos con perturbaciones AR(1) (estimador `xtregar`):
+
+| Regresor | xtregar Global | xtregar Hidrocarburos | xtregar Minero-Agropecuario |
+| :--- | :---: | :---: | :---: |
+| **`log_PF`** | $1.145^{***}$ | $0.828$ | $1.521^{***}$ |
+| | $(0.382)$ | $(0.710)$ | $(0.442)$ |
+| **`log_IE`** | $0.006$ | $-0.087$ | $0.874^{*}$ |
+| | $(0.252)$ | $(0.263)$ | $(0.512)$ |
+| **`log_AN`** | $-0.524^{***}$ | $-1.035^{***}$ | $-0.199$ |
+| | $(0.161)$ | $(0.239)$ | $(0.194)$ |
+| **`log_RI`** | $-0.066$ | $-0.105$ | $-0.033$ |
+| | $(0.089)$ | $(0.112)$ | $(0.130)$ |
+| **Constante** | $0.629$ | $4.084^{***}$ | $-4.931^{***}$ |
+| | $(0.469)$ | $(0.910)$ | $(0.769)$ |
+| **Observaciones** | 220 | 88 | 132 |
+| **Países** | 10 | 4 | 6 |
+| **rho AR(1)** | 0.693 | 0.583 | 0.699 |
+
+: Estimaciones de Efectos Fijos con Perturbaciones AR(1) (xtregar) {#tbl-xtregar}
+
+La prueba de Hausman robusta (@hausman1978specification) identifica el estimador consistente en cada caso. El modelo global no rechaza la hipótesis nula ($\chi^2(4) = 7.38$, $p = 0.1172$). Este resultado valida el estimador de efectos aleatorios (RE). Los subgrupos de Hidrocarburos ($\chi^2(3) = 12.27$, $p = 0.0065$) y Minero-Agropecuario ($\chi^2(4) = 23.84$, $p = 0.0001$) rechazan la hipótesis nula al 1%. Los efectos fijos (FE) son el estimador consistente para estas particiones.
+
+La presencia de autocorrelación serial (prueba de Wooldridge: $F(1, 9) = 137.88$, $p < 0.0001$) y heterocedasticidad grupal (prueba de Wald: $\chi^2(10) = 673.44$, $p < 0.0001$) invalida la eficiencia de los estimadores estándar. Los Mínimos Cuadrados Generalizados Factibles (FGLS) corrigen estas deficiencias. La @tbl-regression-groups detalla las estimaciones con estructura autorregresiva común AR(1) y varianzas heterocedásticas interindividuales:
+
+
+| Regresor | FGLS Global | FGLS Hidrocarburos | FGLS Minero-Agropecuario |
+| :--- | :---: | :---: | :---: |
+| **`log_PF`** | $1.406^{***}$ | $1.879^{***}$ | $1.193^{***}$ |
+| | $(0.298)$ | $(0.548)$ | $(0.338)$ |
+| **`log_IE`** | $-0.504^{***}$ | $-0.228$ | $-0.223$ |
+| | $(0.160)$ | $(0.190)$ | $(0.207)$ |
+| **`log_AN`** | $-0.245^{**}$ | $-0.969^{***}$ | $-0.016$ |
+| | $(0.123)$ | $(0.164)$ | $(0.139)$ |
+| **`log_RI`** | $-0.054$ | $-0.080$ | $0.050$ |
+| | $(0.090)$ | $(0.094)$ | $(0.122)$ |
+| **Constante** | $0.539$ | $1.355$ | $-1.274$ |
+| | $(1.084)$ | $(1.531)$ | $(1.274)$ |
+| **Observaciones** | 230 | 92 | 138 |
+| **Países** | 10 | 4 | 6 |
+| **Wald $\chi^2$** | $\chi^2(4) = 61.49^{***}$ | $\chi^2(4) = 52.99^{***}$ | $\chi^2(4) = 20.16^{***}$ |
+
+: Resultados Comparativos de Mínimos Cuadrados Generalizados Factibles (FGLS) {#tbl-regression-groups}
+
+\begin{tablenotes}Significancia estadística: *** $p < 0.01$, ** $p < 0.05$, * $p < 0.1$. Errores estándar entre paréntesis.\end{tablenotes}
+
+### Análisis de Elasticidades
+
+Los ingresos impositivos (`log_PF`) incrementan la dependencia de rentas extractivas en todas las estimaciones. Este efecto es positivo y significativo. La magnitud del coeficiente es superior en el subgrupo de Hidrocarburos ($\beta = 1.88$) frente al Minero-Agropecuario ($\beta = 1.19$). El resultado expone la vulnerabilidad de las finanzas públicas ante las oscilaciones de las rentas energéticas.
+
+La inversión extranjera directa (`log_IE`) reduce la dependencia global ($\beta = -0.50$). Sin embargo, su efecto pierde significancia estadística en las estimaciones por subgrupos FGLS. Este comportamiento sugiere que el impacto diversificador del capital externo depende de factores específicos del sector receptor.
+
+El crédito privado (`log_AN`) actúa de forma heterogénea. En las economías de Hidrocarburos, la profundización financiera reduce la dependencia de rentas extractivas ($\beta = -0.97$, $p < 0.01$). El resultado valida el rol del crédito como amortiguador de liquidez macroeconómica. En contraste, el coeficiente no es significativo en el grupo Minero-Agropecuario.
+
+La acumulación de reservas internacionales (`log_RI`) carece de significancia estadística bajo estimadores FGLS. La liquidez externa no mitiga directamente la dependencia extractiva. La política tributaria y el desarrollo financiero local representan los canales de transmisión preponderantes.
