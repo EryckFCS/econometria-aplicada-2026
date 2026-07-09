@@ -40,7 +40,7 @@ dev = [
 [tool.ruff]
 line-length = 88
 target-version = "py312"
-exclude = ["**/node_modules", ".venv", "build", "dist"]
+exclude = ["**/node_modules", ".venv", "build", "dist", "**/scratch/drafts/**"]
 
 
 [tool.ruff.lint]

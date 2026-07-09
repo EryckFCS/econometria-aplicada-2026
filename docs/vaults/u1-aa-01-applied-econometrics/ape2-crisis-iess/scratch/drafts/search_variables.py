@@ -1,5 +1,4 @@
 import os
-import json
 import pandas as pd
 import glob
 
@@ -17,7 +16,7 @@ for f in files:
             if matched:
                 print(f"\nCSV: {os.path.basename(f)}")
                 print("Matched columns:", matched)
-        except Exception as e:
+        except Exception:
             pass
     elif f.endswith(".xlsx") or f.endswith(".xls"):
         try:
@@ -28,7 +27,7 @@ for f in files:
                 if matched:
                     print(f"\nExcel: {os.path.basename(f)} | Sheet: {sheet}")
                     print("Matched columns:", matched)
-        except Exception as e:
+        except Exception:
             pass
     elif f.endswith(".parquet"):
         try:
@@ -37,5 +36,5 @@ for f in files:
             if matched:
                 print(f"\nParquet: {os.path.basename(f)}")
                 print("Matched columns:", matched)
-        except Exception as e:
+        except Exception:
             pass

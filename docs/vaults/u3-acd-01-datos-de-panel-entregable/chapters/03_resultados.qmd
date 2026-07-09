@@ -1,0 +1,117 @@
+# Resultados y Discusión
+
+Se estimaron los modelos de regresión para datos de panel (mínimos cuadrados ordinarios agrupados, efectos fijos y efectos aleatorios) y la especificación robusta de mínimos cuadrados generalizados factibles (FGLS) sobre la muestra balanceada cantonal de Ecuador para el periodo 2015-2024.
+
+## Estadísticos Descriptivos de la Muestra
+
+La base de datos conforma un panel balanceado de 221 cantones para el periodo 2015-2024, acumulando 2,210 observaciones. La @tbl-descriptives-canton detalla el comportamiento descriptivo general, inter-cantonal (*between*) e intra-temporal (*within*):
+
+| Variable | Variación | Media | Desviación Estándar | Mínimo | Maksimo | Observaciones |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **`LE`** | Overall | 7.6693 | 1.4836 | 4.7958 | 13.7182 | $N = 2210$ |
+| | Between | | 1.4859 | 4.8964 | 13.6655 | $n = 221$ |
+| | Within | | 0.0477 | 7.4441 | 7.8947 | $T = 10$ |
+| **`PR`** | Overall | -3.2655 | 0.6123 | -5.3747 | 0.6725 | $N = 2210$ |
+| | Between | | 0.5463 | -4.1766 | -0.7532 | $n = 221$ |
+| | Within | | 0.2789 | -5.8973 | -1.1628 | $T = 10$ |
+| **`TE`** | Overall | 10.5637 | 1.3901 | -6.5104 | 14.0851 | $N = 2210$ |
+| | Between | | 1.2078 | 4.0986 | 13.7870 | $n = 221$ |
+| | Within | | 0.6927 | -5.5065 | 12.5568 | $T = 10$ |
+| **`DE`** | Overall | 0.4272 | 0.4181 | -0.2987 | 2.0293 | $N = 2210$ |
+| | Between | | 0.4175 | -0.2481 | 2.0025 | $n = 221$ |
+| | Within | | 0.0356 | 0.3104 | 0.5543 | $T = 10$ |
+| **`PP`** | Overall | 10.8597 | 19.4740 | 0.0720 | 93.9932 | $N = 2210$ |
+| | Between | | 19.2623 | 0.0999 | 92.0415 | $n = 221$ |
+| | Within | | 3.1169 | -11.3998 | 44.1326 | $T = 10$ |
+
+: Estadísticos Descriptivos del Panel Cantonal de Ecuador {#tbl-descriptives-canton}
+
+## Diagnósticos de Colinealidad y Correlación
+
+### Matriz de Correlación de Pearson
+Las correlaciones lineales bivariadas muestran que la variable dependiente `LE` está fuertemente correlacionada de forma positiva con la participación provincial `PP` ($0.666$), el tamaño de facturación `TE` ($0.539$) y la densidad de firmas `DE` ($0.536$). Todos los coeficientes marcados con un asterisco son significativos al 1% de nivel de confianza:
+
+| Variables | `LE` | `PR` | `TE` | `DE` | `PP` |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **`LE`** | 1.0000 | | | | |
+| **`PR`** | -0.1391* | 1.0000 | | | |
+| **`TE`** | 0.5385* | 0.0073 | 1.0000 | | |
+| **`DE`** | 0.5362* | -0.1455* | 0.4730* | 1.0000 | |
+| **`PP`** | 0.6655* | 0.0961* | 0.2192* | 0.1703* | 1.0000 |
+
+### Factor de Inflación de la Varianza (VIF)
+El análisis del VIF confirma que todos los regresores poseen valores cercanos a la unidad, descartando cualquier sesgo crítico por multicolinealidad en el modelo (Media VIF: 1.19, Condición de número: 25.93):
+
+| Variable | VIF | Tolerancia ($1/\text{VIF}$) |
+| :--- | :---: | :---: |
+| **`DE`** | 1.34 | 0.7472 |
+| **`TE`** | 1.33 | 0.7529 |
+| **`PP`** | 1.07 | 0.9344 |
+| **`PR`** | 1.04 | 0.9592 |
+
+---
+
+## Resultados de la Estimación de Modelos de Panel
+
+A continuación se reportan los coeficientes estimados y errores estándar obtenidos mediante regresiones agrupadas (Pooled OLS), Efectos Fijos (FE) y Efectos Aleatorios (RE) en la @tbl-panel-output:
+
+| Regresores | Pooled OLS | Efectos Fijos (FE) | Efectos Aleatorios (RE) |
+| :--- | :---: | :---: | :---: |
+| **`PR`** | -0.3748*** | -0.0189*** | -0.0242*** |
+| | (0.0286) | (0.0041) | (0.0045) |
+| **`TE`** | 0.2991*** | 0.0282*** | 0.0288*** |
+| | (0.0142) | (0.0014) | (0.0015) |
+| **`DE`** | 1.0077*** | 0.2978*** | 0.3659*** |
+| | (0.0475) | (0.0268) | (0.0290) |
+| **`PP`** | 0.0435*** | 0.0006 | 0.0015*** |
+| | (0.0009) | (0.0004) | (0.0004) |
+| **Constante**| 2.3836*** | | 7.1130*** |
+| | (0.1743) | | (0.0625) |
+| **Obs** | 2210 | 2210 | 2210 |
+| **$R^2$ (Within)** | | 0.2170 | 0.2119 |
+
+: Resultados de la Estimación de Modelos de Panel {#tbl-panel-output}
+
+### Contraste y Selección del Estimador: Test de Hausman
+
+El test de especificación de Hausman arrojó un rechazo unánime de la hipótesis nula con un estadístico $\chi^2(4) = 406.40$ ($p < 0.0001$), confirmando que la heterogeneidad inobservable de los cantones está correlacionada con los regresores explicativos. Este contraste valida la selección del estimador de **Efectos Fijos (FE)** como el único consistente y eficiente.
+
+La comparación gráfica de los coeficientes de regresión estimados se detalla a continuación:
+
+![Comparación de Coeficientes de Regresión (FE vs RE)](assets/coef_comparison.png){#fig-coef-comp width=85%}
+
+---
+
+## Corrección de Perturbaciones: Modelo GLS Robusto (FGLS)
+
+Dado que las pruebas de diagnóstico detectaron problemas severos de heterocedasticidad inter-cantonal (Wald Modificado: $\chi^2_{221} = 2050.74$, $p<0.0001$), se aplicó la estimación por **Mínimos Cuadrados Generalizados Factibles (FGLS)** para corregir la variabilidad de las perturbaciones grupales y la autocorrelación serial de primer orden en el término de error.
+
+La @tbl-gls-output-python resume los resultados de FGLS a nivel global y segmentado por subgrupos de desarrollo cantonal (VAB):
+
+| Regresores | Modelo Global | VAB Alto | VAB Medio | VAB Bajo |
+| :--- | :---: | :---: | :---: | :---: |
+| **`PR`** (Productividad) | -0.2795*** | -0.7025*** | -0.2611*** | -0.0783** |
+| | (0.0489) | (0.0939) | (0.0720) | (0.0307) |
+| **`PR2`** (Productividad$^2$) | -0.0124 | -0.0567*** | 0.0009 | -0.0010 |
+| | (0.0078) | (0.0146) | (0.0117) | (0.0049) |
+| **`TE`** (Tamaño Empresa) | 0.0825*** | 0.0353*** | 0.0184*** | 0.1730*** |
+| | (0.0043) | (0.0057) | (0.0023) | (0.0063) |
+| **`DE`** (Densidad Empresa) | 0.8911*** | 0.4752*** | 0.6236*** | 0.4785*** |
+| | (0.0255) | (0.0383) | (0.0315) | (0.0323) |
+| **`PP`** (Part. Provincial) | 0.0359*** | 0.0249*** | 0.0263*** | 0.0187*** |
+| | (0.0009) | (0.0007) | (0.0015) | (0.0030) |
+| **Constante**| 5.2033*** | 6.1997*** | 6.0028*** | 4.3342*** |
+| | (0.0899) | (0.1658) | (0.1171) | (0.0810) |
+| **Obs** | 2210 | 740 | 730 | 740 |
+| **Wald $\chi^2$** | 4042.66 | 1537.65 | 1229.28 | 1075.96 |
+
+: Resultados FGLS Corregidos por Subgrupos de VAB {#tbl-gls-output-python}
+
+*Errores estándar entre paréntesis. Significancia estadística: *** $p<0.01$, ** $p<0.05$, * $p<0.1$.*
+
+## Discusión y Análisis de Elasticidades
+
+1. **La Relación No Lineal de la Productividad (`PR` y `PR2`)**:
+   En los cantones de **VAB Alto**, tanto el coeficiente de productividad lineal ($\beta_{\text{PR}} = -0.7025^{***}$) como el término cuadrático ($\beta_{\text{PR2}} = -0.0567^{***}$) son negativos y altamente significativos. Esto demuestra que en las economías cantonales más grandes y complejas de Ecuador, el aumento de la productividad media del trabajo genera un desplazamiento de empleo formal que se acelera de manera no lineal. Esto es plenamente consistente con el **efecto de sustitución capital-trabajo** y la automatización tecnológica en firmas de gran escala. En contraste, en cantones de **VAB Medio y Bajo**, el término cuadrático no es estadísticamente significativo y el efecto de la productividad opera de forma estrictamente lineal.
+2. **Escala y Densidad Empresarial (`TE` y `DE`)**:
+   La elasticidad positiva del empleo respecto al tamaño promedio de facturación empresarial (`TE` $= 0.0825$ global) y la densidad de las firmas (`DE` $= 0.8911$ global) corrobora que la formalización laboral depende directamente de la escala corporativa. Este impacto es sumamente alto en los cantones con **VAB Bajo** ($\beta_{\text{TE}} = 0.1730$), donde la supervivencia financiera y facturación de los pocos establecimientos estructurados determina críticamente la oferta laboral formal de esos territorios.

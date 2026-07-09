@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-import numpy as np
 
 # Definir rutas
 data_dir = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/data"
@@ -59,7 +58,7 @@ excel_output = os.path.join(data_dir, "master_previsional_ecuador.xlsx")
 try:
     df_master.to_parquet(parquet_output, index=False)
     df_master.to_excel(excel_output, index=False, sheet_name="Master_Previsional_Ecuador")
-    print(f"\n✅ Base maestra consolidada y guardada con éxito en la bóveda:")
+    print("\n✅ Base maestra consolidada y guardada con éxito en la bóveda:")
     print(f"   - Parquet: {parquet_output}")
     print(f"   - Excel:   {excel_output}")
     print(f"   - Cantidad de observaciones: {len(df_master)} (1990-2024)")

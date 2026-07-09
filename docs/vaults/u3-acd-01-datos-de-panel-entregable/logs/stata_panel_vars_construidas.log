@@ -1,0 +1,618 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  Z:/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u3-acd-01-datos-de-panel-entregable/logs/s
+> tata_panel_vars_construidas.log
+  log type:  text
+ opened on:   5 Jul 2026, 22:47:31
+
+. 
+. * Dependencias
+. *capture ssc install collin
+. *capture ssc install xttest3
+. *capture ssc install estout
+. *capture ssc install xthst
+. *capture ssc install xtcdf
+. *capture ssc install xtdcce2
+. *capture net install st0039_1, from(http://www.stata-journal.com/software/sj5-1)
+. *capture ssc install wbopendata
+. 
+. * ==============================================================================
+. * 1.5. OPCIONAL: DESCARGA DESDE LA API DEL BANCO MUNDIAL (PANEL DE PAÍSES)
+. * ==============================================================================
+. /*
+> * Ejecuta estas líneas si deseas construir la base de países directamente desde la API:
+> capture ssc install wbopendata
+> 
+> #delimit ;
+> wbopendata, 
+>     indicator(NY.GDP.TOTL.RT.ZS; BX.KLT.DINV.WD.GD.ZS; FS.AST.PRVT.GD.ZS) 
+>     country(ARG;BOL;BRA;CHL;COL;ECU;PRY;PER;URY;VEN) 
+>     year(2001:2023) 
+>     clear 
+>     long;
+> #delimit cr
+> 
+> * Renombrar variables y guardar base
+> rename ny_gdp_totl_rt_zs VE
+> rename bx_klt_dinv_wd_gd_zs IE
+> rename fs_ast_prvt_gd_zs AN
+> encode countryname, gen(country_id)
+> xtset country_id year
+> save "`base_path'/data/processed/panel_paises_api.dta", replace
+> */
+. 
+. * 2. Importación y declaración del panel cantonal (Ecuador)
+. import delimited "`base_path'/data/processed/panel_cantonal_consolidado.csv", stringcols(3) clear
+(encoding automatically selected: UTF-8)
+(12 vars, 2,210 obs)
+
+. encode codigo_canton, gen(canton_id_num)
+
+. encode vab_group,     gen(vab_group_num)
+
+. xtset canton_id_num anio, yearly
+
+Panel variable: canton_id_num (strongly balanced)
+ Time variable: anio, 2015 to 2024
+         Delta: 1 year
+
+. 
+. * 3. Construcción de variables
+. gen LE = ln(empleo_prom)
+
+. gen PR = ln(vab / empleo_prom)
+
+. gen PR2 = PR^2
+
+. gen TE = ln(ventas_totales / num_emp)
+
+. gen DE = ln(empleo_prom / num_emp)
+
+. gen PP = participacion_provincial
+
+. 
+. * 4. Descriptivos y diagnósticos iniciales
+. xtsum LE PR TE DE PP
+
+Variable         |      Mean   Std. dev.       Min        Max |    Observations
+-----------------+--------------------------------------------+----------------
+LE       overall |  7.669271   1.483598   4.795791   13.71819 |     N =    2210
+         between |              1.48586   4.896385   13.66554 |     n =     221
+         within  |             .0477141   7.444067   7.894724 |     T =      10
+                 |                                            |
+PR       overall | -3.265524   .6123442  -5.374666    .672469 |     N =    2210
+         between |             .5462732   -4.17655  -.7532374 |     n =     221
+         within  |             .2788671  -5.897258  -1.162768 |     T =      10
+                 |                                            |
+TE       overall |  10.56373   1.390148  -6.510407   14.08506 |     N =    2210
+         between |             1.207758    4.09864   13.78696 |     n =     221
+         within  |             .6926591  -5.506499   12.55684 |     T =      10
+                 |                                            |
+DE       overall |   .427218   .4181354  -.2987262   2.029301 |     N =    2210
+         between |             .4174656  -.2480682   2.002507 |     n =     221
+         within  |             .0356337   .3104459   .5542836 |     T =      10
+                 |                                            |
+PP       overall |  10.85973   19.47404    .071959   93.99321 |     N =    2210
+         between |             19.26225   .0998773   92.04147 |     n =     221
+         within  |             3.116949  -11.39982   44.13255 |     T =      10
+
+. collin PR TE DE PP
+(obs=2,210)
+
+  Collinearity Diagnostics
+
+                        SQRT                   R-
+  Variable      VIF     VIF    Tolerance    Squared
+----------------------------------------------------
+        PR      1.04    1.02    0.9592      0.0408
+        TE      1.33    1.15    0.7529      0.2471
+        DE      1.34    1.16    0.7472      0.2528
+        PP      1.07    1.03    0.9344      0.0656
+----------------------------------------------------
+  Mean VIF      1.19
+
+                           Cond
+        Eigenval          Index
+---------------------------------
+    1     3.8982          1.0000
+    2     0.6903          2.3763
+    3     0.3800          3.2029
+    4     0.0256         12.3350
+    5     0.0058         25.9343
+---------------------------------
+ Condition Number        25.9343 
+ Eigenvalues & Cond Index computed from scaled raw sscp (w/ intercept)
+ Det(correlation matrix)    0.7045
+
+. pwcorr LE PR TE DE PP, star(.01) bonferroni
+
+             |       LE       PR       TE       DE       PP
+-------------+---------------------------------------------
+          LE |   1.0000 
+          PR |  -0.1391*  1.0000 
+          TE |   0.5385*  0.0073   1.0000 
+          DE |   0.5362* -0.1455*  0.4730*  1.0000 
+          PP |   0.6655*  0.0961*  0.2192*  0.1703*  1.0000 
+
+. 
+. * 5. TEST DE HAUSMAN POR SUBGRUPO
+. 
+. * Global
+. quietly xtreg LE PR TE DE PP, fe
+
+. estimates store fixed_global
+
+. quietly xtreg LE PR TE DE PP, re
+
+. estimates store random_global
+
+. hausman fixed_global random_global, sigmamore
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |  fixed_global random_glo~l    Difference       Std. err.
+-------------+----------------------------------------------------------------
+          PR |    -.018948    -.0241685        .0052205        .0003601
+          TE |     .028154     .0288482       -.0006942        .0000741
+          DE |    .2977708      .365857       -.0680862        .0062909
+          PP |    .0006342     .0014996       -.0008654        .0000532
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(4) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            = 406.40
+Prob > chi2 = 0.0000
+
+. 
+. * VAB Alto
+. quietly xtreg LE PR TE DE PP if vab_group_num==1, fe
+
+. estimates store fixed_alto
+
+. quietly xtreg LE PR TE DE PP if vab_group_num==1, re
+
+. estimates store random_alto
+
+. hausman fixed_alto random_alto, sigmamore
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |   fixed_alto  random_alto     Difference       Std. err.
+-------------+----------------------------------------------------------------
+          PR |   -.0239396    -.0301982        .0062586        .0007811
+          TE |    .0200571     .0197455        .0003116           .0001
+          DE |    .2403641     .2593626       -.0189985        .0112716
+          PP |    .0008102     .0013897       -.0005796        .0000732
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(4) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            =  75.11
+Prob > chi2 = 0.0000
+
+. 
+. * VAB Bajo
+. quietly xtreg LE PR TE DE PP if vab_group_num==2, fe
+
+. estimates store fixed_bajo
+
+. quietly xtreg LE PR TE DE PP if vab_group_num==2, re
+
+. estimates store random_bajo
+
+. hausman fixed_bajo random_bajo, sigmamore
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |   fixed_bajo  random_bajo     Difference       Std. err.
+-------------+----------------------------------------------------------------
+          PR |   -.0037006    -.0045883        .0008877        .0002295
+          TE |    .1792069      .179537       -.0003301        .0004059
+          DE |     .548422     .5515218       -.0030997        .0035482
+          PP |    .0015849     .0017876       -.0002027        .0000503
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(4) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            =  20.04
+Prob > chi2 = 0.0005
+
+. 
+. * VAB Medio
+. quietly xtreg LE PR TE DE PP if vab_group_num==3, fe
+
+. estimates store fixed_medio
+
+. quietly xtreg LE PR TE DE PP if vab_group_num==3, re
+
+. estimates store random_medio
+
+. hausman fixed_medio random_medio, sigmamore
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |  fixed_medio  random_medio    Difference       Std. err.
+-------------+----------------------------------------------------------------
+          PR |   -.0273455    -.0346724        .0073268        .0009679
+          TE |    .0265323     .0263674        .0001649        .0001232
+          DE |    .2642887     .3397322       -.0754435        .0174993
+          PP |    .0004927     .0014549       -.0009622         .000119
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(4) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            = 104.07
+Prob > chi2 = 0.0000
+
+. 
+. * 6. TEST DE WOOLDRIDGE Y MODELOS DE CORRECCIÓN (xtregar)
+. 
+. * Global
+. xtserial LE PR TE DE PP
+
+Wooldridge test for autocorrelation in panel data
+H0: no first-order autocorrelation
+    F(  1,     220) =      0.014
+           Prob > F =      0.9068
+
+. xtregar LE PR TE DE PP, fe
+
+FE (within) regression with AR(1) disturbances  Number of obs     =      1,989
+Group variable: canton_id_num                   Number of groups  =        221
+
+R-squared:                                      Obs per group:
+     Within  = 0.2237                                         min =          9
+     Between = 0.4616                                         avg =        9.0
+     Overall = 0.4522                                         max =          9
+
+                                                F(4,1764)         =     127.05
+corr(u_i, Xb) = 0.6142                          Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+          LE | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          PR |  -.0323584   .0050152    -6.45   0.000    -.0421948   -.0225221
+          TE |   .0276185   .0014452    19.11   0.000     .0247841    .0304529
+          DE |   .2704385   .0291788     9.27   0.000     .2132099    .3276672
+          PP |   .0009955   .0004456     2.23   0.026     .0001216    .0018695
+       _cons |   7.147809   .0240434   297.29   0.000     7.100653    7.194966
+-------------+----------------------------------------------------------------
+      rho_ar |  .08916122
+     sigma_u |  1.3931475
+     sigma_e |  .04638912
+     rho_fov |  .99889247   (fraction of variance because of u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(220,1764) = 2315.38                 Prob > F = 0.0000
+
+. 
+. * VAB Alto
+. xtserial LE PR TE DE PP if vab_group_num==1
+
+Wooldridge test for autocorrelation in panel data
+H0: no first-order autocorrelation
+    F(  1,      73) =      2.038
+           Prob > F =      0.1577
+
+. xtregar LE PR TE DE PP if vab_group_num==1, fe
+
+FE (within) regression with AR(1) disturbances  Number of obs     =        666
+Group variable: canton_id_num                   Number of groups  =         74
+
+R-squared:                                      Obs per group:
+     Within  = 0.1867                                         min =          9
+     Between = 0.1851                                         avg =        9.0
+     Overall = 0.1813                                         max =          9
+
+                                                F(4,588)          =      33.74
+corr(u_i, Xb) = 0.3443                          Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+          LE | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          PR |  -.0361625   .0090129    -4.01   0.000    -.0538638   -.0184612
+          TE |   .0196323   .0020466     9.59   0.000     .0156127    .0236519
+          DE |   .2028377    .052198     3.89   0.000     .1003204    .3053549
+          PP |   .0010552   .0005959     1.77   0.077    -.0001151    .0022256
+       _cons |   8.709766   .0536234   162.42   0.000     8.604449    8.815082
+-------------+----------------------------------------------------------------
+      rho_ar |   .0615244
+     sigma_u |  1.2107304
+     sigma_e |  .04760708
+     rho_fov |  .99845625   (fraction of variance because of u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(73,588) = 2396.81                   Prob > F = 0.0000
+
+. 
+. * VAB Bajo
+. xtserial LE PR TE DE PP if vab_group_num==2
+
+Wooldridge test for autocorrelation in panel data
+H0: no first-order autocorrelation
+    F(  1,      73) =      0.025
+           Prob > F =      0.8751
+
+. xtregar LE PR TE DE PP if vab_group_num==2, fe
+
+FE (within) regression with AR(1) disturbances  Number of obs     =        666
+Group variable: canton_id_num                   Number of groups  =         74
+
+R-squared:                                      Obs per group:
+     Within  = 0.7327                                         min =          9
+     Between = 0.2748                                         avg =        9.0
+     Overall = 0.2771                                         max =          9
+
+                                                F(4,588)          =     402.84
+corr(u_i, Xb) = 0.1502                          Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+          LE | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          PR |  -.0063824   .0053508    -1.19   0.233    -.0168913    .0041266
+          TE |   .1786772   .0047323    37.76   0.000      .169383    .1879714
+          DE |   .5397513   .0287747    18.76   0.000     .4832377     .596265
+          PP |    .001808   .0012387     1.46   0.145    -.0006249    .0042409
+       _cons |   4.495059   .0444221   101.19   0.000     4.407813    4.582304
+-------------+----------------------------------------------------------------
+      rho_ar |  .06426099
+     sigma_u |  .53338022
+     sigma_e |  .02662593
+     rho_fov |  .99751427   (fraction of variance because of u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(73,588) = 2527.52                   Prob > F = 0.0000
+
+. 
+. * VAB Medio
+. xtserial LE PR TE DE PP if vab_group_num==3
+
+Wooldridge test for autocorrelation in panel data
+H0: no first-order autocorrelation
+    F(  1,      72) =      0.038
+           Prob > F =      0.8464
+
+. xtregar LE PR TE DE PP if vab_group_num==3, fe
+
+FE (within) regression with AR(1) disturbances  Number of obs     =        657
+Group variable: canton_id_num                   Number of groups  =         73
+
+R-squared:                                      Obs per group:
+     Within  = 0.2497                                         min =          9
+     Between = 0.3238                                         avg =        9.0
+     Overall = 0.3103                                         max =          9
+
+                                                F(4,580)          =      48.27
+corr(u_i, Xb) = 0.4489                          Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+          LE | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          PR |  -.0445003   .0101261    -4.39   0.000    -.0643886    -.024612
+          TE |   .0259107   .0022047    11.75   0.000     .0215806    .0302409
+          DE |   .2436873   .0527993     4.62   0.000     .1399861    .3473884
+          PP |   .0007347   .0008749     0.84   0.401    -.0009837    .0024531
+       _cons |   6.928247   .0391051   177.17   0.000     6.851442    7.005052
+-------------+----------------------------------------------------------------
+      rho_ar |   .0744446
+     sigma_u |  .62847146
+     sigma_e |   .0463216
+     rho_fov |   .9945969   (fraction of variance because of u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(72,580) = 578.16                    Prob > F = 0.0000
+
+. 
+. * 7. TEST DE HETEROCEDASTICIDAD (Wald para FE)
+. 
+. * Global
+. quietly xtreg LE PR TE DE PP, fe
+
+. xttest3
+
+Modified Wald test for groupwise heteroskedasticity
+in fixed effect regression model
+
+H0: sigma(i)^2 = sigma^2 for all i
+
+chi2 (221)  =       2050.74
+Prob > chi2 =          0.0000
+
+
+. 
+. * VAB Alto
+. quietly xtreg LE PR TE DE PP if vab_group_num==1, fe
+
+. xttest3
+
+Modified Wald test for groupwise heteroskedasticity
+in fixed effect regression model
+
+H0: sigma(i)^2 = sigma^2 for all i
+
+chi2 (74)  =         689.05
+Prob > chi2 =          0.0000
+
+
+. 
+. * VAB Bajo
+. quietly xtreg LE PR TE DE PP if vab_group_num==2, fe
+
+. xttest3
+
+Modified Wald test for groupwise heteroskedasticity
+in fixed effect regression model
+
+H0: sigma(i)^2 = sigma^2 for all i
+
+chi2 (74)  =         733.25
+Prob > chi2 =          0.0000
+
+
+. 
+. * VAB Medio
+. quietly xtreg LE PR TE DE PP if vab_group_num==3, fe
+
+. xttest3
+
+Modified Wald test for groupwise heteroskedasticity
+in fixed effect regression model
+
+H0: sigma(i)^2 = sigma^2 for all i
+
+chi2 (73)  =         667.45
+Prob > chi2 =          0.0000
+
+
+. 
+. * 8. MODELOS GLS CORREGIDOS (xtgls)
+. 
+. * Global
+. xtgls LE PR PR2 TE DE PP, p(h) c(ar1)
+
+Cross-sectional time-series FGLS regression
+
+Coefficients:  generalized least squares
+Panels:        heteroskedastic
+Correlation:   common AR(1) coefficient for all panels  (0.9098)
+
+Estimated covariances      =       221          Number of obs     =      2,210
+Estimated autocorrelations =         1          Number of groups  =        221
+Estimated coefficients     =         6          Time periods      =         10
+                                                Wald chi2(5)      =    4042.66
+                                                Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+          LE | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          PR |  -.2794861   .0488835    -5.72   0.000     -.375296   -.1836761
+         PR2 |  -.0124468   .0077717    -1.60   0.109     -.027679    .0027854
+          TE |   .0825392   .0043167    19.12   0.000     .0740786    .0909997
+          DE |   .8911166   .0255337    34.90   0.000     .8410714    .9411618
+          PP |   .0359398    .000896    40.11   0.000     .0341837    .0376959
+       _cons |   5.203254   .0899115    57.87   0.000      5.02703    5.379477
+------------------------------------------------------------------------------
+
+. estimates store gls_global
+
+. 
+. * VAB Alto
+. xtgls LE PR PR2 TE DE PP if vab_group_num==1, p(h) c(ar1)
+
+Cross-sectional time-series FGLS regression
+
+Coefficients:  generalized least squares
+Panels:        heteroskedastic
+Correlation:   common AR(1) coefficient for all panels  (0.9110)
+
+Estimated covariances      =        74          Number of obs     =        740
+Estimated autocorrelations =         1          Number of groups  =         74
+Estimated coefficients     =         6          Time periods      =         10
+                                                Wald chi2(5)      =    1537.65
+                                                Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+          LE | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          PR |  -.7025158   .0938716    -7.48   0.000    -.8865007   -.5185308
+         PR2 |  -.0566621   .0146142    -3.88   0.000    -.0853054   -.0280189
+          TE |   .0353429   .0056795     6.22   0.000     .0242113    .0464746
+          DE |    .475178   .0383259    12.40   0.000     .4000605    .5502954
+          PP |   .0248902   .0007162    34.75   0.000     .0234865    .0262939
+       _cons |   6.199703   .1657827    37.40   0.000     5.874775    6.524631
+------------------------------------------------------------------------------
+
+. estimates store gls_alto
+
+. 
+. * VAB Bajo
+. xtgls LE PR PR2 TE DE PP if vab_group_num==2, p(h) c(ar1)
+
+Cross-sectional time-series FGLS regression
+
+Coefficients:  generalized least squares
+Panels:        heteroskedastic
+Correlation:   common AR(1) coefficient for all panels  (0.9474)
+
+Estimated covariances      =        74          Number of obs     =        740
+Estimated autocorrelations =         1          Number of groups  =         74
+Estimated coefficients     =         6          Time periods      =         10
+                                                Wald chi2(5)      =    1075.96
+                                                Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+          LE | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          PR |  -.0782507    .030673    -2.55   0.011    -.1383687   -.0181326
+         PR2 |  -.0010185   .0048846    -0.21   0.835    -.0105921    .0085552
+          TE |   .1729647   .0063009    27.45   0.000     .1606152    .1853142
+          DE |   .4785019   .0322789    14.82   0.000     .4152365    .5417674
+          PP |   .0186992   .0030496     6.13   0.000     .0127222    .0246763
+       _cons |    4.33416   .0810346    53.49   0.000     4.175336    4.492985
+------------------------------------------------------------------------------
+
+. estimates store gls_bajo
+
+. 
+. * VAB Medio
+. xtgls LE PR PR2 TE DE PP if vab_group_num==3, p(h) c(ar1)
+
+Cross-sectional time-series FGLS regression
+
+Coefficients:  generalized least squares
+Panels:        heteroskedastic
+Correlation:   common AR(1) coefficient for all panels  (0.8387)
+
+Estimated covariances      =        73          Number of obs     =        730
+Estimated autocorrelations =         1          Number of groups  =         73
+Estimated coefficients     =         6          Time periods      =         10
+                                                Wald chi2(5)      =    1229.28
+                                                Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+          LE | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          PR |  -.2610556   .0720244    -3.62   0.000    -.4022209   -.1198903
+         PR2 |   .0008683   .0117269     0.07   0.941    -.0221161    .0238526
+          TE |    .018392   .0022823     8.06   0.000     .0139188    .0228652
+          DE |   .6235885   .0314889    19.80   0.000     .5618714    .6853056
+          PP |   .0262841    .001478    17.78   0.000     .0233872     .029181
+       _cons |   6.002794   .1171461    51.24   0.000     5.773192    6.232396
+------------------------------------------------------------------------------
+
+. estimates store gls_medio
+
+. 
+. * 9. TABLA COMPARATIVA GLS Y PRUEBAS AVANZADAS
+. 
+. esttab gls_global gls_alto gls_bajo gls_medio using "`base_path'/logs/Resultados_GLS.rtf", ///
+>     scalars(R_g r2_w r2_b r2_o r2_a F chi2) t ar2 compress label ///
+>     title("Tabla 2. Regresion de Panel mediante FGLS por subgrupos de VAB") ///
+>     nonumbers mtitles("Global" "VAB Alto" "VAB Bajo" "VAB Medio") replace
+(output written to /home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u3-acd-01-datos-de-panel-entregable/lo
+> gs/Resultados_GLS.rtf)
+
+. 
+. * Pruebas de Homogeneidad y CD
+. capture xthst LE PR TE DE PP
+
+. capture xtcdf LE PR TE DE PP
+
+. capture xtcse2 LE PR TE DE PP
+
+. 
+. log close
+      name:  <unnamed>
+       log:  Z:/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u3-acd-01-datos-de-panel-entregable/logs/s
+> tata_panel_vars_construidas.log
+  log type:  text
+ closed on:   5 Jul 2026, 22:47:35
+-------------------------------------------------------------------------------------------------------------------------------------------------------------

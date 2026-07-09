@@ -13,11 +13,13 @@ htmlcov/
 .venv
 
 # Quarto
-/.quarto/
+**/.quarto/
 **/*.quarto_ipynb*
 **/*_files/
 **/*_cache/
 _site/
+*.stswp
+
 
 # Project data artifacts
 data/*

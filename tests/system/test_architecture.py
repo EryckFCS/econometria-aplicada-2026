@@ -79,8 +79,13 @@ def test_governance_files():
 
 def test_main_build_status():
     """Valida el estado e identidad del nodo."""
-    from main import build_status
-    status = build_status()
+    try:
+        from main import build_status
+        status = build_status()
+    except ModuleNotFoundError as e:
+        if "ecs_quantitative" in str(e):
+            pytest.skip("ecs_quantitative no está instalado en este entorno.")
+        raise
     assert "project_root" in status
     assert "project_name" in status
     assert "rag_collection" in status

@@ -1,0 +1,15 @@
+# Introducción
+
+El mercado de trabajo ecuatoriano enfrenta un desequilibrio estructural caracterizado por altos índices de subempleo e informalidad. En este contexto, la definición operativa de empleo formal en el país se establece a través de la afiliación activa a la seguridad social (IESS). De acuerdo con @diazsanchez2024immigration, a inicios de 2022 el mercado laboral formal en el Ecuador representaba el 42.5%, mientras que el sector informal absorbía al 51.4% de la población ocupada. A nivel cantonal, la capacidad de generación de empleo formal con afiliación a la seguridad social depende de la escala de producción agregada local, la densidad de empresas activas y el volumen de facturación mercantil. 
+
+# Planteamiento del Problema
+
+Las investigaciones macroeconómicas tradicionales suelen ignorar estas dinámicas subnacionales debido a sesgos de agregación. Este estudio aborda dicho vacío cuantificando las elasticidades de la demanda de trabajo formal respecto a indicadores de productividad laboral y escala empresarial en el territorio. El problema central consiste en evaluar cómo las diferencias cantonales en productividad laboral y escala empresarial determinan la demanda de empleo formal en el Ecuador, controlando por la heterogeneidad territorial inobservable que sesga las estimaciones de mínimos cuadrados ordinarios.
+
+# Justificación
+
+Este estudio se justifica por tres razones analíticas diferenciadas. En primer lugar, responde a la necesidad de superar las limitaciones de representatividad territorial de los modelos tradicionales en Ecuador. Como demuestran @matano2020drives, la segmentación espacial del empleo y las primas salariales en el país generan desequilibrios que las estimaciones nacionales agrupadas no logran identificar. El uso de un panel cantonal de 221 municipios permite aislar este sesgo aplicando estimadores consistentes de efectos fijos.
+
+En segundo lugar, la investigación aporta evidencia empírica clave sobre la heterogeneidad del empleo según la escala cantonal. Como evidencia @caminomogro2023tax, las políticas fiscales uniformes no generan empleo formal diferencial por sector, sugiriendo que la heterogeneidad territorial es el canal relevante. Esto refuerza nuestro argumento de que es necesario analizar el empleo a través de cantones de manera diferenciada para capturar la verdadera estructura de respuesta del mercado de trabajo ecuatoriano.
+
+Finalmente, los resultados tienen implicaciones prácticas para el diseño de políticas públicas. Las elasticidades estimadas proveen insumos para formular políticas de fomento al empleo y simplificación de trámites adaptadas a la estructura empresarial específica de cada cantón, evitando regulaciones nacionales uniformes que suelen desincentivar la formalización en territorios de menor desarrollo relativo.

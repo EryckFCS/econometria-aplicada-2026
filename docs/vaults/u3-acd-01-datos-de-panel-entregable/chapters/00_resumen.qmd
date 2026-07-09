@@ -1,0 +1,7 @@
+# Resumen {.unnumbered}
+
+En este estudio se analizan los determinantes del empleo formal cantonal en el Ecuador durante el periodo 2015-2024, integrando factores de productividad laboral, escala y densidad empresarial a nivel territorial. A través de un panel de datos balanceado de 221 municipios estimado mediante Efectos Fijos (FE) y Mínimos Cuadrados Generalizados Factibles (FGLS) para corregir autocorrelación y heterocedasticidad, se evalúa cómo la productividad media del trabajo y la escala de la firma impactan en la generación de plazas de empleo formal con afiliación activa al IESS. Los resultados empíricos indican la presencia de una relación negativa y no lineal (cóncava) entre la productividad laboral y el empleo formal en cantones con mayor desarrollo productivo (VAB Alto), sugiriendo un efecto sustitución de capital por trabajo mediante procesos de automatización y modernización. En contraste, en territorios de menor desarrollo relativo (VAB Bajo), el empleo formal exhibe una altísima dependencia y sensibilidad lineal respecto al tamaño y densidad de facturación de las pocas micro y pequeñas empresas formalizadas locales.
+
+**Palabras clave:** Empleo Formal Cantonal, Productividad Laboral, Datos de Panel, Efectos Fijos, FGLS, Ecuador.
+
+**Clasificación JEL:** J23, L25, R12, C23, O18.

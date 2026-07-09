@@ -3,457 +3,798 @@
        log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econometrics_2026\docs\vaults\u3-acd-01-datos-de-panel\scripts\../logs/s
 > tata_panel_estimation.log
   log type:  text
- opened on:  25 Jun 2026, 09:39:22
+ opened on:   6 Jul 2026, 02:26:59
 
 . 
-. di "======================================================================"
-======================================================================
+. // Importar y preparar panel balanceado (2001-2023)
+. import excel "../data/panel_data.xlsx", sheet("data") firstrow clear
+(7 vars, 230 obs)
 
-. di "INICIO DEL PROCESO DE ESTIMACIÓN DE PANEL - CANTONES DE ECUADOR"
-INICIO DEL PROCESO DE ESTIMACIÓN DE PANEL - CANTONES DE ECUADOR
-
-. di "======================================================================"
-======================================================================
+. keep if year >= 2001
+(0 observations deleted)
 
 . 
-. * Importar los datos de panel sanitizados
-. import excel "../data/datos_de_panel_sanitized.xlsx", sheet("panel_data") firstrow clear
-(10 vars, 2,210 obs)
+. encode country, gen(country_id)
 
-. 
-. * Generar variables transformadas logarítmicamente (elasticidades)
-. gen log_ventas = log(ventas_totales)
+. xtset country_id year
 
-. gen log_empresas = log(num_emp)
-
-. gen log_empleo = log(empleo_prom)
-
-. 
-. * Configurar el panel de datos
-. xtset canton_id year
-
-Panel variable: canton_id (strongly balanced)
- Time variable: year, 2015 to 2024
+Panel variable: country_id (strongly balanced)
+ Time variable: year, 2001 to 2023
          Delta: 1 unit
 
 . 
-. * Describir y resumir las variables del panel
+. // Transformación logarítmica de variables
+. gen log_VE = log(VE)
+
+. gen log_PF = log(PF)
+
+. gen log_IE = log(IE)
+
+. gen log_AN = log(AN)
+
+. gen log_RI = log(RI)
+
+. 
+. // Grupos por patrón de especialización primaria (1: Hidrocarburos, 2: Minero-Agropecuario)
+. gen grupo_especializacion = 1 if country == "Bolivia" | country == "Colombia" | country == "Ecuador" | country == "Venezuela"
+(138 missing values generated)
+
+. replace grupo_especializacion = 2 if grupo_especializacion == . & country != ""
+(138 real changes made)
+
+. label define espec_lbl 1 "Hidrocarburos" 2 "Minero-Agropecuario"
+
+. label values grupo_especializacion espec_lbl
+
+. 
+. // Descriptivos y correlación global y subgrupos
 . xtdes
 
-canton_id:  101, 102, ..., 2403                              n =        221
-    year:  2015, 2016, ..., 2024                             T =         10
+country_id:  1, 2, ..., 10                                   n =         10
+    year:  2001, 2002, ..., 2023                             T =         23
            Delta(year) = 1 unit
-           Span(year)  = 10 periods
-           (canton_id*year uniquely identifies each observation)
+           Span(year)  = 23 periods
+           (country_id*year uniquely identifies each observation)
 
 Distribution of T_i:   min      5%     25%       50%       75%     95%     max
-                        10      10      10        10        10      10      10
+                        23      23      23        23        23      23      23
 
      Freq.  Percent    Cum. |  Pattern
- ---------------------------+------------
-      221    100.00  100.00 |  1111111111
- ---------------------------+------------
-      221    100.00         |  XXXXXXXXXX
+ ---------------------------+-------------------------
+       10    100.00  100.00 |  11111111111111111111111
+ ---------------------------+-------------------------
+       10    100.00         |  XXXXXXXXXXXXXXXXXXXXXXX
 
-. xtsum log_ventas log_empresas log_empleo
+. xtsum log_VE log_PF log_IE log_AN log_RI
 
 Variable         |      Mean   Std. dev.       Min        Max |    Observations
 -----------------+--------------------------------------------+----------------
-log_ve~s overall |  17.80579   2.305315   2.302585   25.26884 |     N =    2210
-         between |             2.195438   8.615338   25.08422 |     n =     221
-         within  |             .7170539   1.537711    19.9182 |     T =      10
+log_VE   overall |   1.56918   .8889725  -1.528319   3.374956 |     N =     230
+         between |             .7914396   .2416748   2.764048 |     n =      10
+         within  |             .4733617  -.2008134   2.359834 |     T =      23
                  |                                            |
-log_em~s overall |  7.242053   1.307893   4.406719   12.62467 |     N =    2210
-         between |             1.309445   4.516697   12.55905 |     n =     221
-         within  |             .0540841   7.017575   7.534201 |     T =      10
+log_PF   overall |  2.645768   .2085746   2.058971   3.078795 |     N =     230
+         between |             .2008359   2.204301   2.885665 |     n =      10
+         within  |             .0839244   2.327366   2.906461 |     T =      23
                  |                                            |
-log_em~o overall |  7.669271   1.483598   4.795791   13.71819 |     N =    2210
-         between |              1.48586   4.896385   13.66554 |     n =     221
-         within  |             .0477141   7.444067   7.894724 |     T =      10
+log_IE   overall |  3.282424   .5935206    2.04122   4.245634 |     N =     230
+         between |             .5990547   2.246636   4.149906 |     n =      10
+         within  |             .1669624   2.932608   3.976525 |     T =      23
+                 |                                            |
+log_AN   overall |  3.503964    .596524   2.186736   4.816747 |     N =     230
+         between |             .5304762   2.618302   4.584536 |     n =      10
+         within  |             .3185442   2.627384    4.45476 |     T =      23
+                 |                                            |
+log_RI   overall |  2.601445   .6289315   .6973785   3.939843 |     N =     230
+         between |              .523222   1.444309   3.276986 |     n =      10
+         within  |             .3848295   .7416354   3.446314 |     T =      23
+
+. xtsum log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 1
+
+Variable         |      Mean   Std. dev.       Min        Max |    Observations
+-----------------+--------------------------------------------+----------------
+log_VE   overall |  2.162752   .5908416   .9365638   3.374956 |     N =      92
+         between |             .4573596   1.672119   2.764048 |     n =       4
+         within  |             .4364475   1.030579   2.899956 |     T =      23
+                 |                                            |
+log_PF   overall |  2.673086    .110646   2.418838   2.865749 |     N =      92
+         between |             .0785454   2.605056   2.785018 |     n =       4
+         within  |              .086975   2.354684   2.933779 |     T =      23
+                 |                                            |
+log_IE   overall |  2.968437   .3480672     2.4681   3.517498 |     N =      92
+         between |             .3035041   2.738219   3.412871 |     n =       4
+         within  |             .2265073   2.618622   3.662538 |     T =      23
+                 |                                            |
+log_AN   overall |  3.449372   .4249582   2.186736   4.239874 |     N =      92
+         between |             .3323225   3.034686   3.829238 |     n =       4
+         within  |             .3112082   2.601423    4.06568 |     T =      23
+                 |                                            |
+log_RI   overall |  2.366365   .7587032   .6973785   3.939843 |     N =      92
+         between |             .6853973   1.444309   3.094975 |     n =       4
+         within  |             .4684354   .5065552   3.211234 |     T =      23
+
+. xtsum log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 2
+
+Variable         |      Mean   Std. dev.       Min        Max |    Observations
+-----------------+--------------------------------------------+----------------
+log_VE   overall |  1.173466   .8335192  -1.528319   2.853523 |     N =     138
+         between |             .7295219   .2416748    2.06958 |     n =       6
+         within  |             .4980111  -.5965276    1.96412 |     T =      23
+                 |                                            |
+log_PF   overall |  2.627556    .252488   2.058971   3.078795 |     N =     138
+         between |             .2605887   2.204301   2.885665 |     n =       6
+         within  |             .0821487   2.399304   2.820686 |     T =      23
+                 |                                            |
+log_IE   overall |  3.491748   .6308815    2.04122   4.245634 |     N =     138
+         between |             .6776729   2.246636   4.149906 |     n =       6
+         within  |             .1118817   3.199301   3.734086 |     T =      23
+                 |                                            |
+log_AN   overall |  3.540359   .6866663    2.27032   4.816747 |     N =     138
+         between |             .6605244   2.618302   4.584536 |     n =       6
+         within  |             .3244683   2.663778   4.491154 |     T =      23
+                 |                                            |
+log_RI   overall |  2.758165   .4658095   1.268017   3.616806 |     N =     138
+         between |             .3704389    2.19491   3.276986 |     n =       6
+         within  |             .3190449   1.474067   3.351667 |     T =      23
 
 . 
-. *==============================================================================*
-. * 1. ESTIMACIÓN GLOBAL (TODOS LOS CANTONES)
-. *==============================================================================*
-. di ""
+. collin log_PF log_IE log_AN log_RI
+(obs=230)
 
+  Collinearity Diagnostics
 
-. di ">>> ESTIMACIÓN DEL MODELO DE EFECTOS FIJOS (GLOBAL) <<<"
->>> ESTIMACIÓN DEL MODELO DE EFECTOS FIJOS (GLOBAL) <<<
+                        SQRT                   R-
+  Variable      VIF     VIF    Tolerance    Squared
+----------------------------------------------------
+    log_PF      1.42    1.19    0.7027      0.2973
+    log_IE      1.43    1.19    0.7008      0.2992
+    log_AN      1.42    1.19    0.7019      0.2981
+    log_RI      1.31    1.14    0.7643      0.2357
+----------------------------------------------------
+  Mean VIF      1.40
 
-. xtreg log_ventas log_empresas log_empleo, fe
+                           Cond
+        Eigenval          Index
+---------------------------------
+    1     4.9199          1.0000
+    2     0.0394         11.1737
+    3     0.0224         14.8316
+    4     0.0160         17.5286
+    5     0.0023         46.2846
+---------------------------------
+ Condition Number        46.2846 
+ Eigenvalues & Cond Index computed from scaled raw sscp (w/ intercept)
+ Det(correlation matrix)    0.5332
 
-Fixed-effects (within) regression               Number of obs     =      2,210
-Group variable: canton_id                       Number of groups  =        221
+. pwcorr log_VE log_PF log_IE log_AN log_RI, star(.01) bonferroni
+
+             |   log_VE   log_PF   log_IE   log_AN   log_RI
+-------------+---------------------------------------------
+      log_VE |   1.0000 
+      log_PF |   0.3168*  1.0000 
+      log_IE |  -0.4454* -0.0918   1.0000 
+      log_AN |   0.0803   0.4264*  0.2979*  1.0000 
+      log_RI |  -0.1045   0.2368*  0.3982*  0.2078   1.0000 
+
+. 
+. collin log_PF log_IE log_AN log_RI if grupo_especializacion == 1
+(obs=92)
+
+  Collinearity Diagnostics
+
+                        SQRT                   R-
+  Variable      VIF     VIF    Tolerance    Squared
+----------------------------------------------------
+    log_PF      2.06    1.44    0.4852      0.5148
+    log_IE      1.66    1.29    0.6040      0.3960
+    log_AN      1.51    1.23    0.6613      0.3387
+    log_RI      1.47    1.21    0.6789      0.3211
+----------------------------------------------------
+  Mean VIF      1.68
+
+                           Cond
+        Eigenval          Index
+---------------------------------
+    1     4.9100          1.0000
+    2     0.0697          8.3927
+    3     0.0112         20.9697
+    4     0.0087         23.7799
+    5     0.0004        110.7314
+---------------------------------
+ Condition Number       110.7314 
+ Eigenvalues & Cond Index computed from scaled raw sscp (w/ intercept)
+ Det(correlation matrix)    0.4288
+
+. pwcorr log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 1, star(.01) bonferroni
+
+             |   log_VE   log_PF   log_IE   log_AN   log_RI
+-------------+---------------------------------------------
+      log_VE |   1.0000 
+      log_PF |   0.0939   1.0000 
+      log_IE |  -0.4478* -0.3009   1.0000 
+      log_AN |  -0.6449*  0.3998*  0.2437   1.0000 
+      log_RI |  -0.0182   0.3933*  0.2287   0.1424   1.0000 
+
+. 
+. collin log_PF log_IE log_AN log_RI if grupo_especializacion == 2
+(obs=138)
+
+  Collinearity Diagnostics
+
+                        SQRT                   R-
+  Variable      VIF     VIF    Tolerance    Squared
+----------------------------------------------------
+    log_PF      1.44    1.20    0.6936      0.3064
+    log_IE      1.40    1.19    0.7118      0.2882
+    log_AN      1.43    1.19    0.7007      0.2993
+    log_RI      1.40    1.18    0.7140      0.2860
+----------------------------------------------------
+  Mean VIF      1.42
+
+                           Cond
+        Eigenval          Index
+---------------------------------
+    1     4.9343          1.0000
+    2     0.0265         13.6490
+    3     0.0212         15.2663
+    4     0.0145         18.4161
+    5     0.0035         37.4771
+---------------------------------
+ Condition Number        37.4771 
+ Eigenvalues & Cond Index computed from scaled raw sscp (w/ intercept)
+ Det(correlation matrix)    0.5003
+
+. pwcorr log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 2, star(.01) bonferroni
+
+             |   log_VE   log_PF   log_IE   log_AN   log_RI
+-------------+---------------------------------------------
+      log_VE |   1.0000 
+      log_PF |   0.3610*  1.0000 
+      log_IE |  -0.2339  -0.0106   1.0000 
+      log_AN |   0.3756*  0.4491*  0.3075*  1.0000 
+      log_RI |   0.1647   0.3161*  0.4278*  0.2671   1.0000 
+
+. 
+. // Test de Hausman: elección entre un modelo de efectos fijos y aleatorios
+. // Global
+. xtreg log_VE log_PF log_IE log_AN log_RI, fe
+
+Fixed-effects (within) regression               Number of obs     =        230
+Group variable: country_id                      Number of groups  =         10
 
 R-squared:                                      Obs per group:
-     Within  = 0.2443                                         min =         10
-     Between = 0.8143                                         avg =       10.0
-     Overall = 0.7441                                         max =         10
+     Within  = 0.2661                                         min =         23
+     Between = 0.0000                                         avg =       23.0
+     Overall = 0.0206                                         max =         23
 
-                                                F(2, 1987)        =     321.21
-corr(u_i, Xb) = -0.9922                         Prob > F          =     0.0000
+                                                F(4, 216)         =      19.58
+corr(u_i, Xb) = -0.3854                         Prob > F          =     0.0000
 
 ------------------------------------------------------------------------------
-  log_ventas | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+      log_VE | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
 -------------+----------------------------------------------------------------
-log_empresas |   4.609608   .3991488    11.55   0.000     3.826814    5.392402
-  log_empleo |   2.631697   .4524365     5.82   0.000     1.744397    3.518997
-       _cons |  -35.76043    2.26125   -15.81   0.000     -40.1951   -31.32576
+      log_PF |   2.201946   .3537096     6.23   0.000     1.504782     2.89911
+      log_IE |   .1583703   .1704018     0.93   0.354    -.1774929    .4942336
+      log_AN |  -.5339611   .0886494    -6.02   0.000    -.7086897   -.3592326
+      log_RI |   .1968572   .0733872     2.68   0.008     .0522104    .3415041
+       _cons |  -3.417629   1.171643    -2.92   0.004    -5.726947   -1.108312
 -------------+----------------------------------------------------------------
-     sigma_u |  7.9341662
-     sigma_e |  .65723426
-         rho |  .99318497   (fraction of variance due to u_i)
+     sigma_u |  .88989964
+     sigma_e |  .41753119
+         rho |  .81957916   (fraction of variance due to u_i)
 ------------------------------------------------------------------------------
-F test that all u_i=0: F(220, 1987) = 20.72                  Prob > F = 0.0000
+F test that all u_i=0: F(9, 216) = 58.38                     Prob > F = 0.0000
 
 . estimates store fe_global
 
-. 
-. di ""
+. xtreg log_VE log_PF log_IE log_AN log_RI, re
 
-
-. di ">>> ESTIMACIÓN DEL MODELO DE EFECTOS ALEATORIOS (GLOBAL) <<<"
->>> ESTIMACIÓN DEL MODELO DE EFECTOS ALEATORIOS (GLOBAL) <<<
-
-. xtreg log_ventas log_empresas log_empleo, re
-
-Random-effects GLS regression                   Number of obs     =      2,210
-Group variable: canton_id                       Number of groups  =        221
+Random-effects GLS regression                   Number of obs     =        230
+Group variable: country_id                      Number of groups  =         10
 
 R-squared:                                      Obs per group:
-     Within  = 0.2428                                         min =         10
-     Between = 0.8210                                         avg =       10.0
-     Overall = 0.7499                                         max =         10
+     Within  = 0.2647                                         min =         23
+     Between = 0.0066                                         avg =       23.0
+     Overall = 0.0421                                         max =         23
 
-                                                Wald chi2(2)      =    1094.91
+                                                Wald chi2(4)      =      75.00
 corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
 
 ------------------------------------------------------------------------------
-  log_ventas | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+      log_VE | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
 -------------+----------------------------------------------------------------
-log_empresas |    .829883   .1731107     4.79   0.000     .4905923    1.169174
-  log_empleo |   .7441312   .1535101     4.85   0.000     .4432569    1.045005
-       _cons |   6.088785   .3681396    16.54   0.000     5.367245    6.810326
+      log_PF |   2.128473   .3447809     6.17   0.000     1.452714    2.804231
+      log_IE |   .0498671   .1589401     0.31   0.754    -.2616498    .3613839
+      log_AN |  -.5200489   .0880714    -5.90   0.000    -.6926658   -.3474321
+      log_RI |   .1842065   .0732462     2.51   0.012     .0406465    .3277665
+       _cons |   -2.88292   1.136394    -2.54   0.011    -5.110211   -.6556295
 -------------+----------------------------------------------------------------
-     sigma_u |  .87819092
-     sigma_e |  .65723426
-         rho |  .64098618   (fraction of variance due to u_i)
+     sigma_u |  .73398516
+     sigma_e |  .41753119
+         rho |  .75551748   (fraction of variance due to u_i)
 ------------------------------------------------------------------------------
 
 . estimates store re_global
 
-. 
-. di ""
-
-
-. di ">>> TEST DE HAUSMAN (GLOBAL) <<<"
->>> TEST DE HAUSMAN (GLOBAL) <<<
-
-. hausman fe_global re_global
+. hausman fe_global re_global, sigmamore
 
                  ---- Coefficients ----
              |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
              |   fe_global    re_global      Difference       Std. err.
 -------------+----------------------------------------------------------------
-log_empresas |    4.609608      .829883        3.779725         .359656
-  log_empleo |    2.631697     .7441312        1.887566        .4255978
+      log_PF |    2.201946     2.128473        .0734733        .0904353
+      log_IE |    .1583703     .0498671        .1085033        .0650042
+      log_AN |   -.5339611    -.5200489       -.0139122        .0149704
+      log_RI |    .1968572     .1842065        .0126508        .0102113
 ------------------------------------------------------------------------------
                           b = Consistent under H0 and Ha; obtained from xtreg.
            B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
 
 Test of H0: Difference in coefficients not systematic
 
-    chi2(2) = (b-B)'[(V_b-V_B)^(-1)](b-B)
-            = 428.21
-Prob > chi2 = 0.0000
+    chi2(4) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            =   7.38
+Prob > chi2 = 0.1172
 
 . 
-. *==============================================================================*
-. * 2. ESTIMACIÓN SEGMENTADA POR TERCILES DE VAB (Bajo, Medio, Alto)
-. *==============================================================================*
-. * Convertir vab_group a variable categórica numérica para Stata
-. encode vab_group, gen(vab_group_id)
+. // Hidrocarburos (Subgrupo 1)
+. xtreg log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 1, fe
 
-. 
-. levelsof vab_group_id, local(levels)
-1 2 3
-
-. foreach l of local levels {
-  2.     local grp_label : label vab_group_id `l'
-  3.     di ""
-  4.     di "======================================================================"
-  5.     di "GRUPO DE INGRESO VAB: `grp_label' (ID: `l')"
-  6.     di "======================================================================"
-  7.     
-.     di ">>> EFECTOS FIJOS (FE) - `grp_label' <<<"
-  8.     xtreg log_ventas log_empresas log_empleo if vab_group_id == `l', fe
-  9.     estimates store fe_`l'
- 10.     
-.     di ">>> EFECTOS ALEATORIOS (RE) - `grp_label' <<<"
- 11.     xtreg log_ventas log_empresas log_empleo if vab_group_id == `l', re
- 12.     estimates store re_`l'
- 13.     
-.     di ">>> TEST DE HAUSMAN - `grp_label' <<<"
- 14.     hausman fe_`l' re_`l'
- 15. }
-
-======================================================================
-GRUPO DE INGRESO VAB: Alto (ID: 1)
-======================================================================
->>> EFECTOS FIJOS (FE) - Alto <<<
-
-Fixed-effects (within) regression               Number of obs     =        740
-Group variable: canton_id                       Number of groups  =         74
+Fixed-effects (within) regression               Number of obs     =         92
+Group variable: country_id                      Number of groups  =          4
 
 R-squared:                                      Obs per group:
-     Within  = 0.2029                                         min =         10
-     Between = 0.6956                                         avg =       10.0
-     Overall = 0.4966                                         max =         10
+     Within  = 0.3446                                         min =         23
+     Between = 0.9127                                         avg =       23.0
+     Overall = 0.5516                                         max =         23
 
-                                                F(2, 664)         =      84.51
-corr(u_i, Xb) = -0.9955                         Prob > F          =     0.0000
+                                                F(4, 84)          =      11.04
+corr(u_i, Xb) = 0.5208                          Prob > F          =     0.0000
 
 ------------------------------------------------------------------------------
-  log_ventas | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+      log_VE | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
 -------------+----------------------------------------------------------------
-log_empresas |   5.065512   .8834623     5.73   0.000     3.330796    6.800229
-  log_empleo |   3.091992   1.023624     3.02   0.003     1.082063    5.101921
-       _cons |  -51.51264   6.021902    -8.55   0.000     -63.3369   -39.68838
+      log_PF |   1.440321   .5140392     2.80   0.006     .4180975    2.462544
+      log_IE |   .0285598   .1832298     0.16   0.877    -.3358127    .3929323
+      log_AN |  -.8566996   .1461617    -5.86   0.000    -1.147358   -.5660411
+      log_RI |   .0043473   .0907039     0.05   0.962    -.1760274     .184722
+       _cons |   1.172661   1.435323     0.82   0.416    -1.681637    4.026959
 -------------+----------------------------------------------------------------
-     sigma_u |  8.7890926
-     sigma_e |  .84981568
-         rho |  .99073767   (fraction of variance due to u_i)
+     sigma_u |  .23949598
+     sigma_e |   .3677596
+         rho |   .2978022   (fraction of variance due to u_i)
 ------------------------------------------------------------------------------
-F test that all u_i=0: F(73, 664) = 7.08                     Prob > F = 0.0000
->>> EFECTOS ALEATORIOS (RE) - Alto <<<
+F test that all u_i=0: F(3, 84) = 4.60                       Prob > F = 0.0050
 
-Random-effects GLS regression                   Number of obs     =        740
-Group variable: canton_id                       Number of groups  =         74
+. estimates store fe_hidro
+
+. xtreg log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 1, re
+
+Random-effects GLS regression                   Number of obs     =         92
+Group variable: country_id                      Number of groups  =          4
 
 R-squared:                                      Obs per group:
-     Within  = 0.1387                                         min =         10
-     Between = 0.7980                                         avg =       10.0
-     Overall = 0.5651                                         max =         10
+     Within  = 0.3293                                         min =         23
+     Between = 0.9853                                         avg =       23.0
+     Overall = 0.5837                                         max =         23
 
-                                                Wald chi2(2)      =     266.29
+                                                Wald chi2(4)      =     121.96
 corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
 
 ------------------------------------------------------------------------------
-  log_ventas | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+      log_VE | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
 -------------+----------------------------------------------------------------
-log_empresas |  -.1956441   .1694677    -1.15   0.248    -.5277947    .1365064
-  log_empleo |   1.193999   .1651028     7.23   0.000     .8704036    1.517595
-       _cons |   10.79516   .5827007    18.53   0.000     9.653086    11.93723
+      log_PF |   1.861909   .5303486     3.51   0.000     .8224451    2.901373
+      log_IE |   -.269315   .1511004    -1.78   0.075    -.5654663    .0268363
+      log_AN |  -1.034045   .1182705    -8.74   0.000    -1.265851   -.8022389
+      log_RI |  -.0102389   .0653815    -0.16   0.876    -.1383843    .1179066
+       _cons |   1.576187    1.44099     1.09   0.274    -1.248102    4.400476
 -------------+----------------------------------------------------------------
-     sigma_u |   .5569055
-     sigma_e |  .84981568
-         rho |  .30043068   (fraction of variance due to u_i)
+     sigma_u |          0
+     sigma_e |   .3677596
+         rho |          0   (fraction of variance due to u_i)
 ------------------------------------------------------------------------------
->>> TEST DE HAUSMAN - Alto <<<
+
+. estimates store re_hidro
+
+. hausman fe_hidro re_hidro, sigmamore
+
+Note: the rank of the differenced variance matrix (3) does not equal the number of coefficients being tested (4); be sure this is what you expect, or there
+        may be problems computing the test.  Examine the output of your estimators for anything unexpected and possibly consider scaling your variables so
+        that the coefficients are on a similar scale.
 
                  ---- Coefficients ----
              |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
-             |      fe_1         re_1        Difference       Std. err.
+             |    fe_hidro     re_hidro      Difference       Std. err.
 -------------+----------------------------------------------------------------
-log_empresas |    5.065512    -.1956441        5.261156        .8670562
-  log_empleo |    3.091992     1.193999        1.897993        1.010221
+      log_PF |    1.440321     1.861909       -.4215885         .125483
+      log_IE |    .0285598     -.269315        .2978748        .1220929
+      log_AN |   -.8566996    -1.034045        .1773453        .1001274
+      log_RI |    .0043473    -.0102389        .0145862          .07052
 ------------------------------------------------------------------------------
                           b = Consistent under H0 and Ha; obtained from xtreg.
            B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
 
 Test of H0: Difference in coefficients not systematic
 
-    chi2(2) = (b-B)'[(V_b-V_B)^(-1)](b-B)
-            = 139.84
-Prob > chi2 = 0.0000
+    chi2(3) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            =  12.27
+Prob > chi2 = 0.0065
+(V_b-V_B is not positive definite)
 
-======================================================================
-GRUPO DE INGRESO VAB: Bajo (ID: 2)
-======================================================================
->>> EFECTOS FIJOS (FE) - Bajo <<<
+. 
+. // Minero-Agropecuario (Subgrupo 2)
+. xtreg log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 2, fe
 
-Fixed-effects (within) regression               Number of obs     =        740
-Group variable: canton_id                       Number of groups  =         74
-
-R-squared:                                      Obs per group:
-     Within  = 0.8066                                         min =         10
-     Between = 0.5350                                         avg =       10.0
-     Overall = 0.5319                                         max =         10
-
-                                                F(2, 664)         =    1385.05
-corr(u_i, Xb) = -0.8991                         Prob > F          =     0.0000
-
-------------------------------------------------------------------------------
-  log_ventas | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
--------------+----------------------------------------------------------------
-log_empresas |    3.55755   .1260729    28.22   0.000         3.31      3.8051
-  log_empleo |   1.363462   .1396571     9.76   0.000     1.089239    1.637685
-       _cons |  -14.76404   .6185178   -23.87   0.000    -15.97852   -13.54955
--------------+----------------------------------------------------------------
-     sigma_u |  2.0809206
-     sigma_e |  .12211002
-         rho |  .99656838   (fraction of variance due to u_i)
-------------------------------------------------------------------------------
-F test that all u_i=0: F(73, 664) = 556.17                   Prob > F = 0.0000
->>> EFECTOS ALEATORIOS (RE) - Bajo <<<
-
-Random-effects GLS regression                   Number of obs     =        740
-Group variable: canton_id                       Number of groups  =         74
+Fixed-effects (within) regression               Number of obs     =        138
+Group variable: country_id                      Number of groups  =          6
 
 R-squared:                                      Obs per group:
-     Within  = 0.8048                                         min =         10
-     Between = 0.5336                                         avg =       10.0
-     Overall = 0.5308                                         max =         10
+     Within  = 0.3660                                         min =         23
+     Between = 0.0008                                         avg =       23.0
+     Overall = 0.0069                                         max =         23
 
-                                                Wald chi2(2)      =    1968.53
+                                                F(4, 128)         =      18.47
+corr(u_i, Xb) = -0.7990                         Prob > F          =     0.0000
+
+------------------------------------------------------------------------------
+      log_VE | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      log_PF |    3.24031   .4611297     7.03   0.000     2.327886    4.152734
+      log_IE |   1.071443   .3551895     3.02   0.003     .3686404    1.774247
+      log_AN |  -.2830808   .1235791    -2.29   0.024    -.5276032   -.0385584
+      log_RI |   .2879424   .1199557     2.40   0.018     .0505895    .5252953
+       _cons |  -10.87383   2.052296    -5.30   0.000    -14.93464   -6.813007
+-------------+----------------------------------------------------------------
+     sigma_u |  1.3248359
+     sigma_e |  .41024277
+         rho |  .91250322   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(5, 128) = 49.90                     Prob > F = 0.0000
+
+. estimates store fe_minagro
+
+. xtreg log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 2, re
+
+Random-effects GLS regression                   Number of obs     =        138
+Group variable: country_id                      Number of groups  =          6
+
+R-squared:                                      Obs per group:
+     Within  = 0.3399                                         min =         23
+     Between = 0.0114                                         avg =       23.0
+     Overall = 0.0457                                         max =         23
+
+                                                Wald chi2(4)      =      49.77
 corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
 
 ------------------------------------------------------------------------------
-  log_ventas | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+      log_VE | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
 -------------+----------------------------------------------------------------
-log_empresas |    3.32217    .139081    23.89   0.000     3.049576    3.594764
-  log_empleo |   .8810662     .14876     5.92   0.000      .589502     1.17263
-       _cons |  -10.26333   .6354857   -16.15   0.000    -11.50886     -9.0178
+      log_PF |   2.502718   .4264035     5.87   0.000     1.666982    3.338453
+      log_IE |   .2204163   .2373949     0.93   0.353    -.2448691    .6857017
+      log_AN |  -.3259548   .1182465    -2.76   0.006    -.5577136    -.094196
+      log_RI |   .2999648   .1267369     2.37   0.018     .0515651    .5483645
+       _cons |  -5.845559   1.500147    -3.90   0.000    -8.785794   -2.905325
 -------------+----------------------------------------------------------------
-     sigma_u |  .90861143
-     sigma_e |  .12211002
-         rho |  .98225924   (fraction of variance due to u_i)
+     sigma_u |  .42604204
+     sigma_e |  .41024277
+         rho |  .51888548   (fraction of variance due to u_i)
 ------------------------------------------------------------------------------
->>> TEST DE HAUSMAN - Bajo <<<
+
+. estimates store re_minagro
+
+. hausman fe_minagro re_minagro, sigmamore
 
                  ---- Coefficients ----
              |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
-             |      fe_2         re_2        Difference       Std. err.
+             |   fe_minagro   re_minagro     Difference       Std. err.
 -------------+----------------------------------------------------------------
-log_empresas |     3.55755      3.32217        .2353796               .
-  log_empleo |    1.363462     .8810662        .4823961               .
+      log_PF |     3.24031     2.502718        .7375921        .2635619
+      log_IE |    1.071443     .2204163        .8510271        .3045174
+      log_AN |   -.2830808    -.3259548         .042874        .0637574
+      log_RI |    .2879424     .2999648       -.0120224        .0306952
 ------------------------------------------------------------------------------
                           b = Consistent under H0 and Ha; obtained from xtreg.
            B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
 
 Test of H0: Difference in coefficients not systematic
 
-chi2(2) = (b-B)'[(V_b-V_B)^(-1)](b-B)
-        = -3859.26
-
-Warning: chi2 < 0 ==> model fitted on these data
-         fails to meet the asymptotic assumptions
-         of the Hausman test; see suest for a
-         generalized test.
-
-======================================================================
-GRUPO DE INGRESO VAB: Medio (ID: 3)
-======================================================================
->>> EFECTOS FIJOS (FE) - Medio <<<
-
-Fixed-effects (within) regression               Number of obs     =        730
-Group variable: canton_id                       Number of groups  =         73
-
-R-squared:                                      Obs per group:
-     Within  = 0.2618                                         min =         10
-     Between = 0.2881                                         avg =       10.0
-     Overall = 0.1250                                         max =         10
-
-                                                F(2, 655)         =     116.13
-corr(u_i, Xb) = -0.9909                         Prob > F          =     0.0000
-
-------------------------------------------------------------------------------
-  log_ventas | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
--------------+----------------------------------------------------------------
-log_empresas |   4.947983   .8047671     6.15   0.000     3.367748    6.528218
-  log_empleo |   3.509042   .9115207     3.85   0.000     1.719187    5.298897
-       _cons |  -43.56828   4.228796   -10.30   0.000    -51.87191   -35.26465
--------------+----------------------------------------------------------------
-     sigma_u |  4.7945583
-     sigma_e |  .73781293
-         rho |  .97686706   (fraction of variance due to u_i)
-------------------------------------------------------------------------------
-F test that all u_i=0: F(72, 655) = 7.67                     Prob > F = 0.0000
->>> EFECTOS ALEATORIOS (RE) - Medio <<<
-
-Random-effects GLS regression                   Number of obs     =        730
-Group variable: canton_id                       Number of groups  =         73
-
-R-squared:                                      Obs per group:
-     Within  = 0.2600                                         min =         10
-     Between = 0.2803                                         avg =       10.0
-     Overall = 0.1228                                         max =         10
-
-                                                Wald chi2(2)      =      50.87
-corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
-
-------------------------------------------------------------------------------
-  log_ventas | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
--------------+----------------------------------------------------------------
-log_empresas |     .57765   .2309538     2.50   0.012     .1249888    1.030311
-  log_empleo |   .2369116   .2013907     1.18   0.239    -.1578069    .6316301
-       _cons |   11.83061   .8282999    14.28   0.000     10.20717    13.45404
--------------+----------------------------------------------------------------
-     sigma_u |  .46493435
-     sigma_e |  .73781293
-         rho |  .28422734   (fraction of variance due to u_i)
-------------------------------------------------------------------------------
->>> TEST DE HAUSMAN - Medio <<<
-
-                 ---- Coefficients ----
-             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
-             |      fe_3         re_3        Difference       Std. err.
--------------+----------------------------------------------------------------
-log_empresas |    4.947983       .57765        4.370333        .7709154
-  log_empleo |    3.509042     .2369116         3.27213        .8889948
-------------------------------------------------------------------------------
-                          b = Consistent under H0 and Ha; obtained from xtreg.
-           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
-
-Test of H0: Difference in coefficients not systematic
-
-    chi2(2) = (b-B)'[(V_b-V_B)^(-1)](b-B)
-            = 199.60
-Prob > chi2 = 0.0000
+    chi2(4) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            =  23.84
+Prob > chi2 = 0.0001
 
 . 
-. *==============================================================================*
-. * 3. GRÁFICOS DE EVOLUCIÓN
-. *==============================================================================*
-. di ""
+. // Detección de autocorrelación mediante Test de Wooldridge
+. xtserial log_VE log_PF log_IE log_AN log_RI
 
+Wooldridge test for autocorrelation in panel data
+H0: no first-order autocorrelation
+    F(  1,       9) =    137.878
+           Prob > F =      0.0000
 
-. di ">>> GENERANDO GRÁFICOS DE EVOLUCIÓN TEMPORAL <<<"
->>> GENERANDO GRÁFICOS DE EVOLUCIÓN TEMPORAL <<<
+. xtregar log_VE log_PF log_IE log_AN log_RI, fe
+
+FE (within) regression with AR(1) disturbances  Number of obs     =        220
+Group variable: country_id                      Number of groups  =         10
+
+R-squared:                                      Obs per group:
+     Within  = 0.0934                                         min =         22
+     Between = 0.0033                                         avg =       22.0
+     Overall = 0.0245                                         max =         22
+
+                                                F(4,206)          =       5.31
+corr(u_i, Xb) = -0.2319                         Prob > F          =     0.0004
+
+------------------------------------------------------------------------------
+      log_VE | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      log_PF |   1.145284   .3815666     3.00   0.003     .3930076     1.89756
+      log_IE |   .0060458   .2515174     0.02   0.981    -.4898325    .5019242
+      log_AN |  -.5235488   .1609448    -3.25   0.001    -.8408591   -.2062386
+      log_RI |  -.0660755   .0888537    -0.74   0.458    -.2412548    .1091037
+       _cons |   .6285778    .468993     1.34   0.182    -.2960638    1.553219
+-------------+----------------------------------------------------------------
+      rho_ar |   .6927813
+     sigma_u |  .81145513
+     sigma_e |  .30830224
+     rho_fov |  .87385661   (fraction of variance because of u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(9,206) = 9.11                       Prob > F = 0.0000
 
 . 
-. * Colapsar ventas promedio por año y grupo de VAB para visualizar tendencias
+. xtserial log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 1
+
+Wooldridge test for autocorrelation in panel data
+H0: no first-order autocorrelation
+    F(  1,       3) =    131.251
+           Prob > F =      0.0014
+
+. xtregar log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 1, fe
+
+FE (within) regression with AR(1) disturbances  Number of obs     =         88
+Group variable: country_id                      Number of groups  =          4
+
+R-squared:                                      Obs per group:
+     Within  = 0.2084                                         min =         22
+     Between = 0.7576                                         avg =       22.0
+     Overall = 0.5130                                         max =         22
+
+                                                F(4,80)           =       5.27
+corr(u_i, Xb) = 0.1346                          Prob > F          =     0.0008
+
+------------------------------------------------------------------------------
+      log_VE | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      log_PF |   .8276381   .7097559     1.17   0.247    -.5848211    2.240097
+      log_IE |  -.0873796   .2625385    -0.33   0.740    -.6098478    .4350887
+      log_AN |  -1.035064   .2388678    -4.33   0.000    -1.510426   -.5597024
+      log_RI |  -.1048412   .1121385    -0.93   0.353    -.3280039    .1183216
+       _cons |   4.084239   .9097145     4.49   0.000      2.27385    5.894629
+-------------+----------------------------------------------------------------
+      rho_ar |  .58282108
+     sigma_u |  .22563626
+     sigma_e |  .30320102
+     rho_fov |   .3564184   (fraction of variance because of u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(3,80) = 1.20                        Prob > F = 0.3167
+
+. 
+. xtserial log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 2
+
+Wooldridge test for autocorrelation in panel data
+H0: no first-order autocorrelation
+    F(  1,       5) =     51.357
+           Prob > F =      0.0008
+
+. xtregar log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 2, fe
+
+FE (within) regression with AR(1) disturbances  Number of obs     =        132
+Group variable: country_id                      Number of groups  =          6
+
+R-squared:                                      Obs per group:
+     Within  = 0.1086                                         min =         22
+     Between = 0.0347                                         avg =       22.0
+     Overall = 0.0058                                         max =         22
+
+                                                F(4,122)          =       3.72
+corr(u_i, Xb) = -0.7098                         Prob > F          =     0.0069
+
+------------------------------------------------------------------------------
+      log_VE | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      log_PF |   1.520792   .4416148     3.44   0.001     .6465714    2.395013
+      log_IE |   .8743457   .5115671     1.71   0.090    -.1383525    1.887044
+      log_AN |     -.1993   .1936092    -1.03   0.305    -.5825687    .1839687
+      log_RI |  -.0329938   .1295878    -0.25   0.799    -.2895259    .2235383
+       _cons |  -4.931311   .7691111    -6.41   0.000    -6.453843   -3.408779
+-------------+----------------------------------------------------------------
+      rho_ar |  .69876043
+     sigma_u |  1.0528638
+     sigma_e |  .30152767
+     rho_fov |  .92419891   (fraction of variance because of u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0: F(5,122) = 8.21                       Prob > F = 0.0000
+
+. 
+. // Detección de heterocedasticidad mediante Test de Wald
+. quietly xtreg log_VE log_PF log_IE log_AN log_RI, fe
+
+. xttest3
+
+Modified Wald test for groupwise heteroskedasticity
+in fixed effect regression model
+
+H0: sigma(i)^2 = sigma^2 for all i
+
+chi2 (10)  =         673.44
+Prob > chi2 =          0.0000
+
+
+. 
+. quietly xtreg log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 1, fe
+
+. xttest3
+
+Modified Wald test for groupwise heteroskedasticity
+in fixed effect regression model
+
+H0: sigma(i)^2 = sigma^2 for all i
+
+chi2 (4)  =           35.96
+Prob > chi2 =          0.0000
+
+
+. 
+. quietly xtreg log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 2, fe
+
+. xttest3
+
+Modified Wald test for groupwise heteroskedasticity
+in fixed effect regression model
+
+H0: sigma(i)^2 = sigma^2 for all i
+
+chi2 (6)  =           44.80
+Prob > chi2 =          0.0000
+
+
+. 
+. // Estimación de modelos corregidos (FGLS)
+. xtgls log_VE log_PF log_IE log_AN log_RI, p(h) c(ar1)
+
+Cross-sectional time-series FGLS regression
+
+Coefficients:  generalized least squares
+Panels:        heteroskedastic
+Correlation:   common AR(1) coefficient for all panels  (0.8307)
+
+Estimated covariances      =        10          Number of obs     =        230
+Estimated autocorrelations =         1          Number of groups  =         10
+Estimated coefficients     =         5          Time periods      =         23
+                                                Wald chi2(4)      =      61.49
+                                                Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+      log_VE | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      log_PF |    1.40553   .2980425     4.72   0.000      .821378    1.989683
+      log_IE |  -.5040131   .1597353    -3.16   0.002    -.8170885   -.1909377
+      log_AN |  -.2444599   .1229194    -1.99   0.047    -.4853774   -.0035423
+      log_RI |  -.0543669   .0895115    -0.61   0.544    -.2298062    .1210724
+       _cons |   .5394374   1.083739     0.50   0.619    -1.584651    2.663526
+------------------------------------------------------------------------------
+
+. estimates store gls_global
+
+. 
+. xtgls log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 1, p(h) c(ar1)
+
+Cross-sectional time-series FGLS regression
+
+Coefficients:  generalized least squares
+Panels:        heteroskedastic
+Correlation:   common AR(1) coefficient for all panels  (0.6107)
+
+Estimated covariances      =         4          Number of obs     =         92
+Estimated autocorrelations =         1          Number of groups  =          4
+Estimated coefficients     =         5          Time periods      =         23
+                                                Wald chi2(4)      =      52.99
+                                                Prob > chi2       =     0.0000
+
+------------------------------------------------------------------------------
+      log_VE | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      log_PF |   1.878701   .5482341     3.43   0.001     .8041821     2.95322
+      log_IE |  -.2275831   .1904205    -1.20   0.232    -.6008004    .1456342
+      log_AN |  -.9693202   .1644032    -5.90   0.000    -1.291545   -.6470958
+      log_RI |  -.0804645   .0939738    -0.86   0.392    -.2646498    .1037207
+       _cons |   1.355203   1.531144     0.89   0.376    -1.645785    4.356191
+------------------------------------------------------------------------------
+
+. estimates store gls_hidro
+
+. 
+. xtgls log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 2, p(h) c(ar1)
+
+Cross-sectional time-series FGLS regression
+
+Coefficients:  generalized least squares
+Panels:        heteroskedastic
+Correlation:   common AR(1) coefficient for all panels  (0.8151)
+
+Estimated covariances      =         6          Number of obs     =        138
+Estimated autocorrelations =         1          Number of groups  =          6
+Estimated coefficients     =         5          Time periods      =         23
+                                                Wald chi2(4)      =      20.16
+                                                Prob > chi2       =     0.0005
+
+------------------------------------------------------------------------------
+      log_VE | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      log_PF |   1.192914   .3378245     3.53   0.000     .5307899    1.855038
+      log_IE |  -.2232852   .2068618    -1.08   0.280    -.6287269    .1821564
+      log_AN |  -.0161212   .1394892    -0.12   0.908     -.289515    .2572727
+      log_RI |   .0501307   .1217517     0.41   0.681    -.1884983    .2887596
+       _cons |  -1.273907    1.27401    -1.00   0.317     -3.77092    1.223106
+------------------------------------------------------------------------------
+
+. estimates store gls_minagro
+
+. 
+. // Exportación de estimaciones corregidas
+. esttab gls_global gls_hidro gls_minagro using "../logs/Resultados_Paises_GLS.rtf", ///
+>     scalars(F chi2) t ar2 compress label ///
+>     title("Tabla comparativa de estimaciones FGLS: Global vs Subgrupos de Especialización") ///
+>     nonumbers mtitles("FGLS Global" "FGLS Hidrocarburos" "FGLS Minero-Agropecuario") replace
+(output written to ../logs/Resultados_Paises_GLS.rtf)
+
+. 
+. // Test for slope homogeneity de Pesaran y Yamagata (2008)
+. xthst log_VE log_PF log_IE log_AN log_RI
+Testing for slope heterogeneity
+(Pesaran, Yamagata. 2008. Journal of Econometrics)
+H0: slope coefficients are homogenous
+-------------------------------------
+         Delta          p-value
+          7.088           0.000
+ adj.     8.245           0.000
+-------------------------------------
+Variables partialled out: constant
+
+. 
+. // Prueba de dependencia de las secciones transversales CD de Pesaran
+. xtcdf log_VE log_PF log_IE log_AN log_RI
+
+xtcd test on variables log_VE log_PF log_IE log_AN log_RI
+Panelvar: country_id
+Timevar: year
+------------------------------------------------------------------------------+
+    Variable    |  CD-test   p-value   average joint T | mean ρ   mean abs(ρ) |
+----------------+--------------------------------------+----------------------|
+     log_VE     +  11.361     0.000         23.00      +  0.35       0.48     | 
+     log_PF     +  8.446      0.000         23.00      +  0.26       0.37     | 
+     log_IE     +  -.168      0.867         23.00      +  -0.01      0.42     | 
+     log_AN     +  16.581     0.000         23.00      +  0.52       0.63     | 
+     log_RI     +  1.098      0.272         23.00      +  0.03       0.37     | 
+------------------------------------------------------------------------------+
+ Notes: Under the null hypothesis of cross-section independence, CD ~ N(0,1)
+        P-values close to zero indicate data are correlated across panel groups.
+
+. 
+. // Gráficos de evolución temporal
 . preserve
 
-.     collapse (mean) ventas_totales, by(year vab_group)
+.     collapse (mean) VE, by(year)
 
-.     
-.     * Graficar la evolución temporal por tercil de VAB
-.     twoway (line ventas_totales year if vab_group == "Alto", lcolor(navy) lwidth(medthick)) ///
->            (line ventas_totales year if vab_group == "Medio", lcolor(orange) lwidth(medthick)) ///
->            (line ventas_totales year if vab_group == "Bajo", lcolor(forest_green) lwidth(medthick)), ///
->            title("Evolución de Ventas Promedio por Tercil de VAB (2015-2024)") ///
->            xtitle("Año") ytitle("Ventas Promedio (USD)") ///
->            legend(order(1 "Alto" 2 "Medio" 3 "Bajo")) ///
->            xlabel(2015(1)2024, grid)
+.     twoway (line VE year, lcolor(navy) lwidth(medthick)), ///
+>            title("Evolución Temporal de la Vulnerabilidad Externa (VE) Promedio") ///
+>            xtitle("Año") ytitle("Rentas de Recursos Naturales (% del PIB)") ///
+>            xlabel(2001(2)2023, grid)
 
-.            
-.     graph export "../assets/evolution_by_vab.png", replace
-(file ../assets/evolution_by_vab.png not found)
-file ../assets/evolution_by_vab.png saved as PNG format
+.     graph export "../assets/evolution_dependent_stata.png", replace
+file ../assets/evolution_dependent_stata.png saved as PNG format
 
 . restore
-
-. 
-. di "======================================================================"
-======================================================================
-
-. di "PROCESO FINALIZADO CON ÉXITO"
-PROCESO FINALIZADO CON ÉXITO
-
-. di "======================================================================"
-======================================================================
 
 . 
 . log close
@@ -461,5 +802,5 @@ PROCESO FINALIZADO CON ÉXITO
        log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econometrics_2026\docs\vaults\u3-acd-01-datos-de-panel\scripts\../logs/s
 > tata_panel_estimation.log
   log type:  text
- closed on:  25 Jun 2026, 09:39:28
+ closed on:   6 Jul 2026, 02:27:02
 -------------------------------------------------------------------------------------------------------------------------------------------------------------

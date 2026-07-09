@@ -1,0 +1,36 @@
+---
+title: "Determinantes del Empleo Formal Cantonal en el Ecuador (2015-2024)"
+subtitle: "Un Análisis de Datos de Panel con Variables de Productividad y Estructura Empresarial"
+author: "Erick Condoy"
+date: "2026-06-29"
+format:
+  html:
+    toc: true
+    theme: journal
+    code-fold: true
+    number-sections: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    papersize: a4
+    geometry:
+      - top=30mm
+      - left=30mm
+      - bottom=30mm
+      - right=30mm
+bibliography: references.bib
+link-citations: true
+---
+
+{{< include chapters/00_resumen.qmd >}}
+
+{{< include chapters/01_introduccion.qmd >}}
+
+{{< include chapters/1.5_literatura.qmd >}}
+
+{{< include chapters/02_metodologia.qmd >}}
+
+{{< include chapters/03_resultados.qmd >}}
+
+{{< include chapters/04_conclusiones.qmd >}}

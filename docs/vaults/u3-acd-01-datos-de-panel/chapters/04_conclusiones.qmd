@@ -1,5 +1,13 @@
-# Conclusiones
+# Conclusiones y Limitaciones
 
-1. **Importancia de la Heterogeneidad Regional**: La estimación por efectos fijos corrobora que las particularidades institucionales y geográficas específicas de cada nación (representadas por $\alpha_i$) juegan un rol significativo en el nivel base del crecimiento económico y deben ser controladas para evitar sesgos por variables omitidas.
-2. **Impacto de las Variables Clave**: La inversión extranjera directa y la apertura comercial muestran, de acuerdo a la literatura estándar, efectos positivos de largo plazo en el crecimiento del PIB, mientras que la inflación no controlada actúa como un desincentivo a la estabilidad económica.
-3. **Recomendación Metodológica**: La prueba de Hausman se consolida como el paso crítico fundamental en el análisis de datos de panel para definir si la correlación entre los efectos individuales y los regresores invalida el uso del estimador clásico MCG de Efectos Aleatorios.
+## Conclusiones
+
+Primero, existe una dependencia estructural entre los ingresos impositivos y las rentas de recursos naturales. El efecto es más agudo en economías exportadoras de hidrocarburos ($\beta = 1.88$) que en aquellas con orientación minero-agropecuaria ($\beta = 1.19$). Esta diferencia valida el efecto voracidad fiscal: el gasto público se expanden al ritmo de las rentas extractivas, lo cual incrementa la vulnerabilidad fiscal ante caídas de precios internacionales.
+
+Segundo, la profundidad del crédito privado local funciona como un mecanismo amortiguador. En economías hidrocarburíferas, el financiamiento bancario reduce la dependencia extractiva ($\beta = -0.97$). El crédito provee liquidez frente a shocks externos. Sin embargo, este canal no opera en el grupo minero-agropecuario. En dicho subgrupo, los shocks externos se absorben de manera exclusiva por la vía del presupuesto del Estado.
+
+## Limitaciones
+
+Primero, la relación entre recaudación fiscal y rentas de recursos naturales experimenta endogeneidad por simultaneidad. Los shocks internacionales de commodities afectan ambos agregados de manera paralela. Por esta razón, las estimaciones representan elasticidades de asociación y no causalidad estricta.
+
+Segundo, la partición de la muestra limita la potencia asintótica del panel. El tamaño transversal se reduce ($n = 4$ para hidrocarburos y $n = 6$ para la especialización minero-agropecuaria). Si bien la segmentación corrige la heterogeneidad de pendientes, disminuye la potencia de pruebas como el test de Hausman. La generalización de estos resultados a otros contextos requiere cautela.

@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Erick Condoy">
+<meta name="dcterms.date" content="2026-06-29">
+
+<title>Determinantes del Empleo Formal Cantonal en el Ecuador (2015-2024)</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="index_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-b6a8276bf55561bdbc268162d41bd1f7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap-308139f84cc0afdf0065aa9285a47d87.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">1</span> Introducción</a></li>
+  <li><a href="#planteamiento-del-problema" id="toc-planteamiento-del-problema" class="nav-link" data-scroll-target="#planteamiento-del-problema"><span class="header-section-number">2</span> Planteamiento del Problema</a></li>
+  <li><a href="#justificación" id="toc-justificación" class="nav-link" data-scroll-target="#justificación"><span class="header-section-number">3</span> Justificación</a></li>
+  <li><a href="#revisión-de-la-literatura" id="toc-revisión-de-la-literatura" class="nav-link" data-scroll-target="#revisión-de-la-literatura"><span class="header-section-number">4</span> Revisión de la Literatura</a>
+  <ul class="collapse">
+  <li><a href="#síntesis-de-los-enfoques-teóricos" id="toc-síntesis-de-los-enfoques-teóricos" class="nav-link" data-scroll-target="#síntesis-de-los-enfoques-teóricos"><span class="header-section-number">4.1</span> Síntesis de los enfoques teóricos</a></li>
+  <li><a href="#síntesis-de-la-evidencia-empírica" id="toc-síntesis-de-la-evidencia-empírica" class="nav-link" data-scroll-target="#síntesis-de-la-evidencia-empírica"><span class="header-section-number">4.2</span> Síntesis de la evidencia empírica</a></li>
+  </ul></li>
+  <li><a href="#metodología-econométrica-y-fundamento-teórico" id="toc-metodología-econométrica-y-fundamento-teórico" class="nav-link" data-scroll-target="#metodología-econométrica-y-fundamento-teórico"><span class="header-section-number">5</span> Metodología Econométrica y Fundamento Teórico</a>
+  <ul class="collapse">
+  <li><a href="#fundamento-teórico" id="toc-fundamento-teórico" class="nav-link" data-scroll-target="#fundamento-teórico"><span class="header-section-number">5.1</span> Fundamento Teórico</a>
+  <ul class="collapse">
+  <li><a href="#teoría-principal-demanda-neoclásica-de-factores-y-maximización-de-la-firma" id="toc-teoría-principal-demanda-neoclásica-de-factores-y-maximización-de-la-firma" class="nav-link" data-scroll-target="#teoría-principal-demanda-neoclásica-de-factores-y-maximización-de-la-firma"><span class="header-section-number">5.1.1</span> Teoría Principal: Demanda Neoclásica de Factores y Maximización de la Firma</a></li>
+  </ul></li>
+  <li><a href="#especificación-econométrica" id="toc-especificación-econométrica" class="nav-link" data-scroll-target="#especificación-econométrica"><span class="header-section-number">5.2</span> Especificación Econométrica</a></li>
+  <li><a href="#definición-y-descripción-de-variables" id="toc-definición-y-descripción-de-variables" class="nav-link" data-scroll-target="#definición-y-descripción-de-variables"><span class="header-section-number">5.3</span> Definición y Descripción de Variables</a></li>
+  <li><a href="#modelos-de-estimación-y-pruebas-de-diagnóstico" id="toc-modelos-de-estimación-y-pruebas-de-diagnóstico" class="nav-link" data-scroll-target="#modelos-de-estimación-y-pruebas-de-diagnóstico"><span class="header-section-number">5.4</span> Modelos de Estimación y Pruebas de Diagnóstico</a></li>
+  </ul></li>
+  <li><a href="#resultados-y-discusión" id="toc-resultados-y-discusión" class="nav-link" data-scroll-target="#resultados-y-discusión"><span class="header-section-number">6</span> Resultados y Discusión</a>
+  <ul class="collapse">
+  <li><a href="#estadísticos-descriptivos-de-la-muestra" id="toc-estadísticos-descriptivos-de-la-muestra" class="nav-link" data-scroll-target="#estadísticos-descriptivos-de-la-muestra"><span class="header-section-number">6.1</span> Estadísticos Descriptivos de la Muestra</a></li>
+  <li><a href="#diagnósticos-de-colinealidad-y-correlación" id="toc-diagnósticos-de-colinealidad-y-correlación" class="nav-link" data-scroll-target="#diagnósticos-de-colinealidad-y-correlación"><span class="header-section-number">6.2</span> Diagnósticos de Colinealidad y Correlación</a>
+  <ul class="collapse">
+  <li><a href="#matriz-de-correlación-de-pearson" id="toc-matriz-de-correlación-de-pearson" class="nav-link" data-scroll-target="#matriz-de-correlación-de-pearson"><span class="header-section-number">6.2.1</span> Matriz de Correlación de Pearson</a></li>
+  <li><a href="#factor-de-inflación-de-la-varianza-vif" id="toc-factor-de-inflación-de-la-varianza-vif" class="nav-link" data-scroll-target="#factor-de-inflación-de-la-varianza-vif"><span class="header-section-number">6.2.2</span> Factor de Inflación de la Varianza (VIF)</a></li>
+  </ul></li>
+  <li><a href="#resultados-de-la-estimación-de-modelos-de-panel" id="toc-resultados-de-la-estimación-de-modelos-de-panel" class="nav-link" data-scroll-target="#resultados-de-la-estimación-de-modelos-de-panel"><span class="header-section-number">6.3</span> Resultados de la Estimación de Modelos de Panel</a>
+  <ul class="collapse">
+  <li><a href="#contraste-y-selección-del-estimador-test-de-hausman" id="toc-contraste-y-selección-del-estimador-test-de-hausman" class="nav-link" data-scroll-target="#contraste-y-selección-del-estimador-test-de-hausman"><span class="header-section-number">6.3.1</span> Contraste y Selección del Estimador: Test de Hausman</a></li>
+  </ul></li>
+  <li><a href="#corrección-de-perturbaciones-modelo-gls-robusto-fgls" id="toc-corrección-de-perturbaciones-modelo-gls-robusto-fgls" class="nav-link" data-scroll-target="#corrección-de-perturbaciones-modelo-gls-robusto-fgls"><span class="header-section-number">6.4</span> Corrección de Perturbaciones: Modelo GLS Robusto (FGLS)</a></li>
+  <li><a href="#discusión-y-análisis-de-elasticidades" id="toc-discusión-y-análisis-de-elasticidades" class="nav-link" data-scroll-target="#discusión-y-análisis-de-elasticidades"><span class="header-section-number">6.5</span> Discusión y Análisis de Elasticidades</a></li>
+  </ul></li>
+  <li><a href="#conclusiones-y-limitaciones" id="toc-conclusiones-y-limitaciones" class="nav-link" data-scroll-target="#conclusiones-y-limitaciones"><span class="header-section-number">7</span> Conclusiones y Limitaciones</a>
+  <ul class="collapse">
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones"><span class="header-section-number">7.1</span> Conclusiones</a></li>
+  <li><a href="#limitaciones" id="toc-limitaciones" class="nav-link" data-scroll-target="#limitaciones"><span class="header-section-number">7.2</span> Limitaciones</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="../../../index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Determinantes del Empleo Formal Cantonal en el Ecuador (2015-2024)</h1>
+<p class="subtitle lead">Un Análisis de Datos de Panel con Variables de Productividad y Estructura Empresarial</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Erick Condoy </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 29, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="resumen" class="level1 unnumbered">
+<h1 class="unnumbered">Resumen</h1>
+<p>En este estudio se analizan los determinantes del empleo formal cantonal en el Ecuador durante el periodo 2015-2024, integrando factores de productividad laboral, escala y densidad empresarial a nivel territorial. A través de un panel de datos balanceado de 221 municipios estimado mediante Efectos Fijos (FE) y Mínimos Cuadrados Generalizados Factibles (FGLS) para corregir autocorrelación y heterocedasticidad, se evalúa cómo la productividad media del trabajo y la escala de la firma impactan en la generación de plazas de empleo formal con afiliación activa al IESS. Los resultados empíricos indican la presencia de una relación negativa y no lineal (cóncava) entre la productividad laboral y el empleo formal en cantones con mayor desarrollo productivo (VAB Alto), sugiriendo un efecto sustitución de capital por trabajo mediante procesos de automatización y modernización. En contraste, en territorios de menor desarrollo relativo (VAB Bajo), el empleo formal exhibe una altísima dependencia y sensibilidad lineal respecto al tamaño y densidad de facturación de las pocas micro y pequeñas empresas formalizadas locales.</p>
+<p><strong>Palabras clave:</strong> Empleo Formal Cantonal, Productividad Laboral, Datos de Panel, Efectos Fijos, FGLS, Ecuador.</p>
+<p><strong>Clasificación JEL:</strong> J23, L25, R12, C23, O18.</p>
+</section>
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
+<p>El mercado de trabajo ecuatoriano enfrenta un desequilibrio estructural caracterizado por altos índices de subempleo e informalidad. En este contexto, la definición operativa de empleo formal en el país se establece a través de la afiliación activa a la seguridad social (IESS). De acuerdo con <span class="citation" data-cites="diazsanchez2024immigration">Díaz-Sánchez and Correa (<a href="#ref-diazsanchez2024immigration" role="doc-biblioref">2024</a>)</span>, a inicios de 2022 el mercado laboral formal en el Ecuador representaba el 42.5%, mientras que el sector informal absorbía al 51.4% de la población ocupada. A nivel cantonal, la capacidad de generación de empleo formal con afiliación a la seguridad social depende de la escala de producción agregada local, la densidad de empresas activas y el volumen de facturación mercantil.</p>
+</section>
+<section id="planteamiento-del-problema" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Planteamiento del Problema</h1>
+<p>Las investigaciones macroeconómicas tradicionales suelen ignorar estas dinámicas subnacionales debido a sesgos de agregación. Este estudio aborda dicho vacío cuantificando las elasticidades de la demanda de trabajo formal respecto a indicadores de productividad laboral y escala empresarial en el territorio. El problema central consiste en evaluar cómo las diferencias cantonales en productividad laboral y escala empresarial determinan la demanda de empleo formal en el Ecuador, controlando por la heterogeneidad territorial inobservable que sesga las estimaciones de mínimos cuadrados ordinarios.</p>
+</section>
+<section id="justificación" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Justificación</h1>
+<p>Este estudio se justifica por tres razones analíticas diferenciadas. En primer lugar, responde a la necesidad de superar las limitaciones de representatividad territorial de los modelos tradicionales en Ecuador. Como demuestran <span class="citation" data-cites="matano2020drives">Matano et al. (<a href="#ref-matano2020drives" role="doc-biblioref">2020</a>)</span>, la segmentación espacial del empleo y las primas salariales en el país generan desequilibrios que las estimaciones nacionales agrupadas no logran identificar. El uso de un panel cantonal de 221 municipios permite aislar este sesgo aplicando estimadores consistentes de efectos fijos.</p>
+<p>En segundo lugar, la investigación aporta evidencia empírica clave sobre la heterogeneidad del empleo según la escala cantonal. Como evidencia <span class="citation" data-cites="caminomogro2023tax">Camino-Mogro (<a href="#ref-caminomogro2023tax" role="doc-biblioref">2023</a>)</span>, las políticas fiscales uniformes no generan empleo formal diferencial por sector, sugiriendo que la heterogeneidad territorial es el canal relevante. Esto refuerza nuestro argumento de que es necesario analizar el empleo a través de cantones de manera diferenciada para capturar la verdadera estructura de respuesta del mercado de trabajo ecuatoriano.</p>
+<p>Finalmente, los resultados tienen implicaciones prácticas para el diseño de políticas públicas. Las elasticidades estimadas proveen insumos para formular políticas de fomento al empleo y simplificación de trámites adaptadas a la estructura empresarial específica de cada cantón, evitando regulaciones nacionales uniformes que suelen desincentivar la formalización en territorios de menor desarrollo relativo.</p>
+</section>
+<section id="revisión-de-la-literatura" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Revisión de la Literatura</h1>
+<p>La dinámica de la demanda de trabajo y la formalización laboral a nivel territorial en economías en desarrollo ha sido ampliamente debatida en la literatura empírica y teórica reciente.</p>
+<section id="síntesis-de-los-enfoques-teóricos" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="síntesis-de-los-enfoques-teóricos"><span class="header-section-number">4.1</span> Síntesis de los enfoques teóricos</h2>
+<p>Para comprender las fuerzas dinámicas que determinan la demanda de empleo formal a nivel subnacional, el análisis se sustenta en tres enfoques teóricos interrelacionados. En primer lugar, la teoría del dualismo estructural y segmentación laboral postula que en economías en desarrollo coexisten mercados de trabajo formal y de subsistencia informal, de acuerdo con las formulaciones iniciales de Harris y Todaro. Esta segmentación se debe a barreras de entrada institucionales y a los costos de cumplimiento normativo, tales como la afiliación a la seguridad social y el salario básico, que empujan a las unidades económicas más vulnerables hacia la informalidad.</p>
+<p>En segundo lugar, la teoría del cambio tecnológico sesgado explica cómo la introducción de innovaciones y capital tecnológico en las firmas sustituye puestos de trabajo de baja calificación o tareas repetitivas, elevando simultáneamente la productividad media de los trabajadores calificados que permanecen dentro de las firmas.</p>
+<p>Finalmente, la nueva geografía económica y las economías de aglomeración plantean que la concentración territorial de empresas y la densidad mercantil generan externalidades positivas que reducen los costos de transacción y facilitan el emparejamiento laboral, promoviendo la formalización en zonas de alta densidad urbana.</p>
+</section>
+<section id="síntesis-de-la-evidencia-empírica" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="síntesis-de-la-evidencia-empírica"><span class="header-section-number">4.2</span> Síntesis de la evidencia empírica</h2>
+<p>La evidencia empírica internacional y local aporta lecciones metodológicas en tres niveles. A nivel internacional, diversos estudios demuestran que los incrementos de productividad impulsados por la tecnificación pueden producir un desplazamiento del empleo formal neto en el corto plazo a través del efecto sustitución si la elasticidad de sustitución capital-trabajo es mayor a la unidad, aunque a largo plazo se logre expandir la demanda de empleo por efectos de escala. A nivel latinoamericano, el empleo formal se encuentra fuertemente correlacionado con la escala empresarial y el ciclo económico, donde las micro y pequeñas empresas sufren barreras de financiamiento que les impiden formalizar a su personal debido a su baja productividad relativa.</p>
+<p>En el contexto ecuatoriano, investigaciones sobre la estructura salarial y el empleo muestran una fuerte segmentación espacial con primas salariales urbanas y una alta heterogeneidad regional. Asimismo, estudios sobre incentivos fiscales y flujos migratorios recientes evidencian cómo las rigideces del mercado de trabajo ecuatoriano y los cambios en la oferta laboral alteran los incentivos de formalización de las firmas, sugiriendo la necesidad de analizar las respuestas de las firmas utilizando datos a escala cantonal.</p>
+</section>
+</section>
+<section id="metodología-econométrica-y-fundamento-teórico" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Metodología Econométrica y Fundamento Teórico</h1>
+<p>El análisis del empleo formal cantonal en el Ecuador se articula sobre un marco conceptual compuesto por una teoría principal de demanda factorial y tres enfoques teóricos complementarios que capturan las distorsiones estructurales y espaciales del mercado laboral en desarrollo.</p>
+<section id="fundamento-teórico" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="fundamento-teórico"><span class="header-section-number">5.1</span> Fundamento Teórico</h2>
+<section id="teoría-principal-demanda-neoclásica-de-factores-y-maximización-de-la-firma" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="teoría-principal-demanda-neoclásica-de-factores-y-maximización-de-la-firma"><span class="header-section-number">5.1.1</span> Teoría Principal: Demanda Neoclásica de Factores y Maximización de la Firma</h3>
+<p>La columna vertebral analítica de esta investigación es la <strong>Teoría Neoclásica de la Demanda de Factores de la Firma</strong>. Bajo este enfoque, las firmas actúan como agentes optimizadores que determinan su nivel de empleo formal a partir de la maximización de sus beneficios económicos en mercados de factores competitivos o semi-regulados.</p>
+<p>Supongamos que la producción agregada de un cantón <span class="math inline">\(i\)</span> en el periodo <span class="math inline">\(t\)</span> se describe mediante una función de producción del tipo Cobb-Douglas con rendimientos a escala:</p>
+<p><span id="eq-cobb-douglas"><span class="math display">\[Y_{it} = A_{it} K_{it}^\alpha L_{it}^\beta \tag{1}\]</span></span></p>
+<p>Donde <span class="math inline">\(Y_{it}\)</span> es el producto (VAB cantonal), <span class="math inline">\(A_{it}\)</span> es la productividad total de los factores (cambio tecnológico), <span class="math inline">\(K_{it}\)</span> es el stock de capital, y <span class="math inline">\(L_{it}\)</span> representa el empleo formal contratado. La firma representativa maximiza su función de beneficios:</p>
+<p><span id="eq-beneficios"><span class="math display">\[\Pi_{it} = P_{it} Y_{it} - W_{it} L_{it} - R_{it} K_{it} \tag{2}\]</span></span></p>
+<p>Donde <span class="math inline">\(P_{it}\)</span> es el nivel general de precios local, <span class="math inline">\(W_{it}\)</span> es el salario nominal formal regulado y <span class="math inline">\(R_{it}\)</span> representa el costo de uso del capital. La condición de primer orden respecto al factor trabajo (<span class="math inline">\(L_{it}\)</span>) determina que el producto marginal del trabajo debe igualar al salario real:</p>
+<p><span id="eq-cpo"><span class="math display">\[\frac{\partial Y_{it}}{\partial L_{it}} = \beta \frac{Y_{it}}{L_{it}} = \frac{W_{it}}{P_{it}} \tag{3}\]</span></span></p>
+<p>Al tomar logaritmos y reordenar los términos, el empleo formal óptimo de equilibrio se convierte en una función de la productividad media del trabajo (<span class="math inline">\(Y_{it}/L_{it}\)</span>), el costo del factor y las características tecnológicas del territorio. Esta relación constituye el núcleo del modelo, donde la productividad laboral real media (<span class="math inline">\(PR_{it} = \ln(Y_{it}/L_{it})\)</span>) actúa como el determinante directo del nivel de empleo.</p>
+</section>
+</section>
+<section id="especificación-econométrica" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="especificación-econométrica"><span class="header-section-number">5.2</span> Especificación Econométrica</h2>
+<p>Adaptando los esquemas teóricos anteriores a una estructura de datos de panel, planteamos la ecuación de demanda de trabajo en la <a href="#eq-demanda" class="quarto-xref">Equation&nbsp;4</a>:</p>
+<p><span id="eq-demanda"><span class="math display">\[LE_{it} = \beta_0 + \beta_1 PR_{it} + \beta_2 TE_{it} + \beta_3 DE_{it} + \beta_4 PP_{it} + \alpha_i + \mu_{it} \tag{4}\]</span></span></p>
+<p>Donde <span class="math inline">\(LE_{it}\)</span> es el logaritmo del empleo promedio formal del cantón <span class="math inline">\(i\)</span> en el año <span class="math inline">\(t\)</span>, <span class="math inline">\(PR_{it}\)</span> representa el logaritmo de la productividad media del trabajo, <span class="math inline">\(TE_{it}\)</span> es el logaritmo del tamaño promedio de facturación empresarial, y <span class="math inline">\(DE_{it}\)</span> es el logaritmo de la densidad laboral de las firmas. El coeficiente <span class="math inline">\(PP_{it}\)</span> controla la participación porcentual del cantón en el producto de su provincia, mientras que <span class="math inline">\(\alpha_i\)</span> captura la heterogeneidad inobservable cantonal constante y <span class="math inline">\(\mu_{it}\)</span> es el error estocástico idiopático.</p>
+<p>Se hipotetiza que la elasticidad del empleo formal al tamaño empresarial es decreciente con el nivel de VAB cantonal, dado que en cantones menos desarrollados la firma representativa tiene menor acceso a crédito y tecnología, haciendo al empleo formal más sensible a variaciones en la escala productiva local.</p>
+</section>
+<section id="definición-y-descripción-de-variables" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="definición-y-descripción-de-variables"><span class="header-section-number">5.3</span> Definición y Descripción de Variables</h2>
+<p>La <a href="#tbl-variables" class="quarto-xref">Table&nbsp;1</a> detalla la definición metodológica y fuentes de las variables del modelo:</p>
+<div id="tbl-variables" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Definición de Variables y Fuentes de Información
+</figcaption>
+<div aria-describedby="tbl-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: left;">Fórmula Operativa</th>
+<th style="text-align: left;">Descripción del Indicador</th>
+<th style="text-align: left;">Fuente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>LE</code></strong></td>
+<td style="text-align: left;">Dependiente</td>
+<td style="text-align: left;"><span class="math inline">\(\ln(\text{empleo\_prom})\)</span></td>
+<td style="text-align: left;">Escala del mercado laboral formal cantonal.</td>
+<td style="text-align: left;">INEC / DIEE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>PR</code></strong></td>
+<td style="text-align: left;">Independiente</td>
+<td style="text-align: left;"><span class="math inline">\(\ln(\text{vab} / \text{empleo\_prom})\)</span></td>
+<td style="text-align: left;">Proxy de eficiencia productiva local.</td>
+<td style="text-align: left;">BCE / INEC</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>TE</code></strong></td>
+<td style="text-align: left;">Control</td>
+<td style="text-align: left;"><span class="math inline">\(\ln(\text{ventas\_totales} / \text{num\_emp})\)</span></td>
+<td style="text-align: left;">Escala de facturación de la firma representativa.</td>
+<td style="text-align: left;">INEC / DIEE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>DE</code></strong></td>
+<td style="text-align: left;">Control</td>
+<td style="text-align: left;"><span class="math inline">\(\ln(\text{empleo\_prom} / \text{num\_emp})\)</span></td>
+<td style="text-align: left;">Intensidad de absorción laboral de las firmas.</td>
+<td style="text-align: left;">INEC / DIEE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>PP</code></strong></td>
+<td style="text-align: left;">Control</td>
+<td style="text-align: left;">Expresada en nivel (0 - 100)</td>
+<td style="text-align: left;">Centralidad y jerarquía económica del cantón.</td>
+<td style="text-align: left;">BCE / Propio</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="modelos-de-estimación-y-pruebas-de-diagnóstico" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="modelos-de-estimación-y-pruebas-de-diagnóstico"><span class="header-section-number">5.4</span> Modelos de Estimación y Pruebas de Diagnóstico</h2>
+<p>La estimación de los parámetros de interés parte de la comparación entre los estimadores de Efectos Fijos y Efectos Aleatorios. El modelo de Efectos Fijos permite que el término de efecto individual inobservable de cada cantón esté correlacionado con los regresores explicativos, estimándose a través de la transformación de variables respecto a su media temporal. Por el contrario, el modelo de Efectos Aleatorios asume que este efecto individual se comporta como una perturbación aleatoria incorrelacionada con las variables explicativas del modelo.</p>
+<p>Para determinar formalmente cuál de las dos especificaciones es la adecuada, se aplica el Test de Hausman, cuya hipótesis nula establece la ausencia de correlación sistemática entre los efectos individuales y los regresores explicativos. Un rechazo de esta hipótesis determina de forma unánime que el estimador de Efectos Fijos es el único consistente y eficiente para la inferencia.</p>
+<p>Posteriormente, se aplican pruebas de diagnóstico sobre los errores del modelo. La autocorrelación temporal se evalúa mediante el test de primer orden de Wooldridge para comprobar la persistencia serial de los residuos. La heterocedasticidad inter-cantonal se examina a través de la prueba de Wald modificada para efectos fijos, la cual evalúa la hipótesis nula de homocedasticidad frente a la presencia de varianzas grupales disímiles debido a las enormes diferencias geográficas y mercantiles de los municipios. En caso de detectarse simultáneamente la presencia de heterocedasticidad o correlación serial, se procede a estimar el modelo mediante Mínimos Cuadrados Generalizados Factibles (FGLS) con errores estándar corregidos, garantizando estimadores eficientes bajo paneles con perturbaciones complejas.</p>
+</section>
+</section>
+<section id="resultados-y-discusión" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Resultados y Discusión</h1>
+<p>Se estimaron los modelos de regresión para datos de panel (mínimos cuadrados ordinarios agrupados, efectos fijos y efectos aleatorios) y la especificación robusta de mínimos cuadrados generalizados factibles (FGLS) sobre la muestra balanceada cantonal de Ecuador para el periodo 2015-2024.</p>
+<section id="estadísticos-descriptivos-de-la-muestra" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="estadísticos-descriptivos-de-la-muestra"><span class="header-section-number">6.1</span> Estadísticos Descriptivos de la Muestra</h2>
+<p>La base de datos conforma un panel balanceado de 221 cantones para el periodo 2015-2024, acumulando 2,210 observaciones. La <a href="#tbl-descriptives-canton" class="quarto-xref">Table&nbsp;2</a> detalla el comportamiento descriptivo general, inter-cantonal (<em>between</em>) e intra-temporal (<em>within</em>):</p>
+<div id="tbl-descriptives-canton" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-descriptives-canton-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Estadísticos Descriptivos del Panel Cantonal de Ecuador
+</figcaption>
+<div aria-describedby="tbl-descriptives-canton-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Variación</th>
+<th style="text-align: center;">Media</th>
+<th style="text-align: center;">Desviación Estándar</th>
+<th style="text-align: center;">Mínimo</th>
+<th style="text-align: center;">Maksimo</th>
+<th style="text-align: center;">Observaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>LE</code></strong></td>
+<td style="text-align: left;">Overall</td>
+<td style="text-align: center;">7.6693</td>
+<td style="text-align: center;">1.4836</td>
+<td style="text-align: center;">4.7958</td>
+<td style="text-align: center;">13.7182</td>
+<td style="text-align: center;"><span class="math inline">\(N = 2210\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Between</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1.4859</td>
+<td style="text-align: center;">4.8964</td>
+<td style="text-align: center;">13.6655</td>
+<td style="text-align: center;"><span class="math inline">\(n = 221\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Within</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0.0477</td>
+<td style="text-align: center;">7.4441</td>
+<td style="text-align: center;">7.8947</td>
+<td style="text-align: center;"><span class="math inline">\(T = 10\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>PR</code></strong></td>
+<td style="text-align: left;">Overall</td>
+<td style="text-align: center;">-3.2655</td>
+<td style="text-align: center;">0.6123</td>
+<td style="text-align: center;">-5.3747</td>
+<td style="text-align: center;">0.6725</td>
+<td style="text-align: center;"><span class="math inline">\(N = 2210\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Between</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0.5463</td>
+<td style="text-align: center;">-4.1766</td>
+<td style="text-align: center;">-0.7532</td>
+<td style="text-align: center;"><span class="math inline">\(n = 221\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Within</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0.2789</td>
+<td style="text-align: center;">-5.8973</td>
+<td style="text-align: center;">-1.1628</td>
+<td style="text-align: center;"><span class="math inline">\(T = 10\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>TE</code></strong></td>
+<td style="text-align: left;">Overall</td>
+<td style="text-align: center;">10.5637</td>
+<td style="text-align: center;">1.3901</td>
+<td style="text-align: center;">-6.5104</td>
+<td style="text-align: center;">14.0851</td>
+<td style="text-align: center;"><span class="math inline">\(N = 2210\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Between</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1.2078</td>
+<td style="text-align: center;">4.0986</td>
+<td style="text-align: center;">13.7870</td>
+<td style="text-align: center;"><span class="math inline">\(n = 221\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Within</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0.6927</td>
+<td style="text-align: center;">-5.5065</td>
+<td style="text-align: center;">12.5568</td>
+<td style="text-align: center;"><span class="math inline">\(T = 10\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>DE</code></strong></td>
+<td style="text-align: left;">Overall</td>
+<td style="text-align: center;">0.4272</td>
+<td style="text-align: center;">0.4181</td>
+<td style="text-align: center;">-0.2987</td>
+<td style="text-align: center;">2.0293</td>
+<td style="text-align: center;"><span class="math inline">\(N = 2210\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Between</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0.4175</td>
+<td style="text-align: center;">-0.2481</td>
+<td style="text-align: center;">2.0025</td>
+<td style="text-align: center;"><span class="math inline">\(n = 221\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Within</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0.0356</td>
+<td style="text-align: center;">0.3104</td>
+<td style="text-align: center;">0.5543</td>
+<td style="text-align: center;"><span class="math inline">\(T = 10\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>PP</code></strong></td>
+<td style="text-align: left;">Overall</td>
+<td style="text-align: center;">10.8597</td>
+<td style="text-align: center;">19.4740</td>
+<td style="text-align: center;">0.0720</td>
+<td style="text-align: center;">93.9932</td>
+<td style="text-align: center;"><span class="math inline">\(N = 2210\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Between</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">19.2623</td>
+<td style="text-align: center;">0.0999</td>
+<td style="text-align: center;">92.0415</td>
+<td style="text-align: center;"><span class="math inline">\(n = 221\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Within</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">3.1169</td>
+<td style="text-align: center;">-11.3998</td>
+<td style="text-align: center;">44.1326</td>
+<td style="text-align: center;"><span class="math inline">\(T = 10\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="diagnósticos-de-colinealidad-y-correlación" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="diagnósticos-de-colinealidad-y-correlación"><span class="header-section-number">6.2</span> Diagnósticos de Colinealidad y Correlación</h2>
+<section id="matriz-de-correlación-de-pearson" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="matriz-de-correlación-de-pearson"><span class="header-section-number">6.2.1</span> Matriz de Correlación de Pearson</h3>
+<p>Las correlaciones lineales bivariadas muestran que la variable dependiente <code>LE</code> está fuertemente correlacionada de forma positiva con la participación provincial <code>PP</code> (<span class="math inline">\(0.666\)</span>), el tamaño de facturación <code>TE</code> (<span class="math inline">\(0.539\)</span>) y la densidad de firmas <code>DE</code> (<span class="math inline">\(0.536\)</span>). Todos los coeficientes marcados con un asterisco son significativos al 1% de nivel de confianza:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variables</th>
+<th style="text-align: center;"><code>LE</code></th>
+<th style="text-align: center;"><code>PR</code></th>
+<th style="text-align: center;"><code>TE</code></th>
+<th style="text-align: center;"><code>DE</code></th>
+<th style="text-align: center;"><code>PP</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>LE</code></strong></td>
+<td style="text-align: center;">1.0000</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>PR</code></strong></td>
+<td style="text-align: center;">-0.1391*</td>
+<td style="text-align: center;">1.0000</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>TE</code></strong></td>
+<td style="text-align: center;">0.5385*</td>
+<td style="text-align: center;">0.0073</td>
+<td style="text-align: center;">1.0000</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>DE</code></strong></td>
+<td style="text-align: center;">0.5362*</td>
+<td style="text-align: center;">-0.1455*</td>
+<td style="text-align: center;">0.4730*</td>
+<td style="text-align: center;">1.0000</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>PP</code></strong></td>
+<td style="text-align: center;">0.6655*</td>
+<td style="text-align: center;">0.0961*</td>
+<td style="text-align: center;">0.2192*</td>
+<td style="text-align: center;">0.1703*</td>
+<td style="text-align: center;">1.0000</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="factor-de-inflación-de-la-varianza-vif" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="factor-de-inflación-de-la-varianza-vif"><span class="header-section-number">6.2.2</span> Factor de Inflación de la Varianza (VIF)</h3>
+<p>El análisis del VIF confirma que todos los regresores poseen valores cercanos a la unidad, descartando cualquier sesgo crítico por multicolinealidad en el modelo (Media VIF: 1.19, Condición de número: 25.93):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: center;">VIF</th>
+<th style="text-align: center;">Tolerancia (<span class="math inline">\(1/\text{VIF}\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>DE</code></strong></td>
+<td style="text-align: center;">1.34</td>
+<td style="text-align: center;">0.7472</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>TE</code></strong></td>
+<td style="text-align: center;">1.33</td>
+<td style="text-align: center;">0.7529</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>PP</code></strong></td>
+<td style="text-align: center;">1.07</td>
+<td style="text-align: center;">0.9344</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>PR</code></strong></td>
+<td style="text-align: center;">1.04</td>
+<td style="text-align: center;">0.9592</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="resultados-de-la-estimación-de-modelos-de-panel" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="resultados-de-la-estimación-de-modelos-de-panel"><span class="header-section-number">6.3</span> Resultados de la Estimación de Modelos de Panel</h2>
+<p>A continuación se reportan los coeficientes estimados y errores estándar obtenidos mediante regresiones agrupadas (Pooled OLS), Efectos Fijos (FE) y Efectos Aleatorios (RE) en la <a href="#tbl-panel-output" class="quarto-xref">Table&nbsp;3</a>:</p>
+<div id="tbl-panel-output" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-panel-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Resultados de la Estimación de Modelos de Panel
+</figcaption>
+<div aria-describedby="tbl-panel-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Regresores</th>
+<th style="text-align: center;">Pooled OLS</th>
+<th style="text-align: center;">Efectos Fijos (FE)</th>
+<th style="text-align: center;">Efectos Aleatorios (RE)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>PR</code></strong></td>
+<td style="text-align: center;">-0.3748***</td>
+<td style="text-align: center;">-0.0189***</td>
+<td style="text-align: center;">-0.0242***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.0286)</td>
+<td style="text-align: center;">(0.0041)</td>
+<td style="text-align: center;">(0.0045)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>TE</code></strong></td>
+<td style="text-align: center;">0.2991***</td>
+<td style="text-align: center;">0.0282***</td>
+<td style="text-align: center;">0.0288***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.0142)</td>
+<td style="text-align: center;">(0.0014)</td>
+<td style="text-align: center;">(0.0015)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>DE</code></strong></td>
+<td style="text-align: center;">1.0077***</td>
+<td style="text-align: center;">0.2978***</td>
+<td style="text-align: center;">0.3659***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.0475)</td>
+<td style="text-align: center;">(0.0268)</td>
+<td style="text-align: center;">(0.0290)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>PP</code></strong></td>
+<td style="text-align: center;">0.0435***</td>
+<td style="text-align: center;">0.0006</td>
+<td style="text-align: center;">0.0015***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.0009)</td>
+<td style="text-align: center;">(0.0004)</td>
+<td style="text-align: center;">(0.0004)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Constante</strong></td>
+<td style="text-align: center;">2.3836***</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">7.1130***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.1743)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">(0.0625)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Obs</strong></td>
+<td style="text-align: center;">2210</td>
+<td style="text-align: center;">2210</td>
+<td style="text-align: center;">2210</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(R^2\)</span> (Within)</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0.2170</td>
+<td style="text-align: center;">0.2119</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<section id="contraste-y-selección-del-estimador-test-de-hausman" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="contraste-y-selección-del-estimador-test-de-hausman"><span class="header-section-number">6.3.1</span> Contraste y Selección del Estimador: Test de Hausman</h3>
+<p>El test de especificación de Hausman arrojó un rechazo unánime de la hipótesis nula con un estadístico <span class="math inline">\(\chi^2(4) = 406.40\)</span> (<span class="math inline">\(p &lt; 0.0001\)</span>), confirmando que la heterogeneidad inobservable de los cantones está correlacionada con los regresores explicativos. Este contraste valida la selección del estimador de <strong>Efectos Fijos (FE)</strong> como el único consistente y eficiente.</p>
+<p>La comparación gráfica de los coeficientes de regresión estimados se detalla a continuación:</p>
+<div id="fig-coef-comp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coef-comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/coef_comparison.png" class="img-fluid figure-img" style="width:85.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coef-comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Comparación de Coeficientes de Regresión (FE vs RE)
+</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+</section>
+<section id="corrección-de-perturbaciones-modelo-gls-robusto-fgls" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="corrección-de-perturbaciones-modelo-gls-robusto-fgls"><span class="header-section-number">6.4</span> Corrección de Perturbaciones: Modelo GLS Robusto (FGLS)</h2>
+<p>Dado que las pruebas de diagnóstico detectaron problemas severos de heterocedasticidad inter-cantonal (Wald Modificado: <span class="math inline">\(\chi^2_{221} = 2050.74\)</span>, <span class="math inline">\(p&lt;0.0001\)</span>), se aplicó la estimación por <strong>Mínimos Cuadrados Generalizados Factibles (FGLS)</strong> para corregir la variabilidad de las perturbaciones grupales y la autocorrelación serial de primer orden en el término de error.</p>
+<p>La <a href="#tbl-gls-output-python" class="quarto-xref">Table&nbsp;4</a> resume los resultados de FGLS a nivel global y segmentado por subgrupos de desarrollo cantonal (VAB):</p>
+<div id="tbl-gls-output-python" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gls-output-python-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Resultados FGLS Corregidos por Subgrupos de VAB
+</figcaption>
+<div aria-describedby="tbl-gls-output-python-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Regresores</th>
+<th style="text-align: center;">Modelo Global</th>
+<th style="text-align: center;">VAB Alto</th>
+<th style="text-align: center;">VAB Medio</th>
+<th style="text-align: center;">VAB Bajo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>PR</code></strong> (Productividad)</td>
+<td style="text-align: center;">-0.2795***</td>
+<td style="text-align: center;">-0.7025***</td>
+<td style="text-align: center;">-0.2611***</td>
+<td style="text-align: center;">-0.0783**</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.0489)</td>
+<td style="text-align: center;">(0.0939)</td>
+<td style="text-align: center;">(0.0720)</td>
+<td style="text-align: center;">(0.0307)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>PR2</code></strong> (Productividad<span class="math inline">\(^2\)</span>)</td>
+<td style="text-align: center;">-0.0124</td>
+<td style="text-align: center;">-0.0567***</td>
+<td style="text-align: center;">0.0009</td>
+<td style="text-align: center;">-0.0010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.0078)</td>
+<td style="text-align: center;">(0.0146)</td>
+<td style="text-align: center;">(0.0117)</td>
+<td style="text-align: center;">(0.0049)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>TE</code></strong> (Tamaño Empresa)</td>
+<td style="text-align: center;">0.0825***</td>
+<td style="text-align: center;">0.0353***</td>
+<td style="text-align: center;">0.0184***</td>
+<td style="text-align: center;">0.1730***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.0043)</td>
+<td style="text-align: center;">(0.0057)</td>
+<td style="text-align: center;">(0.0023)</td>
+<td style="text-align: center;">(0.0063)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>DE</code></strong> (Densidad Empresa)</td>
+<td style="text-align: center;">0.8911***</td>
+<td style="text-align: center;">0.4752***</td>
+<td style="text-align: center;">0.6236***</td>
+<td style="text-align: center;">0.4785***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.0255)</td>
+<td style="text-align: center;">(0.0383)</td>
+<td style="text-align: center;">(0.0315)</td>
+<td style="text-align: center;">(0.0323)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>PP</code></strong> (Part. Provincial)</td>
+<td style="text-align: center;">0.0359***</td>
+<td style="text-align: center;">0.0249***</td>
+<td style="text-align: center;">0.0263***</td>
+<td style="text-align: center;">0.0187***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.0009)</td>
+<td style="text-align: center;">(0.0007)</td>
+<td style="text-align: center;">(0.0015)</td>
+<td style="text-align: center;">(0.0030)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Constante</strong></td>
+<td style="text-align: center;">5.2033***</td>
+<td style="text-align: center;">6.1997***</td>
+<td style="text-align: center;">6.0028***</td>
+<td style="text-align: center;">4.3342***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.0899)</td>
+<td style="text-align: center;">(0.1658)</td>
+<td style="text-align: center;">(0.1171)</td>
+<td style="text-align: center;">(0.0810)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Obs</strong></td>
+<td style="text-align: center;">2210</td>
+<td style="text-align: center;">740</td>
+<td style="text-align: center;">730</td>
+<td style="text-align: center;">740</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Wald <span class="math inline">\(\chi^2\)</span></strong></td>
+<td style="text-align: center;">4042.66</td>
+<td style="text-align: center;">1537.65</td>
+<td style="text-align: center;">1229.28</td>
+<td style="text-align: center;">1075.96</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><em>Errores estándar entre paréntesis. Significancia estadística: </em>** <span class="math inline">\(p&lt;0.01\)</span>, ** <span class="math inline">\(p&lt;0.05\)</span>, * <span class="math inline">\(p&lt;0.1\)</span>.*</p>
+</section>
+<section id="discusión-y-análisis-de-elasticidades" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="discusión-y-análisis-de-elasticidades"><span class="header-section-number">6.5</span> Discusión y Análisis de Elasticidades</h2>
+<ol type="1">
+<li><strong>La Relación No Lineal de la Productividad (<code>PR</code> y <code>PR2</code>)</strong>: En los cantones de <strong>VAB Alto</strong>, tanto el coeficiente de productividad lineal (<span class="math inline">\(\beta_{\text{PR}} = -0.7025^{***}\)</span>) como el término cuadrático (<span class="math inline">\(\beta_{\text{PR2}} = -0.0567^{***}\)</span>) son negativos y altamente significativos. Esto demuestra que en las economías cantonales más grandes y complejas de Ecuador, el aumento de la productividad media del trabajo genera un desplazamiento de empleo formal que se acelera de manera no lineal. Esto es plenamente consistente con el <strong>efecto de sustitución capital-trabajo</strong> y la automatización tecnológica en firmas de gran escala. En contraste, en cantones de <strong>VAB Medio y Bajo</strong>, el término cuadrático no es estadísticamente significativo y el efecto de la productividad opera de forma estrictamente lineal.</li>
+<li><strong>Escala y Densidad Empresarial (<code>TE</code> y <code>DE</code>)</strong>: La elasticidad positiva del empleo respecto al tamaño promedio de facturación empresarial (<code>TE</code> <span class="math inline">\(= 0.0825\)</span> global) y la densidad de las firmas (<code>DE</code> <span class="math inline">\(= 0.8911\)</span> global) corrobora que la formalización laboral depende directamente de la escala corporativa. Este impacto es sumamente alto en los cantones con <strong>VAB Bajo</strong> (<span class="math inline">\(\beta_{\text{TE}} = 0.1730\)</span>), donde la supervivencia financiera y facturación de los pocos establecimientos estructurados determina críticamente la oferta laboral formal de esos territorios.</li>
+</ol>
+</section>
+</section>
+<section id="conclusiones-y-limitaciones" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Conclusiones y Limitaciones</h1>
+<section id="conclusiones" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="conclusiones"><span class="header-section-number">7.1</span> Conclusiones</h2>
+<p>La evidencia empírica analizada permite concluir que el empleo formal cantonal en el Ecuador no responde de manera homogénea al dinamismo productivo, sino que se encuentra condicionado por la escala de las firmas y la estructura económica del territorio. La elasticidad negativa observada frente a incrementos en la productividad laboral media revela un comportamiento defensivo y de optimización de costos en los cantones con mayor dinamismo mercantil (VAB Alto), donde las empresas prefieren intensificar sus procesos mediante la sustitución de capital por trabajo a través de la modernización tecnológica y la automatización.</p>
+<p>Asimismo, se evidencia una fuerte dependencia y sensibilidad del empleo formal respecto a la escala de ventas y la densidad empresarial en las regiones con menor desarrollo productivo (VAB Bajo). En estos municipios rezagados, las micro y pequeñas empresas constituyen la única fuente plausible de absorción laboral formal, lo que exige concentrar los incentivos de desarrollo directamente en garantizar la viabilidad y supervivencia mercantil de estas firmas locales antes que en imponer cargas tributarias homogéneas.</p>
+<p>Finalmente, el estudio demuestra que el diseño de políticas públicas uniformes a nivel nacional resulta ineficaz para promover la formalización en el mercado laboral ecuatoriano. Los resultados sugieren la necesidad de implementar estrategias de fomento productivo con un enfoque territorial diferenciado que flexibilicen y simplifiquen la regulación laboral y administrativa en los cantones de bajo y medio desarrollo relativo, permitiendo que las firmas locales logren la escala mínima requerida para soportar los costos de formalización previsional.</p>
+</section>
+<section id="limitaciones" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="limitaciones"><span class="header-section-number">7.2</span> Limitaciones</h2>
+<p>A pesar del rigor econométrico, el análisis presenta limitaciones metodológicas importantes. En primer lugar, existe una restricción en la identificación causal del modelo debido a la posible endogeneidad por causalidad inversa de la productividad laboral, por lo cual los coeficientes reportados deben interpretarse estrictamente en términos de asociación y correlación. En segundo lugar, existe un sesgo potencial por variables omitidas debido a la carencia de microdatos anuales detallados sobre la inversión pública local y el flujo de financiamiento corporativo a nivel cantonal. Por último, la variable dependiente fundamentada en los registros de afiliación activa al IESS constituye un indicador administrativo de formalidad que podría subestimar el empleo real y la dinámica de acuerdos laborales semiformales no regulados, especialmente en el sector agrícola y las zonas predominantemente rurales.</p>
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-caminomogro2023tax" class="csl-entry" role="listitem">
+Camino-Mogro, Segundo. 2023. <span>“Tax Incentives, Private Investment and Employment: <span>E</span>vidence from an <span>E</span>cuadorian Reform.”</span> <em>Journal of International Development</em> 35 (7): 2129–56. <a href="https://doi.org/10.1002/jid.3766">https://doi.org/10.1002/jid.3766</a>.
+</div>
+<div id="ref-diazsanchez2024immigration" class="csl-entry" role="listitem">
+Díaz-Sánchez, Juan Pablo, and Helen Correa. 2024. <span>“Immigration and Formal Labor Market Participation in <span>E</span>cuador.”</span> <em>Research in Globalization</em> 8: 100198. <a href="https://doi.org/10.1016/j.resglo.2024.100198">https://doi.org/10.1016/j.resglo.2024.100198</a>.
+</div>
+<div id="ref-matano2020drives" class="csl-entry" role="listitem">
+Matano, Alessia, Moisés Obaco, and Vicente Royuela. 2020. <span>“What Drives the Spatial Wage Premium in Formal and Informal Labor Markets? <span>T</span>he Case of <span>E</span>cuador.”</span> <em>Journal of Regional Science</em>, ahead of print. <a href="https://doi.org/10.1111/jors.12486">https://doi.org/10.1111/jors.12486</a>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

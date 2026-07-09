@@ -1,0 +1,104 @@
+=== ESTIMACIÓN ECONOMÉTRICA EN PYTHON - EMPLEO CANTONAL ===
+
+--- POOLED OLS ---
+                          PooledOLS Estimation Summary                          
+================================================================================
+Dep. Variable:                     LE   R-squared:                        0.7044
+Estimator:                  PooledOLS   R-squared (Between):              0.7294
+No. Observations:                2210   R-squared (Within):              -23.407
+Date:                Fri, Jul 03 2026   R-squared (Overall):              0.7044
+Time:                        08:31:20   Log-likelihood                   -2660.5
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      1313.5
+Entities:                         221   P-value                           0.0000
+Avg Obs:                      10.0000   Distribution:                  F(4,2205)
+Min Obs:                      10.0000                                           
+Max Obs:                      10.0000   F-statistic (robust):             1313.5
+                                        P-value                           0.0000
+Time periods:                      10   Distribution:                  F(4,2205)
+Avg Obs:                       221.00                                           
+Min Obs:                       221.00                                           
+Max Obs:                       221.00                                           
+                                                                                
+                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+const          2.3836     0.1743     13.675     0.0000      2.0418      2.7254
+PR            -0.3748     0.0286    -13.085     0.0000     -0.4310     -0.3186
+TE             0.2991     0.0142     21.000     0.0000      0.2711      0.3270
+DE             1.0077     0.0475     21.202     0.0000      0.9145      1.1009
+PP             0.0435     0.0009     47.629     0.0000      0.0417      0.0453
+==============================================================================
+
+--- FIXED EFFECTS (FE) ---
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:                     LE   R-squared:                        0.2170
+Estimator:                   PanelOLS   R-squared (Between):              0.1244
+No. Observations:                2210   R-squared (Within):               0.2170
+Date:                Fri, Jul 03 2026   R-squared (Overall):              0.1244
+Time:                        08:31:20   Log-likelihood                    3858.9
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      137.52
+Entities:                         221   P-value                           0.0000
+Avg Obs:                      10.0000   Distribution:                  F(4,1985)
+Min Obs:                      10.0000                                           
+Max Obs:                      10.0000   F-statistic (robust):             137.52
+                                        P-value                           0.0000
+Time periods:                      10   Distribution:                  F(4,1985)
+Avg Obs:                       221.00                                           
+Min Obs:                       221.00                                           
+Max Obs:                       221.00                                           
+                                                                                
+                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+PR            -0.0189     0.0041    -4.6518     0.0000     -0.0269     -0.0110
+TE             0.0282     0.0014     20.256     0.0000      0.0254      0.0309
+DE             0.2978     0.0268     11.111     0.0000      0.2452      0.3503
+PP             0.0006     0.0004     1.7464     0.0809  -7.797e-05      0.0013
+==============================================================================
+
+F-test for Poolability: 3284.2
+P-value: 0.0000
+Distribution: F(220,1985)
+
+Included effects: Entity
+
+--- RANDOM EFFECTS (RE) ---
+                        RandomEffects Estimation Summary                        
+================================================================================
+Dep. Variable:                     LE   R-squared:                        0.1974
+Estimator:              RandomEffects   R-squared (Between):              0.1529
+No. Observations:                2210   R-squared (Within):               0.2119
+Date:                Fri, Jul 03 2026   R-squared (Overall):              0.1530
+Time:                        08:31:21   Log-likelihood                    3519.7
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      135.57
+Entities:                         221   P-value                           0.0000
+Avg Obs:                      10.0000   Distribution:                  F(4,2205)
+Min Obs:                      10.0000                                           
+Max Obs:                      10.0000   F-statistic (robust):             135.57
+                                        P-value                           0.0000
+Time periods:                      10   Distribution:                  F(4,2205)
+Avg Obs:                       221.00                                           
+Min Obs:                       221.00                                           
+Max Obs:                       221.00                                           
+                                                                                
+                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+const          7.1130     0.0625     113.77     0.0000      6.9904      7.2356
+PR            -0.0242     0.0045    -5.3809     0.0000     -0.0330     -0.0154
+TE             0.0288     0.0015     18.784     0.0000      0.0258      0.0319
+DE             0.3659     0.0290     12.629     0.0000      0.3090      0.4227
+PP             0.0015     0.0004     3.7661     0.0002      0.0007      0.0023
+==============================================================================
+
+--- TEST DE HAUSMAN ---
+Chi-cuadrado: -72.7215
+Grados de libertad: 4
+p-valor: 1.0000e+00

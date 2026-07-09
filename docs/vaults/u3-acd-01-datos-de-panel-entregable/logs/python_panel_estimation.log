@@ -1,0 +1,98 @@
+=== ESTIMACIÓN ECONOMETRICA EN PYTHON (LINEARMODELS) ===
+
+--- POOLED OLS RESULTS ---
+                          PooledOLS Estimation Summary                          
+================================================================================
+Dep. Variable:              ln_empleo   R-squared:                        0.8829
+Estimator:                  PooledOLS   R-squared (Between):              0.9052
+No. Observations:                2210   R-squared (Within):              -20.683
+Date:                Mon, Jun 29 2026   R-squared (Overall):              0.8829
+Time:                        11:43:00   Log-likelihood                   -1637.6
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      8316.4
+Entities:                         221   P-value                           0.0000
+Avg Obs:                      10.0000   Distribution:                  F(2,2207)
+Min Obs:                      10.0000                                           
+Max Obs:                      10.0000   F-statistic (robust):             8316.4
+                                        P-value                           0.0000
+Time periods:                      10   Distribution:                  F(2,2207)
+Avg Obs:                       221.00                                           
+Min Obs:                       221.00                                           
+Max Obs:                       221.00                                           
+                                                                                
+                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+const          0.8981     0.1072     8.3779     0.0000      0.6879      1.1083
+ln_vab         0.6057     0.0125     48.367     0.0000      0.5811      0.6303
+ln_ventas      0.2305     0.0083     27.836     0.0000      0.2142      0.2467
+==============================================================================
+
+--- FIXED EFFECTS (FE) RESULTS ---
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:              ln_empleo   R-squared:                        0.1958
+Estimator:                   PanelOLS   R-squared (Between):              0.1383
+No. Observations:                2210   R-squared (Within):               0.1958
+Date:                Mon, Jun 29 2026   R-squared (Overall):              0.1384
+Time:                        11:43:00   Log-likelihood                    3829.4
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      241.85
+Entities:                         221   P-value                           0.0000
+Avg Obs:                      10.0000   Distribution:                  F(2,1987)
+Min Obs:                      10.0000                                           
+Max Obs:                      10.0000   F-statistic (robust):             241.85
+                                        P-value                           0.0000
+Time periods:                      10   Distribution:                  F(2,1987)
+Avg Obs:                       221.00                                           
+Min Obs:                       221.00                                           
+Max Obs:                       221.00                                           
+                                                                                
+                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+ln_vab         0.0080     0.0035     2.3188     0.0205      0.0012      0.0148
+ln_ventas      0.0293     0.0013     21.899     0.0000      0.0267      0.0319
+==============================================================================
+
+F-test for Poolability: 1262.9
+P-value: 0.0000
+Distribution: F(220,1987)
+
+Included effects: Entity
+
+--- RANDOM EFFECTS (RE) RESULTS ---
+                        RandomEffects Estimation Summary                        
+================================================================================
+Dep. Variable:              ln_empleo   R-squared:                        0.1591
+Estimator:              RandomEffects   R-squared (Between):              0.1478
+No. Observations:                2210   R-squared (Within):               0.1698
+Date:                Mon, Jun 29 2026   R-squared (Overall):              0.1478
+Time:                        11:43:00   Log-likelihood                    3046.3
+Cov. Estimator:            Unadjusted                                           
+                                        F-statistic:                      208.81
+Entities:                         221   P-value                           0.0000
+Avg Obs:                      10.0000   Distribution:                  F(2,2207)
+Min Obs:                      10.0000                                           
+Max Obs:                      10.0000   F-statistic (robust):             208.81
+                                        P-value                           0.0000
+Time periods:                      10   Distribution:                  F(2,2207)
+Avg Obs:                       221.00                                           
+Min Obs:                       221.00                                           
+Max Obs:                       221.00                                           
+                                                                                
+                             Parameter Estimates                              
+==============================================================================
+            Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------
+const          6.9107     0.0563     122.77     0.0000      6.8003      7.0211
+ln_vab         0.0325     0.0046     7.0168     0.0000      0.0234      0.0415
+ln_ventas      0.0346     0.0018     19.185     0.0000      0.0310      0.0381
+==============================================================================
+
+--- TEST DE HAUSMAN ---
+Chi-cuadrado: -84.0154
+Grados de libertad: 2
+p-valor: 1.0000e+00

@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 # Load original data
 df_orig = pd.read_excel('docs/vaults/u1-aa-02-aa1-series-tiempo/data/aa1_import_function.xlsx', sheet_name='data')

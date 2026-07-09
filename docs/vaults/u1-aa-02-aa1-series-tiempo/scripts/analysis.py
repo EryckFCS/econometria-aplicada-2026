@@ -6,7 +6,6 @@ utilizando datos constantes del Banco Mundial.
 
 import pandas as pd
 import numpy as np
-import statsmodels.api as sm
 from statsmodels.tsa.ardl import ARDL
 import matplotlib.pyplot as plt
 import os
