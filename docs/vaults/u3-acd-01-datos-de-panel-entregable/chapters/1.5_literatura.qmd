@@ -1,0 +1,17 @@
+# Revisión de la Literatura
+
+La dinámica de la demanda de trabajo y la formalización laboral a nivel territorial en economías en desarrollo ha sido ampliamente debatida en la literatura empírica y teórica reciente.
+
+## Síntesis de los enfoques teóricos
+
+Para comprender las fuerzas dinámicas que determinan la demanda de empleo formal a nivel subnacional, el análisis se sustenta en tres enfoques teóricos interrelacionados. En primer lugar, la teoría del dualismo estructural y segmentación laboral postula que en economías en desarrollo coexisten mercados de trabajo formal y de subsistencia informal, de acuerdo con las formulaciones iniciales de Harris y Todaro. Esta segmentación se debe a barreras de entrada institucionales y a los costos de cumplimiento normativo, tales como la afiliación a la seguridad social y el salario básico, que empujan a las unidades económicas más vulnerables hacia la informalidad.
+
+En segundo lugar, la teoría del cambio tecnológico sesgado explica cómo la introducción de innovaciones y capital tecnológico en las firmas sustituye puestos de trabajo de baja calificación o tareas repetitivas, elevando simultáneamente la productividad media de los trabajadores calificados que permanecen dentro de las firmas.
+
+Finalmente, la nueva geografía económica y las economías de aglomeración plantean que la concentración territorial de empresas y la densidad mercantil generan externalidades positivas que reducen los costos de transacción y facilitan el emparejamiento laboral, promoviendo la formalización en zonas de alta densidad urbana.
+
+## Síntesis de la evidencia empírica
+
+La evidencia empírica internacional y local aporta lecciones metodológicas en tres niveles. A nivel internacional, diversos estudios demuestran que los incrementos de productividad impulsados por la tecnificación pueden producir un desplazamiento del empleo formal neto en el corto plazo a través del efecto sustitución si la elasticidad de sustitución capital-trabajo es mayor a la unidad, aunque a largo plazo se logre expandir la demanda de empleo por efectos de escala. A nivel latinoamericano, el empleo formal se encuentra fuertemente correlacionado con la escala empresarial y el ciclo económico, donde las micro y pequeñas empresas sufren barreras de financiamiento que les impiden formalizar a su personal debido a su baja productividad relativa.
+
+En el contexto ecuatoriano, investigaciones sobre la estructura salarial y el empleo muestran una fuerte segmentación espacial con primas salariales urbanas y una alta heterogeneidad regional. Asimismo, estudios sobre incentivos fiscales y flujos migratorios recientes evidencian cómo las rigideces del mercado de trabajo ecuatoriano y los cambios en la oferta laboral alteran los incentivos de formalización de las firmas, sugiriendo la necesidad de analizar las respuestas de las firmas utilizando datos a escala cantonal.

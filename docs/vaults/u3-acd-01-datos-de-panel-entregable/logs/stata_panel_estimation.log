@@ -1,0 +1,508 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  Z:/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u3-acd-01-datos-de-panel-entregable/logs/s
+> tata_panel_estimation.log
+  log type:  text
+ opened on:  29 Jun 2026, 13:21:00
+
+. 
+. * 2. Importar base
+. import delimited "`base_path'/data/processed/panel_cantonal_consolidado.csv", ///
+>     stringcols(3) clear
+(encoding automatically selected: UTF-8)
+(12 vars, 2,210 obs)
+
+. 
+. * 3. Preprocesamiento
+. encode codigo_canton, gen(canton_id_num)
+
+. encode vab_group,     gen(vab_group_num)
+
+. 
+. * 4. Panel
+. xtset canton_id_num anio, yearly
+
+Panel variable: canton_id_num (strongly balanced)
+ Time variable: anio, 2015 to 2024
+         Delta: 1 year
+
+. label list vab_group_num
+vab_group_num:
+           1 Alto
+           2 Bajo
+           3 Medio
+
+. tab vab_group vab_group_num, miss
+
+           |          vab_group_num
+ vab_group |      Alto       Bajo      Medio |     Total
+-----------+---------------------------------+----------
+      Alto |       740          0          0 |       740 
+      Bajo |         0        740          0 |       740 
+     Medio |         0          0        730 |       730 
+-----------+---------------------------------+----------
+     Total |       740        740        730 |     2,210 
+
+. 
+. * 5. Estadísticas descriptivas
+. xtsum empleo_prom vab ventas_totales num_emp participacion_provincial
+
+Variable         |      Mean   Std. dev.       Min        Max |    Observations
+-----------------+--------------------------------------------+----------------
+empleo~m overall |  13091.55   73685.34        121     907269 |     N =    2210
+         between |              73797.8        134   861089.9 |     n =     221
+         within  |             2367.217  -26654.35   59270.65 |     T =      10
+                 |                                            |
+vab      overall |  458.8453   2342.168    4.00556   27178.87 |     N =    2210
+         between |             2337.814   5.618368   25066.68 |     n =     221
+         within  |             206.5037  -2689.796    4031.35 |     T =      10
+                 |                                            |
+ventas~s overall |  9.99e+08   6.76e+09         10   9.42e+10 |     N =    2210
+         between |             6.71e+09     5695.4   7.89e+10 |     n =     221
+         within  |             9.88e+08  -1.54e+10   2.40e+10 |     T =      10
+                 |                                            |
+num_emp  overall |  5339.338   23312.73         82     303967 |     N =    2210
+         between |             23343.37       91.7   284826.2 |     n =     221
+         within  |             888.9661  -12298.86   24480.14 |     T =      10
+                 |                                            |
+partic~l overall |  10.85973   19.47404    .071959   93.99321 |     N =    2210
+         between |             19.26225   .0998773   92.04147 |     n =     221
+         within  |             3.116949  -11.39982   44.13255 |     T =      10
+
+. 
+. * 6. Transformaciones logarítmicas
+. gen ln_empleo = ln(empleo_prom)
+
+. gen ln_vab    = ln(vab)
+
+. gen ln_ventas = ln(ventas_totales)
+
+. 
+. * 7. Diagnóstico de colinealidad
+. collin ln_vab ln_ventas num_emp participacion_provincial
+(obs=2,210)
+
+  Collinearity Diagnostics
+
+                        SQRT                   R-
+  Variable      VIF     VIF    Tolerance    Squared
+----------------------------------------------------
+    ln_vab      4.33    2.08    0.2310      0.7690
+ ln_ventas      3.15    1.78    0.3171      0.6829
+   num_emp      1.48    1.22    0.6765      0.3235
+participacion_provincial      2.09    1.45    0.4780      0.5220
+----------------------------------------------------
+  Mean VIF      2.76
+
+                           Cond
+        Eigenval          Index
+---------------------------------
+    1     3.5303          1.0000
+    2     1.0595          1.8254
+    3     0.3756          3.0657
+    4     0.0313         10.6271
+    5     0.0033         32.6560
+---------------------------------
+ Condition Number        32.6560 
+ Eigenvalues & Cond Index computed from scaled raw sscp (w/ intercept)
+ Det(correlation matrix)    0.1139
+
+. pwcorr ln_empleo ln_vab ln_ventas num_emp participacion_provincial, ///
+>     star(.01) bonferroni
+
+             | ln_emp~o   ln_vab ln_ven~s  num_emp partic~l
+-------------+---------------------------------------------
+   ln_empleo |   1.0000 
+      ln_vab |   0.9175*  1.0000 
+   ln_ventas |   0.8710*  0.8242*  1.0000 
+     num_emp |   0.5430*  0.5065*  0.4324*  1.0000 
+participac~l |   0.6655*  0.6863*  0.5296*  0.5325*  1.0000 
+
+. 
+. * ==============================================================================
+. * 8. MODELO GLOBAL
+. * ==============================================================================
+. 
+. * --- HAUSMAN: FE y RE sin cluster (requerimiento del test) ---
+. quietly xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial, fe
+
+. estimates store fe_hausman
+
+. 
+. quietly xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial, re
+
+. estimates store re_hausman
+
+. 
+. hausman fe_hausman re_hausman, sigmamore
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |   fe_hausman   re_hausman     Difference       Std. err.
+-------------+----------------------------------------------------------------
+      ln_vab |    .0128951     .0302819       -.0173868        .0007913
+   ln_ventas |    .0285869     .0318525       -.0032656        .0001706
+     num_emp |    6.86e-06     .0000172       -.0000104        9.06e-07
+participac~l |   -.0008495    -.0002126        -.000637        .0000843
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(4) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            = 929.56
+Prob > chi2 = 0.0000
+
+. 
+. * --- MODELO REPORTABLE: FE con errores cluster (heteroscedasticidad confirmada) ---
+. xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial, ///
+>     fe vce(cluster canton_id_num)
+
+Fixed-effects (within) regression               Number of obs     =      2,210
+Group variable: canton_id_~m                    Number of groups  =        221
+
+R-squared:                                      Obs per group:
+     Within  = 0.2145                                         min =         10
+     Between = 0.5686                                         avg =       10.0
+     Overall = 0.5637                                         max =         10
+
+                                                F(4, 220)         =       8.83
+corr(u_i, Xb) = 0.6818                          Prob > F          =     0.0000
+
+                                    (Std. err. adjusted for 221 clusters in canton_id_num)
+------------------------------------------------------------------------------------------
+                         |               Robust
+               ln_empleo | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------------------+----------------------------------------------------------------
+                  ln_vab |   .0128951   .0038091     3.39   0.001     .0053881    .0204021
+               ln_ventas |   .0285869   .0075146     3.80   0.000      .013777    .0433967
+                 num_emp |   6.86e-06   3.40e-06     2.02   0.045     1.52e-07    .0000136
+participacion_provincial |  -.0008495   .0003346    -2.54   0.012    -.0015089   -.0001901
+                   _cons |   7.076077   .1321746    53.54   0.000     6.815587    7.336568
+-------------------------+----------------------------------------------------------------
+                 sigma_u |  1.3410494
+                 sigma_e |  .04461139
+                     rho |  .99889459   (fraction of variance due to u_i)
+------------------------------------------------------------------------------------------
+
+. estimates store fixed
+
+. 
+. * --- Two-way FE con cluster ---
+. xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial ///
+>     i.anio, fe vce(cluster canton_id_num)
+
+Fixed-effects (within) regression               Number of obs     =      2,210
+Group variable: canton_id_~m                    Number of groups  =        221
+
+R-squared:                                      Obs per group:
+     Within  = 0.2353                                         min =         10
+     Between = 0.5405                                         avg =       10.0
+     Overall = 0.5347                                         max =         10
+
+                                                F(13, 220)        =       9.13
+corr(u_i, Xb) = 0.6628                          Prob > F          =     0.0000
+
+                                    (Std. err. adjusted for 221 clusters in canton_id_num)
+------------------------------------------------------------------------------------------
+                         |               Robust
+               ln_empleo | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------------------+----------------------------------------------------------------
+                  ln_vab |   .0009563   .0036754     0.26   0.795    -.0062872    .0081999
+               ln_ventas |   .0285819   .0073887     3.87   0.000     .0140202    .0431437
+                 num_emp |   6.61e-06   3.24e-06     2.04   0.042     2.28e-07     .000013
+participacion_provincial |  -.0002752    .000309    -0.89   0.374    -.0008843    .0003338
+                         |
+                    anio |
+                   2016  |   .0030075   .0027067     1.11   0.268    -.0023267    .0083418
+                   2017  |   .0015174   .0028966     0.52   0.601    -.0041912     .007226
+                   2018  |    .007197   .0029104     2.47   0.014     .0014612    .0129328
+                   2019  |   .0132661    .003171     4.18   0.000     .0070167    .0195154
+                   2020  |   .0117933    .003309     3.56   0.000     .0052718    .0183147
+                   2021  |   .0164064   .0038271     4.29   0.000      .008864    .0239488
+                   2022  |   .0184239   .0042308     4.35   0.000     .0100858     .026762
+                   2023  |   .0155104   .0039581     3.92   0.000     .0077098    .0233111
+                   2024  |   .0233649   .0049345     4.74   0.000       .01364    .0330898
+                         |
+                   _cons |   7.112805   .1310681    54.27   0.000     6.854496    7.371115
+-------------------------+----------------------------------------------------------------
+                 sigma_u |  1.3531159
+                 sigma_e |  .04411506
+                     rho |   .9989382   (fraction of variance due to u_i)
+------------------------------------------------------------------------------------------
+
+. estimates store fixed_twoway
+
+. 
+. * --- Test de heteroscedasticidad (sobre FE sin cluster) ---
+. quietly xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial, fe
+
+. xttest3
+
+Modified Wald test for groupwise heteroskedasticity
+in fixed effect regression model
+
+H0: sigma(i)^2 = sigma^2 for all i
+
+chi2 (221)  =       2526.14
+Prob > chi2 =          0.0000
+
+
+. 
+. * ==============================================================================
+. * 9. MODELOS POR SUBGRUPO
+. * vab_group_num: 1=Alto  2=Bajo  3=Medio
+. * ==============================================================================
+. 
+. * --- VAB Alto ---
+. quietly xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial ///
+>     if vab_group_num==1, fe
+
+. estimates store fe_h_alto
+
+. quietly xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial ///
+>     if vab_group_num==1, re
+
+. estimates store re_h_alto
+
+. hausman fe_h_alto re_h_alto, sigmamore
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |   fe_h_alto    re_h_alto      Difference       Std. err.
+-------------+----------------------------------------------------------------
+      ln_vab |    .0117538     .0178775       -.0061237        .0013731
+   ln_ventas |    .0205097     .0202989        .0002108        .0001786
+     num_emp |    6.25e-06     .0000135       -7.30e-06        9.05e-07
+participac~l |    -.000748    -.0001519        -.000596        .0001334
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(4) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            = 250.51
+Prob > chi2 = 0.0000
+
+. 
+. xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial ///
+>     if vab_group_num==1, fe vce(cluster canton_id_num)
+
+Fixed-effects (within) regression               Number of obs     =        740
+Group variable: canton_id_~m                    Number of groups  =         74
+
+R-squared:                                      Obs per group:
+     Within  = 0.2076                                         min =         10
+     Between = 0.5714                                         avg =       10.0
+     Overall = 0.5689                                         max =         10
+
+                                                F(4, 73)          =       4.53
+corr(u_i, Xb) = 0.6379                          Prob > F          =     0.0025
+
+                                     (Std. err. adjusted for 74 clusters in canton_id_num)
+------------------------------------------------------------------------------------------
+                         |               Robust
+               ln_empleo | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------------------+----------------------------------------------------------------
+                  ln_vab |   .0117538   .0063554     1.85   0.068    -.0009125    .0244201
+               ln_ventas |   .0205097   .0069499     2.95   0.004     .0066587    .0343608
+                 num_emp |   6.25e-06   3.01e-06     2.07   0.042     2.43e-07    .0000122
+participacion_provincial |   -.000748    .000399    -1.87   0.065    -.0015431    .0000471
+                   _cons |    8.66708   .1450339    59.76   0.000     8.378028    8.956132
+-------------------------+----------------------------------------------------------------
+                 sigma_u |   1.070385
+                 sigma_e |   .0450574
+                     rho |  .99823118   (fraction of variance due to u_i)
+------------------------------------------------------------------------------------------
+
+. estimates store fixed_alto
+
+. 
+. * --- VAB Medio ---
+. quietly xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial ///
+>     if vab_group_num==3, fe
+
+. estimates store fe_h_medio
+
+. quietly xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial ///
+>     if vab_group_num==3, re
+
+. estimates store re_h_medio
+
+. hausman fe_h_medio re_h_medio, sigmamore
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |   fe_h_medio   re_h_medio     Difference       Std. err.
+-------------+----------------------------------------------------------------
+      ln_vab |   -.0027291    -.0014004       -.0013287        .0005945
+   ln_ventas |    .0166922     .0155499        .0011423        .0002281
+     num_emp |    .0002705      .000304       -.0000334        6.03e-06
+participac~l |    .0007329      .001049       -.0003161        .0000978
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(4) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            =  53.26
+Prob > chi2 = 0.0000
+
+. 
+. xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial ///
+>     if vab_group_num==3, fe vce(cluster canton_id_num)
+
+Fixed-effects (within) regression               Number of obs     =        730
+Group variable: canton_id_~m                    Number of groups  =         73
+
+R-squared:                                      Obs per group:
+     Within  = 0.4721                                         min =         10
+     Between = 0.6825                                         avg =       10.0
+     Overall = 0.6796                                         max =         10
+
+                                                F(4, 72)          =      24.10
+corr(u_i, Xb) = 0.5602                          Prob > F          =     0.0000
+
+                                     (Std. err. adjusted for 73 clusters in canton_id_num)
+------------------------------------------------------------------------------------------
+                         |               Robust
+               ln_empleo | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------------------+----------------------------------------------------------------
+                  ln_vab |  -.0027291   .0071781    -0.38   0.705    -.0170384    .0115801
+               ln_ventas |   .0166922   .0053124     3.14   0.002     .0061021    .0272823
+                 num_emp |   .0002705    .000041     6.60   0.000     .0001888    .0003522
+participacion_provincial |   .0007329   .0005443     1.35   0.182    -.0003522    .0018179
+                   _cons |   6.737791    .091302    73.80   0.000     6.555784    6.919798
+-------------------------+----------------------------------------------------------------
+                 sigma_u |  .46157781
+                 sigma_e |  .03703288
+                     rho |  .99360415   (fraction of variance due to u_i)
+------------------------------------------------------------------------------------------
+
+. estimates store fixed_medio
+
+. 
+. * --- VAB Bajo ---
+. quietly xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial ///
+>     if vab_group_num==2, fe
+
+. estimates store fe_h_bajo
+
+. quietly xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial ///
+>     if vab_group_num==2, re
+
+. estimates store re_h_bajo
+
+. hausman fe_h_bajo re_h_bajo, sigmamore
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |   fe_h_bajo    re_h_bajo      Difference       Std. err.
+-------------+----------------------------------------------------------------
+      ln_vab |    .0085593     .0116999       -.0031406        .0006578
+   ln_ventas |    .1079438     .0938276        .0141162        .0023967
+     num_emp |    .0002917     .0005069       -.0002151        .0000249
+participac~l |    .0002183    -.0000137         .000232        .0001365
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(4) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            = 121.02
+Prob > chi2 = 0.0000
+
+. 
+. xtreg ln_empleo ln_vab ln_ventas num_emp participacion_provincial ///
+>     if vab_group_num==2, fe vce(cluster canton_id_num)
+
+Fixed-effects (within) regression               Number of obs     =        740
+Group variable: canton_id_~m                    Number of groups  =         74
+
+R-squared:                                      Obs per group:
+     Within  = 0.5946                                         min =         10
+     Between = 0.7121                                         avg =       10.0
+     Overall = 0.7033                                         max =         10
+
+                                                F(4, 73)          =     159.56
+corr(u_i, Xb) = 0.6805                          Prob > F          =     0.0000
+
+                                     (Std. err. adjusted for 74 clusters in canton_id_num)
+------------------------------------------------------------------------------------------
+                         |               Robust
+               ln_empleo | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------------------+----------------------------------------------------------------
+                  ln_vab |   .0085593   .0050961     1.68   0.097    -.0015973    .0187159
+               ln_ventas |   .1079438   .0105836    10.20   0.000     .0868508    .1290368
+                 num_emp |   .0002917   .0000879     3.32   0.001     .0001166    .0004669
+participacion_provincial |   .0002183   .0012131     0.18   0.858    -.0021994    .0026359
+                   _cons |   4.498302   .1291147    34.84   0.000     4.240976    4.755627
+-------------------------+----------------------------------------------------------------
+                 sigma_u |  .45927496
+                 sigma_e |  .03165843
+                     rho |  .99527094   (fraction of variance due to u_i)
+------------------------------------------------------------------------------------------
+
+. estimates store fixed_bajo
+
+. 
+. * ==============================================================================
+. * 10. TABLA COMPARATIVA (modelos FE con cluster)
+. * ==============================================================================
+. estimates table fixed fixed_twoway fixed_alto fixed_medio fixed_bajo, ///
+>     b(%9.4f) se stats(N r2_w r2_b r2_o)
+
+--------------------------------------------------------------------------
+    Variable |   fixed     fixed_t~y   fixed_a~o   fixed_m~o   fixed_b~o  
+-------------+------------------------------------------------------------
+      ln_vab |    0.0129      0.0010      0.0118     -0.0027      0.0086  
+             |    0.0038      0.0037      0.0064      0.0072      0.0051  
+   ln_ventas |    0.0286      0.0286      0.0205      0.0167      0.1079  
+             |    0.0075      0.0074      0.0069      0.0053      0.0106  
+     num_emp |    0.0000      0.0000      0.0000      0.0003      0.0003  
+             |    0.0000      0.0000      0.0000      0.0000      0.0001  
+participac~l |   -0.0008     -0.0003     -0.0007      0.0007      0.0002  
+             |    0.0003      0.0003      0.0004      0.0005      0.0012  
+             |
+        anio |
+       2016  |                0.0030                                      
+             |                0.0027                                      
+       2017  |                0.0015                                      
+             |                0.0029                                      
+       2018  |                0.0072                                      
+             |                0.0029                                      
+       2019  |                0.0133                                      
+             |                0.0032                                      
+       2020  |                0.0118                                      
+             |                0.0033                                      
+       2021  |                0.0164                                      
+             |                0.0038                                      
+       2022  |                0.0184                                      
+             |                0.0042                                      
+       2023  |                0.0155                                      
+             |                0.0040                                      
+       2024  |                0.0234                                      
+             |                0.0049                                      
+             |
+       _cons |    7.0761      7.1128      8.6671      6.7378      4.4983  
+             |    0.1322      0.1311      0.1450      0.0913      0.1291  
+-------------+------------------------------------------------------------
+           N |      2210        2210         740         730         740  
+        r2_w |    0.2145      0.2353      0.2076      0.4721      0.5946  
+        r2_b |    0.5686      0.5405      0.5714      0.6825      0.7121  
+        r2_o |    0.5637      0.5347      0.5689      0.6796      0.7033  
+--------------------------------------------------------------------------
+                                                              Legend: b/se
+
+. 
+. log close
+      name:  <unnamed>
+       log:  Z:/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u3-acd-01-datos-de-panel-entregable/logs/s
+> tata_panel_estimation.log
+  log type:  text
+ closed on:  29 Jun 2026, 13:21:07
+-------------------------------------------------------------------------------------------------------------------------------------------------------------

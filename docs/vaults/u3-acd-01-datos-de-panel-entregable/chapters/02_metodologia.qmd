@@ -1,0 +1,55 @@
+# Metodología Econométrica y Fundamento Teórico
+
+El análisis del empleo formal cantonal en el Ecuador se articula sobre un marco conceptual compuesto por una teoría principal de demanda factorial y tres enfoques teóricos complementarios que capturan las distorsiones estructurales y espaciales del mercado laboral en desarrollo.
+
+## Fundamento Teórico
+
+### Teoría Principal: Demanda Neoclásica de Factores y Maximización de la Firma
+
+La columna vertebral analítica de esta investigación es la **Teoría Neoclásica de la Demanda de Factores de la Firma**. Bajo este enfoque, las firmas actúan como agentes optimizadores que determinan su nivel de empleo formal a partir de la maximización de sus beneficios económicos en mercados de factores competitivos o semi-regulados. 
+
+Supongamos que la producción agregada de un cantón $i$ en el periodo $t$ se describe mediante una función de producción del tipo Cobb-Douglas con rendimientos a escala:
+
+$$Y_{it} = A_{it} K_{it}^\alpha L_{it}^\beta$$ {#eq-cobb-douglas}
+
+Donde $Y_{it}$ es el producto (VAB cantonal), $A_{it}$ es la productividad total de los factores (cambio tecnológico), $K_{it}$ es el stock de capital, y $L_{it}$ representa el empleo formal contratado. La firma representativa maximiza su función de beneficios:
+
+$$\Pi_{it} = P_{it} Y_{it} - W_{it} L_{it} - R_{it} K_{it}$$ {#eq-beneficios}
+
+Donde $P_{it}$ es el nivel general de precios local, $W_{it}$ es el salario nominal formal regulado y $R_{it}$ representa el costo de uso del capital. La condición de primer orden respecto al factor trabajo ($L_{it}$) determina que el producto marginal del trabajo debe igualar al salario real:
+
+$$\frac{\partial Y_{it}}{\partial L_{it}} = \beta \frac{Y_{it}}{L_{it}} = \frac{W_{it}}{P_{it}}$$ {#eq-cpo}
+
+Al tomar logaritmos y reordenar los términos, el empleo formal óptimo de equilibrio se convierte en una función de la productividad media del trabajo ($Y_{it}/L_{it}$), el costo del factor y las características tecnológicas del territorio. Esta relación constituye el núcleo del modelo, donde la productividad laboral real media ($PR_{it} = \ln(Y_{it}/L_{it})$) actúa como el determinante directo del nivel de empleo.
+
+## Especificación Econométrica
+
+Adaptando los esquemas teóricos anteriores a una estructura de datos de panel, planteamos la ecuación de demanda de trabajo en la @eq-demanda:
+
+$$LE_{it} = \beta_0 + \beta_1 PR_{it} + \beta_2 TE_{it} + \beta_3 DE_{it} + \beta_4 PP_{it} + \alpha_i + \mu_{it}$$ {#eq-demanda}
+
+Donde $LE_{it}$ es el logaritmo del empleo promedio formal del cantón $i$ en el año $t$, $PR_{it}$ representa el logaritmo de la productividad media del trabajo, $TE_{it}$ es el logaritmo del tamaño promedio de facturación empresarial, y $DE_{it}$ es el logaritmo de la densidad laboral de las firmas. El coeficiente $PP_{it}$ controla la participación porcentual del cantón en el producto de su provincia, mientras que $\alpha_i$ captura la heterogeneidad inobservable cantonal constante y $\mu_{it}$ es el error estocástico idiopático.
+
+Se hipotetiza que la elasticidad del empleo formal al tamaño empresarial es decreciente con el nivel de VAB cantonal, dado que en cantones menos desarrollados la firma representativa tiene menor acceso a crédito y tecnología, haciendo al empleo formal más sensible a variaciones en la escala productiva local.
+
+## Definición y Descripción de Variables
+
+La @tbl-variables detalla la definición metodológica y fuentes de las variables del modelo:
+
+| Variable | Tipo | Fórmula Operativa | Descripción del Indicador | Fuente |
+| :--- | :--- | :--- | :--- | :--- |
+| **`LE`** | Dependiente | $\ln(\text{empleo\_prom})$ | Escala del mercado laboral formal cantonal. | INEC / DIEE |
+| **`PR`** | Independiente | $\ln(\text{vab} / \text{empleo\_prom})$ | Proxy de eficiencia productiva local. | BCE / INEC |
+| **`TE`** | Control | $\ln(\text{ventas\_totales} / \text{num\_emp})$ | Escala de facturación de la firma representativa. | INEC / DIEE |
+| **`DE`** | Control | $\ln(\text{empleo\_prom} / \text{num\_emp})$ | Intensidad de absorción laboral de las firmas. | INEC / DIEE |
+| **`PP`** | Control | Expresada en nivel (0 - 100) | Centralidad y jerarquía económica del cantón. | BCE / Propio |
+
+: Definición de Variables y Fuentes de Información {#tbl-variables}
+
+## Modelos de Estimación y Pruebas de Diagnóstico
+
+La estimación de los parámetros de interés parte de la comparación entre los estimadores de Efectos Fijos y Efectos Aleatorios. El modelo de Efectos Fijos permite que el término de efecto individual inobservable de cada cantón esté correlacionado con los regresores explicativos, estimándose a través de la transformación de variables respecto a su media temporal. Por el contrario, el modelo de Efectos Aleatorios asume que este efecto individual se comporta como una perturbación aleatoria incorrelacionada con las variables explicativas del modelo.
+
+Para determinar formalmente cuál de las dos especificaciones es la adecuada, se aplica el Test de Hausman, cuya hipótesis nula establece la ausencia de correlación sistemática entre los efectos individuales y los regresores explicativos. Un rechazo de esta hipótesis determina de forma unánime que el estimador de Efectos Fijos es el único consistente y eficiente para la inferencia. 
+
+Posteriormente, se aplican pruebas de diagnóstico sobre los errores del modelo. La autocorrelación temporal se evalúa mediante el test de primer orden de Wooldridge para comprobar la persistencia serial de los residuos. La heterocedasticidad inter-cantonal se examina a través de la prueba de Wald modificada para efectos fijos, la cual evalúa la hipótesis nula de homocedasticidad frente a la presencia de varianzas grupales disímiles debido a las enormes diferencias geográficas y mercantiles de los municipios. En caso de detectarse simultáneamente la presencia de heterocedasticidad o correlación serial, se procede a estimar el modelo mediante Mínimos Cuadrados Generalizados Factibles (FGLS) con errores estándar corregidos, garantizando estimadores eficientes bajo paneles con perturbaciones complejas.

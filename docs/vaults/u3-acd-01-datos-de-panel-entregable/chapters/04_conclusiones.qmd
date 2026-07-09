@@ -1,0 +1,13 @@
+# Conclusiones y Limitaciones
+
+## Conclusiones
+
+La evidencia empírica analizada permite concluir que el empleo formal cantonal en el Ecuador no responde de manera homogénea al dinamismo productivo, sino que se encuentra condicionado por la escala de las firmas y la estructura económica del territorio. La elasticidad negativa observada frente a incrementos en la productividad laboral media revela un comportamiento defensivo y de optimización de costos en los cantones con mayor dinamismo mercantil (VAB Alto), donde las empresas prefieren intensificar sus procesos mediante la sustitución de capital por trabajo a través de la modernización tecnológica y la automatización.
+
+Asimismo, se evidencia una fuerte dependencia y sensibilidad del empleo formal respecto a la escala de ventas y la densidad empresarial en las regiones con menor desarrollo productivo (VAB Bajo). En estos municipios rezagados, las micro y pequeñas empresas constituyen la única fuente plausible de absorción laboral formal, lo que exige concentrar los incentivos de desarrollo directamente en garantizar la viabilidad y supervivencia mercantil de estas firmas locales antes que en imponer cargas tributarias homogéneas.
+
+Finalmente, el estudio demuestra que el diseño de políticas públicas uniformes a nivel nacional resulta ineficaz para promover la formalización en el mercado laboral ecuatoriano. Los resultados sugieren la necesidad de implementar estrategias de fomento productivo con un enfoque territorial diferenciado que flexibilicen y simplifiquen la regulación laboral y administrativa en los cantones de bajo y medio desarrollo relativo, permitiendo que las firmas locales logren la escala mínima requerida para soportar los costos de formalización previsional.
+
+## Limitaciones
+
+A pesar del rigor econométrico, el análisis presenta limitaciones metodológicas importantes. En primer lugar, existe una restricción en la identificación causal del modelo debido a la posible endogeneidad por causalidad inversa de la productividad laboral, por lo cual los coeficientes reportados deben interpretarse estrictamente en términos de asociación y correlación. En segundo lugar, existe un sesgo potencial por variables omitidas debido a la carencia de microdatos anuales detallados sobre la inversión pública local y el flujo de financiamiento corporativo a nivel cantonal. Por último, la variable dependiente fundamentada en los registros de afiliación activa al IESS constituye un indicador administrativo de formalidad que podría subestimar el empleo real y la dinámica de acuerdos laborales semiformales no regulados, especialmente en el sector agrícola y las zonas predominantemente rurales.
