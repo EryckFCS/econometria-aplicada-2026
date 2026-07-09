@@ -8,9 +8,18 @@ from unittest.mock import Mock, patch
 import pandas as pd
 import pytest
 
-from ecs_quantitative.core.lake import LakeManager
-from ecs_quantitative.core import fetch_wb
-from ecs_quantitative.ingestion import SourceBackendRegistry
+try:
+    from ecs_quantitative.core.lake import LakeManager
+    from ecs_quantitative.core import fetch_wb
+    from ecs_quantitative.ingestion import SourceBackendRegistry
+    HAS_ECS_QUANTITATIVE = True
+except ImportError:
+    HAS_ECS_QUANTITATIVE = False
+
+# Skip all tests in this file if ecs_quantitative is not installed
+if not HAS_ECS_QUANTITATIVE:
+    pytestmark = pytest.mark.skip(reason="ecs_quantitative is not installed in this environment")
+
 from lib.catalog import SERIES_APE1
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
