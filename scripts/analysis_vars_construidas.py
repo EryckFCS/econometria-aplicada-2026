@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 from linearmodels.panel import PanelOLS, RandomEffects
 import statsmodels.api as sm
-from statsmodels.stats.diagnostic import het_breuschpagan
 
 # 1. Configuración de rutas y carga de datos
 base_path = "/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u3-acd-01-datos-de-panel-entregable"
@@ -52,7 +51,7 @@ def hausman_test(fe_model, re_model):
         chi2 = float(diff.T @ inv_cov_diff @ diff)
         from scipy.stats import chi2 as chi2_dist
         p_val = 1 - chi2_dist.cdf(chi2, df_df)
-    except Exception as e:
+    except Exception:
         chi2 = np.nan
         p_val = np.nan
     

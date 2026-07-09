@@ -7,7 +7,6 @@ Autor: Erick Condoy
 Fecha: 2026-06-29
 """
 
-import os
 import pathlib
 import pandas as pd
 import numpy as np

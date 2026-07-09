@@ -1,7 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
 
 # Load data
 data_path = '/home/erick-fcs/Documentos/universidad/07_Ciclo/septimo_ciclo/applied_econometrics_2026/docs/vaults/u1-aa-01-applied-econometrics/ape2-crisis-iess/analysis_erick_condoy/data/base_analisis.csv'

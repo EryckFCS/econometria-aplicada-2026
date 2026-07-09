@@ -5,7 +5,6 @@ Script para sanitizar y estructurar en formato de panel de datos largo (long for
 el VAB cantonal del Ecuador para el periodo 2007-2024.
 """
 
-import os
 import pathlib
 import pandas as pd
 import numpy as np

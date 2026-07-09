@@ -7,7 +7,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
-from ecs_quantitative.core.utils import normalize_iso2
+from ecs_quantitative.core.utils import normalize_iso2  # noqa: E402
 PARTNERS_DIR = PROJECT_ROOT / "data" / "raw" / "partners"
 OUTPUT_DIR = PROJECT_ROOT / "data" / "curation" / "group_work" / "standardized"
 
