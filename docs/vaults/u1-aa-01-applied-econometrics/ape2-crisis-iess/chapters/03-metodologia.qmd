@@ -17,6 +17,29 @@ La base de datos combina registros de afiliación previsional del IESS con serie
 : Matriz de Variables de Investigación {tbl-colwidths="[10,15,35,10,30]"}
 :::
 
+```{mermaid}
+%%| label: fig-pipeline
+%%| fig-cap: Diagrama del Pipeline de Ingeniería de Datos y Estimación Econométrica
+graph TD
+    subgraph Extracción e Integración
+        A1[Registros Administrativos IESS: Afiliados] --> B[Base Integrada Anual N=35]
+        A2[Banco Mundial WDI: GM, MI, HO, FL] --> B
+    end
+    subgraph Procesamiento y Estacionariedad
+        B --> C[Tratamiento de Datos: Imputación Lineal y Forward Fill de HO]
+        C --> D[Pruebas de Raíz Unitaria: ADF, PP y Zivot-Andrews con Quiebre]
+        D --> E{¿Orden Mixto de Integración I(0)/I(1)?}
+    end
+    subgraph Modelado e Inferencia Estructural
+        E -->|Sí| F[Modelo ARDL - Cointegración por Líneas Bounds Test]
+        E -->|Sí| G[Gregory-Hansen: Cointegración con Quiebre de Régimen]
+        E -->|Sí| H[Kernel-based Regularized Least Squares - KRLS]
+        F --> I[Causalidad de Granger y Espectral en Frecuencia]
+        G --> I
+        H --> I
+    end
+```
+
 Analizo las variables seleccionadas para comprender las tendencias históricas y la variabilidad física de las series temporales, las cuales se resumen a continuación a través de sus estadísticos descriptivos elementales.
 
 | Variable | N | Media | Desv. Est. | Mín. | Máx. |
@@ -91,45 +114,45 @@ FL & -2.423 & -2.785 & -3.657 & 2009 & -4.212** & -6.756*** & -7.020*** & 2015 &
 
 Para evaluar el orden de integración de las series temporales de forma individual y prevenir regresiones espurias, implemento pruebas de raíz unitaria con y sin quiebres estructurales. 
 
-La prueba de **Dickey-Fuller Aumentada (ADF)**, formulada originalmente por **David Dickey y Wayne Fuller (1979)**, evalúa la presencia de una raíz unitaria (no estacionariedad) frente a la alternativa de estacionariedad en torno a una tendencia determinista. La utilizo para verificar que ninguna serie del sistema supere el orden de integración $I(1)$, estimando la regresión auxiliar general:
+La prueba de **Dickey-Fuller Aumentada (ADF)**, formulada originalmente por **David Dickey y Wayne Fuller (1979)**, evalúa la presencia de una raíz unitaria (no estacionariedad) frente a la alternativa de estacionariedad en torno a una tendencia determinista. En el soporte computacional, esta estimación se realiza en Stata mediante el comando oficial `dfuller` (StataCorp, 2023). La utilizo para verificar que ninguna serie del sistema supere el orden de integración $I(1)$, estimando la regresión auxiliar general:
 
 $$\Delta y_t = \alpha_0 + \alpha_1 t + \delta y_{t-1} + \sum_{j=1}^{k} \theta_j \Delta y_{t-j} + \epsilon_t$$ {#eq-adf}
 
 Donde $y_t$ es la variable genérica bajo análisis, $\Delta$ representa la primera diferencia, $t$ la tendencia y se selecciona el rezago óptimo $k$ mediante el Criterio de Schwarz para eliminar la autocorrelación en el residuo $\epsilon_t \sim i.i.d.(0, \sigma^2)$.
 
-De manera complementaria, aplico la prueba de **Phillips-Perron (PP)**, formulada por **Peter Phillips y Pierre Perron (1988)**. Mide la hipótesis de raíz unitaria aplicando correcciones no paramétricas directas a la matriz de varianza-covarianza para controlar la correlación serial y la heterocedasticidad en el término de error. Estima la ecuación:
+De manera complementaria, aplico la prueba de **Phillips-Perron (PP)**, formulada por **Peter Phillips y Pierre Perron (1988)**, la cual se computa en Stata utilizando el comando estándar `pperron` (StataCorp, 2023). Mide la hipótesis de raíz unitaria aplicando correcciones no paramétricas directas a la matriz de varianza-covarianza para controlar la correlación serial y la heterocedasticidad en el término de error. Estima la ecuación:
 
 $$y_t = \mu_0 + \mu_1 \left( t - \frac{T}{2} \right) + \phi y_{t-1} + u_t$$ {#eq-pp}
 
 La empleo como contraste robusto para validar la estacionariedad de las series. 
 
-Adicionalmente, dado que los choques de política económica y las crisis estructurales en Ecuador (como la dolarización o reformas legales) pueden sesgar las pruebas tradicionales hacia la no-estacionariedad, estimo la prueba de **Zivot-Andrews (ZA)**, formulada por **Eric Zivot y Donald Andrews (1992)**. Esta prueba mide la existencia de raíz unitaria permitiendo la presencia de un quiebre estructural endógeno en la constante, en la tendencia o en ambos. Estimo la regresión auxiliar:
+Adicionalmente, dado que los choques de política económica y las crisis estructurales en Ecuador (como la dolarización o reformas legales) pueden sesgar las pruebas tradicionales hacia la no-estacionariedad, estimo la prueba de **Zivot-Andrews (ZA)**, formulada por **Eric Zivot y Donald Andrews (1992)**. En Stata, se utiliza el módulo de usuario `zandrews` desarrollado por Christopher Baum (Baum, 2015). Esta prueba mide la existencia de raíz unitaria permitiendo la presencia de un quiebre estructural endógeno en la constante, en la tendencia o en ambos. Estima la regresión auxiliar:
 
 $$y_t = \mu + \beta t + \theta D_t(\lambda) + \gamma DT_t(\lambda) + \alpha y_{t-1} + \sum_{j=1}^{k} c_j \Delta y_{t-j} + e_t$$ {#eq-za}
 
 Donde $D_t(\lambda)$ y $DT_t(\lambda)$ son variables dummy que capturan quiebres en intercepto y tendencia respectivamente para una fracción del punto de quiebre $\lambda = T_B/T$. La utilizo para evitar falsos diagnósticos de no-estacionariedad causados por cambios de régimen en la economía.
 
-Para evaluar el equilibrio de largo plazo en sistemas integrados de orden mixto, implemento la prueba de cointegración por límites (**Bounds Test**), formulada por **M. Hashem Pesaran, Yongcheol Shin y Richard J. Smith (2001)**. Esta metodología mide la existencia de una relación lineal de largo plazo entre un conjunto de variables sin importar si son integradas de orden $I(0)$, $I(1)$ o de forma mixta. Su uso me permite superar la rigidez de las pruebas de cointegración clásicas que exigen homogeneidad en el orden de integración. La ecuación condicional general de corrección de error uniecuacional (ARDL-ECM) la formulo como:
+Para evaluar el equilibrio de largo plazo en sistemas integrados de orden mixto, implemento la prueba de cointegración por límites (**Bounds Test**), formulada por **M. Hashem Pesaran, Yongcheol Shin y Richard J. Smith (2001)**. Se calcula en Stata empleando el paquete de usuario `ardl` programado por Sebastian Kripfganz y Daniel Schneider (Kripfganz & Schneider, 2023). Esta metodología mide la existencia de una relación lineal de largo plazo entre un conjunto de variables sin importar si son integradas de orden $I(0)$, $I(1)$ o de forma mixta. Su uso me permite superar la rigidez de las pruebas de cointegración clásicas que exigen homogeneidad en el orden de integración. La ecuación condicional general de corrección de error uniecuacional (ARDL-ECM) la formulo como:
 
 $$\Delta y_t = c_0 + c_1 t + \alpha y_{t-1} + \sum_{i=1}^{K} \beta_i x_{i, t-1} + \sum_{j=1}^{p-1} \psi_j \Delta y_{t-j} + \sum_{i=1}^{K} \sum_{j=0}^{q_i-1} \gamma_{i,j} \Delta x_{i, t-j} + \epsilon_t$$ {#eq-bounds}
 
 Donde $y_t$ representa la variable dependiente genérica, $x_{i,t}$ denota el vector de regresores explicativos, $\alpha$ y $\beta_i$ capturan la dinámica de largo plazo, y $\psi_j$, $\gamma_{i,j}$ modelan las respuestas dinámicas de corto plazo. El contraste Wald-F conjunto evalúa la hipótesis nula de inexistencia de relación de largo plazo ($H_0: \alpha = \beta_1 = \dots = \beta_K = 0$) comparando el estadístico F calculado con las cotas críticas inferiores $I(0)$ y superiores $I(1)$. Ante la cointegración, derivo la velocidad de ajuste y el término de error rezagado ($ECT_{t-1}$) que mide el retorno al equilibrio dinámico.
 
-Adicionalmente, para modelar cambios de régimen de largo plazo ante posibles quiebres estructurales en la relación previsional, aplico pruebas de cointegración con quiebre estructural de **Gregory y Hansen (1996)**, estimando la especificación:
+Adicionalmente, para modelar cambios de régimen de largo plazo ante posibles quiebres estructurales en la relación previsional, aplico pruebas de cointegración con quiebre estructural de **Gregory y Hansen (1996)**, mediante el módulo de Stata `gregoryhansen` desarrollado por Diallo (2014), estimando la especificación:
 
 $$y_{1t} = \mu_1 + \mu_2 \varphi_{t\tau} + \alpha^{\top} y_{2t} + e_t$$ {#eq-gh}
 
-Donde $\varphi_{t\tau}$ es una variable dicotómica de quiebre de régimen. Para lidiar con no linealidades en el sistema, aplico la validación no paramétrica robusta **Kernel-based Regularized Least Squares (KRLS)** de **Jens Hainmueller y Chad Hazlett (2014)**, modelando la función predictiva mediante:
+Donde $\varphi_{t\tau}$ es una variable dicotómica de quiebre de régimen. Para lidiar con no linealidades en el sistema, aplico la validación no paramétrica robusta **Kernel-based Regularized Least Squares (KRLS)** de **Jens Hainmueller y Chad Hazlett (2014)**. En Stata, se utiliza el paquete `krls` de Jeremy Ferwerda y Chad Hazlett (Ferwerda & Hazlett, 2013), modelando la función predictiva mediante:
 
 $$f(x) = \sum_{i=1}^{N} c_i K(x, x_i)$$ {#eq-krls}
 
 Donde $K(x, x_i) = \exp\left( -\frac{\|x - x_i\|^2}{\sigma^2} \right)$ es un kernel gaussiano que mapea interacciones no lineales de alta dimensión.
 
-La precedencia temporal y la dirección causal entre las variables las examino mediante la prueba de **Causalidad de Granger**, formulada por **Clive Granger (1969)**. Esta prueba evalúa si los valores rezagados de una variable contribuyen a predecir el comportamiento actual de otra, controlando por la historia de esta última. La utilizo para clarificar el flujo de precedencia temporal entre el entorno fiscal/seguridad y la afiliación, estimando la regresión auxiliar bivariada generalizada en un marco VAR:
+La precedencia temporal y la dirección causal entre las variables las examino mediante la prueba de **Causalidad de Granger**, formulada por **Clive Granger (1969)**, ejecutada en Stata con el comando oficial `vargranger` posterior a la estimación del modelo VAR (StataCorp, 2023). Esta prueba evalúa si los valores rezagados de una variable contribuyen a predecir el comportamiento actual de otra, controlando por la historia de esta última. La utilizo para clarificar el flujo de precedencia temporal entre el entorno fiscal/seguridad y la afiliación, estimando la regresión auxiliar bivariada generalizada en un marco VAR:
 
 $$y_t = \alpha_0 + \sum_{i=1}^{p} \beta_i y_{t-i} + \sum_{j=1}^{p} \gamma_j x_{t-j} + \varepsilon_t$$ {#eq-granger-var}
 
-Donde la hipótesis nula establece la ausencia de causalidad de Granger de $x_t$ hacia $y_t$ ($H_0: \gamma_1 = \dots = \gamma_p = 0$). En caso de cointegración, extiendo el análisis al marco de la causalidad espectral de **Jörg Breitung y Jörg Candelon (2006)** en el dominio de la frecuencia para evaluar las relaciones dinámicas en horizontes de corto y largo plazo, estimando la medida causal:
+Donde la hipótesis nula establece la ausencia de causalidad de Granger de $x_t$ hacia $y_t$ ($H_0: \gamma_1 = \dots = \gamma_p = 0$). En caso de cointegración, extiendo el análisis al marco de la causalidad espectral de **Jörg Breitung y Jörg Candelon (2006)** en el dominio de la frecuencia para evaluar las relaciones dinámicas en horizontes de corto y largo plazo, implementada en Stata a través del módulo de usuario `spcaus` (Breitung & Candelon, 2006), estimando la medida causal:
 
 $$M_{y \to x}(\omega) = \log \left[ 1 + \frac{\text{var}(\eta_t)}{\text{var}(\epsilon_t)} |G(\omega)|^2 \right]$$ {#eq-bc}
 
