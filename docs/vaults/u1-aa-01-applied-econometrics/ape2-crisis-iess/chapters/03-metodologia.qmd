@@ -132,7 +132,7 @@ Adicionalmente, dado que los choques de política económica y las crisis estruc
 
 $$y_t = \mu + \beta t + \theta D_t(\lambda) + \gamma DT_t(\lambda) + \alpha y_{t-1} + \sum_{j=1}^{k} c_j \Delta y_{t-j} + e_t$$ {#eq-za}
 
-Donde $D_t(\lambda)$ y $DT_t(\lambda)$ son variables dummy que capturan quiebres en intercepto y tendencia respectivamente para una fracción del punto de quiebre $\lambda = T_B/T$. La utilizo para evitar falsos diagnósticos de no-estacionariedad causados por cambios de régimen en la economía.
+Donde $D_t(\lambda)$ y $DT_t(\lambda)$ son variables dummy que capturan quiebres en intercepto y tendencia respectivamente para una fracción del punto de quiebre $\lambda = T_B/T$. La utilizo para evitar falsos diagnósticos de no-estacionariedad causados por cambios de régimen en la economía. Esta metodología de raíz unitaria con quiebre estructural ha sido implementada con éxito en investigaciones empíricas similares sobre sostenibilidad previsional, tales como el estudio de @sarisoy2026 para auditar las transferencias fiscales y la solvencia de la seguridad social en Turquía.
 
 ### Cointegración y equilibrio de largo plazo (3.2.2)
 
@@ -146,7 +146,7 @@ Adicionalmente, para modelar cambios de régimen de largo plazo ante posibles qu
 
 $$y_{1t} = \mu_1 + \mu_2 \varphi_{t\tau} + \alpha^{\top} y_{2t} + e_t$$ {#eq-gh}
 
-Donde $\varphi_{t\tau}$ es una variable dicotómica de quiebre de régimen.
+Donde $\varphi_{t\tau}$ es una variable dicotómica de quiebre de régimen. La cointegración con quiebre estructural bajo este método ha sido ampliamente adoptada en la literatura de economía pública para evaluar la solvencia gubernamental en contextos de transición demográfica, como lo ilustran @ramosherrera2020 al evaluar la sostenibilidad previsional y fiscal ante el envejecimiento poblacional en la Eurozona.
 
 ### Estimadores dinámicos y validación no paramétrica (3.2.3)
 
@@ -156,7 +156,7 @@ Para lidiar con no linealidades y quiebres regulatorios extremos que distorsiona
 
 $$f(x) = \sum_{i=1}^{N} c_i K(x, x_i)$$ {#eq-krls}
 
-Donde $K(x, x_i) = \exp\left( -\frac{\|x - x_i\|^2}{\sigma^2} \right)$ es un kernel gaussiano que mapea interacciones no lineales de alta dimensión y estima efectos marginales locales para cada observación sin supuestos distributivos.
+Donde $K(x, x_i) = \exp\left( -\frac{\|x - x_i\|^2}{\sigma^2} \right)$ es un kernel gaussiano que mapea interacciones no lineales de alta dimensión y estima efectos marginales locales para cada observación sin supuestos distributivos. En la literatura aplicada reciente, la metodología KRLS ha sido empleada por @global2025 para desentrañar interacciones complejas en modelos de sostenibilidad social e institucional con presencia de riesgo exógeno, superando los sesgos de la regresión clásica.
 
 ### Dirección y dinámica de causalidad (3.2.4)
 
@@ -168,6 +168,6 @@ Donde la hipótesis nula establece la ausencia de causalidad de Granger de $x_t$
 
 $$M_{y \to x}(\omega) = \log \left[ 1 + \frac{\text{var}(\eta_t)}{\text{var}(\epsilon_t)} |G(\omega)|^2 \right]$$ {#eq-bc}
 
-Donde $\omega \in (0, \pi)$ representa la frecuencia correspondiente a la periodicidad del ciclo bajo análisis.
+Donde $\omega \in (0, \pi)$ representa la frecuencia correspondiente a la periodicidad del ciclo bajo análisis. El análisis de causalidad espectral en frecuencia ha sido implementado en la econometría moderna para discernir si las dinámicas causales entre el mercado de trabajo y los choques fiscales poseen un carácter transitorio o permanente, siguiendo el enfoque seminal de @breitungcandelon2006.
 
 El soporte computacional y la estimación se sustentan en desarrollos científicos consolidados. Para la prueba KPSS adopto el algoritmo de Baum (1998); estimo el modelo ARDL mediante la especificación de Kripfganz y Schneider (2023); para las pruebas de raíz unitaria tradicionales sigo las directrices de StataCorp (2023) mediante sus módulos estándar `dfuller` y `pperron`. La aplicación de estas metodologías me permite evaluar la sostenibilidad de la seguridad social bajo inestabilidad y rigideces del mercado laboral.
