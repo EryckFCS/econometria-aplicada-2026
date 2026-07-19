@@ -8,13 +8,13 @@ La base de datos combina registros de afiliación previsional del IESS con serie
 ::: {#tbl-variables tbl-pos='H'}
 | Código | Variable | Definición | Unidad | Fuente de Datos |
 | :--- | :--- | :--- | :--- | :--- |
-| **AF** | **Afiliados** | Personas registradas que aportan activamente al IESS (SGO + SSC). | Conteo | IESS / Boletines Estadísticos |
-| **GM** | **Gasto Militar** | Gasto en defensa y fuerzas armadas como proporción del producto interno. | % del PIB | Banco Mundial (WDI) |
-| **MI** | **Migración** | Saldo neto de personas que ingresan menos las que salen del país. | Conteo | Banco Mundial (WDI) |
-| **HO** | **Homicidios** | Muertes ilegales causadas intencionalmente por violencia interpersonal. | Tasa por 100k hab. | Banco Mundial / UNODC |
-| **FL** | **Fuerza Laboral** | Población económicamente activa total. | Conteo | Banco Mundial (WDI) |
+| **AF** | **Afiliados** | Personas registradas que aportan activamente al IESS (SGO + SSC). | Conteo | [BCE (IEM)](https://www.bce.fin.ec/index.php/informacion-estadistica-mensual) / [IESS Boletines](https://www.iess.gob.ec/es/web/guest/estadisticas-institucionales) |
+| **GM** | **Gasto Militar** | Gasto en defensa y fuerzas armadas como proporción del producto interno. | % del PIB | [Banco Mundial (MS.MIL.XPND.GD.ZS)](https://data.worldbank.org/indicator/MS.MIL.XPND.GD.ZS) |
+| **MI** | **Migración** | Saldo neto de personas que ingresan menos las que salen del país. | Conteo | [Banco Mundial (SM.POP.NETM)](https://data.worldbank.org/indicator/SM.POP.NETM) |
+| **HO** | **Homicidios** | Muertes ilegales causadas intencionalmente por violencia interpersonal. | Tasa por 100k hab. | [Banco Mundial (VC.IHR.PSRC.P5)](https://data.worldbank.org/indicator/VC.IHR.PSRC.P5) / [UNODC Data](https://dataunodc.un.org/) |
+| **FL** | **Fuerza Laboral** | Población económicamente activa total. | Conteo | [Banco Mundial (SL.TLF.TOTL.IN)](https://data.worldbank.org/indicator/SL.TLF.TOTL.IN) |
 
-: Matriz de Variables de Investigación
+: Matriz de Variables de Investigación {tbl-colwidths="[10,15,35,10,30]"}
 :::
 
 Analizo las variables seleccionadas para comprender las tendencias históricas y la variabilidad física de las series temporales, las cuales se resumen a continuación a través de sus estadísticos descriptivos elementales.
