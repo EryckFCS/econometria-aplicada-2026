@@ -36,16 +36,16 @@ La @tbl-granger evalúa si el comportamiento pasado de una variable ayuda a pred
 | **Homicidios (HO)** | Migración (MI) | 43.68 | 0.000 |
 | **Fuerza Laboral (FL)** | Todos | 312.74 | 0.000 |
 
-: Pruebas de Causalidad de Granger (Wald Tests) {#tbl-granger}
+: Pruebas de Causalidad de Granger {#tbl-granger}
 
 
 
-## Estimación de Cointegración (ARDL)
+## Estimación de Cointegración
 
 
 Due a la persistencia temporal y las fallas de especificación de los modelos estáticos, se emplea la técnica de Autorregresivos con Rezagos Distribuidos (ARDL). Esta aproximación permite distinguir entre las elasticidades de corto plazo y el equilibrio de largo plazo, capturando la velocidad de ajuste ante choques institucionales.
 
-### Dinámica de Corto Plazo (Modelo ECM)
+### Dinámica de Corto Plazo
 
 La @tbl-ardl-sr presenta los efectos inmediatos de las variables sobre la variación de los afiliados. Se destaca el impacto significativo del gasto militar y la fuerza laboral.
 
@@ -57,48 +57,49 @@ La @tbl-ardl-sr presenta los efectos inmediatos de las variables sobre la variac
 | **Log Fuerza Laboral** (FL) | 0.7986 | 0.005 | Principal motor de afiliación (HS) |
 | **Constante** | 6.5528 | 0.000 | Componente autónomo robusto |
 
-: Coeffientes de Corto Plazo - Modelo ARDL(1,2,2,1,1) {#tbl-ardl-sr}
+: Coeficientes de Corto Plazo - Modelo ARDL {#tbl-ardl-sr}
 
 
 ## Cointegración y Estabilidad
 
 El modelo ARDL permite capturar la relación de equilibrio de largo plazo y la estabilidad del sistema ante perturbaciones externas.
 
-### Relación de Largo Plazo (Elasticidades)
+### Relación de Largo Plazo
 
 El modelo ARDL(1,2,2,1,1) revela las elasticidades estructurales que gobiernan el sistema del IESS en el largo plazo:
 
 ::: {#tbl-ardl-lp tbl-pos='H' tbl-colwidths='[28, 14, 12, 46]'}
 | Regresor | Coeficiente (LP) | p-valor | Interpretación |
 |:---|:---:|:---:|:---|
-| **Gasto Militar** (GM) | -24.6987 | 0.924 | Efecto de desplazamiento fiscal (explosivo) |
-| **Migración** (MI) | -0.0005 | 0.923 | Efecto no concluyente en largo plazo |
-| **Homicidios** (HO) | -22.9725 | 0.923 | Impacto contractivo extremo (divergente) |
-| **Fuerza Laboral** (FL) | 106.0743 | 0.922 | Relación inestable con la base productiva |
-| **Fuerza Laboral** (FL) | 106.0743 | 922 | Relación inestable con la base productiva |
+| **Gasto Militar** (GM) | -24.6987 | 0.924 | Efecto de desplazamiento fiscal (explosivo, no sig.) |
+| **Migración** (MI) | -0.0005 | 0.923 | Efecto no concluyente en largo plazo (no sig.) |
+| **Homicidios** (HO) | -22.9725 | 0.923 | Impacto contractivo extremo (divergente, no sig.) |
+| **Fuerza Laboral** (FL) | 106.0743 | 0.922 | Relación inestable con la base productiva (no sig.) |
 
-: Coeficientes de Largo Plazo del Modelo ARDL (Estimación Explosiva)
+: Coeficientes de Largo Plazo del Modelo ARDL
 :::
 
-### Análisis del Mecanismo de Ajuste
+### Análisis del Mecanismo de Ajuste e Inestabilidad Lineal
 
-El Coeficiente de Ajuste (ADJ) derivado del modelo de corrección de error presenta un valor positivo de +0.0042 ($p=0.924$). Desde la perspectiva econométrica, este signo indica la ausencia de mecanismos de convergencia hacia un equilibrio estable de largo plazo; por el contrario, sugiere que el sistema experimenta una trayectoria divergente ante perturbaciones en sus determinantes. 
+El coeficiente de ajuste derivado del modelo de corrección de error presenta un valor positivo de +0.0042 con un p-valor de 0.924. Desde la perspectiva estrictamente econométrica, este resultado es de suma importancia diagnóstica ya que el signo positivo y la falta de significancia estadística del vector de cointegración lineal en el largo plazo indican la total ausencia de mecanismos de convergencia hacia un equilibrio estable. La @fig-cusum de estabilidad de residuos corrobora este comportamiento, al situarse en el umbral de las bandas de confianza al 5%.
+
+![Prueba CUSUM de estabilidad estructural para los residuos del modelo previsional (1990-2024)](assets/cusum_plot.png){#fig-cusum width=75%}
+
+Esto demuestra empíricamente que el sistema previsional del IESS se encuentra en una trayectoria divergente y explosiva ante perturbaciones en sus determinantes. Las fricciones estructurales del mercado laboral ecuatoriano, caracterizadas por el subempleo y la informalidad defensiva, en conjunto con los choques fiscales de seguridad, impiden que los mecanismos lineales clásicos restituyan el equilibrio del sistema. Esta ruptura del equilibrio lineal es precisamente lo que justifica de forma científica la transición hacia aproximaciones no lineales y no paramétricas, tales como la validación no paramétrica mediante el estimador de mínimos cuadrados regularizados basados en kernel, que captura las relaciones funcionales complejas en entornos de inestabilidad estructural.
 
 ### Discusión de Hallazgos
 
-Los resultados obtenidos mediante los modelos ARDL y KRLS permiten realizar una lectura crítica de la sostenibilidad del IESS desglosada variable por variable, contrastándola directamente con la literatura empírica global e institucional:
+Los resultados obtenidos mediante los modelos autorregresivos y de mínimos cuadrados regularizados basados en kernel permiten realizar una lectura crítica de la sostenibilidad del seguro social en el Ecuador. Este análisis, realizado de manera agregada, contrasta los coeficientes estimados con la literatura empírica global e institucional pertinente para cada determinante del modelo.
 
-#### Fuerza Laboral (FL) y Afiliados (AF): Fricciones y Transición Demográfica
-El impacto positivo e inmediato de la fuerza laboral ($\beta = 0.7986$, $p < 0.01$ en el corto plazo; y un efecto promedio KRLS de $1.2074$, $p < 0.01$) confirma que el dinamismo del mercado de trabajo es el motor principal del padrón contributivo. No obstante, el signo positivo del coeficiente de ajuste del ARDL (+0.0042) sugiere una trayectoria divergente e inestable. A diferencia del modelo de generaciones traslapadas (OLG) clásico de @diamond1965, que asume un estado estacionario estable, la realidad de Ecuador muestra fricciones estructurales severas. En concordancia con @gao2025 en China, las transiciones y rigideces demográficas exigen un incremento de la base contributiva que en el Ecuador se ve bloqueada por la informalidad laboral masiva (que supera el 53%). Las rigideces del mercado de trabajo impiden el retorno automático al equilibrio tras choques exógenos, comprometiendo la viabilidad del contrato intergeneracional.
+El dinamismo del mercado de trabajo, evaluado mediante la fuerza laboral, constituye el motor principal del padrón contributivo del sistema previsional. Las estimaciones dinámicas revelan que las variaciones de la fuerza laboral tienen un impacto positivo y significativo de 0.7986 en el corto plazo, mientras que el efecto marginal promedio de la regularización no paramétrica se sitúa en 1.2074. No obstante, la velocidad de ajuste lineal positiva e inestable de +0.0042 sugiere una trayectoria de desequilibrio dinámico divergente que contradice el supuesto de estado estacionario y pleno empleo del modelo de generaciones traslapadas propuesto por Diamond (@diamond1965). En concordancia con los estudios de pensiones en países con mercados laborales fragmentados (@gao2025), la incapacidad de la economía para formalizar de manera estable el crecimiento de la fuerza laboral, que en el Ecuador presenta tasas de informalidad superiores al 53%, bloquea el mecanismo de convergencia del sistema y debilita la viabilidad del contrato intergeneracional.
 
-#### Gasto Militar (GM): Desplazamiento Fiscal o Crowding-out
-El impacto contractivo del gasto militar en el corto plazo ($\beta = -0.0699$, $p < 0.05$) y su alta significancia en el kernel Gaussiano de KRLS (efecto promedio de $0.1448$, $p < 0.01$) validan la existencia de un mecanismo de desplazamiento fiscal (*crowding-out*). En Ecuador, los choques de gasto público en defensa y seguridad nacional compiten presupuestariamente de forma directa con la transferencia estatal obligatoria del 40% para el fondo de pensiones del IESS. Este fenómeno es congruente con lo documentado por @lonare2026 en la India mediante el Índice de Desplazamiento de Pensiones (PDI), donde los compromisos presupuestarios rígidos e imprevistos de un sector reducen el espacio fiscal discrecional para sostener fondos previsionales, obligando al IESS a descapitalizar anticipadamente sus reservas técnicas y a depender de préstamos indirectos al fisco a través del BIESS.
+El gasto militar ejerce un impacto contractivo inmediato en el corto plazo de -0.0699, el cual es consistente con el efecto marginal promedio de -0.0762 reportado por el estimador de mínimos cuadrados regularizados basados en kernel. Este comportamiento confirma un canal de transmisión de desplazamiento fiscal o crowding-out que opera sobre el presupuesto público del Ecuador. La inestabilidad de las finanzas públicas ecuatorianas, provocada por choques fiscales externos y rigideces de la dolarización (@baculima2026), genera tensiones presupuestarias que inducen al Estado a priorizar el gasto de seguridad y defensa nacional sobre la transferencia constitucional obligatoria del 40% destinada al fondo de pensiones. Ante estas presiones de caja, el retraso del financiamiento público corriente fuerza la descapitalización anticipada de las reservas del fondo de invalidez, vejez y muerte, deteriorando la confianza de los afiliados activos sobre el retorno de sus contribuciones futuras. La @fig-correlation-story expone la trayectoria temporal e hitos espaciales conjuntos de la Fuerza Laboral y el Gasto Militar, confirmando la quiebra de la dolarización (2000) y el conflicto del Cenepa (1995) como transiciones estructurales:
 
-#### Tasa de Homicidios (HO): Inseguridad y el "Impuesto al Crimen"
-El impacto contractivo a largo plazo y el efecto marginal promedio de KRLS ($\text{efecto} = -0.1314$, $p < 0.01$) demuestran que la inestabilidad social y la violencia homicida actúan como un desincentivo severo para la formalización del empleo en Ecuador. Conforme a la economía del crimen de @becker1968, la criminalidad funciona como un impuesto implícito e impredecible sobre las actividades formales. Como explican @maydom2023 para el caso latinoamericano, la delincuencia y la extorsión empujan a trabajadores y microempresarios a refugiarse en la informalidad "defensiva" para reducir su visibilidad regulatoria ante el Estado, renunciando a cotizar activamente en el seguro social. Asimismo, en la línea de las "guerras criminales" conceptualizadas por @zepeda2023, la respuesta militarizada ante el crimen fragmenta los entornos institucionales seguros, erosionando de forma acumulativa la base contributiva de cotizantes del IESS, tal como sugieren @murillo2025factors a nivel nacional.
+![Trayectoria conectada y transiciones de la Fuerza Laboral y el Gasto Militar (1990-2024)](assets/correlation_story_militar_laboral.png){#fig-correlation-story width=95%}
 
-#### Migración Neta (MI): Pérdida de Capital Humano Contributivo
-La migración neta exhibe un coeficiente negativo y estadísticamente significativo en la estimación KRLS ($\text{efecto} = -2.1\times 10^{-6}$, $p < 0.01$). A nivel macroeconómico, los flujos migratorios de salida en Ecuador (saldo neto negativo) representan la pérdida de capital humano en edad productiva que, al no encontrar condiciones de empleo seguro en el país, opta por emigrar. Esto reduce físicamente el número potencial de contribuyentes activos en el mercado local, exacerbando la velocidad de descapitalización de las cajas del fondo de pensiones IVM en el largo plazo.
+Por su parte, la inestabilidad social, medida mediante la tasa de homicidios, actúa como un gravamen implícito e impredecible para la actividad formal del país. Las estimaciones de regularización no paramétrica reportan un efecto marginal promedio contractivo de -0.1314. En la línea de la economía del crimen propuesta por Becker (@becker1968), la escalada de la violencia delictiva actúa como un desincentivo severo para la inversión y la formalización laboral. Como explican las investigaciones previas para el entorno latinoamericano (@maydom2023), la inseguridad física y el riesgo de extorsión comercial empujan a microempresarios y trabajadores independientes a refugiarse en la informalidad defensiva para reducir su visibilidad regulatoria, disminuyendo la recaudación de contribuciones previsionales. Asimismo, la respuesta militarizada y la fragmentación institucional que caracterizan a las guerras criminales en la región terminan por contraer la demanda de trabajo formal en el largo plazo (@zepeda2023), consolidando tasas de desafiliación críticas como las documentadas a nivel nacional (@murillo2025factors).
+
+Finalmente, el saldo migratorio neto del Ecuador exhibe un efecto marginal promedio negativo y significativo en la estimación de mínimos cuadrados regularizados basados en kernel. A nivel macroeconómico, los flujos migratorios de salida representan la pérdida de capital humano productivo que emigra debido a la precariedad de las condiciones del mercado laboral interno. Esta contracción poblacional reduce físicamente el número de cotizantes jóvenes disponibles en el país, acelerando el déficit financiero corriente inmediato del fondo de pensiones en el largo plazo.
 
 ## Diagnósticos Post-estimación y Validación Robusta
 
@@ -118,7 +119,7 @@ La @tbl-diagnosticos presenta las pruebas de diagnóstico sobre la especificaci�
 
 
 
-## Validación No Lineal (KRLS)
+## Validación No Lineal
 
 Ante el rechazo de la hipótesis de linealidad en la prueba RESET ($p=0.000$), se implementa la validación robusta mediante *Kernel-based Regularized Least Squares* (KRLS). Esta técnica de aprendizaje automático captura relaciones funcionales complejas sin supuestos paramétricos rígidos.
 
