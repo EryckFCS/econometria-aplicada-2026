@@ -192,13 +192,13 @@ La presencia de autocorrelación serial (prueba de Wooldridge: $F(1, 9) = 137.88
 
 | Regresor | FGLS Global | FGLS Hidrocarburos | FGLS Minero-Agropecuario |
 | :--- | :---: | :---: | :---: |
-| **`log_PF`** | $1.406^{***}$ | $1.879^{***}$ | $1.193^{***}$ |
+| **log (Ingresos Impositivos)** | $1.406^{***}$ | $1.879^{***}$ | $1.193^{***}$ |
 | | $(0.298)$ | $(0.548)$ | $(0.338)$ |
-| **`log_IE`** | $-0.504^{***}$ | $-0.228$ | $-0.223$ |
+| **log (Inversión Extranjera)** | $-0.504^{***}$ | $-0.228$ | $-0.223$ |
 | | $(0.160)$ | $(0.190)$ | $(0.207)$ |
-| **`log_AN`** | $-0.245^{**}$ | $-0.969^{***}$ | $-0.016$ |
+| **log (Crédito Privado)** | $-0.245^{**}$ | $-0.969^{***}$ | $-0.016$ |
 | | $(0.123)$ | $(0.164)$ | $(0.139)$ |
-| **`log_RI`** | $-0.054$ | $-0.080$ | $0.050$ |
+| **log (Reservas Internacionales)** | $-0.054$ | $-0.080$ | $0.050$ |
 | | $(0.090)$ | $(0.094)$ | $(0.122)$ |
 | **Constante** | $0.539$ | $1.355$ | $-1.274$ |
 | | $(1.084)$ | $(1.531)$ | $(1.274)$ |
@@ -206,16 +206,12 @@ La presencia de autocorrelación serial (prueba de Wooldridge: $F(1, 9) = 137.88
 | **Países** | 10 | 4 | 6 |
 | **Wald $\chi^2$** | $\chi^2(4) = 61.49^{***}$ | $\chi^2(4) = 52.99^{***}$ | $\chi^2(4) = 20.16^{***}$ |
 
-: Resultados Comparativos de Mínimos Cuadrados Generalizados Factibles (FGLS) {#tbl-regression-groups}
+: Resultados Comparativos de Mínimos Cuadrados Generalizados Factibles (FGLS) (Variable dependiente: `log_VE`) {#tbl-regression-groups}
 
-\begin{tablenotes}Significancia estadística: *** $p < 0.01$, ** $p < 0.05$, * $p < 0.1$. Errores estándar entre paréntesis.\end{tablenotes}
+Nota: Significancia estadística: \*\*\* $p < 0.01$, \*\* $p < 0.05$, \* $p < 0.1$. Errores estándar entre paréntesis.
 
 ### Análisis de Elasticidades
 
-Los ingresos impositivos (`log_PF`) incrementan la dependencia de rentas extractivas en todas las estimaciones. Este efecto es positivo y significativo. La magnitud del coeficiente es superior en el subgrupo de Hidrocarburos ($\beta = 1.88$) frente al Minero-Agropecuario ($\beta = 1.19$). El resultado expone la vulnerabilidad de las finanzas públicas ante las oscilaciones de las rentas energéticas.
+Los ingresos impositivos (`log_PF`) incrementan la dependencia de rentas extractivas de manera generalizada y robusta, mostrando una magnitud superior en el subgrupo de Hidrocarburos ($b = 1.88$) frente al Minero-Agropecuario ($b = 1.19$). Este hallazgo expone la vulnerabilidad y rigidez fiscal de las finanzas públicas ante shocks de commodities, un comportamiento coincidente con los postulados de @cepal_fiscal2023 sobre la subordinación de la estructura tributaria y el impacto fiscal de las actividades extractivas en América Latina. Por su parte, el desarrollo del crédito privado (`log_AN`) actúa como un mecanismo atenuador de la dependencia exclusivamente en el grupo de Hidrocarburos ($b = -0.97$, $p < 0.01$), lo cual concuerda con @cepal_bonanza2021 al señalar que la profundización financiera local y la capacidad de ahorro doméstico son canales indispensables para canalizar las rentas de recursos hacia actividades productivas diversificadas.
 
-La inversión extranjera directa (`log_IE`) reduce la dependencia global ($\beta = -0.50$). Sin embargo, su efecto pierde significancia estadística en las estimaciones por subgrupos FGLS. Este comportamiento sugiere que el impacto diversificador del capital externo depende de factores específicos del sector receptor.
-
-El crédito privado (`log_AN`) actúa de forma heterogénea. En las economías de Hidrocarburos, la profundización financiera reduce la dependencia de rentas extractivas ($\beta = -0.97$, $p < 0.01$). El resultado valida el rol del crédito como amortiguador de liquidez macroeconómica. En contraste, el coeficiente no es significativo en el grupo Minero-Agropecuario.
-
-La acumulación de reservas internacionales (`log_RI`) carece de significancia estadística bajo estimadores FGLS. La liquidez externa no mitiga directamente la dependencia extractiva. La política tributaria y el desarrollo financiero local representan los canales de transmisión preponderantes.
+Por otro lado, la inversión extranjera directa (`log_IE`) reduce la dependencia solo a nivel global ($b = -0.50$), perdiendo significancia estadística en las estimaciones por subgrupos. Esta divergencia sugiere que el impacto del capital externo está condicionado por su destino sectorial, en concordancia con @goda2021, quienes señalan que la IED primario-exportadora tiende a exacerbar la especialización extractiva y la desindustrialización. Finalmente, la acumulación de reservas internacionales (`log_RI`) carece de significancia estadística bajo los estimadores FGLS globales y sectoriales, lo que respalda el análisis de @cepal_gobernanza2024 al evidenciar que la liquidez externa opera como un mecanismo de estabilización financiera de corto plazo ante la volatilidad de precios, pero es insuficiente para alterar la vulnerabilidad estructural.

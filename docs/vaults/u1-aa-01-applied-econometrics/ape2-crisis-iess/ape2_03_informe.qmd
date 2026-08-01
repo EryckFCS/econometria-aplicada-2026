@@ -18,6 +18,12 @@ format:
     fig-cap-location: bottom
     tbl-colwidths: auto
     indent: false
+    header-includes:
+      - \usepackage[normalem]{ulem}
+      - \newcommand{\ul}[1]{\uline{#1}}
+      - \usepackage{multirow}
+      - \setlength{\parindent}{0pt}
+      - \setlength{\parskip}{6pt}
   docx:
     toc: false
     number-sections: true
@@ -27,10 +33,6 @@ format:
     tbl-colwidths: auto
     reference-doc: templates/custom-reference.docx
     indent: false
-header-includes:
-  - \usepackage{multirow}
-  - \setlength{\parindent}{0pt}
-  - \setlength{\parskip}{6pt}
 ---
 
 {{< include chapters/00-resumen.qmd >}}

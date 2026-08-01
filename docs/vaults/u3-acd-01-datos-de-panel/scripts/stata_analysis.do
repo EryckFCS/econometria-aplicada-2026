@@ -5,11 +5,11 @@ set graphics off
 set seed 42
 
 // Dependencias
-capture ssc install collin
-capture ssc install xttest3
-capture ssc install estout
-capture ssc install xthst
-capture ssc install xtcdf
+*capture ssc install collin
+*capture ssc install xttest3
+*capture ssc install estout
+*capture ssc install xthst
+*capture ssc install xtcdf
 
 // Entorno y logs
 cd "`c(pwd)'"
@@ -94,7 +94,7 @@ xttest3
 quietly xtreg log_VE log_PF log_IE log_AN log_RI if grupo_especializacion == 2, fe
 xttest3
 
-// Estimación de modelos corregidos (FGLS)
+// Estimación de modelos corregidos (GLS)
 xtgls log_VE log_PF log_IE log_AN log_RI, p(h) c(ar1)
 estimates store gls_global
 
