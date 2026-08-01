@@ -3,7 +3,7 @@
        log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econometrics_2026\docs\vaults\u3-acd-01-datos-de-panel\scripts\../logs/s
 > tata_panel_estimation.log
   log type:  text
- opened on:   6 Jul 2026, 02:26:59
+ opened on:  13 Jul 2026, 10:19:18
 
 . 
 . // Importar y preparar panel balanceado (2001-2023)
@@ -802,5 +802,5 @@ file ../assets/evolution_dependent_stata.png saved as PNG format
        log:  Z:\home\erick-fcs\Documentos\universidad\07_Ciclo\septimo_ciclo\applied_econometrics_2026\docs\vaults\u3-acd-01-datos-de-panel\scripts\../logs/s
 > tata_panel_estimation.log
   log type:  text
- closed on:   6 Jul 2026, 02:27:02
+ closed on:  13 Jul 2026, 10:19:21
 -------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,43 @@
+---
+title: "Modelo Definitivo de Datos de Panel: FGLS"
+subtitle: "Econometría Aplicada - Entregable de Resultados"
+author: "Erick Fabricio Condoy Seraquive"
+date: "2026-07-13"
+format:
+  docx:
+    toc: false
+    number-sections: true
+bibliography: "../../../../bibliography/references.bib"
+---
+
+# Modelo de Regresión Definitivo
+
+La presencia de autocorrelación serial (prueba de Wooldridge: $F(1, 9) = 137.88$, $p < 0.0001$) y heterocedasticidad grupal (prueba de Wald: $\chi^2(10) = 673.44$, $p < 0.0001$) invalida la eficiencia y consistencia de los estimadores estándar de efectos fijos y efectos aleatorios. Por lo tanto, se optó por la estimación definitiva mediante Mínimos Cuadrados Generalizados Factibles (FGLS), la cual corrige estas deficiencias asumiendo una estructura autorregresiva común AR(1) y varianzas heterocedásticas interindividuales. Los resultados a nivel global y por subgrupos de especialización constan en la @tbl-regression-groups:
+
+| Regresor | FGLS Global | FGLS Hidrocarburos | FGLS Minero-Agropecuario |
+| :--- | :---: | :---: | :---: |
+| **log (Ingresos Impositivos)** | $1.406^{***}$ | $1.879^{***}$ | $1.193^{***}$ |
+| | $(0.298)$ | $(0.548)$ | $(0.338)$ |
+| **log (Inversión Extranjera)** | $-0.504^{***}$ | $-0.228$ | $-0.223$ |
+| | $(0.160)$ | $(0.190)$ | $(0.207)$ |
+| **log (Crédito Privado)** | $-0.245^{**}$ | $-0.969^{***}$ | $-0.016$ |
+| | $(0.123)$ | $(0.164)$ | $(0.139)$ |
+| **log (Reservas Internacionales)** | $-0.054$ | $-0.080$ | $0.050$ |
+| | $(0.090)$ | $(0.094)$ | $(0.122)$ |
+| **Constante** | $0.539$ | $1.355$ | $-1.274$ |
+| | $(1.084)$ | $(1.531)$ | $(1.274)$ |
+| **Observaciones** | 230 | 92 | 138 |
+| **Países** | 10 | 4 | 6 |
+| **Wald $\chi^2$** | $\chi^2(4) = 61.49^{***}$ | $\chi^2(4) = 52.99^{***}$ | $\chi^2(4) = 20.16^{***}$ |
+
+: Resultados Comparativos de Mínimos Cuadrados Generalizados Factibles (FGLS) (Variable dependiente: `log_VE`) {#tbl-regression-groups}
+
+Nota: Significancia estadística: \*\*\* $p < 0.01$, \*\* $p < 0.05$, \* $p < 0.1$. Errores estándar entre paréntesis.
+
+## Análisis de Elasticidades
+
+Los ingresos impositivos (`log_PF`) incrementan la dependencia de rentas extractivas de manera generalizada y robusta, mostrando una magnitud superior en el subgrupo de Hidrocarburos ($b = 1.88$) frente al Minero-Agropecuario ($b = 1.19$). Este hallazgo expone la vulnerabilidad y rigidez fiscal de las finanzas públicas ante shocks de commodities, un comportamiento coincidente con los postulados de @cepal_fiscal2023 sobre la subordinación de la estructura tributaria y el impacto fiscal de las actividades extractivas en América Latina. Por su parte, el desarrollo del crédito privado (`log_AN`) actúa como un mecanismo atenuador de la dependencia exclusivamente en el grupo de Hidrocarburos ($b = -0.97$, $p < 0.01$), lo cual concuerda con @cepal_bonanza2021 al señalar que la profundización financiera local y la capacidad de ahorro doméstico son canales indispensables para canalizar las rentas de recursos hacia actividades productivas diversificadas.
+
+Por otro lado, la inversión extranjera directa (`log_IE`) reduce la dependencia solo a nivel global ($b = -0.50$), perdiendo significancia estadística en las estimaciones por subgrupos. Esta divergencia sugiere que el impacto del capital externo está condicionado por su destino sectorial, en concordancia con @goda2021, quienes señalan que la IED primario-exportadora tiende a exacerbar la especialización extractiva y la desindustrialización. Finalmente, la acumulación de reservas internacionales (`log_RI`) carece de significancia estadística bajo los estimadores FGLS globales y sectoriales, lo que respalda el análisis de @cepal_gobernanza2024 al evidenciar que la liquidez externa opera como un mecanismo de estabilización financiera de corto plazo ante la volatilidad de precios, pero es insuficiente para alterar la vulnerabilidad estructural.
+
+# Bibliografía

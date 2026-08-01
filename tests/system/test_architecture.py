@@ -109,13 +109,16 @@ def test_bibliography_validation():
     
     mismatch_keys = []
     for res in results:
-        if not res["valid"] and res["status"] == "ERROR_MISMATCH":
-            # Solo fallar si el mismatch es en el campo 'title' (error crítico de DOI)
-            critical_mismatches = [m for m in res["mismatches"] if m["field"] == "title"]
-            if critical_mismatches:
+        if not res["valid"] and res["status"] in ("ERROR_MISMATCH", "ERROR_NOT_FOUND"):
+            # Solo fallar si el mismatch es en el campo 'title' (error crítico de DOI) o si no se encuentra el DOI
+            if res["status"] == "ERROR_NOT_FOUND":
                 mismatch_keys.append((res["key"], res["details"]))
             else:
-                print(f"Warning: Mismatch menor de publisher para {res['key']}: {res['details']}")
+                critical_mismatches = [m for m in res["mismatches"] if m["field"] == "title"]
+                if critical_mismatches:
+                    mismatch_keys.append((res["key"], res["details"]))
+                else:
+                    print(f"Warning: Mismatch menor de publisher para {res['key']}: {res['details']}")
             
     assert not mismatch_keys, f"Se detectaron DOIs incorrectos (mismatch de título): {mismatch_keys}"
 
